@@ -1,0 +1,32 @@
+{
+  "success": true,
+  "count": 2,
+  "data": [
+    {
+      "_id": "threat001",
+      "name": "Shadow Predator Alpha",
+      "aliases": ["DarkHunter", "NightStalker"],
+      "type": "predator",
+      "actor_classification": "Child Predator",
+      "threat_level": "CRITICAL",
+      "location": "Unknown",
+      "hunt_priority": 1,
+      "bounty_usd": 50000,
+      "known_for": "Operating predator network targeting minors",
+      "law_enforcement_status": "WANTED - FBI Most Wanted List"
+    },
+    {
+      "_id": "threat007",
+      "name": "Silent Stalker",
+      "aliases": ["Whisper", "GhostFollow"],
+      "type": "predators",
+      "actor_classification": "Online Predator",
+      "threat_level": "HIGH",
+      "location": "North America",
+      "hunt_priority": 1,
+      "bounty_usd": 25000,
+      "known_for": "Grooming minors through gaming platforms",
+      "law_enforcement_status": "WANTED - FBI Regional Office"
+    }
+  ]
+}

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐾⚖️ DINA JUSTICE TV - Live Perpetrator Exposure 📺</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: #000;
+      color: #00ff00;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    .tv-container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      background: linear-gradient(135deg, #0a0e27 0%, #16213e 100%);
+    }
+
+    .tv-header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 20px;
+      background: rgba(255, 215, 0, 0.1);
+      border: 3px solid #FFD700;
+      border-radius: 15px;
+      animation: glow-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+      50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.8); }
+    }
+
+    .tv-header h1 {
+      color: #FFD700;
+      font-size: 2rem;
+      text-shadow: 0 0 20px #FFD700;
+      margin-bottom: 10px;
+    }
+
+    .tv-status {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    .status-badge {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    .status-live {
+      background: rgba(255, 0, 0, 0.3);
+      border: 2px solid #ff0000;
+      color: #ff0000;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0.5; }
+    }
+
+    .status-info {
+      background: rgba(0, 255, 255, 0.2);
+      border: 2px solid #00ffff;
+      color: #00ffff;
+    }
+
+    .tv-main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      overflow: hidden;
+    }
+
+    .tv-screen {
+      background: #000;
+      border: 4px solid #00ff00;
+      border-radius: 15px;
+      padding: 20px;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+    }
+
+    /* Scanline effect */
+    .tv-screen::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 0, 0.03) 2px,
+        rgba(0, 255, 0, 0.03) 4px
+      );
+      pointer-events: none;
+      animation: scan 8s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes scan {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(100%); }
+    }
+
+    .perpetrator-card {
+      background: rgba(255, 215, 0, 0.1);
+      border: 2px solid #FFD700;
+      border-left: 6px solid #FFD700;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      z-index: 2;
+    }
+
+    .perpetrator-card:hover {
+      background: rgba(255, 215, 0, 0.2);
+      transform: translateX(10px);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    }
+
+    .perp-name {
+      color: #FFD700;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+      text-shadow: 0 0 10px #FFD700;
+    }
+
+    .perp-role {
+      color: #00ffff;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .perp-status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    .status-convicted {
+      background: rgba(0, 255, 65, 0.3);
+      border: 2px solid #00ff41;
+      color: #00ff41;
+    }
+
+    .status-unprosecuted {
+      background: rgba(255, 0, 51, 0.3);
+      border: 2px solid #ff0033;
+      color: #ff0033;
+      animation: pulse-red 1.5s infinite;
+    }
+
+    @keyframes pulse-red {
+      0%, 100% { box-shadow: 0 0 10px #ff0033; }
+      50% { box-shadow: 0 0 20px #ff0033; }
+    }
+
+    .perp-crimes {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 215, 0, 0.3);
+      font-size: 0.85rem;
+      color: #ff6b6b;
+    }
+
+    .stats-panel {
+      background: #000;
+      border: 4px solid #00ffff;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+      overflow-y: auto;
+    }
+
+    .stats-panel h2 {
+      color: #00ffff;
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 0 0 15px #00ffff;
+    }
+
+    .stat-box {
+      background: rgba(255, 215, 0, 0.1);
+      border: 2px solid #FFD700;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
+      color: #FFD700;
+      font-weight: bold;
+      text-shadow: 0 0 15px #FFD700;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #00ffff;
+      text-transform: uppercase;
+    }
+
+    .stat-box.warning .stat-value {
+      color: #ff0033;
+      text-shadow: 0 0 15px #ff0033;
+    }
+
+    .legal-notice {
+      background: rgba(0, 255, 65, 0.1);
+      border: 2px solid #00ff41;
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      color: #00ff41;
+      text-align: center;
+    }
+
+    .loading {
+      text-align: center;
+      font-size: 1.5rem;
+      color: #FFD700;
+      padding: 50px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .tv-footer {
+      margin-top: 20px;
+      padding: 15px;
+      text-align: center;
+      background: rgba(255, 215, 0, 0.1);
+      border: 2px solid #FFD700;
+      border-radius: 10px;
+      color: #FFD700;
+    }
+
+    .neko-message {
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+    }
+
+    .wiesenthal-quote {
+      font-style: italic;
+      font-size: 0.9rem;
+      color: #00ffff;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #00ff00;
+      border-radius: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #FFD700;
+    }
+  </style>
+</head>
+<body>
+  <div class="tv-container">
+    <div class="tv-header">
+      <h1>🐾⚖️ DINA JUSTICE TV - LIVE PERPETRATOR EXPOSURE 📺⚖️🐾</h1>
+      <div class="tv-status">
+        <span class="status-badge status-live">🔴 LIVE BROADCAST</span>
+        <span class="status-badge status-info">⚖️ JUSTICE MODE: ACTIVE</span>
+        <span class="status-badge status-info">🌍 INTERNATIONAL PURSUIT</span>
+      </div>
+    </div>
+
+    <div class="tv-main">
+      <div class="tv-screen">
+        <div id="perpetrators-container">
+          <div class="loading">⚡ Loading DINA perpetrators, nyaa~... 📡</div>
+        </div>
+      </div>
+
+      <div class="stats-panel">
+        <h2>📊 JUSTICE STATS</h2>
+        <div id="stats-container">
+          <div class="loading">Loading stats...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tv-footer">
+      <div class="neko-message">*purrs in justice broadcasting* 😻⚖️✨</div>
+      <div class="wiesenthal-quote">"Justice, not vengeance" - Simon Wiesenthal</div>
+      <div style="margin-top: 10px; font-size: 0.85rem;">
+        🔍 Methodology: Wiesenthal Nazi-Hunting Precedent | ⚖️ Legal Basis: NO Statute of Limitations
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = 'http://192.168.1.134:5000/api';
+
+    async function loadPerpetrators() {
+      try {
+        const response = await fetch(`${API_URL}/dina/perpetrators`);
+        const data = await response.json();
+
+        if (data.success && data.data) {
+          displayPerpetrators(data.data);
+        }
+      } catch (error) {
+        document.getElementById('perpetrators-container').innerHTML =
+          '<div class="loading">❌ Error loading perpetrators, desu!</div>';
+        console.error('Error:', error);
+      }
+    }
+
+    async function loadStats() {
+      try {
+        const response = await fetch(`${API_URL}/dina/stats`);
+        const data = await response.json();
+
+        if (data.success && data.data) {
+          displayStats(data.data);
+        }
+      } catch (error) {
+        document.getElementById('stats-container').innerHTML =
+          '<div class="loading">❌ Error loading stats</div>';
+        console.error('Error:', error);
+      }
+    }
+
+    function displayPerpetrators(perpetrators) {
+      const container = document.getElementById('perpetrators-container');
+
+      if (perpetrators.length === 0) {
+        container.innerHTML = '<div class="loading">No perpetrators documented yet, nyaa~</div>';
+        return;
+      }
+
+      let html = '';
+      perpetrators.forEach((perp, index) => {
+        const convicted = perp.legalStatus?.convicted;
+        const statusClass = convicted ? 'status-convicted' : 'status-unprosecuted';
+        const statusText = convicted ? '⚖️ CONVICTED' : '⚠️ UNPROSECUTED';
+
+        const crimesText = perp.crimesAccused && perp.crimesAccused.length > 0
+          ? perp.crimesAccused.slice(0, 2).join(' • ')
+          : 'Crimes being documented';
+
+        html += `
+          <div class="perpetrator-card" data-index="${index}">
+            <div class="perp-name">${perp.fullName}</div>
+            <div class="perp-role">${perp.role}</div>
+            <div class="perp-status ${statusClass}">${statusText}</div>
+            <div class="perp-crimes">
+              📋 ${crimesText}
+            </div>
+            <div style="margin-top: 8px; font-size: 0.8rem; color: #00ffff;">
+              🔍 Verification: ${perp.verificationStatus || 'pending'}
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+
+      // Add click handlers
+      document.querySelectorAll('.perpetrator-card').forEach(card => {
+        card.addEventListener('click', function() {
+          const index = this.dataset.index;
+          showPerpDetails(perpetrators[index]);
+        });
+      });
+    }
+
+    function displayStats(stats) {
+      const container = document.getElementById('stats-container');
+
+      html = `
+        <div class="stat-box">
+          <div class="stat-value">${stats.total_documents}</div>
+          <div class="stat-label">Total Documents</div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-value">${stats.perpetrators?.total || 0}</div>
+          <div class="stat-label">Perpetrators</div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-value">${stats.perpetrators?.convicted || 0}</div>
+          <div class="stat-label">✅ Convicted</div>
+        </div>
+
+        <div class="stat-box warning">
+          <div class="stat-value">${stats.perpetrators?.unprosecuted || 0}</div>
+          <div class="stat-label">⚠️ Unprosecuted</div>
+        </div>
+
+        <div class="legal-notice">
+          <strong>⚖️ LEGAL BASIS:</strong><br>
+          Crimes against humanity have<br>
+          <strong>NO STATUTE OF LIMITATIONS</strong>
+        </div>
+
+        <div class="legal-notice" style="margin-top: 10px; background: rgba(255, 215, 0, 0.1); border-color: #FFD700; color: #FFD700;">
+          <strong>📚 METHODOLOGY:</strong><br>
+          ${stats.methodology || 'Wiesenthal Precedent'}
+        </div>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    function showPerpDetails(perp) {
+      const details = `
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔍 PERPETRATOR DETAILS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👤 NAME: ${perp.fullName}
+
+💼 ROLE: ${perp.role}
+
+🏛️ ORGANIZATIONS:
+${perp.organization ? perp.organization.map(o => '   • ' + o).join('\n') : '   Unknown'}
+
+⚖️ LEGAL STATUS:
+   Convicted: ${perp.legalStatus?.convicted ? 'YES ✅' : 'NO ⚠️'}
+   Status: ${perp.legalStatus?.currentStatus || 'Unknown'}
+
+🚨 CRIMES ACCUSED:
+${perp.crimesAccused ? perp.crimesAccused.map(c => '   • ' + c).join('\n') : '   Being documented'}
+
+🔍 VERIFICATION: ${perp.verificationStatus || 'Pending'}
+
+🏷️ TAGS: ${perp.tags ? perp.tags.join(', ') : 'None'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      `;
+
+      alert(details);
+    }
+
+    // Auto-refresh every 30 seconds
+    function autoRefresh() {
+      loadPerpetrators();
+      loadStats();
+    }
+
+    // Initial load
+    loadPerpetrators();
+    loadStats();
+
+    // Refresh every 30 seconds
+    setInterval(autoRefresh, 30000);
+
+    console.log('🐾⚖️ DINA Justice TV initialized, nyaa~!');
+    console.log('📡 Broadcasting perpetrator exposure 24/7, desu!');
+  </script>
+</body>
+</html>

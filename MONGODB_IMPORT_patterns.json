@@ -1,0 +1,80 @@
+[
+  {
+    "pattern_id": "TEST-MULT-TEXT-001",
+    "pattern_name": "Multiple Element Text Matching",
+    "category": "testing",
+    "subcategory": "react_testing_library",
+    "symptom": "Found multiple elements with the text: X",
+    "solution": "Use getAllByText() instead of getByText()",
+    "severity": "medium",
+    "project": "neko-defense-dashboard",
+    "import_to": "case_patterns"
+  },
+  {
+    "pattern_id": "TEST-MOCK-ORDER-001",
+    "pattern_name": "Mock Fetch Handler Ordering Bug",
+    "category": "testing",
+    "subcategory": "mocking",
+    "symptom": "Tests pass wrong data, specific endpoints return generic data",
+    "solution": "Order mock checks from MOST SPECIFIC to MOST GENERAL",
+    "severity": "critical",
+    "impact": "Can break entire test suites silently",
+    "project": "neko-defense-dashboard",
+    "import_to": "case_patterns"
+  },
+  {
+    "pattern_id": "TEST-VIEW-NAV-001",
+    "pattern_name": "Component View Mode Navigation Required",
+    "category": "testing",
+    "subcategory": "component_behavior",
+    "symptom": "Cannot find elements in different view mode",
+    "solution": "Navigate to correct view mode BEFORE assertions",
+    "severity": "high",
+    "project": "neko-defense-dashboard",
+    "import_to": "case_patterns"
+  },
+  {
+    "pattern_id": "TEST-CANVAS-JSDOM-001",
+    "pattern_name": "Canvas Mocking in jsdom Environment",
+    "category": "testing",
+    "subcategory": "canvas_jsdom",
+    "symptom": "Canvas tests fail with getContext error",
+    "solution": "Mock HTMLCanvasElement.prototype.getContext",
+    "severity": "medium",
+    "project": "neko-defense-dashboard",
+    "import_to": "case_patterns"
+  },
+  {
+    "pattern_id": "TEST-WRAPPER-DETECT-001",
+    "pattern_name": "Component Wrapper Detection",
+    "category": "testing",
+    "subcategory": "react_wrappers",
+    "symptom": "Test expects component but gets wrapper",
+    "solution": "Check wrapper type, access via .props.children",
+    "severity": "low",
+    "project": "neko-defense-dashboard",
+    "import_to": "case_patterns"
+  },
+  {
+    "pattern_id": "TEST-SELECTOR-TYPE-001",
+    "pattern_name": "Button vs Div with onClick",
+    "category": "testing",
+    "subcategory": "dom_selectors",
+    "symptom": "Cannot find button elements",
+    "solution": "Check actual DOM - may be divs not buttons",
+    "severity": "medium",
+    "project": "neko-defense-dashboard",
+    "import_to": "case_patterns"
+  },
+  {
+    "pattern_id": "TEST-ASYNC-STATS-001",
+    "pattern_name": "Async Stat Value Rendering",
+    "category": "testing",
+    "subcategory": "async_rendering",
+    "symptom": "Cannot find stat values immediately",
+    "solution": "Use findByText() or waitFor() with timeout",
+    "severity": "medium",
+    "project": "neko-defense-dashboard",
+    "import_to": "case_patterns"
+  }
+]
