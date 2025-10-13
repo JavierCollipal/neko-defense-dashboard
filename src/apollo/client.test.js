@@ -75,7 +75,8 @@ describe('Apollo Client Configuration', () => {
     it('checks localStorage for auth token', async () => {
       console.log('🧪 [Test] Checking localStorage access, nyaa~');
 
-      global.localStorage.getItem.mockReturnValue(null);
+      // Set return value on the existing jest.fn()
+      global.localStorage.getItem = jest.fn().mockReturnValue(null);
 
       const { apolloClient } = await import('./client');
 
@@ -304,7 +305,7 @@ describe('Apollo Client Configuration', () => {
     it('attempts to read token from localStorage', async () => {
       console.log('🧪 [Test] Checking localStorage read attempt, desu~');
 
-      global.localStorage.getItem.mockReturnValue('test-token');
+      global.localStorage.getItem = jest.fn().mockReturnValue('test-token');
 
       const { apolloClient } = await import('./client');
 
@@ -315,7 +316,7 @@ describe('Apollo Client Configuration', () => {
     it('handles missing token gracefully', async () => {
       console.log('🧪 [Test] Checking missing token handling, nyaa~');
 
-      global.localStorage.getItem.mockReturnValue(null);
+      global.localStorage.getItem = jest.fn().mockReturnValue(null);
 
       const { apolloClient } = await import('./client');
 
@@ -326,7 +327,7 @@ describe('Apollo Client Configuration', () => {
     it('handles present token', async () => {
       console.log('🧪 [Test] Checking present token handling, desu~');
 
-      global.localStorage.getItem.mockReturnValue('Bearer test-token-123');
+      global.localStorage.getItem = jest.fn().mockReturnValue('Bearer test-token-123');
 
       const { apolloClient } = await import('./client');
 
