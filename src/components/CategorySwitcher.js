@@ -1,60 +1,64 @@
 // 🐾🛡️ CATEGORY SWITCHER - SPECIAL THREAT TRACKING
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-const CATEGORIES = [
+const getCategoriesWithTranslation = (t) => [
   {
     id: 'all',
-    name: 'All Threats',
+    name: t('categories.all_threats'),
     icon: '🎯',
     color: '#00ffff'
   },
   {
     id: 'predators',
-    name: 'Predators',
+    name: t('categories.predators'),
     icon: '⚠️',
     color: '#ff0033',
-    priority: 'CRITICAL'
+    priority: t('categories.priority_critical')
   },
   {
     id: 'pedophiles',
-    name: 'Pedophiles',
+    name: t('categories.pedophiles'),
     icon: '🚨',
     color: '#ff0033',
-    priority: 'MAXIMUM ALERT'
+    priority: t('categories.priority_maximum')
   },
   {
     id: 'dina_network',
-    name: 'DINA Network',
+    name: t('categories.dina_network'),
     icon: '🕸️',
     color: '#ff1493',
-    priority: 'HIGH'
+    priority: t('categories.priority_high')
   },
   {
     id: 'ransomware',
-    name: 'Ransomware',
+    name: t('categories.ransomware'),
     icon: '💀',
     color: '#ffd700'
   },
   {
     id: 'state_sponsored',
-    name: 'State Sponsored',
+    name: t('categories.state_sponsored'),
     icon: '🕷️',
     color: '#ff6600'
   },
   {
     id: 'crypto_crime',
-    name: 'Crypto Crime',
+    name: t('categories.crypto_crime'),
     icon: '₿',
     color: '#00ff41'
   }
 ];
 
 function CategorySwitcher({ activeCategory, onCategoryChange, threatCounts }) {
+  const { t } = useTranslation();
+  const CATEGORIES = getCategoriesWithTranslation(t);
+
   return (
     <div className="category-switcher">
       <div className="switcher-header">
-        <h2>🛡️ THREAT CATEGORIES</h2>
-        <div className="fortress-badge">FORTRESS MODE</div>
+        <h2>🛡️ {t('categories.header')}</h2>
+        <div className="fortress-badge">{t('categories.fortress_badge')}</div>
       </div>
 
       <div className="categories-list">
@@ -72,7 +76,7 @@ function CategorySwitcher({ activeCategory, onCategoryChange, threatCounts }) {
                 <div className="category-priority">{category.priority}</div>
               )}
               <div className="category-count">
-                {threatCounts[category.id] || 0} detected
+                {threatCounts[category.id] || 0} {t('categories.detected')}
               </div>
             </div>
             {category.priority && (
@@ -85,10 +89,10 @@ function CategorySwitcher({ activeCategory, onCategoryChange, threatCounts }) {
       <div className="switcher-footer">
         <div className="monitoring-status">
           <span className="status-dot"></span>
-          ACTIVE MONITORING
+          {t('categories.active_monitoring')}
         </div>
         <div className="neko-guardian">
-          🐾 Neko Guardian: ON
+          🐾 {t('categories.neko_guardian')}
         </div>
       </div>
     </div>

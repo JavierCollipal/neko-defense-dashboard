@@ -1,0 +1,102 @@
+{
+  "app": {
+    "title": "नेको-आर्क रक्षा प्रणाली",
+    "status_live": "लाइव",
+    "fortress_mode": "किला मोड: सक्रिय",
+    "kawaii_level": "कावाई स्तर: अधिकतम",
+    "loading": "लोड हो रहा है, न्याओ~!",
+    "footer": "*रक्षात्मक उत्कृष्टता में गुर्राता है* | न्या न्या न्या~!"
+  },
+  "buttons": {
+    "neko_tv": "नेको टीवी",
+    "multi_channel_tv": "मल्टी-चैनल टीवी",
+    "dina_docs": "डीना दस्तावेज़",
+    "dina_justice_tv": "डीना न्याय टीवी",
+    "valech_v2": "वालेच V2.0",
+    "threat_actors": "खतरा अभिनेता",
+    "back_to_dashboard": "← डैशबोर्ड पर वापस जाएं"
+  },
+  "alerts": {
+    "allow_popups": "कृपया नेको टीवी खोलने के लिए पॉप-अप की अनुमति दें, न्याओ~!",
+    "allow_popups_multi": "कृपया मल्टी-चैनल टीवी खोलने के लिए पॉप-अप की अनुमति दें, न्याओ~!",
+    "allow_popups_dina": "कृपया डीना न्याय टीवी खोलने के लिए पॉप-अप की अनुमति दें, न्याओ~!"
+  },
+  "headers": {
+    "valech_v2": "वालेच V2.0 अपग्रेड सिस्टम",
+    "threat_actors_registry": "खतरा अभिनेता रजिस्ट्री",
+    "dina_international": "डीना अंतर्राष्ट्रीय शिकार अभियान",
+    "live_global_tracking": "लाइव - वैश्विक ट्रैकिंग",
+    "live_global_deployment": "लाइव - वैश्विक तैनाती",
+    "live_v2_deployed": "लाइव - V2.0 तैनात",
+    "maximum_capacity_mode": "अधिकतम क्षमता मोड: सक्रिय",
+    "threat_intelligence_mode": "खतरा खुफिया मोड: सक्रिय",
+    "international_justice_mode": "अंतर्राष्ट्रीय न्याय मोड: सक्रिय"
+  },
+  "categories": {
+    "header": "खतरे की श्रेणियां",
+    "all_threats": "सभी खतरे",
+    "predators": "शिकारी",
+    "pedophiles": "बाल यौन शोषक",
+    "dina_network": "डीना नेटवर्क",
+    "ransomware": "रैनसमवेयर",
+    "state_sponsored": "राज्य प्रायोजित",
+    "crypto_crime": "क्रिप्टो अपराध",
+    "detected": "पता लगाया गया",
+    "priority_critical": "गंभीर",
+    "priority_maximum": "अधिकतम चेतावनी",
+    "priority_high": "उच्च",
+    "fortress_badge": "किला मोड",
+    "active_monitoring": "सक्रिय निगरानी",
+    "neko_guardian": "नेको रक्षक: चालू"
+  },
+  "stats": {
+    "header": "रक्षा प्रणाली स्थिति",
+    "defense_statistics": "रक्षा आंकड़े",
+    "loading_stats": "आंकड़े लोड हो रहे हैं, न्याओ~!",
+    "active_collections": "सक्रिय संग्रह",
+    "honeypot_traps": "हनीपॉट जाल",
+    "threat_detection": "खतरा पहचान",
+    "kawaii_power": "कावाई शक्ति",
+    "active": "सक्रिय",
+    "last_update": "अंतिम अपडेट:"
+  },
+  "threats": {
+    "all_threat_actors": "सभी खतरा अभिनेता",
+    "predator_threat_actors": "शिकारी खतरा अभिनेता",
+    "pedophile_threat_actors": "बाल यौन शोषक खतरा अभिनेता - बड़े पैमाने पर शिकार लक्ष्य",
+    "dina_network_actors": "डीना नेटवर्क अभिनेता",
+    "ransomware_groups": "रैनसमवेयर समूह",
+    "state_sponsored_apts": "राज्य प्रायोजित APT",
+    "crypto_crime_actors": "क्रिप्टो अपराध अभिनेता",
+    "threat_actors": "खतरा अभिनेता",
+    "loading_hunt_targets": "शिकार लक्ष्य लोड हो रहे हैं, देसु~!",
+    "network_error": "नेटवर्क त्रुटि - रक्षा प्रणाली से कनेक्ट करने में असमर्थ",
+    "failed_to_load": "खतरा अभिनेताओं को लोड करने में विफल",
+    "no_threats_found": "इस श्रेणी में कोई खतरा अभिनेता नहीं मिला, न्याओ~!",
+    "targets": "लक्ष्य",
+    "target": "लक्ष्य",
+    "hunt_active": "शिकार सक्रिय",
+    "unknown": "अज्ञात",
+    "unknown_actor": "अज्ञात अभिनेता",
+    "aka": "उर्फ:",
+    "type": "प्रकार:",
+    "classification": "वर्गीकरण:",
+    "location": "स्थान:",
+    "nation": "राष्ट्र:",
+    "hunt_priority": "शिकार प्राथमिकता:",
+    "bounty": "इनाम:",
+    "known_for": "के लिए जाना जाता है:",
+    "last_updated": "अंतिम अपडेट:",
+    "purrs_hunt_readiness": "*शिकार तैयारी में गुर्राता है*"
+  },
+  "threat_levels": {
+    "critical": "गंभीर",
+    "high": "उच्च",
+    "medium": "मध्यम",
+    "low": "कम"
+  },
+  "language": {
+    "select": "भाषा चुनें",
+    "current": "वर्तमान भाषा:"
+  }
+}

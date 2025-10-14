@@ -1,0 +1,100 @@
+/* 🐾🌍 NEKO DEFENSE - RTL (Right-to-Left) Support for Arabic 🌍🐾 */
+
+/* Apply RTL direction to the entire app when Arabic is selected */
+[dir="rtl"] {
+  direction: rtl;
+}
+
+[dir="rtl"] body {
+  text-align: right;
+}
+
+/* Flip margins and paddings */
+[dir="rtl"] .main-container {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .sidebar-left {
+  margin-right: 0;
+  margin-left: 20px;
+}
+
+[dir="rtl"] .status-bar {
+  flex-direction: row-reverse;
+}
+
+/* Flip flex layouts */
+[dir="rtl"] .category-item {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .category-info {
+  text-align: right;
+}
+
+[dir="rtl"] .stat-card {
+  text-align: right;
+}
+
+[dir="rtl"] .actor-header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .actor-details {
+  text-align: right;
+}
+
+[dir="rtl"] .detail-item {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .detail-label {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+/* Fix button alignments */
+[dir="rtl"] .tv-window-button {
+  margin-left: 0;
+  margin-right: 10px;
+}
+
+/* Language switcher in RTL */
+[dir="rtl"] .language-switcher {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+/* Threat actors grid */
+[dir="rtl"] .threat-actor-card {
+  text-align: right;
+}
+
+/* Stats grid */
+[dir="rtl"] .stats-grid {
+  direction: rtl;
+}
+
+/* Footer */
+[dir="rtl"] .App-footer {
+  text-align: center; /* Keep footer centered */
+}
+
+/* Fix icons and emojis (they should stay LTR) */
+[dir="rtl"] .stat-icon,
+[dir="rtl"] .category-icon,
+[dir="rtl"] .flag {
+  direction: ltr;
+  display: inline-block;
+}
+
+/* Border corrections */
+[dir="rtl"] .category-item {
+  border-left: none;
+  border-right: 4px solid;
+}
+
+[dir="rtl"] .language-option.active {
+  border-left: none;
+  border-right: 4px solid #ff1493;
+}

@@ -1,0 +1,102 @@
+{
+  "app": {
+    "title": "SISTEMA DE DEFENSA NEKO-ARC",
+    "status_live": "EN VIVO",
+    "fortress_mode": "MODO FORTALEZA: ACTIVO",
+    "kawaii_level": "NIVEL KAWAII: MÁXIMO",
+    "loading": "Cargando, ¡nyaa~!",
+    "footer": "*ronronea en excelencia defensiva* | ¡NYA NYA NYA~!"
+  },
+  "buttons": {
+    "neko_tv": "NEKO TV",
+    "multi_channel_tv": "TV MULTICANAL",
+    "dina_docs": "DOCS DINA",
+    "dina_justice_tv": "TV JUSTICIA DINA",
+    "valech_v2": "VALECH V2.0",
+    "threat_actors": "ACTORES DE AMENAZA",
+    "back_to_dashboard": "← Volver al Panel"
+  },
+  "alerts": {
+    "allow_popups": "Por favor, permite ventanas emergentes para abrir NEKO TV, ¡nyaa~!",
+    "allow_popups_multi": "Por favor, permite ventanas emergentes para abrir TV MULTICANAL, ¡nyaa~!",
+    "allow_popups_dina": "Por favor, permite ventanas emergentes para abrir TV JUSTICIA DINA, ¡nyaa~!"
+  },
+  "headers": {
+    "valech_v2": "SISTEMA DE ACTUALIZACIÓN VALECH V2.0",
+    "threat_actors_registry": "REGISTRO DE ACTORES DE AMENAZA",
+    "dina_international": "OPERACIÓN DE CAZA INTERNACIONAL DINA",
+    "live_global_tracking": "EN VIVO - RASTREO GLOBAL",
+    "live_global_deployment": "EN VIVO - DESPLIEGUE GLOBAL",
+    "live_v2_deployed": "EN VIVO - V2.0 DESPLEGADO",
+    "maximum_capacity_mode": "MODO CAPACIDAD MÁXIMA: ACTIVO",
+    "threat_intelligence_mode": "MODO INTELIGENCIA DE AMENAZAS: ACTIVO",
+    "international_justice_mode": "MODO JUSTICIA INTERNACIONAL: ACTIVO"
+  },
+  "categories": {
+    "header": "CATEGORÍAS DE AMENAZAS",
+    "all_threats": "Todas las Amenazas",
+    "predators": "Depredadores",
+    "pedophiles": "Pedófilos",
+    "dina_network": "Red DINA",
+    "ransomware": "Ransomware",
+    "state_sponsored": "Patrocinado por Estados",
+    "crypto_crime": "Crimen Cripto",
+    "detected": "detectado",
+    "priority_critical": "CRÍTICO",
+    "priority_maximum": "ALERTA MÁXIMA",
+    "priority_high": "ALTO",
+    "fortress_badge": "MODO FORTALEZA",
+    "active_monitoring": "MONITOREO ACTIVO",
+    "neko_guardian": "Guardián Neko: ENCENDIDO"
+  },
+  "stats": {
+    "header": "ESTADO DEL SISTEMA DE DEFENSA",
+    "defense_statistics": "Estadísticas de Defensa",
+    "loading_stats": "Cargando estadísticas, ¡nyaa~!",
+    "active_collections": "Colecciones Activas",
+    "honeypot_traps": "Trampas Honeypot",
+    "threat_detection": "Detección de Amenazas",
+    "kawaii_power": "Poder Kawaii",
+    "active": "ACTIVO",
+    "last_update": "Última Actualización:"
+  },
+  "threats": {
+    "all_threat_actors": "TODOS LOS ACTORES DE AMENAZA",
+    "predator_threat_actors": "ACTORES DE AMENAZA DEPREDADORES",
+    "pedophile_threat_actors": "ACTORES DE AMENAZA PEDÓFILOS - OBJETIVO DE CAZA MASIVA",
+    "dina_network_actors": "ACTORES DE LA RED DINA",
+    "ransomware_groups": "GRUPOS DE RANSOMWARE",
+    "state_sponsored_apts": "APTs PATROCINADOS POR ESTADOS",
+    "crypto_crime_actors": "ACTORES DE CRIMEN CRIPTO",
+    "threat_actors": "ACTORES DE AMENAZA",
+    "loading_hunt_targets": "Cargando objetivos de caza, ¡desu~!",
+    "network_error": "Error de red - no se puede conectar al sistema de defensa",
+    "failed_to_load": "No se pudieron cargar los actores de amenaza",
+    "no_threats_found": "No se encontraron actores de amenaza en esta categoría, ¡nyaa~!",
+    "targets": "OBJETIVOS",
+    "target": "OBJETIVO",
+    "hunt_active": "CAZA ACTIVA",
+    "unknown": "DESCONOCIDO",
+    "unknown_actor": "Actor Desconocido",
+    "aka": "alias:",
+    "type": "Tipo:",
+    "classification": "Clasificación:",
+    "location": "Ubicación:",
+    "nation": "Nación:",
+    "hunt_priority": "Prioridad de Caza:",
+    "bounty": "Recompensa:",
+    "known_for": "Conocido Por:",
+    "last_updated": "Última Actualización:",
+    "purrs_hunt_readiness": "*ronronea en preparación para la caza*"
+  },
+  "threat_levels": {
+    "critical": "CRÍTICO",
+    "high": "ALTO",
+    "medium": "MEDIO",
+    "low": "BAJO"
+  },
+  "language": {
+    "select": "Seleccionar Idioma",
+    "current": "Idioma Actual:"
+  }
+}

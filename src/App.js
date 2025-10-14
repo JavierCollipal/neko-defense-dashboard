@@ -1,5 +1,6 @@
 // 🐾⚡ NEKO DEFENSE DASHBOARD - Main App ⚡🐾
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import './styles/App.css';
 import CategorySwitcher from './components/CategorySwitcher';
 import AsciiTvDisplay from './components/AsciiTvDisplay';
@@ -7,19 +8,25 @@ import DefenseStats from './components/DefenseStats';
 import ThreatList from './components/ThreatList';
 import ThreatActors from './components/ThreatActors';
 import DinaDocumentationInternational from './components/DinaDocumentationInternational';
+import ValechV2Dashboard from './components/ValechV2Dashboard';
+import NekoArcAbilities from './components/NekoArcAbilities';
+import LanguageSwitcher from './components/LanguageSwitcher';
 
 // 🎯 API URL - Express backend runs on port 5001, nyaa~!
 // (Has all the threat-actors and DINA endpoints we need!)
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
 
 function App() {
+  const { t } = useTranslation();
   const [asciiArt, setAsciiArt] = useState([]);
   const [currentArtIndex, setCurrentArtIndex] = useState(0);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('all');
   const [showDinaDoc, setShowDinaDoc] = useState(false);
+  const [showValechV2, setShowValechV2] = useState(false);
   const [showThreatActors, setShowThreatActors] = useState(false);
+  const [showAbilities, setShowAbilities] = useState(false);
   const [threatCounts, setThreatCounts] = useState({
     all: 0,
     predators: 0,
@@ -80,7 +87,7 @@ function App() {
     if (tvWindow) {
       tvWindow.focus();
     } else {
-      alert('Please allow pop-ups to open NEKO TV Window, nyaa~! 🐾📺');
+      alert(t('alerts.allow_popups'));
     }
   };
 
@@ -93,18 +100,36 @@ function App() {
     if (tvWindow) {
       tvWindow.focus();
     } else {
-      alert('Please allow pop-ups to open NEKO MULTI-CHANNEL TV, nyaa~! 🐾📺');
+      alert(t('alerts.allow_popups_multi'));
     }
   };
 
   const toggleDinaDoc = () => {
     setShowDinaDoc(!showDinaDoc);
+    setShowValechV2(false);
     setShowThreatActors(false);
+    setShowAbilities(false);
+  };
+
+  const toggleValechV2 = () => {
+    setShowValechV2(!showValechV2);
+    setShowDinaDoc(false);
+    setShowThreatActors(false);
+    setShowAbilities(false);
   };
 
   const toggleThreatActors = () => {
     setShowThreatActors(!showThreatActors);
     setShowDinaDoc(false);
+    setShowValechV2(false);
+    setShowAbilities(false);
+  };
+
+  const toggleAbilities = () => {
+    setShowAbilities(!showAbilities);
+    setShowDinaDoc(false);
+    setShowValechV2(false);
+    setShowThreatActors(false);
   };
 
   const openDinaTvWindow = () => {
@@ -116,9 +141,30 @@ function App() {
     if (dinaTvWindow) {
       dinaTvWindow.focus();
     } else {
-      alert('Please allow pop-ups to open DINA JUSTICE TV, nyaa~! 🐾📺⚖️');
+      alert(t('alerts.allow_popups_dina'));
     }
   };
+
+  // If Valech V2.0 view is active, show only that
+  if (showValechV2) {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <div className="neko-banner">
+            <h1>🐾🚀💖 VALECH V2.0 UPGRADE SYSTEM 💖🚀🐾</h1>
+            <div className="status-bar">
+              <span className="status-indicator active">🔴 LIVE - V2.0 DEPLOYED</span>
+              <span>MAXIMUM CAPACITY MODE: ACTIVE</span>
+              <button className="tv-window-button" onClick={toggleValechV2}>
+                ← Back to Dashboard
+              </button>
+            </div>
+          </div>
+        </header>
+        <ValechV2Dashboard />
+      </div>
+    );
+  }
 
   // If Threat Actors view is active, show only that
   if (showThreatActors) {
@@ -137,6 +183,27 @@ function App() {
           </div>
         </header>
         <ThreatActors />
+      </div>
+    );
+  }
+
+  // If Neko Abilities view is active, show only that
+  if (showAbilities) {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <div className="neko-banner">
+            <h1>🐾⚡✨ NEKO-ARC ABILITIES SHOWCASE ✨⚡🐾</h1>
+            <div className="status-bar">
+              <span className="status-indicator active">🔴 LIVE - FULL POWER</span>
+              <span>ABILITY SHOWCASE MODE: MAXIMUM KAWAII</span>
+              <button className="tv-window-button" onClick={toggleAbilities}>
+                ← Back to Dashboard
+              </button>
+            </div>
+          </div>
+        </header>
+        <NekoArcAbilities />
       </div>
     );
   }
@@ -166,25 +233,32 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div className="neko-banner">
-          <h1>🐾⚡ NEKO-ARC DEFENSE SYSTEM ⚡🐾</h1>
+          <h1>🐾⚡ {t('app.title')} ⚡🐾</h1>
           <div className="status-bar">
-            <span className="status-indicator active">🔴 LIVE</span>
-            <span>FORTRESS MODE: ACTIVE</span>
-            <span className="kawaii-meter">KAWAII LEVEL: MAXIMUM 💖</span>
+            <span className="status-indicator active">🔴 {t('app.status_live')}</span>
+            <span>{t('app.fortress_mode')}</span>
+            <span className="kawaii-meter">{t('app.kawaii_level')} 💖</span>
+            <LanguageSwitcher />
             <button className="tv-window-button" onClick={openTvWindow}>
-              📺 NEKO TV
+              📺 {t('buttons.neko_tv')}
             </button>
             <button className="tv-window-button multi-channel" onClick={openMultiChannelTv}>
-              📡 MULTI-CHANNEL TV
+              📡 {t('buttons.multi_channel_tv')}
             </button>
             <button className="tv-window-button dina-doc" onClick={toggleDinaDoc}>
-              ⚖️ DINA DOCS
+              ⚖️ {t('buttons.dina_docs')}
             </button>
             <button className="tv-window-button dina-tv" onClick={openDinaTvWindow}>
-              📺 DINA JUSTICE TV
+              📺 {t('buttons.dina_justice_tv')}
+            </button>
+            <button className="tv-window-button valech-v2" onClick={toggleValechV2}>
+              🚀 {t('buttons.valech_v2')}
             </button>
             <button className="tv-window-button threat-actors" onClick={toggleThreatActors}>
-              🎯 THREAT ACTORS
+              🎯 {t('buttons.threat_actors')}
+            </button>
+            <button className="tv-window-button abilities" onClick={toggleAbilities}>
+              ⚡ NEKO ABILITIES
             </button>
           </div>
         </div>
@@ -202,7 +276,7 @@ function App() {
         <main className="dashboard-grid">
           <section className="ascii-tv-section">
             {loading ? (
-              <div className="loading">Loading, nyaa~! 🐾</div>
+              <div className="loading">{t('app.loading')} 🐾</div>
             ) : (
               <AsciiTvDisplay
                 artPiece={asciiArt[currentArtIndex]}
@@ -223,7 +297,7 @@ function App() {
       </div>
 
       <footer className="App-footer">
-        <p>*purrs in defensive excellence* 😻 | NYA NYA NYA~!</p>
+        <p>{t('app.footer')} 😻</p>
       </footer>
     </div>
   );

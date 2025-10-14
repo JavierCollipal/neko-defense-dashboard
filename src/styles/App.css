@@ -1,4 +1,5 @@
 /* 🐾⚡ NEKO DEFENSE DASHBOARD - LEGENDARY STYLING ⚡🐾 */
+@import './rtl-support.css';
 
 :root {
   --neko-primary: #ff1493;

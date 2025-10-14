@@ -1,0 +1,102 @@
+{
+  "app": {
+    "title": "نظام الدفاع نيكو-آرك",
+    "status_live": "مباشر",
+    "fortress_mode": "وضع القلعة: نشط",
+    "kawaii_level": "مستوى الكاواي: الحد الأقصى",
+    "loading": "جاري التحميل، نياو~!",
+    "footer": "*يخرخر في التميز الدفاعي* | نيا نيا نيا~!"
+  },
+  "buttons": {
+    "neko_tv": "نيكو تي في",
+    "multi_channel_tv": "التلفزيون متعدد القنوات",
+    "dina_docs": "وثائق دينا",
+    "dina_justice_tv": "تلفزيون العدالة دينا",
+    "valech_v2": "فاليتش V2.0",
+    "threat_actors": "الجهات المهددة",
+    "back_to_dashboard": "← العودة إلى لوحة التحكم"
+  },
+  "alerts": {
+    "allow_popups": "يرجى السماح بالنوافذ المنبثقة لفتح نافذة نيكو تي في، نياو~!",
+    "allow_popups_multi": "يرجى السماح بالنوافذ المنبثقة لفتح التلفزيون متعدد القنوات، نياو~!",
+    "allow_popups_dina": "يرجى السماح بالنوافذ المنبثقة لفتح تلفزيون العدالة دينا، نياو~!"
+  },
+  "headers": {
+    "valech_v2": "نظام ترقية فاليتش V2.0",
+    "threat_actors_registry": "سجل الجهات المهددة",
+    "dina_international": "عملية الصيد الدولية دينا",
+    "live_global_tracking": "مباشر - التتبع العالمي",
+    "live_global_deployment": "مباشر - النشر العالمي",
+    "live_v2_deployed": "مباشر - تم نشر V2.0",
+    "maximum_capacity_mode": "وضع السعة القصوى: نشط",
+    "threat_intelligence_mode": "وضع استخبارات التهديد: نشط",
+    "international_justice_mode": "وضع العدالة الدولية: نشط"
+  },
+  "categories": {
+    "header": "فئات التهديد",
+    "all_threats": "جميع التهديدات",
+    "predators": "المفترسون",
+    "pedophiles": "مستغلو الأطفال",
+    "dina_network": "شبكة دينا",
+    "ransomware": "برامج الفدية",
+    "state_sponsored": "برعاية الدولة",
+    "crypto_crime": "جرائم التشفير",
+    "detected": "تم اكتشافه",
+    "priority_critical": "حرج",
+    "priority_maximum": "تنبيه أقصى",
+    "priority_high": "عالي",
+    "fortress_badge": "وضع القلعة",
+    "active_monitoring": "المراقبة النشطة",
+    "neko_guardian": "حارس نيكو: مفعل"
+  },
+  "stats": {
+    "header": "حالة نظام الدفاع",
+    "defense_statistics": "إحصائيات الدفاع",
+    "loading_stats": "جاري تحميل الإحصائيات، نياو~!",
+    "active_collections": "المجموعات النشطة",
+    "honeypot_traps": "فخاخ الطُعم",
+    "threat_detection": "كشف التهديدات",
+    "kawaii_power": "قوة الكاواي",
+    "active": "نشط",
+    "last_update": "آخر تحديث:"
+  },
+  "threats": {
+    "all_threat_actors": "جميع الجهات المهددة",
+    "predator_threat_actors": "الجهات المهددة المفترسة",
+    "pedophile_threat_actors": "الجهات المهددة من مستغلي الأطفال - هدف صيد جماعي",
+    "dina_network_actors": "جهات شبكة دينا",
+    "ransomware_groups": "مجموعات برامج الفدية",
+    "state_sponsored_apts": "التهديدات المستمرة المتقدمة برعاية الدولة",
+    "crypto_crime_actors": "جهات جرائم التشفير",
+    "threat_actors": "الجهات المهددة",
+    "loading_hunt_targets": "جاري تحميل أهداف الصيد، ديسو~!",
+    "network_error": "خطأ في الشبكة - غير قادر على الاتصال بنظام الدفاع",
+    "failed_to_load": "فشل تحميل الجهات المهددة",
+    "no_threats_found": "لم يتم العثور على جهات مهددة في هذه الفئة، نياو~!",
+    "targets": "الأهداف",
+    "target": "الهدف",
+    "hunt_active": "الصيد نشط",
+    "unknown": "غير معروف",
+    "unknown_actor": "جهة غير معروفة",
+    "aka": "المعروف باسم:",
+    "type": "النوع:",
+    "classification": "التصنيف:",
+    "location": "الموقع:",
+    "nation": "الدولة:",
+    "hunt_priority": "أولوية الصيد:",
+    "bounty": "المكافأة:",
+    "known_for": "معروف بـ:",
+    "last_updated": "آخر تحديث:",
+    "purrs_hunt_readiness": "*يخرخر في جاهزية الصيد*"
+  },
+  "threat_levels": {
+    "critical": "حرج",
+    "high": "عالي",
+    "medium": "متوسط",
+    "low": "منخفض"
+  },
+  "language": {
+    "select": "اختر اللغة",
+    "current": "اللغة الحالية:"
+  }
+}

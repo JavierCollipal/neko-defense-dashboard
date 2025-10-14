@@ -823,6 +823,575 @@ describe('DinaDocumentationInternational Component', () => {
       consoleError.mockRestore();
     });
   });
+
+  describe('📺✨ All Agents Tab - Neko Arc TV Style Tests (ULTRA BASED!) ✨📺', () => {
+    beforeEach(() => {
+      // Mock All Agents API response
+      global.fetch = jest.fn((url) => {
+        if (url.includes('/dina/stats')) {
+          return Promise.resolve({
+            json: () => Promise.resolve(mockApiResponses.dinaStats)
+          });
+        }
+        if (url.includes('/dina/perpetrators')) {
+          return Promise.resolve({
+            json: () => Promise.resolve(mockApiResponses.dinaPerpetrators)
+          });
+        }
+        if (url.includes('/dina/all-agents')) {
+          return Promise.resolve({
+            json: () => Promise.resolve({
+              success: true,
+              data: [
+                { agentNumber: 1, fullName: 'Agent One', rank: 'Colonel', status: 'DECEASED', source: '2008 Army List' },
+                { agentNumber: 2, fullName: 'Agent Two', rank: 'Major', status: 'UNLOCATED', source: '2008 Army List' },
+                { agentNumber: 3, fullName: 'Agent Three', rank: 'Captain', status: 'UNPROSECUTED', source: '2008 Army List' }
+              ],
+              pagination: {
+                current_page: 1,
+                total_pages: 22,
+                total_agents: 1097,
+                has_previous: false,
+                has_next: true
+              }
+            })
+          });
+        }
+        return Promise.reject(new Error('Unknown URL'));
+      });
+    });
+
+    describe('🎬 All Agents View Rendering', () => {
+      it('renders neko arc TV header when All Agents tab is clicked', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/ALL 1,097 KNOWN DINA AGENTS - NEKO ARC TV ARCHIVE/i)).toBeInTheDocument();
+        });
+      });
+
+      it('displays neko TV subtitle', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/Interactive Browsing, nyaa~/i)).toBeInTheDocument();
+        });
+      });
+
+      it('renders neko loading state while fetching agents', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        // Should show loading initially
+        expect(screen.getByText(/Loading agents with NEKO POWER/i)).toBeInTheDocument();
+      });
+
+      it('displays agents grid after loading', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const grid = screen.getByTestId('agents-grid');
+          expect(grid).toBeInTheDocument();
+        });
+      });
+
+      it('renders all fetched agents as cards', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText('Agent One')).toBeInTheDocument();
+          expect(screen.getByText('Agent Two')).toBeInTheDocument();
+          expect(screen.getByText('Agent Three')).toBeInTheDocument();
+        });
+      });
+    });
+
+    describe('🔍 Neko Search Functionality', () => {
+      it('renders search input with placeholder', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const searchInput = screen.getByTestId('agent-search-input');
+          expect(searchInput).toBeInTheDocument();
+          expect(searchInput).toHaveAttribute('placeholder', expect.stringMatching(/Search by name.*nyaa~/i));
+        });
+      });
+
+      it('updates search input value on typing', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const searchInput = screen.getByTestId('agent-search-input');
+          fireEvent.change(searchInput, { target: { value: 'Agent One' } });
+        });
+
+        await waitFor(() => {
+          const searchInput = screen.getByTestId('agent-search-input');
+          expect(searchInput).toHaveValue('Agent One');
+        });
+      });
+
+      it('shows clear button when search has value', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const searchInput = screen.getByTestId('agent-search-input');
+          fireEvent.change(searchInput, { target: { value: 'test search' } });
+        });
+
+        await waitFor(() => {
+          const clearButton = screen.getByTestId('clear-search-button');
+          expect(clearButton).toBeInTheDocument();
+        });
+      });
+
+      it('clears search when clear button is clicked', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const searchInput = screen.getByTestId('agent-search-input');
+          fireEvent.change(searchInput, { target: { value: 'test search' } });
+        });
+
+        await waitFor(() => {
+          const clearButton = screen.getByTestId('clear-search-button');
+          fireEvent.click(clearButton);
+        });
+
+        await waitFor(() => {
+          const searchInput = screen.getByTestId('agent-search-input');
+          expect(searchInput).toHaveValue('');
+        });
+      });
+
+      it('calls API with search parameter when searching', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const searchInput = screen.getByTestId('agent-search-input');
+          fireEvent.change(searchInput, { target: { value: 'Agent One' } });
+        });
+
+        await waitFor(() => {
+          expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining('search=Agent%20One'));
+        });
+      });
+
+      it('resets to page 1 when searching', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        // Go to page 2 first
+        await waitFor(() => {
+          const nextButton = screen.getByTestId('next-page-button');
+          fireEvent.click(nextButton);
+        });
+
+        // Then search
+        await waitFor(() => {
+          const searchInput = screen.getByTestId('agent-search-input');
+          fireEvent.change(searchInput, { target: { value: 'test' } });
+        });
+
+        // Should call API with page=1
+        await waitFor(() => {
+          expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining('page=1'));
+        });
+      });
+
+      it('displays search results count when searching', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const searchInput = screen.getByTestId('agent-search-input');
+          fireEvent.change(searchInput, { target: { value: 'test' } });
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/🎯 Found: 1097 agents/i)).toBeInTheDocument();
+        });
+      });
+    });
+
+    describe('🎮 Expandable Agent Cards', () => {
+      it('displays expand hint on agent card', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/▼ Click for details/i)).toBeInTheDocument();
+        });
+      });
+
+      it('expands agent card when clicked', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const agentCard = screen.getByTestId('agent-card-1');
+          fireEvent.click(agentCard);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/Agent Information/i)).toBeInTheDocument();
+        });
+      });
+
+      it('shows collapse hint when agent card is expanded', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const agentCard = screen.getByTestId('agent-card-1');
+          fireEvent.click(agentCard);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/▲ Click to collapse/i)).toBeInTheDocument();
+        });
+      });
+
+      it('collapses agent card when clicked again', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const agentCard = screen.getByTestId('agent-card-1');
+          fireEvent.click(agentCard);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/Agent Information/i)).toBeInTheDocument();
+        });
+
+        await waitFor(() => {
+          const agentCard = screen.getByTestId('agent-card-1');
+          fireEvent.click(agentCard);
+        });
+
+        await waitFor(() => {
+          expect(screen.queryByText(/Agent Information/i)).not.toBeInTheDocument();
+        });
+      });
+
+      it('displays agent details when expanded', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const agentCard = screen.getByTestId('agent-card-1');
+          fireEvent.click(agentCard);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/Full Name:/i)).toBeInTheDocument();
+          expect(screen.getByText(/Agent Number:/i)).toBeInTheDocument();
+          expect(screen.getByText(/Source & Verification/i)).toBeInTheDocument();
+        });
+      });
+
+      it('closes expanded card when close button is clicked', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const agentCard = screen.getByTestId('agent-card-1');
+          fireEvent.click(agentCard);
+        });
+
+        await waitFor(() => {
+          const closeButton = screen.getByText(/✖ Close Details/i);
+          fireEvent.click(closeButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.queryByText(/Agent Information/i)).not.toBeInTheDocument();
+        });
+      });
+    });
+
+    describe('📄 Neko Pagination Tests', () => {
+      it('displays pagination controls', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const pagination = screen.getByTestId('pagination-controls');
+          expect(pagination).toBeInTheDocument();
+        });
+      });
+
+      it('displays current page and total pages', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/Page 1 of 22/i)).toBeInTheDocument();
+        });
+      });
+
+      it('disables previous button on first page', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const prevButton = screen.getByTestId('prev-page-button');
+          expect(prevButton).toBeDisabled();
+        });
+      });
+
+      it('enables next button when more pages exist', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const nextButton = screen.getByTestId('next-page-button');
+          expect(nextButton).not.toBeDisabled();
+        });
+      });
+
+      it('calls API with next page when next button is clicked', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const nextButton = screen.getByTestId('next-page-button');
+          fireEvent.click(nextButton);
+        });
+
+        await waitFor(() => {
+          expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining('page=2'));
+        });
+      });
+
+      it('highlights active page number', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const pageButton = screen.getByTestId('page-1');
+          expect(pageButton).toHaveClass('active');
+        });
+      });
+    });
+
+    describe('🎯 No Results State', () => {
+      it('displays no results message when search returns empty', async () => {
+        // Mock empty search results
+        global.fetch = jest.fn((url) => {
+          if (url.includes('/dina/all-agents') && url.includes('search=')) {
+            return Promise.resolve({
+              json: () => Promise.resolve({
+                success: true,
+                data: [],
+                pagination: {
+                  current_page: 1,
+                  total_pages: 0,
+                  total_agents: 0,
+                  has_previous: false,
+                  has_next: false
+                }
+              })
+            });
+          }
+          return Promise.resolve({
+            json: () => Promise.resolve(mockApiResponses.dinaStats)
+          });
+        });
+
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const searchInput = screen.getByTestId('agent-search-input');
+          fireEvent.change(searchInput, { target: { value: 'nonexistent' } });
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/No agents found matching "nonexistent"/i)).toBeInTheDocument();
+        });
+      });
+
+      it('suggests trying different search term', async () => {
+        // Mock empty search results
+        global.fetch = jest.fn((url) => {
+          if (url.includes('/dina/all-agents') && url.includes('search=')) {
+            return Promise.resolve({
+              json: () => Promise.resolve({
+                success: true,
+                data: [],
+                pagination: {
+                  current_page: 1,
+                  total_pages: 0,
+                  total_agents: 0,
+                  has_previous: false,
+                  has_next: false
+                }
+              })
+            });
+          }
+          return Promise.resolve({
+            json: () => Promise.resolve(mockApiResponses.dinaStats)
+          });
+        });
+
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const searchInput = screen.getByTestId('agent-search-input');
+          fireEvent.change(searchInput, { target: { value: 'xyz' } });
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/Try a different search term, nyaa~/i)).toBeInTheDocument();
+        });
+      });
+    });
+
+    describe('📚 Neko Info Panel', () => {
+      it('displays neko info panel with archive description', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/About This Neko Arc TV Archive/i)).toBeInTheDocument();
+        });
+      });
+
+      it('displays neko signature in info panel', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/🐾 \*purrs in archival excellence\*/i)).toBeInTheDocument();
+        });
+      });
+    });
+  });
 });
 
 // *purrs in international testing excellence* 😻🌍⚖️
+// *swishes tail in neko arc TV testing mastery* 📺✨🐾

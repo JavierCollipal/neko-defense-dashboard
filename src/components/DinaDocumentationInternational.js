@@ -23,16 +23,20 @@ const DinaDocumentationInternational = () => {
   const [pagination, setPagination] = useState(null);
   const [allAgentsLoading, setAllAgentsLoading] = useState(false);
 
+  // 🔍 Search state for ALL AGENTS view (NEKO POWER!)
+  const [searchTerm, setSearchTerm] = useState('');
+  const [expandedAgentId, setExpandedAgentId] = useState(null);
+
   useEffect(() => {
     fetchDinaData();
   }, []);
 
-  // 📋 Fetch when viewMode changes to 'all-agents' or when page changes
+  // 📋 Fetch when viewMode changes to 'all-agents', page changes, or search term changes
   useEffect(() => {
     if (viewMode === 'all-agents') {
-      fetchAllAgentsPaginated(currentPage);
+      fetchAllAgentsPaginated(currentPage, searchTerm);
     }
-  }, [viewMode, currentPage]);
+  }, [viewMode, currentPage, searchTerm]);
 
   const fetchDinaData = async () => {
     try {
@@ -84,16 +88,33 @@ const DinaDocumentationInternational = () => {
     setSelectedPerp(null);
     if (mode === 'all-agents') {
       setCurrentPage(1); // Reset to page 1 when entering this view
+      setSearchTerm(''); // Reset search
+      setExpandedAgentId(null); // Reset expanded agent
     }
   };
 
-  // 📋 Fetch paginated ALL AGENTS (1,097 total)
-  const fetchAllAgentsPaginated = async (page) => {
+  // 🔍 Handle search input with page reset (NEKO SEARCH POWER!)
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    setCurrentPage(1); // Reset to page 1 when searching
+    setExpandedAgentId(null); // Close any expanded agent
+  };
+
+  // 🎮 Toggle agent card expansion (NEKO TV STYLE!)
+  const toggleAgentExpand = (agentId) => {
+    setExpandedAgentId(expandedAgentId === agentId ? null : agentId);
+  };
+
+  // 📋 Fetch paginated ALL AGENTS (1,097 total) with SEARCH (NEKO POWER!)
+  const fetchAllAgentsPaginated = async (page, search = '') => {
     try {
       setAllAgentsLoading(true);
-      console.log(`🐾 [ALL-AGENTS] Fetching page ${page}...`);
+      console.log(`🐾 [ALL-AGENTS] Fetching page ${page} with search "${search}", nyaa~`);
 
-      const response = await fetch(`${API_URL}/dina/all-agents?page=${page}&limit=50`);
+      // Build URL with search parameter if provided
+      const searchParam = search ? `&search=${encodeURIComponent(search)}` : '';
+      const response = await fetch(`${API_URL}/dina/all-agents?page=${page}&limit=50${searchParam}`);
       const data = await response.json();
 
       console.log(`✅ [ALL-AGENTS] Page ${page} loaded:`, data);
@@ -467,66 +488,149 @@ const DinaDocumentationInternational = () => {
           </div>
         )}
 
-        {/* ALL AGENTS VIEW - PAGINATED (1,097 total) */}
+        {/* ALL AGENTS VIEW - NEKO ARC TV STYLE (1,097 total) */}
         {viewMode === 'all-agents' && (
-          <div className="all-agents-paginated-section">
-            <h2>📋 ALL 1,097 KNOWN DINA AGENTS</h2>
-            <p className="section-subtitle">From 2008 Chilean Army Official Disclosure - Browseable with Pagination</p>
+          <div className="all-agents-neko-tv-section">
+            <div className="neko-tv-header">
+              <h2>📺✨ ALL 1,097 KNOWN DINA AGENTS - NEKO ARC TV ARCHIVE ✨📺</h2>
+              <p className="neko-tv-subtitle">From 2008 Chilean Army Official Disclosure - Interactive Browsing, nyaa~!</p>
+            </div>
 
-            {pagination && (
-              <div className="pagination-info-top">
-                <span>Page {pagination.current_page} of {pagination.total_pages}</span>
-                <span>Showing {allAgents.length} of {pagination.total_agents} total agents</span>
+            {/* 🔍 NEKO ARC SEARCH BAR */}
+            <div className="neko-search-container">
+              <div className="neko-search-box">
+                <span className="neko-search-icon">🔍</span>
+                <input
+                  type="text"
+                  className="neko-search-input"
+                  placeholder="Search by name, rank, or agent number, nyaa~..."
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  data-testid="agent-search-input"
+                />
+                {searchTerm && (
+                  <button
+                    className="neko-search-clear"
+                    onClick={() => {
+                      setSearchTerm('');
+                      setCurrentPage(1);
+                    }}
+                    data-testid="clear-search-button"
+                  >
+                    ✖
+                  </button>
+                )}
               </div>
-            )}
+              {pagination && (
+                <div className="neko-results-info">
+                  <span className="neko-results-count">
+                    {searchTerm ? `🎯 Found: ${pagination.total_agents} agents` : `📋 Total: ${pagination.total_agents} agents`}
+                  </span>
+                  <span className="neko-page-info">
+                    Page {pagination.current_page} of {pagination.total_pages}
+                  </span>
+                </div>
+              )}
+            </div>
 
             {allAgentsLoading ? (
-              <div className="loading-pagination">Loading agents, nyaa~... 🐾</div>
+              <div className="neko-loading">
+                <div className="neko-loading-spinner"></div>
+                <p>Loading agents with NEKO POWER, nyaa~... 🐾✨</p>
+              </div>
             ) : (
               <>
-                <div className="all-agents-grid">
-                  {allAgents.map((agent, index) => (
-                    <div key={agent.agentNumber || index} className="agent-card-simple">
-                      <div className="agent-number">#{agent.agentNumber}</div>
-                      <div className="agent-name">{agent.fullName}</div>
-                      <div className="agent-rank-badge">{agent.rank}</div>
-                      <div className={`agent-status-badge ${
-                        agent.status === 'DECEASED' ? 'status-deceased' :
-                        agent.status === 'UNLOCATED' ? 'status-unlocated' :
-                        agent.status === 'UNPROSECUTED' ? 'status-unprosecuted' :
-                        'status-unknown'
-                      }`}>
-                        {agent.status}
-                      </div>
-                      <div className="agent-source">
-                        <small>{agent.source}</small>
-                      </div>
+                {/* 🎮 NEKO ARC TV-STYLE AGENT CARDS */}
+                <div className="neko-agents-grid" data-testid="agents-grid">
+                  {allAgents.length === 0 ? (
+                    <div className="neko-no-results">
+                      <p>😿 No agents found matching "{searchTerm}", desu!</p>
+                      <p>Try a different search term, nyaa~</p>
                     </div>
-                  ))}
+                  ) : (
+                    allAgents.map((agent, index) => {
+                      const agentId = agent.agentNumber || `agent-${index}`;
+                      const isExpanded = expandedAgentId === agentId;
+
+                      return (
+                        <div
+                          key={agentId}
+                          className={`neko-agent-card ${isExpanded ? 'expanded' : ''}`}
+                          onClick={() => toggleAgentExpand(agentId)}
+                          data-testid={`agent-card-${agentId}`}
+                        >
+                          {/* 📺 INTRODUCTION VIEW (Always Visible) */}
+                          <div className="neko-agent-intro">
+                            <div className="neko-agent-number">#{agent.agentNumber}</div>
+                            <div className="neko-agent-name">{agent.fullName}</div>
+                            <div className="neko-agent-rank-badge">{agent.rank}</div>
+                            <div className={`neko-agent-status ${
+                              agent.status === 'DECEASED' ? 'status-deceased' :
+                              agent.status === 'UNLOCATED' ? 'status-unlocated' :
+                              agent.status === 'UNPROSECUTED' ? 'status-unprosecuted' :
+                              'status-unknown'
+                            }`}>
+                              {agent.status}
+                            </div>
+                            <div className="neko-expand-hint">
+                              {isExpanded ? '▲ Click to collapse' : '▼ Click for details'}
+                            </div>
+                          </div>
+
+                          {/* 📋 DETAILED VIEW (Expandable) */}
+                          {isExpanded && (
+                            <div className="neko-agent-details" onClick={(e) => e.stopPropagation()}>
+                              <div className="neko-detail-section">
+                                <h4>📋 Agent Information</h4>
+                                <p><strong>Full Name:</strong> {agent.fullName}</p>
+                                <p><strong>Agent Number:</strong> #{agent.agentNumber}</p>
+                                <p><strong>Rank:</strong> {agent.rank}</p>
+                                <p><strong>Status:</strong> {agent.status}</p>
+                              </div>
+                              <div className="neko-detail-section">
+                                <h4>📚 Source & Verification</h4>
+                                <p>{agent.source}</p>
+                              </div>
+                              {agent.notes && (
+                                <div className="neko-detail-section">
+                                  <h4>📝 Additional Notes</h4>
+                                  <p>{agent.notes}</p>
+                                </div>
+                              )}
+                              <div className="neko-close-btn" onClick={() => setExpandedAgentId(null)}>
+                                ✖ Close Details
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })
+                  )}
                 </div>
 
-                {/* Pagination Controls */}
-                {pagination && (
-                  <div className="pagination-controls">
+                {/* 🎮 NEKO ARC TV PAGINATION */}
+                {pagination && pagination.total_pages > 1 && (
+                  <div className="neko-pagination" data-testid="pagination-controls">
                     <button
-                      className="pagination-button"
+                      className="neko-page-btn neko-page-prev"
                       onClick={() => setCurrentPage(currentPage - 1)}
                       disabled={!pagination.has_previous}
+                      data-testid="prev-page-button"
                     >
-                      ← Previous
+                      ◀ Previous
                     </button>
 
-                    <div className="page-numbers">
+                    <div className="neko-page-numbers">
                       {/* First page */}
                       {pagination.current_page > 3 && (
                         <>
                           <button
-                            className="page-number"
+                            className="neko-page-num"
                             onClick={() => setCurrentPage(1)}
                           >
                             1
                           </button>
-                          {pagination.current_page > 4 && <span className="ellipsis">...</span>}
+                          {pagination.current_page > 4 && <span className="neko-ellipsis">⋯</span>}
                         </>
                       )}
 
@@ -537,8 +641,9 @@ const DinaDocumentationInternational = () => {
                           return (
                             <button
                               key={pageNum}
-                              className={`page-number ${pageNum === pagination.current_page ? 'active' : ''}`}
+                              className={`neko-page-num ${pageNum === pagination.current_page ? 'active' : ''}`}
                               onClick={() => setCurrentPage(pageNum)}
+                              data-testid={`page-${pageNum}`}
                             >
                               {pageNum}
                             </button>
@@ -550,9 +655,9 @@ const DinaDocumentationInternational = () => {
                       {/* Last page */}
                       {pagination.current_page < pagination.total_pages - 2 && (
                         <>
-                          {pagination.current_page < pagination.total_pages - 3 && <span className="ellipsis">...</span>}
+                          {pagination.current_page < pagination.total_pages - 3 && <span className="neko-ellipsis">⋯</span>}
                           <button
-                            className="page-number"
+                            className="neko-page-num"
                             onClick={() => setCurrentPage(pagination.total_pages)}
                           >
                             {pagination.total_pages}
@@ -562,20 +667,24 @@ const DinaDocumentationInternational = () => {
                     </div>
 
                     <button
-                      className="pagination-button"
+                      className="neko-page-btn neko-page-next"
                       onClick={() => setCurrentPage(currentPage + 1)}
                       disabled={!pagination.has_next}
+                      data-testid="next-page-button"
                     >
-                      Next →
+                      Next ▶
                     </button>
                   </div>
                 )}
 
-                <div className="pagination-note">
-                  <h4>📚 About This List</h4>
-                  <p>This list contains all 1,097 DINA agents disclosed by the Chilean Army in 2008. Many remain unprosecuted and their current whereabouts are unknown. Research is ongoing to document each individual's role and legal status, nyaa~!</p>
-                  <p><strong>Source:</strong> 2008 Chilean Army Official DINA Personnel Disclosure</p>
-                  <p><strong>Note:</strong> The 8 high-profile agents with comprehensive research are available in the "PERPETRATORS" and "WANTED AGENTS" tabs.</p>
+                {/* 📚 NEKO INFO PANEL */}
+                <div className="neko-info-panel">
+                  <h4>📺✨ About This Neko Arc TV Archive</h4>
+                  <p>This interactive archive contains all 1,097 DINA agents disclosed by the Chilean Army in 2008. Click any agent card to reveal detailed information, nyaa~!</p>
+                  <p><strong>🔍 Search:</strong> Use the search bar to find agents by name, rank, or number, desu!</p>
+                  <p><strong>📋 Source:</strong> 2008 Chilean Army Official DINA Personnel Disclosure</p>
+                  <p><strong>⚖️ Note:</strong> Many remain unprosecuted. The 8 high-profile agents with comprehensive research are in "PERPETRATORS" and "WANTED AGENTS" tabs.</p>
+                  <p className="neko-signature">🐾 *purrs in archival excellence* 😻✨</p>
                 </div>
               </>
             )}

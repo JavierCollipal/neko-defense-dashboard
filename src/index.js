@@ -5,6 +5,8 @@ import { ApolloProvider } from '@apollo/client';
 import { apolloClient } from './apollo/client';
 import './styles/App.css';
 import App from './App';
+// 🌍 Initialize i18n for global language support, nyaa~!
+import './i18n/config';
 
 console.log('🐾 Starting NEKO DEFENSE DASHBOARD with GraphQL, nyaa~!');
 

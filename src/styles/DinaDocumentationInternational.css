@@ -475,6 +475,487 @@
   animation: pulse 2s infinite;
 }
 
+/* 📺✨ NEKO ARC TV STYLE - ALL AGENTS TAB (ULTRA BASED!) ✨📺 */
+
+/* Neko TV Header */
+.all-agents-neko-tv-section {
+  padding: 30px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.neko-tv-header {
+  text-align: center;
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+  padding: 30px;
+  border-radius: 20px;
+  border: 2px solid #ffd700;
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+  animation: neko-glow 3s infinite;
+}
+
+@keyframes neko-glow {
+  0%, 100% {
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+    border-color: #ffd700;
+  }
+  50% {
+    box-shadow: 0 0 60px rgba(255, 215, 0, 0.6), 0 0 100px rgba(102, 126, 234, 0.3);
+    border-color: #00ffff;
+  }
+}
+
+.neko-tv-header h2 {
+  font-size: 32px;
+  color: #ffd700;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+  margin-bottom: 10px;
+}
+
+.neko-tv-subtitle {
+  font-size: 16px;
+  color: #00ffff;
+  margin: 0;
+}
+
+/* 🔍 Neko Search Container */
+.neko-search-container {
+  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.neko-search-box {
+  display: flex;
+  align-items: center;
+  background: rgba(20, 20, 40, 0.9);
+  border: 2px solid #00ffff;
+  border-radius: 30px;
+  padding: 5px 20px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(0, 255, 255, 0.3);
+}
+
+.neko-search-box:focus-within {
+  border-color: #ffd700;
+  box-shadow: 0 4px 30px rgba(255, 215, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.neko-search-icon {
+  font-size: 24px;
+  margin-right: 15px;
+  animation: pulse 2s infinite;
+}
+
+.neko-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  padding: 15px 0;
+  outline: none;
+}
+
+.neko-search-input::placeholder {
+  color: #aaaaaa;
+}
+
+.neko-search-clear {
+  background: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+.neko-search-clear:hover {
+  background: #ff3300;
+  transform: rotate(90deg);
+}
+
+.neko-results-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  background: rgba(0, 255, 255, 0.1);
+  border-radius: 15px;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.neko-results-count {
+  font-size: 16px;
+  color: #00ffff;
+  font-weight: bold;
+}
+
+.neko-page-info {
+  font-size: 14px;
+  color: #ffd700;
+}
+
+/* 🎮 Neko Agents Grid */
+.neko-agents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  margin: 30px 0;
+}
+
+/* 📺 Neko Agent Card */
+.neko-agent-card {
+  background: linear-gradient(135deg, rgba(20, 20, 60, 0.9), rgba(40, 40, 80, 0.9));
+  border: 2px solid #667eea;
+  border-radius: 20px;
+  padding: 25px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.neko-agent-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(102, 126, 234, 0.1),
+    transparent
+  );
+  transform: rotate(45deg);
+  transition: all 0.5s;
+}
+
+.neko-agent-card:hover::before {
+  animation: neko-shine 1.5s infinite;
+}
+
+@keyframes neko-shine {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.neko-agent-card:hover {
+  border-color: #ffd700;
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 50px rgba(255, 215, 0, 0.4), 0 0 30px rgba(102, 126, 234, 0.3);
+}
+
+.neko-agent-card.expanded {
+  border-color: #00ff88;
+  transform: scale(1.05);
+  box-shadow: 0 20px 60px rgba(0, 255, 136, 0.5);
+  z-index: 10;
+}
+
+/* 📺 Agent Introduction */
+.neko-agent-intro {
+  position: relative;
+  z-index: 1;
+}
+
+.neko-agent-number {
+  display: inline-block;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.neko-agent-name {
+  font-size: 22px;
+  font-weight: bold;
+  color: #ffd700;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 10px rgba(255, 215, 0, 0.5);
+}
+
+.neko-agent-rank-badge {
+  display: inline-block;
+  background: rgba(0, 255, 255, 0.2);
+  color: #00ffff;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 13px;
+  margin-bottom: 12px;
+  border: 1px solid #00ffff;
+}
+
+.neko-agent-status {
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.neko-agent-status.status-deceased {
+  background: rgba(128, 128, 128, 0.3);
+  color: #aaaaaa;
+  border: 1px solid #666666;
+}
+
+.neko-agent-status.status-unlocated {
+  background: rgba(255, 102, 0, 0.3);
+  color: #ff6600;
+  border: 1px solid #ff6600;
+}
+
+.neko-agent-status.status-unprosecuted {
+  background: rgba(255, 0, 0, 0.3);
+  color: #ff3333;
+  border: 1px solid #ff3333;
+}
+
+.neko-agent-status.status-unknown {
+  background: rgba(255, 215, 0, 0.2);
+  color: #ffd700;
+  border: 1px solid #ffd700;
+}
+
+.neko-expand-hint {
+  margin-top: 15px;
+  font-size: 12px;
+  color: #aaaaaa;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.neko-agent-card:hover .neko-expand-hint {
+  color: #ffd700;
+}
+
+/* 📋 Agent Details (Expandable) */
+.neko-agent-details {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid rgba(0, 255, 255, 0.3);
+  animation: neko-expand 0.4s ease-out;
+}
+
+@keyframes neko-expand {
+  from {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    max-height: 1000px;
+    transform: translateY(0);
+  }
+}
+
+.neko-detail-section {
+  margin: 15px 0;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border-left: 4px solid #00ffff;
+  border-radius: 8px;
+}
+
+.neko-detail-section h4 {
+  color: #00ffff;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.neko-detail-section p {
+  color: #dddddd;
+  font-size: 14px;
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+.neko-detail-section strong {
+  color: #ffd700;
+}
+
+.neko-close-btn {
+  margin-top: 15px;
+  padding: 12px 20px;
+  background: #ff6600;
+  color: white;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.neko-close-btn:hover {
+  background: #ff3300;
+  transform: scale(1.05);
+}
+
+/* 🎮 Neko Pagination */
+.neko-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 40px 0;
+  padding: 25px;
+  background: rgba(20, 20, 40, 0.8);
+  border-radius: 30px;
+  border: 2px solid #667eea;
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+}
+
+.neko-page-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.neko-page-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+}
+
+.neko-page-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.neko-page-numbers {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.neko-page-num {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 2px solid #667eea;
+  padding: 10px 15px;
+  border-radius: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  min-width: 45px;
+}
+
+.neko-page-num:hover {
+  background: rgba(102, 126, 234, 0.3);
+  border-color: #ffd700;
+  transform: scale(1.1);
+}
+
+.neko-page-num.active {
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  color: #000;
+  border-color: #ffd700;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.5);
+  transform: scale(1.15);
+}
+
+.neko-ellipsis {
+  color: #00ffff;
+  font-size: 24px;
+  padding: 0 10px;
+}
+
+/* 📚 Neko Info Panel */
+.neko-info-panel {
+  margin-top: 40px;
+  padding: 30px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+  border-radius: 20px;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.neko-info-panel h4 {
+  color: #ffd700;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.neko-info-panel p {
+  color: #dddddd;
+  line-height: 1.8;
+  margin: 12px 0;
+}
+
+.neko-info-panel strong {
+  color: #00ffff;
+}
+
+.neko-signature {
+  text-align: center;
+  font-size: 18px;
+  color: #ffd700;
+  margin-top: 20px;
+  font-style: italic;
+}
+
+/* 😿 No Results */
+.neko-no-results {
+  text-align: center;
+  padding: 60px 30px;
+  background: rgba(255, 102, 0, 0.1);
+  border-radius: 20px;
+  border: 2px dashed #ff6600;
+}
+
+.neko-no-results p {
+  color: #ff6600;
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+/* 🐾 Neko Loading */
+.neko-loading {
+  text-align: center;
+  padding: 60px 30px;
+}
+
+.neko-loading-spinner {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
+  border: 4px solid rgba(102, 126, 234, 0.3);
+  border-top: 4px solid #ffd700;
+  border-radius: 50%;
+  animation: neko-spin 1s linear infinite;
+}
+
+@keyframes neko-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.neko-loading p {
+  color: #ffd700;
+  font-size: 20px;
+  animation: pulse 2s infinite;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .dina-international-container {
@@ -511,5 +992,29 @@
   .quick-button {
     padding: 15px 25px;
     font-size: 16px;
+  }
+
+  /* Neko TV Responsive */
+  .neko-tv-header h2 {
+    font-size: 24px;
+  }
+
+  .neko-search-input {
+    font-size: 16px;
+  }
+
+  .neko-agents-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .neko-pagination {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .neko-page-num {
+    padding: 8px 12px;
+    font-size: 14px;
+    min-width: 40px;
   }
 }

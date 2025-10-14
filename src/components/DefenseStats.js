@@ -1,43 +1,46 @@
 // 🐾 Defense Stats Component
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 function DefenseStats({ stats }) {
+  const { t } = useTranslation();
+
   if (!stats) {
     return (
       <div className="defense-stats">
-        <h2>📊 Defense Statistics</h2>
-        <p>Loading stats, nyaa~! 🐾</p>
+        <h2>📊 {t('stats.defense_statistics')}</h2>
+        <p>{t('stats.loading_stats')} 🐾</p>
       </div>
     );
   }
 
   return (
     <div className="defense-stats">
-      <h2>📊 DEFENSE SYSTEM STATUS</h2>
+      <h2>📊 {t('stats.header')}</h2>
       
       <div className="stats-grid">
         <div className="stat-card">
           <div className="stat-icon">🗂️</div>
           <div className="stat-value">{stats.total_collections}</div>
-          <div className="stat-label">Active Collections</div>
+          <div className="stat-label">{t('stats.active_collections')}</div>
         </div>
 
         <div className="stat-card">
           <div className="stat-icon">🍯</div>
           <div className="stat-value">5</div>
-          <div className="stat-label">Honeypot Traps</div>
+          <div className="stat-label">{t('stats.honeypot_traps')}</div>
         </div>
 
         <div className="stat-card">
           <div className="stat-icon">🎯</div>
-          <div className="stat-value">ACTIVE</div>
-          <div className="stat-label">Threat Detection</div>
+          <div className="stat-value">{t('stats.active')}</div>
+          <div className="stat-label">{t('stats.threat_detection')}</div>
         </div>
 
         <div className="stat-card kawaii-stat">
           <div className="stat-icon">💖</div>
           <div className="stat-value">{stats.kawaii_level}</div>
-          <div className="stat-label">Kawaii Power</div>
+          <div className="stat-label">{t('stats.kawaii_power')}</div>
         </div>
       </div>
 
@@ -58,7 +61,7 @@ function DefenseStats({ stats }) {
       <div className="status-message">
         <strong>{stats.status}</strong>
         <div className="timestamp">
-          Last Update: {new Date(stats.timestamp).toLocaleString()}
+          {t('stats.last_update')} {new Date(stats.timestamp).toLocaleString()}
         </div>
       </div>
     </div>

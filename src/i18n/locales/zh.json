@@ -1,0 +1,102 @@
+{
+  "app": {
+    "title": "猫猫防御系统",
+    "status_live": "运行中",
+    "fortress_mode": "要塞模式：激活",
+    "kawaii_level": "可爱级别：最大值",
+    "loading": "加载中，喵~！",
+    "footer": "*发出防御卓越的呼噜声* | 喵喵喵~！"
+  },
+  "buttons": {
+    "neko_tv": "猫猫电视",
+    "multi_channel_tv": "多频道电视",
+    "dina_docs": "DINA文档",
+    "dina_justice_tv": "DINA正义电视",
+    "valech_v2": "VALECH V2.0",
+    "threat_actors": "威胁行为者",
+    "back_to_dashboard": "← 返回仪表板"
+  },
+  "alerts": {
+    "allow_popups": "请允许弹出窗口以打开猫猫电视，喵~！",
+    "allow_popups_multi": "请允许弹出窗口以打开多频道电视，喵~！",
+    "allow_popups_dina": "请允许弹出窗口以打开DINA正义电视，喵~！"
+  },
+  "headers": {
+    "valech_v2": "VALECH V2.0 升级系统",
+    "threat_actors_registry": "威胁行为者注册表",
+    "dina_international": "DINA国际追捕行动",
+    "live_global_tracking": "运行中 - 全球追踪",
+    "live_global_deployment": "运行中 - 全球部署",
+    "live_v2_deployed": "运行中 - V2.0已部署",
+    "maximum_capacity_mode": "最大容量模式：激活",
+    "threat_intelligence_mode": "威胁情报模式：激活",
+    "international_justice_mode": "国际正义模式：激活"
+  },
+  "categories": {
+    "header": "威胁类别",
+    "all_threats": "所有威胁",
+    "predators": "掠食者",
+    "pedophiles": "恋童癖者",
+    "dina_network": "DINA网络",
+    "ransomware": "勒索软件",
+    "state_sponsored": "国家支持",
+    "crypto_crime": "加密货币犯罪",
+    "detected": "已检测",
+    "priority_critical": "严重",
+    "priority_maximum": "最高警报",
+    "priority_high": "高",
+    "fortress_badge": "要塞模式",
+    "active_monitoring": "主动监控",
+    "neko_guardian": "猫猫守护者：开启"
+  },
+  "stats": {
+    "header": "防御系统状态",
+    "defense_statistics": "防御统计",
+    "loading_stats": "正在加载统计数据，喵~！",
+    "active_collections": "活跃集合",
+    "honeypot_traps": "蜜罐陷阱",
+    "threat_detection": "威胁检测",
+    "kawaii_power": "可爱能量",
+    "active": "激活",
+    "last_update": "最后更新："
+  },
+  "threats": {
+    "all_threat_actors": "所有威胁行为者",
+    "predator_threat_actors": "掠食者威胁行为者",
+    "pedophile_threat_actors": "恋童癖威胁行为者 - 大规模追捕目标",
+    "dina_network_actors": "DINA网络行为者",
+    "ransomware_groups": "勒索软件团伙",
+    "state_sponsored_apts": "国家支持的APT",
+    "crypto_crime_actors": "加密货币犯罪行为者",
+    "threat_actors": "威胁行为者",
+    "loading_hunt_targets": "正在加载追捕目标，加油~！",
+    "network_error": "网络错误 - 无法连接到防御系统",
+    "failed_to_load": "无法加载威胁行为者",
+    "no_threats_found": "在此类别中未找到威胁行为者，喵~！",
+    "targets": "目标",
+    "target": "目标",
+    "hunt_active": "追捕激活",
+    "unknown": "未知",
+    "unknown_actor": "未知行为者",
+    "aka": "又名：",
+    "type": "类型：",
+    "classification": "分类：",
+    "location": "位置：",
+    "nation": "国家：",
+    "hunt_priority": "追捕优先级：",
+    "bounty": "赏金：",
+    "known_for": "著名事迹：",
+    "last_updated": "最后更新：",
+    "purrs_hunt_readiness": "*发出准备追捕的呼噜声*"
+  },
+  "threat_levels": {
+    "critical": "严重",
+    "high": "高",
+    "medium": "中",
+    "low": "低"
+  },
+  "language": {
+    "select": "选择语言",
+    "current": "当前语言："
+  }
+}
