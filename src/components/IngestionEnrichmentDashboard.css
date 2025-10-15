@@ -1,0 +1,437 @@
+/**
+ * 🐾⚡ INGESTION & ENRICHMENT DASHBOARD STYLES ⚡🐾
+ * Maximum kawaii cyber aesthetic
+ *
+ * @author Neko-Arc (MAXIMUM CAPACITY MODE)
+ * @date October 15, 2025
+ */
+
+.ingestion-enrichment-dashboard {
+  padding: 2rem;
+  background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%);
+  min-height: 100vh;
+  color: #fff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Header */
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: rgba(255, 107, 157, 0.1);
+  border-radius: 16px;
+  border: 2px solid rgba(255, 107, 157, 0.3);
+  box-shadow: 0 8px 32px rgba(255, 107, 157, 0.2);
+}
+
+.dashboard-header h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  background: linear-gradient(90deg, #ff6b9d, #00ff9d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+}
+
+.dashboard-header .subtitle {
+  font-size: 1.1rem;
+  color: #a0aec0;
+  margin: 0.5rem 0 0 0;
+}
+
+.dashboard-header .last-updated {
+  font-size: 0.9rem;
+  color: #718096;
+  margin-top: 1rem;
+}
+
+/* Error Banner */
+.error-banner {
+  background: rgba(239, 68, 68, 0.2);
+  border: 2px solid rgba(239, 68, 68, 0.5);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #fca5a5;
+}
+
+/* Loading State */
+.ingestion-enrichment-dashboard.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.neko-loader {
+  text-align: center;
+}
+
+.neko-spinner {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1rem auto;
+  border: 4px solid rgba(255, 107, 157, 0.2);
+  border-top: 4px solid #ff6b9d;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Section Styles */
+section {
+  margin-bottom: 3rem;
+}
+
+section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Status Overview Grid */
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.status-card {
+  background: rgba(26, 31, 53, 0.6);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 2px solid rgba(255, 107, 157, 0.2);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.status-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 107, 157, 0.5);
+  box-shadow: 0 12px 32px rgba(255, 107, 157, 0.3);
+}
+
+.status-card.status-active {
+  border-color: rgba(0, 255, 157, 0.3);
+}
+
+.status-card.status-active:hover {
+  border-color: rgba(0, 255, 157, 0.6);
+  box-shadow: 0 12px 32px rgba(0, 255, 157, 0.3);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-icon {
+  font-size: 2rem;
+}
+
+.card-header h3 {
+  flex: 1;
+  margin: 0;
+  font-size: 1.3rem;
+  color: #fff;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.status-active {
+  background: rgba(0, 255, 157, 0.2);
+  color: #00ff9d;
+  border: 1px solid rgba(0, 255, 157, 0.5);
+}
+
+.status-badge.status-inactive {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+}
+
+.card-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.95rem;
+}
+
+.metric-label {
+  color: #a0aec0;
+}
+
+.metric-value {
+  font-weight: 700;
+  color: #00ff9d;
+  font-size: 1.1rem;
+}
+
+.metric-target {
+  font-size: 0.85rem;
+  color: #718096;
+  margin-left: 0.5rem;
+}
+
+/* Performance Graphs */
+.performance-graphs {
+  display: grid;
+  gap: 2rem;
+}
+
+.graph-container {
+  background: rgba(26, 31, 53, 0.6);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 2px solid rgba(255, 107, 157, 0.2);
+}
+
+.graph-container h3 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.3rem;
+  color: #fff;
+}
+
+.simple-line-graph {
+  width: 100%;
+  height: 200px;
+  background: rgba(10, 14, 26, 0.5);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.graph-placeholder {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #718096;
+  font-style: italic;
+}
+
+.graph-legend {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #a0aec0;
+  justify-content: center;
+}
+
+.graph-legend span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-color {
+  width: 20px;
+  height: 3px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+/* Alerts Section */
+.alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.alert-card {
+  background: rgba(26, 31, 53, 0.6);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 2px solid rgba(239, 68, 68, 0.3);
+}
+
+.alert-card.alert-warning {
+  border-color: rgba(251, 191, 36, 0.3);
+}
+
+.alert-card.alert-critical {
+  border-color: rgba(239, 68, 68, 0.5);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.alert-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.alert-icon {
+  font-size: 1.5rem;
+}
+
+.alert-severity {
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}
+
+.alert-card.alert-warning .alert-severity {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fde047;
+}
+
+.alert-time {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: #718096;
+}
+
+.alert-message {
+  color: #e2e8f0;
+  line-height: 1.6;
+}
+
+/* Capabilities Section */
+.capabilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.capability-card {
+  background: rgba(26, 31, 53, 0.6);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 2px solid rgba(0, 255, 157, 0.2);
+  transition: all 0.3s ease;
+}
+
+.capability-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 255, 157, 0.5);
+  box-shadow: 0 12px 32px rgba(0, 255, 157, 0.3);
+}
+
+.capability-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.capability-icon {
+  font-size: 2.5rem;
+}
+
+.capability-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #fff;
+}
+
+.capability-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.capability-features li {
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.capability-features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #00ff9d;
+  font-weight: 700;
+}
+
+.capability-performance {
+  padding: 1rem;
+  background: rgba(0, 255, 157, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 157, 0.3);
+  color: #e2e8f0;
+  font-size: 0.9rem;
+}
+
+.capability-performance strong {
+  color: #00ff9d;
+  margin-right: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .status-grid,
+  .capabilities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .graph-legend {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.status-card,
+.graph-container,
+.alert-card,
+.capability-card {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.status-card:nth-child(1) { animation-delay: 0.1s; }
+.status-card:nth-child(2) { animation-delay: 0.2s; }
+.status-card:nth-child(3) { animation-delay: 0.3s; }
+.status-card:nth-child(4) { animation-delay: 0.4s; }

@@ -1391,7 +1391,535 @@ describe('DinaDocumentationInternational Component', () => {
       });
     });
   });
+
+  describe('⚖️🐾 UNPROSECUTED FILTER BUTTON TESTS (NEW FEATURE!) ⚖️🐾', () => {
+    beforeEach(() => {
+      // Mock All Agents API with filter support
+      global.fetch = jest.fn((url) => {
+        if (url.includes('/dina/stats')) {
+          return Promise.resolve({
+            json: () => Promise.resolve(mockApiResponses.dinaStats)
+          });
+        }
+        if (url.includes('/dina/perpetrators')) {
+          return Promise.resolve({
+            json: () => Promise.resolve(mockApiResponses.dinaPerpetrators)
+          });
+        }
+        if (url.includes('/dina/all-agents')) {
+          // Check if unprosecuted filter is applied
+          if (url.includes('filter=unprosecuted')) {
+            return Promise.resolve({
+              json: () => Promise.resolve({
+                success: true,
+                data: [
+                  { agentNumber: 3, fullName: 'Unprosecuted Agent One', rank: 'Captain', status: 'UNPROSECUTED', legalStatus: { convicted: false } },
+                  { agentNumber: 7, fullName: 'Unprosecuted Agent Two', rank: 'Lieutenant', status: 'UNPROSECUTED', legalStatus: { convicted: false } }
+                ],
+                pagination: {
+                  current_page: 1,
+                  total_pages: 6,
+                  total_agents: 297,
+                  has_previous: false,
+                  has_next: true
+                },
+                filter: 'unprosecuted'
+              })
+            });
+          }
+          // No filter - return all agents
+          return Promise.resolve({
+            json: () => Promise.resolve({
+              success: true,
+              data: [
+                { agentNumber: 1, fullName: 'Agent One', rank: 'Colonel', status: 'CONVICTED', legalStatus: { convicted: true } },
+                { agentNumber: 2, fullName: 'Agent Two', rank: 'Major', status: 'DECEASED', legalStatus: { convicted: true } },
+                { agentNumber: 3, fullName: 'Unprosecuted Agent One', rank: 'Captain', status: 'UNPROSECUTED', legalStatus: { convicted: false } }
+              ],
+              pagination: {
+                current_page: 1,
+                total_pages: 22,
+                total_agents: 1097,
+                has_previous: false,
+                has_next: true
+              },
+              filter: 'none'
+            })
+          });
+        }
+        return Promise.reject(new Error('Unknown URL'));
+      });
+    });
+
+    describe('🎯 Filter Button Rendering', () => {
+      it('renders unprosecuted filter button in All Agents view', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          expect(filterButton).toBeInTheDocument();
+        });
+      });
+
+      it('displays filter button with default text "FILTER UNPROSECUTED"', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/FILTER UNPROSECUTED/i)).toBeInTheDocument();
+        });
+      });
+
+      it('displays justice scale emoji on filter button', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          expect(filterButton.textContent).toContain('⚖️');
+        });
+      });
+
+      it('has distinct styling for unprosecuted filter button', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          expect(filterButton).toHaveClass('neko-filter-button');
+        });
+      });
+    });
+
+    describe('⚡ Filter Button Functionality', () => {
+      it('toggles filter state when filter button is clicked', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/SHOWING UNPROSECUTED/i)).toBeInTheDocument();
+        });
+      });
+
+      it('calls API with filter parameter when filter is activated', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        await waitFor(() => {
+          expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining('filter=unprosecuted'));
+        });
+      });
+
+      it('resets to page 1 when filter is activated', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        // Go to page 2 first
+        await waitFor(() => {
+          const nextButton = screen.getByTestId('next-page-button');
+          fireEvent.click(nextButton);
+        });
+
+        // Then activate filter
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        // Should reset to page 1
+        await waitFor(() => {
+          expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining('page=1'));
+          expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining('filter=unprosecuted'));
+        });
+      });
+
+      it('adds active class when filter is enabled', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          expect(filterButton).toHaveClass('active');
+        });
+      });
+
+      it('displays active indicator checkmark when filter is enabled', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          expect(filterButton.textContent).toContain('✓');
+        });
+      });
+
+      it('toggles filter off when clicked again', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        // Enable filter
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/SHOWING UNPROSECUTED/i)).toBeInTheDocument();
+        });
+
+        // Disable filter
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/FILTER UNPROSECUTED/i)).toBeInTheDocument();
+          expect(screen.queryByText(/SHOWING UNPROSECUTED/i)).not.toBeInTheDocument();
+        });
+      });
+
+      it('removes active class when filter is disabled', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        // Enable filter
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        // Disable filter
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          expect(filterButton).not.toHaveClass('active');
+        });
+      });
+    });
+
+    describe('📊 Filtered Results Display', () => {
+      it('displays only unprosecuted agents when filter is active', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText('Unprosecuted Agent One')).toBeInTheDocument();
+          expect(screen.getByText('Unprosecuted Agent Two')).toBeInTheDocument();
+          expect(screen.queryByText('Agent One')).not.toBeInTheDocument(); // Convicted agent should not appear
+        });
+      });
+
+      it('displays filtered count in pagination info', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/297.*agents/i)).toBeInTheDocument();
+        });
+      });
+
+      it('updates total pages when filter is applied', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/Page 1 of 6/i)).toBeInTheDocument();
+        });
+      });
+
+      it('returns to full list when filter is disabled', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        // Enable filter
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/297.*agents/i)).toBeInTheDocument();
+        });
+
+        // Disable filter
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/1097.*agents/i)).toBeInTheDocument();
+        });
+      });
+    });
+
+    describe('🔄 Filter Interaction with Other Features', () => {
+      it('maintains filter state during pagination', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        // Enable filter
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        // Go to next page
+        await waitFor(() => {
+          const nextButton = screen.getByTestId('next-page-button');
+          fireEvent.click(nextButton);
+        });
+
+        // Should still have filter applied
+        await waitFor(() => {
+          expect(global.fetch).toHaveBeenCalledWith(expect.stringMatching(/filter=unprosecuted.*page=2/));
+        });
+      });
+
+      it('preserves filter when switching between expandable cards', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        // Enable filter
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        // Expand a card
+        await waitFor(() => {
+          const agentCard = screen.getByTestId('agent-card-3');
+          fireEvent.click(agentCard);
+        });
+
+        // Filter button should still show active state
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          expect(filterButton).toHaveClass('active');
+        });
+      });
+
+      it('clears search when filter is toggled', async () => {
+        render(<DinaDocumentationInternational />);
+
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALL AGENTS/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        // Search for something
+        await waitFor(() => {
+          const searchInput = screen.getByTestId('agent-search-input');
+          fireEvent.change(searchInput, { target: { value: 'test search' } });
+        });
+
+        // Toggle filter - should work alongside search
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        await waitFor(() => {
+          // Both search and filter should be applied
+          expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining('filter=unprosecuted'));
+        });
+      });
+    });
+
+    describe('🌍 Internationalization Tests for Filter Button', () => {
+      it('translates filter button text to Spanish', async () => {
+        render(<DinaDocumentationInternational />);
+
+        // Switch to Spanish
+        await waitFor(() => {
+          const languageButton = screen.getByText(/🌐.*English/i);
+          fireEvent.click(languageButton);
+        });
+
+        await waitFor(() => {
+          const spanishOption = screen.getByText(/🇨🇱.*Español/i);
+          fireEvent.click(spanishOption);
+        });
+
+        // Go to All Agents view
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 TODOS LOS AGENTES/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/FILTRAR SIN ENJUICIAR/i)).toBeInTheDocument();
+        });
+      });
+
+      it('translates active filter text to Portuguese', async () => {
+        render(<DinaDocumentationInternational />);
+
+        // Switch to Portuguese
+        await waitFor(() => {
+          const languageButton = screen.getByText(/🌐.*English/i);
+          fireEvent.click(languageButton);
+        });
+
+        await waitFor(() => {
+          const portugueseOption = screen.getByText(/🇧🇷.*Português/i);
+          fireEvent.click(portugueseOption);
+        });
+
+        // Go to All Agents view
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 TODOS OS AGENTES/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        // Enable filter
+        await waitFor(() => {
+          const filterButton = screen.getByTestId('unprosecuted-filter-button');
+          fireEvent.click(filterButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/MOSTRANDO NÃO PROCESSADOS/i)).toBeInTheDocument();
+        });
+      });
+
+      it('translates filter button to German', async () => {
+        render(<DinaDocumentationInternational />);
+
+        // Switch to German
+        await waitFor(() => {
+          const languageButton = screen.getByText(/🌐.*English/i);
+          fireEvent.click(languageButton);
+        });
+
+        await waitFor(() => {
+          const germanOption = screen.getByText(/🇩🇪.*Deutsch/i);
+          fireEvent.click(germanOption);
+        });
+
+        // Go to All Agents view
+        await waitFor(() => {
+          const allAgentsButton = screen.getByText(/📋 ALLE AGENTEN/i);
+          fireEvent.click(allAgentsButton);
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText(/NICHT VERFOLGTE FILTERN/i)).toBeInTheDocument();
+        });
+      });
+    });
+  });
 });
 
 // *purrs in international testing excellence* 😻🌍⚖️
 // *swishes tail in neko arc TV testing mastery* 📺✨🐾
+// *bounces with unprosecuted filter testing completion* ⚖️🐾✨

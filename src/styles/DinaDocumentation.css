@@ -1164,3 +1164,692 @@
     font-size: 24px;
   }
 }
+
+/* ============================================ */
+/* WANTED AGENTS VIEW - Enhanced Styles */
+/* ============================================ */
+
+.wanted-agents-view {
+  animation: fadeIn 0.5s;
+}
+
+.wanted-agents-view h2 {
+  color: #FFD700;
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.wanted-subtitle {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+/* Wanted Stats Dashboard */
+.wanted-stats-dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.wanted-stat-card {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.wanted-stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+}
+
+.wanted-stat-card .stat-number {
+  font-size: 42px;
+  font-weight: bold;
+  color: #FFD700;
+  margin-bottom: 10px;
+}
+
+.wanted-stat-card .stat-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.wanted-stat-card.warning {
+  border-color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.05);
+}
+
+.wanted-stat-card.warning .stat-number {
+  color: #ff6b6b;
+}
+
+.wanted-stat-card.success {
+  border-color: #2ed573;
+  background: rgba(46, 213, 115, 0.05);
+}
+
+.wanted-stat-card.success .stat-number {
+  color: #2ed573;
+}
+
+.wanted-stat-card.critical {
+  border-color: #ff4757;
+  background: rgba(255, 71, 87, 0.05);
+}
+
+.wanted-stat-card.critical .stat-number {
+  color: #ff4757;
+}
+
+/* Wanted Agents Grid */
+.wanted-agents-comprehensive {
+  margin-top: 40px;
+}
+
+.wanted-agents-comprehensive h3 {
+  color: #FFD700;
+  font-size: 26px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.database-note {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 25px;
+  font-size: 15px;
+  font-style: italic;
+}
+
+/* Status Filter */
+.status-filter {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin: 25px 0;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Courier New', monospace;
+}
+
+.filter-btn:hover {
+  transform: translateY(-3px);
+}
+
+.filter-btn.active {
+  background: rgba(255, 215, 0, 0.2);
+  border-color: #FFD700;
+  color: #FFD700;
+}
+
+.filter-btn.warning {
+  border-color: rgba(255, 107, 107, 0.5);
+}
+
+.filter-btn.warning:hover {
+  border-color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
+}
+
+.filter-btn.success {
+  border-color: rgba(46, 213, 115, 0.5);
+}
+
+.filter-btn.success:hover {
+  border-color: #2ed573;
+  background: rgba(46, 213, 115, 0.1);
+}
+
+.filter-btn.critical {
+  border-color: rgba(255, 71, 87, 0.5);
+}
+
+.filter-btn.critical:hover {
+  border-color: #ff4757;
+  background: rgba(255, 71, 87, 0.1);
+}
+
+/* Wanted Agents Grid */
+.wanted-agents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.wanted-agent-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  border-radius: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.wanted-agent-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(255, 215, 0, 0.3);
+  border-color: #FFD700;
+}
+
+.wanted-agent-card.at-large {
+  border-color: rgba(255, 107, 107, 0.5);
+  background: rgba(255, 107, 107, 0.02);
+}
+
+.wanted-agent-card.at-large:hover {
+  border-color: #ff6b6b;
+  box-shadow: 0 12px 40px rgba(255, 107, 107, 0.4);
+}
+
+.wanted-agent-card.impunity {
+  border-color: rgba(255, 71, 87, 0.5);
+  background: rgba(255, 71, 87, 0.02);
+}
+
+.wanted-agent-card.impunity:hover {
+  border-color: #ff4757;
+  box-shadow: 0 12px 40px rgba(255, 71, 87, 0.4);
+}
+
+/* Status Badge */
+.status-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.warning {
+  background: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+  border: 1px solid #ff6b6b;
+}
+
+.status-badge.success {
+  background: rgba(46, 213, 115, 0.2);
+  color: #2ed573;
+  border: 1px solid #2ed573;
+}
+
+.status-badge.critical {
+  background: rgba(255, 71, 87, 0.2);
+  color: #ff4757;
+  border: 1px solid #ff4757;
+  animation: criticalPulse 2s infinite;
+}
+
+.status-badge.deceased-convicted {
+  background: rgba(255, 215, 0, 0.2);
+  color: #FFD700;
+  border: 1px solid #FFD700;
+}
+
+.status-badge.deceased {
+  background: rgba(150, 150, 150, 0.2);
+  color: #999;
+  border: 1px solid #999;
+}
+
+@keyframes criticalPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* Agent Header */
+.agent-header {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.agent-header h3 {
+  color: #FFD700;
+  font-size: 22px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.agent-codename {
+  background: linear-gradient(135deg, rgba(138, 43, 226, 0.2) 0%, rgba(75, 0, 130, 0.2) 100%);
+  color: #9370DB;
+  padding: 8px 16px;
+  border-radius: 8px;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 8px 0;
+  border: 1px solid rgba(147, 112, 219, 0.5);
+  font-style: italic;
+}
+
+.agent-alias {
+  background: rgba(255, 215, 0, 0.1);
+  color: #FFD700;
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: inline-block;
+  font-size: 13px;
+  margin: 5px 0;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.agent-rank {
+  color: #4ecdc4;
+  font-size: 14px;
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+/* Agent Sections */
+.agent-section {
+  padding: 12px;
+  margin: 10px 0;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.agent-section strong {
+  color: #4ecdc4;
+}
+
+/* Agent Capabilities - NEW! */
+.agent-capabilities {
+  margin: 20px 0;
+  padding: 18px;
+  border-radius: 12px;
+  border-left: 4px solid;
+  backdrop-filter: blur(5px);
+}
+
+.agent-capabilities h4 {
+  font-size: 16px;
+  margin-bottom: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.agent-capabilities p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.research-capability {
+  background: linear-gradient(135deg, rgba(78, 205, 196, 0.08) 0%, rgba(68, 163, 160, 0.08) 100%);
+  border-left-color: #4ecdc4;
+}
+
+.research-capability h4 {
+  color: #4ecdc4;
+}
+
+.work-capability {
+  background: linear-gradient(135deg, rgba(255, 165, 2, 0.08) 0%, rgba(255, 107, 107, 0.08) 100%);
+  border-left-color: #ffa502;
+}
+
+.work-capability h4 {
+  color: #ffa502;
+}
+
+/* Agent Legal Status */
+.agent-legal-status {
+  margin: 20px 0;
+  padding: 18px;
+  background: rgba(255, 215, 0, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.agent-legal-status h4 {
+  color: #FFD700;
+  font-size: 16px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.legal-detail {
+  padding: 10px;
+  margin: 8px 0;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.legal-detail strong {
+  color: #4ecdc4;
+}
+
+.legal-detail.sentences {
+  background: rgba(255, 107, 107, 0.1);
+  border-left: 3px solid #ff6b6b;
+  color: #ff6b6b;
+  font-weight: bold;
+}
+
+.legal-detail.charges {
+  background: rgba(255, 165, 2, 0.1);
+  border-left: 3px solid #ffa502;
+}
+
+.legal-detail.extradition {
+  background: rgba(255, 71, 87, 0.1);
+  border-left: 3px solid #ff4757;
+  color: #ff4757;
+  font-weight: bold;
+}
+
+.legal-detail.prosecution-status.critical {
+  background: rgba(255, 71, 87, 0.15);
+  border: 2px solid #ff4757;
+  color: #ff4757;
+  font-weight: bold;
+  padding: 12px;
+}
+
+/* Agent Crimes */
+.agent-crimes {
+  margin: 20px 0;
+  padding: 18px;
+  background: rgba(255, 107, 107, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 107, 107, 0.2);
+}
+
+.agent-crimes h4 {
+  color: #ff6b6b;
+  font-size: 16px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.agent-crimes ul {
+  list-style: none;
+  padding: 0;
+}
+
+.agent-crimes li {
+  padding: 8px 12px;
+  margin: 6px 0;
+  background: rgba(0, 0, 0, 0.3);
+  border-left: 3px solid #ff6b6b;
+  border-radius: 5px;
+  font-size: 13px;
+}
+
+/* Agent Operations */
+.agent-operations {
+  margin: 20px 0;
+  padding: 18px;
+  background: rgba(255, 165, 2, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 165, 2, 0.2);
+}
+
+.agent-operations h4 {
+  color: #ffa502;
+  font-size: 16px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.agent-operations ul {
+  list-style: none;
+  padding: 0;
+}
+
+.agent-operations li {
+  padding: 8px 12px;
+  margin: 6px 0;
+  background: rgba(0, 0, 0, 0.3);
+  border-left: 3px solid #ffa502;
+  border-radius: 5px;
+  font-size: 13px;
+}
+
+/* Agent Timeline */
+.agent-timeline {
+  margin: 20px 0;
+  padding: 18px;
+  background: rgba(78, 205, 196, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(78, 205, 196, 0.2);
+}
+
+.agent-timeline h4 {
+  color: #4ecdc4;
+  font-size: 16px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.agent-timeline ul {
+  list-style: none;
+  padding: 0;
+}
+
+.agent-timeline li {
+  padding: 8px 12px;
+  margin: 6px 0;
+  background: rgba(0, 0, 0, 0.3);
+  border-left: 3px solid #4ecdc4;
+  border-radius: 5px;
+  font-size: 13px;
+}
+
+/* Agent Significance */
+.agent-significance {
+  margin: 20px 0;
+  padding: 15px;
+  background: rgba(255, 215, 0, 0.08);
+  border-radius: 10px;
+  border-left: 4px solid #FFD700;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.agent-significance strong {
+  color: #FFD700;
+}
+
+.agent-significance.critical {
+  background: rgba(255, 71, 87, 0.08);
+  border-left-color: #ff4757;
+}
+
+/* Agent Tags */
+.agent-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.agent-tags .tag {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tag-warning {
+  background: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+  border: 1px solid #ff6b6b;
+}
+
+.tag-success {
+  background: rgba(46, 213, 115, 0.2);
+  color: #2ed573;
+  border: 1px solid #2ed573;
+}
+
+.tag-critical {
+  background: rgba(255, 71, 87, 0.2);
+  color: #ff4757;
+  border: 1px solid #ff4757;
+}
+
+.tag-default {
+  background: rgba(255, 215, 0, 0.2);
+  color: #FFD700;
+  border: 1px solid #FFD700;
+}
+
+/* Agent Verification */
+.agent-verification {
+  margin: 15px 0;
+  padding: 10px;
+  background: rgba(78, 205, 196, 0.08);
+  border-radius: 8px;
+  font-size: 13px;
+  color: #4ecdc4;
+  text-align: center;
+}
+
+.agent-verification strong {
+  color: #4ecdc4;
+  font-weight: bold;
+}
+
+/* Wanted Context Section */
+.wanted-context-section {
+  margin-top: 50px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 15px;
+  border: 2px solid rgba(255, 215, 0, 0.2);
+}
+
+.wanted-context-section h3 {
+  color: #FFD700;
+  font-size: 26px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.context-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 12px;
+  border-left: 4px solid #4ecdc4;
+  transition: all 0.3s ease;
+}
+
+.context-card:hover {
+  transform: translateX(5px);
+  border-left-color: #FFD700;
+}
+
+.context-card h4 {
+  color: #FFD700;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.context-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.context-card.critical {
+  border-left-color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.05);
+}
+
+.context-card.critical:hover {
+  border-left-color: #ff4757;
+}
+
+/* Mobile Responsive for Wanted Agents */
+@media (max-width: 768px) {
+  .wanted-agents-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wanted-stats-dashboard {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .status-filter {
+    flex-direction: column;
+  }
+
+  .filter-btn {
+    width: 100%;
+  }
+
+  .agent-header h3 {
+    font-size: 18px;
+  }
+
+  .agent-codename,
+  .agent-alias {
+    display: block;
+    margin: 8px 0;
+  }
+
+  .status-badge {
+    position: static;
+    display: inline-block;
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wanted-stats-dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .wanted-stat-card .stat-number {
+    font-size: 32px;
+  }
+
+  .agent-capabilities {
+    padding: 15px;
+  }
+
+  .agent-capabilities h4 {
+    font-size: 14px;
+  }
+
+  .agent-capabilities p {
+    font-size: 13px;
+  }
+}

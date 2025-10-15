@@ -490,6 +490,119 @@ app.get('/api/dina/international-crimes', async (req, res) => {
   }
 });
 
+// 🎬✨ VIDEO MAKER API ENDPOINT ✨🎬
+const multer = require('multer');
+const { exec } = require('child_process');
+const fs = require('fs');
+const path = require('path');
+
+// Configure multer for file uploads
+const upload = multer({
+  dest: '/tmp/neko-video-uploads/',
+  limits: {
+    fileSize: 500 * 1024 * 1024 // 500MB limit
+  }
+});
+
+// Video maker endpoint
+app.post('/api/video-maker', upload.fields([{ name: 'video', maxCount: 1 }, { name: 'image', maxCount: 1 }]), async (req, res) => {
+  const startTime = Date.now();
+  console.log('🎬 [VideoMaker API] Processing video request, nyaa~!');
+
+  try {
+    if (!req.files || !req.files.video || !req.files.image) {
+      return res.status(400).json({ success: false, error: 'Both video and image files are required!' });
+    }
+
+    const videoFile = req.files.video[0];
+    const imageFile = req.files.image[0];
+    const position = req.body.position || 'bottom-right';
+    const outputName = req.body.outputName || 'video-output';
+
+    // Map position to overlay coordinates
+    const positionMap = {
+      'top-left': '10:10',
+      'top-right': 'main_w-overlay_w-10:10',
+      'bottom-left': '10:main_h-overlay_h-10',
+      'bottom-right': 'main_w-overlay_w-10:main_h-overlay_h-10',
+      'center': '(main_w-overlay_w)/2:(main_h-overlay_h)/2',
+      'full': '0:0'
+    };
+
+    const overlayPosition = positionMap[position] || positionMap['bottom-right'];
+
+    // Ensure output name has .mp4 extension
+    const outputFileName = outputName.endsWith('.mp4') ? outputName : `${outputName}.mp4`;
+    const outputPath = `/tmp/neko-video-uploads/${outputFileName}`;
+
+    // Build ffmpeg command
+    const ffmpegCommand = `ffmpeg -i "${videoFile.path}" -i "${imageFile.path}" -filter_complex "[0:v][1:v] overlay=${overlayPosition}" -c:a copy "${outputPath}" -y`;
+
+    console.log('⏳ [VideoMaker API] Running ffmpeg...');
+
+    exec(ffmpegCommand, (error, stdout, stderr) => {
+      // Clean up input files
+      fs.unlinkSync(videoFile.path);
+      fs.unlinkSync(imageFile.path);
+
+      if (error) {
+        console.error('❌ [VideoMaker API] ffmpeg error:', error.message);
+        return res.status(500).json({ success: false, error: `Video processing failed: ${error.message}` });
+      }
+
+      // Check if output file was created
+      if (!fs.existsSync(outputPath)) {
+        console.error('❌ [VideoMaker API] Output file not created');
+        return res.status(500).json({ success: false, error: 'Video processing failed - output file not created' });
+      }
+
+      // Get file size
+      const stats = fs.statSync(outputPath);
+      const fileSizeMB = (stats.size / 1024 / 1024).toFixed(2);
+      const processingTime = ((Date.now() - startTime) / 1000).toFixed(2);
+
+      console.log(`✅ [VideoMaker API] Video created successfully! Size: ${fileSizeMB}MB, Time: ${processingTime}s`);
+
+      // Return success with file info
+      res.json({
+        success: true,
+        message: 'Video created with MAXIMUM NEKO POWER! 🎬✨',
+        outputFile: outputFileName,
+        fileSize: `${fileSizeMB}MB`,
+        processingTime: `${processingTime}s`,
+        downloadPath: `/api/video-maker/download/${outputFileName}`
+      });
+
+      // Clean up output file after 5 minutes
+      setTimeout(() => {
+        if (fs.existsSync(outputPath)) {
+          fs.unlinkSync(outputPath);
+          console.log('🧹 [VideoMaker API] Cleaned up output file:', outputFileName);
+        }
+      }, 5 * 60 * 1000);
+    });
+  } catch (error) {
+    console.error('❌ [VideoMaker API] Error:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Download processed video endpoint
+app.get('/api/video-maker/download/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = `/tmp/neko-video-uploads/${filename}`;
+
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).json({ success: false, error: 'File not found or expired' });
+  }
+
+  res.download(filePath, filename, (err) => {
+    if (err) {
+      console.error('❌ [VideoMaker API] Download error:', err.message);
+    }
+  });
+});
+
 // Start server
 connectDB().then(() => {
   app.listen(PORT, () => {

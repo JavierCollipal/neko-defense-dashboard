@@ -17,10 +17,14 @@ function DinaDocumentation() {
   const dinaAgentsDatabase = [
     {
       fullName: "Manuel Contreras Sepúlveda",
+      codename: "Mamo",
+      alias: "El Mamo",
       role: "DINA Commander & Chief",
       rank: "Brigadier General",
       organization: ["DINA (1973-1977)"],
       status: "DECEASED - CONVICTED",
+      researchCapability: "Strategic intelligence, torture coordination, international operations, CIA liaison",
+      workCapability: "Full command authority over all DINA operations, cross-border assassination planning, Operation Condor coordination",
       legalStatus: {
         convicted: true,
         currentStatus: "Died in prison August 7, 2015 (age 86)",
@@ -48,10 +52,13 @@ function DinaDocumentation() {
     },
     {
       fullName: "Adriana Rivas Araya",
+      codename: "La Chani",
       alias: "La Chani",
       role: "DINA Agent - Lautaro Brigade Secretary",
       organization: ["DINA - Lautaro Brigade (1973-1977)"],
       status: "⚠️ AT LARGE - FIGHTING EXTRADITION",
+      researchCapability: "Intelligence documentation, detainee records management, Contreras' personal secretary access to classified operations",
+      workCapability: "Administrative control of Lautaro Brigade operations, coordination of kidnappings, victim processing and documentation",
       legalStatus: {
         convicted: false,
         currentStatus: "IMPRISONED IN AUSTRALIA since 2019 - Fighting Extradition",
@@ -76,10 +83,14 @@ function DinaDocumentation() {
     },
     {
       fullName: "Miguel Krassnoff Martchenko",
+      codename: "Vlado",
+      alias: "El Ruso (The Russian)",
       role: "DINA Operations Officer - Caupolicán Brigade",
       rank: "Captain (DINA)",
       organization: ["DINA", "Chilean Army"],
       status: "CONVICTED - IMPRISONED",
+      researchCapability: "Torture techniques specialist, interrogation methods, forced disappearance logistics, Villa Grimaldi operations",
+      workCapability: "Field operations commander, torture execution, kidnapping operations, death squad coordination, Operation Colombo implementation",
       legalStatus: {
         convicted: true,
         currentStatus: "SERVING SENTENCE",
@@ -105,10 +116,14 @@ function DinaDocumentation() {
     },
     {
       fullName: "Raúl Eduardo Iturriaga Neumann",
+      codename: "Guatón",
+      alias: "El Guatón",
       role: "DINA Deputy Director - Exterior Operations",
       rank: "Lieutenant Colonel",
       organization: ["DINA", "Chilean Army"],
       status: "CONVICTED - IMPRISONED",
+      researchCapability: "International intelligence networks, Operation Condor coordination, foreign assassination planning, European connections",
+      workCapability: "External operations command, cross-border assassination execution, diplomatic cover operations, multinational coordination with Argentine/Uruguayan services",
       legalStatus: {
         convicted: true,
         currentStatus: "SERVING SENTENCE",
@@ -134,10 +149,14 @@ function DinaDocumentation() {
     },
     {
       fullName: "Pedro Octavio Espinoza Bravo",
+      codename: "Pedro",
+      alias: "El Pedro",
       role: "DINA Second-in-Command",
       rank: "Brigadier General",
       organization: ["DINA", "Chilean Army"],
       status: "CONVICTED - IMPRISONED",
+      researchCapability: "Strategic operations planning, DINA infrastructure management, international assassination coordination, Villa Grimaldi oversight",
+      workCapability: "Deputy commander authority, operational planning for Letelier assassination, Carmelo Soria murder coordination, direct reporting to Contreras",
       legalStatus: {
         convicted: true,
         currentStatus: "SERVING SENTENCE (as of January 2025)",
@@ -163,11 +182,14 @@ function DinaDocumentation() {
     },
     {
       fullName: "Marcelo Moren Brito",
-      alias: "El Ronco",
+      codename: "El Ronco",
+      alias: "El Ronco (The Hoarse One)",
       role: "Villa Grimaldi Commander - Caupolicán Brigade Chief",
       rank: "Major",
       organization: ["DINA", "Chilean Army", "Caravan of Death"],
       status: "DECEASED - CONVICTED",
+      researchCapability: "Mass torture facility management, psychological torture methods, execution protocols, Caravan of Death operations",
+      workCapability: "Villa Grimaldi command (4,500+ detainees processed), torture center operations, mass execution coordination, 240+ deaths at single facility",
       legalStatus: {
         convicted: true,
         currentStatus: "Died September 11, 2015 (age 80) at Hospital Militar",
@@ -192,10 +214,13 @@ function DinaDocumentation() {
     },
     {
       fullName: "Osvaldo Romo Mena",
-      alias: "El Guatón Romo",
+      codename: "Guatón Romo",
+      alias: "El Guatón Romo (Fat Romo)",
       role: "DINA Interrogator & Torturer",
       organization: ["DINA (1973-1990)"],
       status: "DECEASED - CONVICTED",
+      researchCapability: "Extreme interrogation techniques, psychological torture, forced disappearance logistics, informant identification",
+      workCapability: "100+ forced disappearances, direct torture execution, brutal interrogations, Villa Grimaldi operations, Londres 38 work",
       legalStatus: {
         convicted: true,
         currentStatus: "Died July 4, 2007",
@@ -214,11 +239,14 @@ function DinaDocumentation() {
     },
     {
       fullName: "Ingrid Olderöck Bernhard",
+      codename: "La Mujer de los Perros",
       alias: "La Mujer de los Perros (The Dog Woman)",
       role: "DINA Torture Specialist - Venda Sexy Commander",
       rank: "Major (Carabineros)",
       organization: ["DINA", "Carabineros de Chile", "Women's School"],
       status: "⚠️ DECEASED - NEVER PROSECUTED",
+      researchCapability: "Sexual torture methods, dog training for assault, psychological warfare, female torturer training, Venda Sexy operations",
+      workCapability: "Venda Sexy command, 27+ forced disappearances from facility, trained 70 female torturers, specialized in sexual violence and animal-assisted torture",
       legalStatus: {
         convicted: false,
         currentStatus: "Died March 17, 2001 (age 58) from internal hemorrhage",
@@ -562,7 +590,8 @@ function DinaDocumentation() {
                     {/* Agent Info */}
                     <div className="agent-header">
                       <h3>{agent.fullName}</h3>
-                      {agent.alias && <div className="agent-alias">Alias: "{agent.alias}"</div>}
+                      {agent.codename && <div className="agent-codename">🎭 Codename: "{agent.codename}"</div>}
+                      {agent.alias && <div className="agent-alias">Alias: {agent.alias}</div>}
                       <div className="agent-rank">{agent.rank || agent.role}</div>
                     </div>
 
@@ -573,6 +602,20 @@ function DinaDocumentation() {
                     <div className="agent-section">
                       <strong>Organization:</strong> {agent.organization.join(', ')}
                     </div>
+
+                    {/* Research & Work Capabilities */}
+                    {agent.researchCapability && (
+                      <div className="agent-capabilities research-capability">
+                        <h4>🔍 Research Capability</h4>
+                        <p>{agent.researchCapability}</p>
+                      </div>
+                    )}
+                    {agent.workCapability && (
+                      <div className="agent-capabilities work-capability">
+                        <h4>⚡ Work Capability</h4>
+                        <p>{agent.workCapability}</p>
+                      </div>
+                    )}
 
                     {/* Legal Status */}
                     <div className="agent-legal-status">

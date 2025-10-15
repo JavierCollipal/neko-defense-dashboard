@@ -10,7 +10,9 @@ import ThreatActors from './components/ThreatActors';
 import DinaDocumentationInternational from './components/DinaDocumentationInternational';
 import ValechV2Dashboard from './components/ValechV2Dashboard';
 import NekoArcAbilities from './components/NekoArcAbilities';
+import VideoMaker from './components/VideoMaker';
 import LanguageSwitcher from './components/LanguageSwitcher';
+import IngestionEnrichmentDashboard from './components/IngestionEnrichmentDashboard';
 
 // 🎯 API URL - Express backend runs on port 5001, nyaa~!
 // (Has all the threat-actors and DINA endpoints we need!)
@@ -27,6 +29,8 @@ function App() {
   const [showValechV2, setShowValechV2] = useState(false);
   const [showThreatActors, setShowThreatActors] = useState(false);
   const [showAbilities, setShowAbilities] = useState(false);
+  const [showVideoMaker, setShowVideoMaker] = useState(false);
+  const [showIngestionEnrichment, setShowIngestionEnrichment] = useState(false);
   const [threatCounts, setThreatCounts] = useState({
     all: 0,
     predators: 0,
@@ -109,6 +113,7 @@ function App() {
     setShowValechV2(false);
     setShowThreatActors(false);
     setShowAbilities(false);
+    setShowVideoMaker(false);
   };
 
   const toggleValechV2 = () => {
@@ -116,6 +121,7 @@ function App() {
     setShowDinaDoc(false);
     setShowThreatActors(false);
     setShowAbilities(false);
+    setShowVideoMaker(false);
   };
 
   const toggleThreatActors = () => {
@@ -123,6 +129,7 @@ function App() {
     setShowDinaDoc(false);
     setShowValechV2(false);
     setShowAbilities(false);
+    setShowVideoMaker(false);
   };
 
   const toggleAbilities = () => {
@@ -130,6 +137,25 @@ function App() {
     setShowDinaDoc(false);
     setShowValechV2(false);
     setShowThreatActors(false);
+    setShowVideoMaker(false);
+  };
+
+  const toggleVideoMaker = () => {
+    setShowVideoMaker(!showVideoMaker);
+    setShowDinaDoc(false);
+    setShowValechV2(false);
+    setShowThreatActors(false);
+    setShowAbilities(false);
+    setShowIngestionEnrichment(false);
+  };
+
+  const toggleIngestionEnrichment = () => {
+    setShowIngestionEnrichment(!showIngestionEnrichment);
+    setShowDinaDoc(false);
+    setShowValechV2(false);
+    setShowThreatActors(false);
+    setShowAbilities(false);
+    setShowVideoMaker(false);
   };
 
   const openDinaTvWindow = () => {
@@ -142,6 +168,19 @@ function App() {
       dinaTvWindow.focus();
     } else {
       alert(t('alerts.allow_popups_dina'));
+    }
+  };
+
+  const openMongoDBTvWindow = () => {
+    const mongoTvWindow = window.open(
+      '/mongodb-tv-window.html',
+      'MongoDBTvMonitoring',
+      'width=1600,height=1000,menubar=no,toolbar=no,location=no,status=no'
+    );
+    if (mongoTvWindow) {
+      mongoTvWindow.focus();
+    } else {
+      alert('Please allow popups to view MongoDB TV monitoring, nyaa~! 🐾📊');
     }
   };
 
@@ -208,6 +247,48 @@ function App() {
     );
   }
 
+  // If Video Maker view is active, show only that
+  if (showVideoMaker) {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <div className="neko-banner">
+            <h1>🐾🎬✨ NEKO VIDEO MAKER ✨🎬🐾</h1>
+            <div className="status-bar">
+              <span className="status-indicator active">🔴 LIVE - CREATION MODE</span>
+              <span>VIDEO PRODUCTION: MAXIMUM NEKO POWER</span>
+              <button className="tv-window-button" onClick={toggleVideoMaker}>
+                ← Back to Dashboard
+              </button>
+            </div>
+          </div>
+        </header>
+        <VideoMaker />
+      </div>
+    );
+  }
+
+  // If Ingestion & Enrichment view is active, show only that
+  if (showIngestionEnrichment) {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <div className="neko-banner">
+            <h1>🐾⚡ INGESTION & ENRICHMENT SYSTEM ⚡🐾</h1>
+            <div className="status-bar">
+              <span className="status-indicator active">🔴 LIVE - RAG PIPELINE</span>
+              <span>ULTIMATE OPTIMIZATION MODE: ACTIVE</span>
+              <button className="tv-window-button" onClick={toggleIngestionEnrichment}>
+                ← Back to Dashboard
+              </button>
+            </div>
+          </div>
+        </header>
+        <IngestionEnrichmentDashboard />
+      </div>
+    );
+  }
+
   // If DINA documentation is active, show only that
   if (showDinaDoc) {
     return (
@@ -259,6 +340,15 @@ function App() {
             </button>
             <button className="tv-window-button abilities" onClick={toggleAbilities}>
               ⚡ NEKO ABILITIES
+            </button>
+            <button className="tv-window-button video-maker" onClick={toggleVideoMaker}>
+              🎬 VIDEO MAKER
+            </button>
+            <button className="tv-window-button mongodb-tv" onClick={openMongoDBTvWindow}>
+              📊 MONGODB TV
+            </button>
+            <button className="tv-window-button ingestion-enrichment" onClick={toggleIngestionEnrichment}>
+              ⚡ INGESTION SYSTEM
             </button>
           </div>
         </div>

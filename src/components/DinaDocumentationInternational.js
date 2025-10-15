@@ -27,16 +27,19 @@ const DinaDocumentationInternational = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedAgentId, setExpandedAgentId] = useState(null);
 
+  // ⚖️ Filter state for UNPROSECUTED agents (JUSTICE MODE!)
+  const [filterUnprosecuted, setFilterUnprosecuted] = useState(false);
+
   useEffect(() => {
     fetchDinaData();
   }, []);
 
-  // 📋 Fetch when viewMode changes to 'all-agents', page changes, or search term changes
+  // 📋 Fetch when viewMode changes to 'all-agents', page changes, search term changes, or filter changes
   useEffect(() => {
     if (viewMode === 'all-agents') {
-      fetchAllAgentsPaginated(currentPage, searchTerm);
+      fetchAllAgentsPaginated(currentPage, searchTerm, filterUnprosecuted);
     }
-  }, [viewMode, currentPage, searchTerm]);
+  }, [viewMode, currentPage, searchTerm, filterUnprosecuted]);
 
   const fetchDinaData = async () => {
     try {
@@ -90,6 +93,7 @@ const DinaDocumentationInternational = () => {
       setCurrentPage(1); // Reset to page 1 when entering this view
       setSearchTerm(''); // Reset search
       setExpandedAgentId(null); // Reset expanded agent
+      setFilterUnprosecuted(false); // Reset filter
     }
   };
 
@@ -106,15 +110,16 @@ const DinaDocumentationInternational = () => {
     setExpandedAgentId(expandedAgentId === agentId ? null : agentId);
   };
 
-  // 📋 Fetch paginated ALL AGENTS (1,097 total) with SEARCH (NEKO POWER!)
-  const fetchAllAgentsPaginated = async (page, search = '') => {
+  // 📋 Fetch paginated ALL AGENTS (1,097 total) with SEARCH and FILTER (NEKO POWER!)
+  const fetchAllAgentsPaginated = async (page, search = '', filterUnprosecuted = false) => {
     try {
       setAllAgentsLoading(true);
-      console.log(`🐾 [ALL-AGENTS] Fetching page ${page} with search "${search}", nyaa~`);
+      console.log(`🐾 [ALL-AGENTS] Fetching page ${page} with search "${search}" and filter unprosecuted: ${filterUnprosecuted}, nyaa~`);
 
-      // Build URL with search parameter if provided
+      // Build URL with search and filter parameters
       const searchParam = search ? `&search=${encodeURIComponent(search)}` : '';
-      const response = await fetch(`${API_URL}/dina/all-agents?page=${page}&limit=50${searchParam}`);
+      const filterParam = filterUnprosecuted ? `&filter=unprosecuted` : '';
+      const response = await fetch(`${API_URL}/dina/all-agents?page=${page}&limit=50${searchParam}${filterParam}`);
       const data = await response.json();
 
       console.log(`✅ [ALL-AGENTS] Page ${page} loaded:`, data);
@@ -521,10 +526,32 @@ const DinaDocumentationInternational = () => {
                   </button>
                 )}
               </div>
+
+              {/* ⚖️ UNPROSECUTED FILTER BUTTON (JUSTICE MODE!) */}
+              <div className="neko-filter-container">
+                <button
+                  className={`neko-filter-button ${filterUnprosecuted ? 'active' : ''}`}
+                  onClick={() => {
+                    setFilterUnprosecuted(!filterUnprosecuted);
+                    setCurrentPage(1); // Reset to page 1 when toggling filter
+                  }}
+                  data-testid="unprosecuted-filter-button"
+                  title="Show only unprosecuted DINA agents"
+                >
+                  <span className="filter-icon">⚖️</span>
+                  <span className="filter-text">
+                    {filterUnprosecuted ? 'SHOWING UNPROSECUTED' : 'FILTER UNPROSECUTED'}
+                  </span>
+                  {filterUnprosecuted && <span className="filter-active-indicator">✓</span>}
+                </button>
+              </div>
+
               {pagination && (
                 <div className="neko-results-info">
                   <span className="neko-results-count">
-                    {searchTerm ? `🎯 Found: ${pagination.total_agents} agents` : `📋 Total: ${pagination.total_agents} agents`}
+                    {filterUnprosecuted && `⚖️ Unprosecuted: ${pagination.total_agents} agents`}
+                    {!filterUnprosecuted && searchTerm && `🎯 Found: ${pagination.total_agents} agents`}
+                    {!filterUnprosecuted && !searchTerm && `📋 Total: ${pagination.total_agents} agents`}
                   </span>
                   <span className="neko-page-info">
                     Page {pagination.current_page} of {pagination.total_pages}

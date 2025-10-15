@@ -1018,3 +1018,116 @@
     min-width: 40px;
   }
 }
+
+/* ⚖️ UNPROSECUTED FILTER BUTTON (JUSTICE MODE!) ⚖️ */
+.neko-filter-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.neko-filter-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, rgba(255, 0, 51, 0.3), rgba(255, 102, 0, 0.3));
+  color: white;
+  border: 2px solid #ff3333;
+  padding: 15px 30px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(255, 0, 51, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.neko-filter-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 215, 0, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.neko-filter-button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.neko-filter-button:hover {
+  border-color: #ffd700;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 35px rgba(255, 215, 0, 0.5);
+}
+
+.neko-filter-button.active {
+  background: linear-gradient(135deg, #ff3333, #ff6600);
+  border-color: #ffd700;
+  box-shadow: 0 6px 30px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 0, 51, 0.4);
+  animation: filter-active-pulse 2s ease-in-out infinite;
+}
+
+@keyframes filter-active-pulse {
+  0%, 100% {
+    box-shadow: 0 6px 30px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 0, 51, 0.4);
+  }
+  50% {
+    box-shadow: 0 8px 40px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 0, 51, 0.6);
+  }
+}
+
+.filter-icon {
+  font-size: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.filter-text {
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+.filter-active-indicator {
+  font-size: 20px;
+  color: #00ff88;
+  animation: check-bounce 0.6s ease-out;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes check-bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+/* Filter Button Pressed Effect */
+.neko-filter-button:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* Responsive Filter Button */
+@media (max-width: 768px) {
+  .neko-filter-button {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  .filter-icon {
+    font-size: 20px;
+  }
+
+  .filter-text {
+    font-size: 14px;
+  }
+}
