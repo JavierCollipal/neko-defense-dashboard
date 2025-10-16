@@ -1,5 +1,6 @@
 // 🐾⚖️ DINA DOCUMENTATION COMPONENT - Expose Chilean Dictatorship Crimes ⚖️🐾
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import DinaCentersMap from './DinaCentersMap';
 import '../styles/DinaDocumentation.css';
 
@@ -7,6 +8,7 @@ import '../styles/DinaDocumentation.css';
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
 
 function DinaDocumentation() {
+  const { i18n } = useTranslation();
   const [stats, setStats] = useState(null);
   const [perpetrators, setPerpetrators] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -292,12 +294,13 @@ function DinaDocumentation() {
 
   useEffect(() => {
     fetchDinaData();
-  }, []);
+  }, [i18n.language]); // Refetch when language changes, desu~!
 
   const fetchDinaData = async () => {
     try {
       setLoading(true);
-      console.log('🔍 [DinaDoc] Fetching DINA data from API, nyaa~');
+      const userLang = i18n.language || 'en';
+      console.log('🔍 [DinaDoc] Fetching DINA data from API, nyaa~ | Language:', userLang);
 
       // Fetch DINA statistics with timeout
       try {
@@ -334,7 +337,7 @@ function DinaDocumentation() {
         const perpsController = new AbortController();
         const perpsTimeout = setTimeout(() => perpsController.abort(), 5000);
 
-        const perpsResponse = await fetch(`${API_URL}/dina/perpetrators`, {
+        const perpsResponse = await fetch(`${API_URL}/dina/perpetrators?lang=${userLang}`, {
           signal: perpsController.signal
         });
         clearTimeout(perpsTimeout);

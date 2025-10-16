@@ -31,6 +31,10 @@ beforeEach(() => {
   }).as('getThreatCounts');
 
   // NEW: Intercept threat actors endpoint with category filtering, desu! 🎯
+  cy.intercept('GET', '**/api/threat-actors', {
+    fixture: 'threat-actors-all.json'
+  }).as('getThreatActors');
+
   cy.intercept('GET', '**/api/threat-actors?category=all', {
     fixture: 'threat-actors-all.json'
   }).as('getThreatActorsAll');

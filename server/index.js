@@ -6,6 +6,9 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
+// 🌍 Translation Service with MongoDB Caching, nyaa~!
+const { translateDocuments, getUserLanguage } = require('./translation-service');
+
 const app = express();
 const PORT = process.env.API_PORT || 5001;
 
@@ -246,11 +249,12 @@ app.get('/api/threat-counts', async (req, res) => {
   }
 });
 
-// Get all threat actors from MongoDB with category filtering, nyaa~! 🐾🎯
+// Get all threat actors from MongoDB with category filtering + TRANSLATION, nyaa~! 🐾🎯🌍
 app.get('/api/threat-actors', async (req, res) => {
   try {
     const category = req.query.category || 'all';
-    console.log('🎯 [API] Fetching threat actors, category:', category);
+    const userLang = getUserLanguage(req);
+    console.log('🎯 [API] Fetching threat actors, category:', category, '| Language:', userLang);
 
     // Build filter based on category
     let filter = {};
@@ -324,17 +328,24 @@ app.get('/api/threat-actors', async (req, res) => {
       }
     }
 
-    const threatActors = await db.collection('threat_actors')
+    let threatActors = await db.collection('threat_actors')
       .find(filter)
       .sort({ threat_level: -1, rank: 1 })
       .toArray();
+
+    // 🌍 Translate data if user language is not English, nyaa~!
+    if (userLang !== 'en') {
+      console.log(`🌐 [Translation] Translating ${threatActors.length} threat actors to ${userLang}`);
+      threatActors = await translateDocuments(threatActors, userLang, db, 'threat_actors');
+    }
 
     console.log(`✅ [API] Retrieved ${threatActors.length} threat actors for category: ${category}`);
     res.json({
       success: true,
       category: category,
       count: threatActors.length,
-      data: threatActors
+      data: threatActors,
+      language: userLang
     });
   } catch (error) {
     console.error('❌ [API] Failed to fetch threat actors:', error.message);
@@ -342,11 +353,13 @@ app.get('/api/threat-actors', async (req, res) => {
   }
 });
 
-// Get threat actor by ID
+// Get threat actor by ID + TRANSLATION, nyaa~! 🔍🌍
 app.get('/api/threat-actors/:actorId', async (req, res) => {
   try {
-    console.log('🔍 [API] Fetching threat actor:', req.params.actorId);
-    const threatActor = await db.collection('threat_actors')
+    const userLang = getUserLanguage(req);
+    console.log('🔍 [API] Fetching threat actor:', req.params.actorId, '| Language:', userLang);
+
+    let threatActor = await db.collection('threat_actors')
       .findOne({ actor_id: req.params.actorId });
 
     if (!threatActor) {
@@ -354,8 +367,15 @@ app.get('/api/threat-actors/:actorId', async (req, res) => {
       return res.status(404).json({ success: false, error: 'Threat actor not found' });
     }
 
+    // 🌍 Translate data if user language is not English, nyaa~!
+    if (userLang !== 'en') {
+      console.log(`🌐 [Translation] Translating threat actor to ${userLang}`);
+      const translated = await translateDocuments([threatActor], userLang, db, 'threat_actors');
+      threatActor = translated[0];
+    }
+
     console.log('✅ [API] Found threat actor:', threatActor.name);
-    res.json({ success: true, data: threatActor });
+    res.json({ success: true, data: threatActor, language: userLang });
   } catch (error) {
     console.error('❌ [API] Error fetching threat actor:', error.message);
     res.status(500).json({ success: false, error: error.message });
@@ -420,17 +440,18 @@ app.get('/api/dina/stats', async (req, res) => {
   }
 });
 
-// Get DINA perpetrators list
+// Get DINA perpetrators list + TRANSLATION, nyaa~! 🎯🌍
 app.get('/api/dina/perpetrators', async (req, res) => {
   try {
-    console.log('🎯 [DINA API] Fetching DINA perpetrators, nyaa~');
+    const userLang = getUserLanguage(req);
+    console.log('🎯 [DINA API] Fetching DINA perpetrators, nyaa~ | Language:', userLang);
 
-    const perpetrators = await db.collection('dina_perpetrators')
+    let perpetrators = await db.collection('dina_perpetrators')
       .find({ id: { $exists: true } })
       .toArray();
 
     // Transform data for frontend compatibility
-    const transformedPerpetrators = perpetrators.map(p => ({
+    let transformedPerpetrators = perpetrators.map(p => ({
       ...p,
       fullName: p.fullName || p.name,
       role: p.position || p.role || 'DINA Agent',
@@ -444,11 +465,18 @@ app.get('/api/dina/perpetrators', async (req, res) => {
       crimesAccused: p.major_crimes || p.crimesAccused || []
     }));
 
+    // 🌍 Translate data if user language is not English, nyaa~!
+    if (userLang !== 'en') {
+      console.log(`🌐 [Translation] Translating ${transformedPerpetrators.length} DINA perpetrators to ${userLang}`);
+      transformedPerpetrators = await translateDocuments(transformedPerpetrators, userLang, db, 'dina_perpetrators');
+    }
+
     console.log(`✅ [DINA API] Retrieved ${transformedPerpetrators.length} DINA perpetrators`);
     res.json({
       success: true,
       count: transformedPerpetrators.length,
-      data: transformedPerpetrators
+      data: transformedPerpetrators,
+      language: userLang
     });
   } catch (error) {
     console.error('❌ [DINA API] Failed to fetch perpetrators:', error.message);

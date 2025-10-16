@@ -230,6 +230,32 @@ body::before {
   }
 }
 
+/* YouTube Channel Button - EXPOSURE BROADCASTING */
+.tv-window-button.youtube-channel {
+  background: linear-gradient(135deg, #ff0000, #ff4444);
+  border-color: #ff0000;
+  animation: youtube-exposure-glow 2s ease-in-out infinite;
+  font-size: 1.1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tv-window-button.youtube-channel:hover {
+  background: linear-gradient(135deg, #ff4444, #ff0000);
+  box-shadow: 0 0 40px rgba(255, 0, 0, 1);
+  transform: scale(1.2);
+}
+
+@keyframes youtube-exposure-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 68, 68, 1);
+  }
+}
+
 /* Main Dashboard Grid */
 .dashboard-grid {
   display: grid;

@@ -1,11 +1,13 @@
 // 🐾⚡ THREAT ACTORS REGISTRY - LEGENDARY TRACKING ⚡🐾
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import '../styles/ThreatActors.css';
 
 // 🎯 API URL - Express backend runs on port 5001 (same as main app), nyaa~!
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
 
 function ThreatActors() {
+  const { i18n } = useTranslation();
   const [threatActors, setThreatActors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,14 +18,15 @@ function ThreatActors() {
   useEffect(() => {
     console.log('🐾 [ThreatActors] Component mounted, fetching data, nyaa~');
     fetchThreatActors();
-  }, []);
+  }, [i18n.language]); // Refetch when language changes, desu~!
 
   const fetchThreatActors = async () => {
-    console.log('🔍 [ThreatActors] Fetching threat actors from API, desu~');
+    const userLang = i18n.language || 'en';
+    console.log('🔍 [ThreatActors] Fetching threat actors from API, desu~ | Language:', userLang);
     try {
       setLoading(true);
-      const response = await fetch(`${API_URL}/threat-actors`);
-      console.log('📡 [ThreatActors] Response status:', response.status);
+      const response = await fetch(`${API_URL}/threat-actors?lang=${userLang}`);
+      console.log('📡 [ThreatActors] Response status:', response.status, '| Language:', userLang);
 
       const data = await response.json();
       console.log('✅ [ThreatActors] Received data:', { count: data.count, success: data.success });
@@ -67,10 +70,10 @@ function ThreatActors() {
   const filteredActors = threatActors.filter(actor => {
     const matchesType = filterType === 'all' || actor.type === filterType;
     const matchesSearch = !searchTerm ||
-      actor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      actor.actor_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (actor.name && actor.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (actor.actor_id && actor.actor_id.toLowerCase().includes(searchTerm.toLowerCase())) ||
       (actor.aliases && actor.aliases.some(alias =>
-        alias.toLowerCase().includes(searchTerm.toLowerCase())
+        alias && alias.toLowerCase().includes(searchTerm.toLowerCase())
       ));
     return matchesType && matchesSearch;
   });
@@ -169,9 +172,9 @@ function ThreatActors() {
       </div>
 
       <div className="threat-actors-grid">
-        {filteredActors.map((actor) => (
+        {filteredActors.map((actor, index) => (
           <div
-            key={actor.actor_id}
+            key={actor.actor_id || actor._id || index}
             className="threat-actor-card"
             onClick={() => setSelectedActor(actor)}
             style={{ borderLeft: `4px solid ${getThreatLevelColor(actor.threat_level)}` }}
@@ -179,14 +182,14 @@ function ThreatActors() {
             <div className="actor-header">
               <div className="actor-icon">{getTypeIcon(actor.type)}</div>
               <div className="actor-title">
-                <h3>{actor.name}</h3>
-                <span className="actor-id">{actor.actor_id}</span>
+                <h3>{actor.name || 'Unknown Actor'}</h3>
+                <span className="actor-id">{actor.actor_id || 'unknown_id'}</span>
               </div>
               <div
                 className="threat-badge"
                 style={{ backgroundColor: getThreatLevelColor(actor.threat_level) }}
               >
-                {actor.threat_level}
+                {actor.threat_level || 'UNKNOWN'}
               </div>
             </div>
 
@@ -203,8 +206,8 @@ function ThreatActors() {
               </div>
               <div className="info-row">
                 <span className="info-label">Status:</span>
-                <span className={`status-badge ${actor.status.toLowerCase()}`}>
-                  {actor.status}
+                <span className={`status-badge ${(actor.status || 'unknown').toLowerCase()}`}>
+                  {actor.status || 'Unknown'}
                 </span>
               </div>
               {actor.attribution?.reward_usd > 0 && (
@@ -255,14 +258,14 @@ function ThreatActors() {
             <div className="modal-header">
               <div className="modal-icon">{getTypeIcon(selectedActor.type)}</div>
               <div>
-                <h2>{selectedActor.name}</h2>
-                <p className="modal-subtitle">{selectedActor.actor_id}</p>
+                <h2>{selectedActor.name || 'Unknown Actor'}</h2>
+                <p className="modal-subtitle">{selectedActor.actor_id || 'unknown_id'}</p>
               </div>
               <div
                 className="threat-badge large"
                 style={{ backgroundColor: getThreatLevelColor(selectedActor.threat_level) }}
               >
-                {selectedActor.threat_level}
+                {selectedActor.threat_level || 'UNKNOWN'}
               </div>
             </div>
 

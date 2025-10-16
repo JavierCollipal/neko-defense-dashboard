@@ -184,6 +184,10 @@ function App() {
     }
   };
 
+  const openYouTubeChannel = () => {
+    window.open('https://youtu.be/bRNkW-SYSEk?si=swxBiVXF0RziqRhZ', '_blank', 'noopener,noreferrer');
+  };
+
   // If Valech V2.0 view is active, show only that
   if (showValechV2) {
     return (
@@ -320,6 +324,9 @@ function App() {
             <span>{t('app.fortress_mode')}</span>
             <span className="kawaii-meter">{t('app.kawaii_level')} 💖</span>
             <LanguageSwitcher />
+            <button className="tv-window-button youtube-channel" onClick={openYouTubeChannel}>
+              🎬 YOUTUBE CHANNEL
+            </button>
             <button className="tv-window-button" onClick={openTvWindow}>
               📺 {t('buttons.neko_tv')}
             </button>

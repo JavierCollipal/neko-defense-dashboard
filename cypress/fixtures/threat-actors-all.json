@@ -1,111 +1,132 @@
 {
   "success": true,
-  "count": 8,
+  "count": 3,
   "data": [
     {
       "_id": "threat001",
-      "name": "Shadow Predator Alpha",
-      "aliases": ["DarkHunter", "NightStalker"],
-      "type": "predator",
-      "actor_classification": "Child Predator",
+      "actor_id": "TA-CRITICAL-001",
+      "name": "Mikhail Pavlovich Matveev",
+      "type": "individual",
       "threat_level": "CRITICAL",
-      "location": "Unknown",
-      "hunt_priority": 1,
-      "bounty_usd": 50000,
-      "known_for": "Operating predator network targeting minors",
-      "law_enforcement_status": "WANTED - FBI Most Wanted List"
+      "status": "WANTED",
+      "aliases": ["Wazawaka", "m1x", "Boriselcin"],
+      "origin": {
+        "country": "Russia",
+        "affiliated_state": false
+      },
+      "attribution": {
+        "fbi_wanted": true,
+        "reward_usd": 10000000
+      },
+      "categories": ["Ransomware", "Extortion", "Data Theft"],
+      "evidence": {
+        "victim_count": 200,
+        "financial_damage_usd": 100000000,
+        "known_incidents": [
+          "Hive Ransomware Campaign",
+          "LockBit Operations",
+          "Babuk Ransomware Attacks"
+        ]
+      },
+      "technical_profile": {
+        "malware_families": ["Hive", "LockBit", "Babuk"],
+        "attack_vectors": [
+          "Phishing",
+          "RDP Exploitation",
+          "Vulnerability Exploitation"
+        ]
+      },
+      "intelligence": {
+        "sources": ["FBI", "Interpol"],
+        "confidence_level": "HIGH",
+        "last_updated": "2025-10-15T00:00:00Z"
+      },
+      "hunting_status": {
+        "notes": "Active FBI manhunt with $10M reward, nyaa~!"
+      }
     },
     {
       "_id": "threat002",
-      "name": "Crypto Phantom",
-      "aliases": ["BitGhost", "CoinThief"],
-      "type": "crypto_crime",
-      "actor_classification": "Cryptocurrency Thief",
+      "actor_id": "TA-HIGH-002",
+      "name": "RansomHub Group",
+      "type": "ransomware",
       "threat_level": "HIGH",
-      "location": "Eastern Europe",
-      "hunt_priority": 2,
-      "bounty_usd": 100000,
-      "known_for": "Stealing $50M in cryptocurrency from exchanges",
-      "law_enforcement_status": "INTERPOL Red Notice"
+      "status": "ACTIVE",
+      "aliases": ["RansomHub", "Hub Crew"],
+      "origin": {
+        "country": "Unknown",
+        "affiliated_state": false
+      },
+      "attribution": {
+        "fbi_wanted": false,
+        "reward_usd": 5000000
+      },
+      "categories": ["Ransomware-as-a-Service", "Data Exfiltration"],
+      "evidence": {
+        "victim_count": 150,
+        "financial_damage_usd": 75000000,
+        "known_incidents": [
+          "Healthcare Sector Attacks",
+          "Critical Infrastructure Targeting"
+        ]
+      },
+      "technical_profile": {
+        "malware_families": ["RansomHub"],
+        "attack_vectors": [
+          "Exploiting Known Vulnerabilities",
+          "Phishing",
+          "Initial Access Brokers"
+        ]
+      },
+      "intelligence": {
+        "sources": ["Private Sector", "FBI"],
+        "confidence_level": "MEDIUM",
+        "last_updated": "2025-10-10T00:00:00Z"
+      }
     },
     {
       "_id": "threat003",
-      "name": "DINA Network Node 7",
-      "aliases": ["Node7", "DinaCell7"],
-      "type": "dina_network",
-      "actor_classification": "Network Operator",
-      "threat_level": "HIGH",
-      "location": "South America",
-      "hunt_priority": 1,
-      "bounty_usd": 75000,
-      "known_for": "DINA investigation subject, network operations",
-      "law_enforcement_status": "ACTIVE INVESTIGATION - Multiple Jurisdictions"
-    },
-    {
-      "_id": "threat004",
-      "name": "RansomLock Crew",
-      "aliases": ["LockTeam", "CryptoLocker"],
-      "type": "ransomware",
-      "actor_classification": "Ransomware Gang",
-      "threat_level": "HIGH",
-      "location": "Russia",
-      "hunt_priority": 2,
-      "bounty_usd": 250000,
-      "known_for": "Major ransomware campaigns against hospitals",
-      "law_enforcement_status": "SANCTIONS - US Treasury"
-    },
-    {
-      "_id": "threat005",
-      "name": "APT-Dragon",
-      "aliases": ["DragonForce", "EastDragon"],
-      "type": "state_sponsored",
-      "actor_classification": "Advanced Persistent Threat",
+      "actor_id": "TA-APT-003",
+      "name": "APT29 / Cozy Bear",
+      "type": "apt",
       "threat_level": "CRITICAL",
-      "location": "Asia",
-      "nation_state": "State-Sponsored Actor",
-      "hunt_priority": 3,
-      "bounty_usd": 0,
-      "known_for": "Cyber espionage targeting government infrastructure",
-      "law_enforcement_status": "MONITORING - International Intelligence"
-    },
-    {
-      "_id": "threat006",
-      "name": "Underground Merchant",
-      "aliases": ["DarkVendor", "SilkDealer"],
-      "type": "pedophiles",
-      "actor_classification": "CSAM Distributor",
-      "threat_level": "CRITICAL",
-      "location": "Unknown",
-      "hunt_priority": 1,
-      "bounty_usd": 100000,
-      "known_for": "Large-scale CSAM distribution network",
-      "law_enforcement_status": "WANTED - Homeland Security Investigation"
-    },
-    {
-      "_id": "threat007",
-      "name": "Silent Stalker",
-      "aliases": ["Whisper", "GhostFollow"],
-      "type": "predators",
-      "actor_classification": "Online Predator",
-      "threat_level": "HIGH",
-      "location": "North America",
-      "hunt_priority": 1,
-      "bounty_usd": 25000,
-      "known_for": "Grooming minors through gaming platforms",
-      "law_enforcement_status": "WANTED - FBI Regional Office"
-    },
-    {
-      "_id": "threat008",
-      "name": "Poison Spider Group",
-      "aliases": ["SpiderWeb", "VenomCrew"],
-      "type": "pedophiles",
-      "actor_classification": "CSAM Ring Leader",
-      "threat_level": "CRITICAL",
-      "location": "Europe",
-      "hunt_priority": 1,
-      "bounty_usd": 150000,
-      "known_for": "Coordinating international CSAM distribution ring",
-      "law_enforcement_status": "EUROPOL INVESTIGATION - Multi-Country Operation"
+      "status": "MONITORED",
+      "aliases": ["Cozy Bear", "The Dukes", "APT29"],
+      "origin": {
+        "country": "Russia",
+        "affiliated_state": true
+      },
+      "attribution": {
+        "fbi_wanted": false,
+        "reward_usd": 0
+      },
+      "categories": ["Espionage", "Supply Chain Attack", "Cloud Exploitation"],
+      "evidence": {
+        "victim_count": 300,
+        "financial_damage_usd": 500000000,
+        "known_incidents": [
+          "SolarWinds Supply Chain Attack",
+          "COVID-19 Vaccine Research Theft",
+          "Government Network Intrusions"
+        ]
+      },
+      "technical_profile": {
+        "malware_families": ["SUNBURST", "WellMess", "WellMail"],
+        "attack_vectors": [
+          "Supply Chain Compromise",
+          "Spear Phishing",
+          "Cloud Service Exploitation",
+          "Zero-Day Vulnerabilities"
+        ]
+      },
+      "intelligence": {
+        "sources": ["NSA", "FBI", "CISA", "International Agencies"],
+        "confidence_level": "HIGH",
+        "last_updated": "2025-10-12T00:00:00Z"
+      },
+      "hunting_status": {
+        "notes": "State-sponsored APT - continuous monitoring, desu~"
+      }
     }
   ]
 }
