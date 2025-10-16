@@ -1,0 +1,60 @@
+/* NEKO DEFENSE - LAYOUT */
+
+.layout {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.layout-main {
+  flex: 1;
+  padding: var(--space-md);
+
+  /* Account for bottom tabs on mobile */
+  padding-bottom: calc(var(--bottom-nav-height) + var(--space-md));
+}
+
+/* Tablet/Desktop: More padding */
+@media (min-width: 768px) {
+  .layout-main {
+    padding: var(--space-lg);
+    padding-bottom: var(--space-lg);
+  }
+}
+
+/* Desktop: Side padding for wide screens */
+@media (min-width: 1200px) {
+  .layout-main {
+    padding: var(--space-xl);
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+/* Footer */
+.layout-footer {
+  background: rgba(10, 14, 39, 0.9);
+  border-top: 2px solid var(--neko-primary);
+  padding: var(--space-lg);
+  text-align: center;
+  color: var(--neko-secondary);
+  margin-top: auto;
+
+  /* Account for bottom tabs on mobile */
+  margin-bottom: var(--bottom-nav-height);
+}
+
+.layout-footer p {
+  margin: var(--space-xs) 0;
+  font-size: var(--font-sm);
+}
+
+/* Desktop: No bottom tabs, footer at bottom */
+@media (min-width: 768px) {
+  .layout-footer {
+    margin-bottom: 0;
+  }
+}

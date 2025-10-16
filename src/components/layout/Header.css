@@ -1,0 +1,179 @@
+/* NEKO DEFENSE - HEADER (Mobile-First) */
+
+.app-header {
+  background: rgba(10, 14, 39, 0.95);
+  border-bottom: 3px solid var(--neko-primary);
+  box-shadow: 0 4px 20px rgba(255, 20, 147, 0.5);
+  padding: var(--space-md);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  justify-content: space-between;
+}
+
+/* Hamburger Button (Mobile Only) */
+.hamburger-btn {
+  background: transparent;
+  border: 2px solid var(--neko-secondary);
+  border-radius: var(--radius-md);
+  color: var(--neko-secondary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: var(--space-sm);
+  min-width: var(--tap-target-comfortable);
+  min-height: var(--tap-target-comfortable);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+}
+
+.hamburger-btn:hover,
+.hamburger-btn:focus {
+  background: rgba(0, 255, 255, 0.1);
+  border-color: var(--neko-primary);
+  color: var(--neko-primary);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+.hamburger-btn:active {
+  transform: scale(0.95);
+}
+
+.hamburger-icon {
+  display: block;
+  font-size: 1.5rem;
+}
+
+/* Banner */
+.neko-banner {
+  flex: 1;
+  text-align: center;
+}
+
+.neko-banner h1 {
+  margin: 0;
+  font-size: clamp(1rem, 4vw, 1.5rem);
+  color: var(--neko-primary);
+  text-shadow: 0 0 10px var(--neko-secondary);
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    text-shadow: 0 0 10px var(--neko-secondary);
+  }
+  50% {
+    text-shadow: 0 0 20px var(--neko-secondary), 0 0 30px var(--neko-primary);
+  }
+}
+
+/* Header Actions (Desktop) */
+.header-actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.tv-window-button {
+  padding: var(--space-sm) var(--space-md);
+  background: linear-gradient(135deg, var(--neko-primary), var(--neko-secondary));
+  border: 2px solid var(--neko-accent);
+  border-radius: var(--radius-lg);
+  color: #fff;
+  font-weight: bold;
+  font-size: var(--font-sm);
+  font-family: 'Courier New', monospace;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: 0 0 15px rgba(255, 20, 147, 0.5);
+}
+
+.tv-window-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.7);
+}
+
+/* Status Bar (Desktop Only) */
+.status-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--neko-secondary);
+  font-size: var(--font-sm);
+  font-weight: bold;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-full);
+  background: rgba(0, 255, 65, 0.1);
+  border: 2px solid var(--neko-success);
+  color: var(--neko-success);
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--neko-success);
+  border-radius: 50%;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+.kawaii-meter {
+  color: var(--neko-primary);
+  text-shadow: 0 0 10px var(--neko-primary);
+}
+
+/* Tablet/Desktop: Larger header */
+@media (min-width: 768px) {
+  .app-header {
+    padding: var(--space-lg);
+  }
+
+  .neko-banner h1 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+}
+
+/* Very large desktop */
+@media (min-width: 1400px) {
+  .app-header {
+    padding: var(--space-xl);
+  }
+}
+
+/* Accessibility */
+.hamburger-btn:focus-visible {
+  outline: 2px solid var(--neko-accent);
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .neko-banner h1 {
+    animation: none;
+  }
+
+  .status-dot {
+    animation: none;
+  }
+}

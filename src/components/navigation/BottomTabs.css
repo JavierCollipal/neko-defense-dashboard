@@ -1,0 +1,139 @@
+/* NEKO DEFENSE - BOTTOM TAB NAVIGATION */
+
+.bottom-tabs {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-fixed);
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  background: var(--neko-darker);
+  border-top: 2px solid var(--neko-primary);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5), 0 -4px 20px rgba(255, 20, 147, 0.3);
+
+  /* Safe area for iOS notch */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: var(--tap-target-optimal);
+  padding: var(--space-xs) var(--space-sm);
+
+  color: var(--neko-secondary);
+  text-decoration: none;
+  font-size: var(--font-sm);
+
+  transition: all var(--transition-base);
+
+  /* Better tap target */
+  position: relative;
+}
+
+.tab::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--neko-primary);
+  transform: scaleX(0);
+  transition: transform var(--transition-base);
+}
+
+.tab-icon {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-xs);
+  transition: transform var(--transition-fast);
+}
+
+.tab-label {
+  font-size: var(--font-xs);
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Active state */
+.tab.active {
+  color: var(--neko-primary);
+  background: rgba(255, 20, 147, 0.1);
+}
+
+.tab.active::before {
+  transform: scaleX(1);
+}
+
+.tab.active .tab-icon {
+  transform: scale(1.1);
+  text-shadow: 0 0 10px var(--neko-primary);
+}
+
+/* Hover/Focus (desktop) */
+@media (hover: hover) {
+  .tab:hover,
+  .tab:focus {
+    color: var(--neko-accent);
+    background: rgba(255, 215, 0, 0.05);
+  }
+
+  .tab:hover .tab-icon {
+    transform: scale(1.15);
+  }
+}
+
+/* Touch feedback */
+.tab:active {
+  background: rgba(255, 20, 147, 0.2);
+}
+
+/* Hide on tablet/desktop */
+@media (min-width: 768px) {
+  .bottom-tabs {
+    display: none;
+  }
+}
+
+/* Landscape mobile: Smaller icons, hide labels */
+@media (orientation: landscape) and (max-height: 500px) {
+  .tab {
+    min-height: 48px;
+    padding: var(--space-xs);
+  }
+
+  .tab-icon {
+    font-size: 1.25rem;
+    margin-bottom: 0;
+  }
+
+  .tab-label {
+    display: none;
+  }
+}
+
+/* Accessibility: Focus styles */
+.tab:focus-visible {
+  outline: 2px solid var(--neko-accent);
+  outline-offset: -2px;
+}
+
+/* Animation on mount */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.bottom-tabs {
+  animation: slideUp var(--transition-slow);
+}
