@@ -1,0 +1,458 @@
+/*
+ * NEKO DEFENSE SYSTEM - TYPOGRAPHY
+ * Mobile-First Fluid Typography System
+ *
+ * Based on CSS clamp() for smooth scaling across all devices
+ */
+
+/* ========================================
+ * BASE FONT SETTINGS
+ * Mobile-first typography foundation
+ * ======================================== */
+
+html {
+  font-size: 16px; /* Base for rem calculations (1rem = 16px) */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%; /* Prevent iOS text size adjustment */
+}
+
+body {
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-base);
+  line-height: 1.6;
+  color: var(--neko-secondary);
+  background: var(--neko-darker);
+
+  /* Better text rendering on mobile */
+  text-rendering: optimizeLegibility;
+  -webkit-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+}
+
+/* ========================================
+ * HEADING SCALE (Fluid Sizing)
+ * Automatically scales from mobile to desktop
+ * ======================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  line-height: 1.2;
+  color: var(--neko-primary);
+  margin-top: 0;
+  font-family: 'Courier New', monospace;
+}
+
+h1 {
+  font-size: var(--font-3xl);
+  margin-bottom: var(--space-lg);
+  text-shadow: var(--shadow-md);
+}
+
+h2 {
+  font-size: var(--font-2xl);
+  margin-bottom: var(--space-md);
+  text-shadow: var(--shadow-sm);
+}
+
+h3 {
+  font-size: var(--font-xl);
+  margin-bottom: var(--space-md);
+  color: var(--neko-primary);
+}
+
+h4 {
+  font-size: var(--font-lg);
+  margin-bottom: var(--space-sm);
+  color: var(--neko-secondary);
+}
+
+h5 {
+  font-size: var(--font-base);
+  margin-bottom: var(--space-sm);
+  color: var(--neko-secondary);
+}
+
+h6 {
+  font-size: var(--font-sm);
+  margin-bottom: var(--space-xs);
+  color: var(--neko-accent);
+}
+
+/* ========================================
+ * BODY TEXT
+ * Optimized for readability on all devices
+ * ======================================== */
+
+p {
+  font-size: var(--font-base);
+  margin-bottom: var(--space-md);
+  line-height: 1.6;
+  color: var(--neko-secondary);
+
+  /* Better word breaking on mobile */
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Lead text (intro paragraphs) */
+.lead {
+  font-size: var(--font-lg);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--neko-accent);
+}
+
+/* Small text */
+small, .text-sm {
+  font-size: var(--font-sm);
+}
+
+.text-xs {
+  font-size: var(--font-xs);
+}
+
+/* Large text */
+.text-lg {
+  font-size: var(--font-lg);
+}
+
+.text-xl {
+  font-size: var(--font-xl);
+}
+
+/* ========================================
+ * DISPLAY TEXT
+ * Hero sections and large displays
+ * ======================================== */
+
+.display {
+  font-size: clamp(2.5rem, 8vw + 1rem, 4rem);
+  line-height: 1.1;
+  font-weight: bold;
+  color: var(--neko-primary);
+  text-shadow: var(--shadow-lg);
+  letter-spacing: -0.02em;
+}
+
+.display-sm {
+  font-size: clamp(2rem, 6vw + 0.5rem, 3rem);
+  line-height: 1.15;
+}
+
+/* ========================================
+ * MONOSPACE TEXT (ASCII Art, Code)
+ * Special styling for technical content
+ * ======================================== */
+
+.mono, code, pre, .ascii-art {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.05em;
+}
+
+code {
+  background: var(--neko-dark);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9em;
+  color: var(--neko-success);
+}
+
+pre {
+  background: var(--neko-dark);
+  border: var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  overflow-x: auto;
+  font-size: var(--font-sm);
+  line-height: 1.4;
+}
+
+/* ASCII Art specific */
+.ascii-art {
+  font-size: var(--font-ascii);
+  line-height: 1.2;
+  white-space: pre;
+  color: var(--neko-success);
+  letter-spacing: 0;
+
+  /* Prevent text selection for better UX */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ========================================
+ * TEXT UTILITIES
+ * Helper classes for common patterns
+ * ======================================== */
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.text-lowercase {
+  text-transform: lowercase;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+/* Font weights */
+.font-normal {
+  font-weight: normal;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+/* ========================================
+ * COLOR UTILITIES
+ * Text color variants
+ * ======================================== */
+
+.text-primary {
+  color: var(--neko-primary);
+}
+
+.text-secondary {
+  color: var(--neko-secondary);
+}
+
+.text-accent {
+  color: var(--neko-accent);
+}
+
+.text-success {
+  color: var(--neko-success);
+}
+
+.text-danger {
+  color: var(--neko-danger);
+}
+
+.text-warning {
+  color: var(--neko-warning);
+}
+
+.text-info {
+  color: var(--neko-info);
+}
+
+/* ========================================
+ * LINKS
+ * Mobile-optimized link styles
+ * ======================================== */
+
+a {
+  color: var(--neko-accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+
+  /* Touch-friendly tap area */
+  display: inline-block;
+  padding: 2px 0;
+}
+
+a:hover,
+a:focus {
+  color: var(--neko-primary);
+  text-decoration: underline;
+}
+
+a:active {
+  color: var(--neko-secondary);
+}
+
+/* Remove default link styling in some contexts */
+a.no-style {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ========================================
+ * LISTS
+ * Optimized list styles
+ * ======================================== */
+
+ul, ol {
+  margin: 0 0 var(--space-md) 0;
+  padding-left: var(--space-lg);
+}
+
+li {
+  margin-bottom: var(--space-xs);
+  color: var(--neko-secondary);
+}
+
+/* Unstyled list */
+.list-none {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+/* ========================================
+ * EMPHASIS & FORMATTING
+ * Text emphasis styles
+ * ======================================== */
+
+strong, b {
+  font-weight: bold;
+  color: var(--neko-accent);
+}
+
+em, i {
+  font-style: italic;
+  color: var(--neko-primary);
+}
+
+mark {
+  background: var(--neko-primary-alpha);
+  color: var(--neko-primary);
+  padding: 0 4px;
+  border-radius: var(--radius-sm);
+}
+
+/* ========================================
+ * BLOCKQUOTES
+ * Styled quotes
+ * ======================================== */
+
+blockquote {
+  border-left: 4px solid var(--neko-primary);
+  padding-left: var(--space-md);
+  margin: var(--space-lg) 0;
+  font-style: italic;
+  color: var(--neko-accent);
+}
+
+blockquote p {
+  margin-bottom: var(--space-sm);
+}
+
+/* ========================================
+ * ACCESSIBILITY
+ * Screen reader only text
+ * ======================================== */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ========================================
+ * TRUNCATION
+ * Text overflow handling
+ * ======================================== */
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ========================================
+ * ACCESSIBILITY OVERRIDES
+ * Respect user preferences
+ * ======================================== */
+
+/* Allow text zoom (WCAG requirement) */
+@supports (font-size: max(16px, 1rem)) {
+  body {
+    font-size: max(16px, var(--font-base));
+  }
+}
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+  body {
+    color: #ffffff;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #ffff00;
+  }
+}
+
+/* Reduced motion: Remove text shadows */
+@media (prefers-reduced-motion: reduce) {
+  h1, h2, .display {
+    text-shadow: none;
+  }
+}
+
+/* ========================================
+ * MOBILE-SPECIFIC ADJUSTMENTS
+ * Fine-tuning for very small screens
+ * ======================================== */
+
+@media (max-width: 380px) {
+  /* Tighter line height on very small screens */
+  body {
+    line-height: 1.5;
+  }
+
+  /* Reduce letter spacing */
+  .text-uppercase {
+    letter-spacing: 0.05em;
+  }
+}
+
+/* ========================================
+ * PRINT STYLES
+ * Optimize for printing
+ * ======================================== */
+
+@media print {
+  body {
+    color: #000;
+    background: #fff;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #000;
+    text-shadow: none;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,195 @@
+/*
+ * NEKO DEFENSE SYSTEM - CSS VARIABLES
+ * Mobile-First Design Tokens
+ *
+ * Usage: All components should use these variables instead of hardcoded values
+ */
+
+:root {
+  /* ========================================
+   * COLORS (Cyberpunk Theme)
+   * Keep existing aesthetic while mobile-optimizing
+   * ======================================== */
+
+  --neko-primary: #ff1493;        /* Hot pink */
+  --neko-secondary: #00ffff;      /* Cyan */
+  --neko-dark: #0a0e27;           /* Dark blue-black */
+  --neko-darker: #050812;         /* Darker background */
+  --neko-accent: #ffd700;         /* Gold */
+  --neko-success: #00ff41;        /* Bright green */
+  --neko-danger: #ff0033;         /* Red */
+  --neko-warning: #ffaa00;        /* Orange */
+  --neko-info: #00aaff;           /* Blue */
+
+  /* Transparent variants for overlays */
+  --neko-primary-alpha: rgba(255, 20, 147, 0.1);
+  --neko-secondary-alpha: rgba(0, 255, 255, 0.1);
+  --neko-dark-alpha: rgba(10, 14, 39, 0.9);
+
+  /* ========================================
+   * TYPOGRAPHY SCALE (Fluid & Responsive)
+   * Uses clamp() for smooth scaling across devices
+   * min: mobile (320px), preferred: viewport-based, max: desktop
+   * ======================================== */
+
+  --font-xs: clamp(0.75rem, 1vw + 0.5rem, 0.875rem);
+  --font-sm: clamp(0.875rem, 1.5vw + 0.5rem, 1rem);
+  --font-base: clamp(1rem, 2vw + 0.5rem, 1.125rem);
+  --font-lg: clamp(1.125rem, 2.5vw + 0.5rem, 1.25rem);
+  --font-xl: clamp(1.25rem, 3vw + 0.5rem, 1.5rem);
+  --font-2xl: clamp(1.5rem, 4vw + 0.5rem, 2rem);
+  --font-3xl: clamp(2rem, 5vw + 0.5rem, 2.5rem);
+  --font-4xl: clamp(2.5rem, 6vw + 0.5rem, 3rem);
+
+  /* ASCII Art special sizing */
+  --font-ascii: clamp(0.6rem, 1.2vw + 0.5rem, 0.85rem);
+
+  /* ========================================
+   * SPACING SCALE (Responsive)
+   * Consistent spacing across all components
+   * ======================================== */
+
+  --space-xs: clamp(4px, 1vw, 8px);
+  --space-sm: clamp(8px, 2vw, 12px);
+  --space-md: clamp(12px, 3vw, 16px);
+  --space-lg: clamp(16px, 4vw, 24px);
+  --space-xl: clamp(24px, 5vw, 32px);
+  --space-2xl: clamp(32px, 6vw, 48px);
+  --space-3xl: clamp(48px, 8vw, 64px);
+
+  /* ========================================
+   * TOUCH TARGETS (Mobile-Friendly)
+   * Based on iOS & Android guidelines
+   * ======================================== */
+
+  --tap-target-min: 44px;          /* iOS minimum */
+  --tap-target-comfortable: 48px;   /* Android minimum */
+  --tap-target-optimal: 56px;       /* Optimal for most users */
+
+  /* ========================================
+   * LAYOUT WIDTHS
+   * Container max-widths for different breakpoints
+   * ======================================== */
+
+  --container-mobile: 100%;
+  --container-tablet: 768px;
+  --container-desktop: 1200px;
+  --container-wide: 1400px;
+
+  /* ========================================
+   * Z-INDEX SCALE
+   * Consistent layering across app
+   * ======================================== */
+
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-notification: 600;
+  --z-tooltip: 700;
+
+  /* ========================================
+   * ANIMATIONS & TRANSITIONS
+   * Consistent timing across interactions
+   * ======================================== */
+
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 350ms ease;
+  --transition-drawer: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ========================================
+   * SHADOWS (Cyberpunk Glow Effect)
+   * Neon-style box shadows for the aesthetic
+   * ======================================== */
+
+  --shadow-sm: 0 0 5px var(--neko-secondary);
+  --shadow-md: 0 0 10px var(--neko-secondary), 0 0 20px var(--neko-secondary);
+  --shadow-lg: 0 0 15px var(--neko-primary), 0 0 30px var(--neko-primary);
+  --shadow-xl: 0 0 20px var(--neko-primary), 0 0 40px var(--neko-primary), 0 0 60px var(--neko-primary);
+
+  /* Standard shadows for cards */
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.4);
+
+  /* ========================================
+   * BORDER RADIUS
+   * Consistent rounding across components
+   * ======================================== */
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* ========================================
+   * BORDERS
+   * Consistent border styling
+   * ======================================== */
+
+  --border-width: 2px;
+  --border-primary: 2px solid var(--neko-primary);
+  --border-secondary: 2px solid var(--neko-secondary);
+  --border-accent: 2px solid var(--neko-accent);
+
+  /* ========================================
+   * HEADER/FOOTER HEIGHTS
+   * Fixed heights for layout calculations
+   * ======================================== */
+
+  --header-height-mobile: clamp(60px, 15vw, 80px);
+  --header-height-desktop: 120px;
+  --footer-height: 60px;
+  --bottom-nav-height: 56px;
+}
+
+/* ========================================
+ * ACCESSIBILITY OVERRIDES
+ * Respect user preferences
+ * ======================================== */
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  :root {
+    --neko-primary: #ff3399;
+    --neko-secondary: #00ffff;
+    --neko-accent: #ffff00;
+    /* Increase contrast ratios */
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0.01ms;
+    --transition-base: 0.01ms;
+    --transition-slow: 0.01ms;
+    --transition-drawer: 0.01ms;
+  }
+}
+
+/* Dark Mode (future-proofing) */
+@media (prefers-color-scheme: light) {
+  :root {
+    /* Could add light theme variants in future */
+    /* For now, cyberpunk is always dark 🐾 */
+  }
+}
+
+/* ========================================
+ * RTL SUPPORT VARIABLES
+ * For right-to-left languages
+ * ======================================== */
+
+[dir="rtl"] {
+  --text-align: right;
+  --flex-direction: row-reverse;
+}
+
+[dir="ltr"] {
+  --text-align: left;
+  --flex-direction: row;
+}

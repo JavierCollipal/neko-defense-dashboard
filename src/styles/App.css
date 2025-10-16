@@ -1,7 +1,18 @@
 /* 🐾⚡ NEKO DEFENSE DASHBOARD - LEGENDARY STYLING ⚡🐾 */
-@import './rtl-support.css';
 
+/* ========================================
+ * MOBILE-FIRST CSS ARCHITECTURE
+ * Load new system first, then legacy styles
+ * ======================================== */
+@import './variables.css';      /* Design tokens & CSS variables */
+@import './typography.css';     /* Fluid typography system */
+@import './breakpoints.css';    /* Mobile-first breakpoints */
+@import './components.css';     /* Reusable component patterns */
+@import './rtl-support.css';    /* RTL language support */
+
+/* Legacy :root variables (will be gradually replaced) */
 :root {
+  /* These are now defined in variables.css, keeping here for compatibility */
   --neko-primary: #ff1493;
   --neko-secondary: #00ffff;
   --neko-dark: #0a0e27;

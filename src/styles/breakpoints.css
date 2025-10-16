@@ -1,0 +1,441 @@
+/*
+ * NEKO DEFENSE SYSTEM - BREAKPOINTS
+ * Mobile-First Responsive Breakpoint System
+ *
+ * Design Philosophy: Start with mobile, progressively enhance for larger screens
+ * ALWAYS use min-width media queries (NOT max-width)
+ */
+
+/* ========================================
+ * BREAKPOINT DOCUMENTATION
+ *
+ * Mobile (320px - 575px):    Base styles, no media query needed
+ * Small+ (576px+):           Large phones
+ * Medium+ (768px+):          Tablets (portrait)
+ * Large+ (992px+):           Tablets (landscape) / Small desktop
+ * XL+ (1200px+):             Desktop
+ * 2XL+ (1400px+):            Large desktop / Wide screens
+ *
+ * Usage Example:
+ * .element {
+ *   width: 100%;  // Mobile default
+ * }
+ * @media (min-width: 768px) {
+ *   .element {
+ *     width: 750px;  // Tablet enhancement
+ *   }
+ * }
+ * ======================================== */
+
+/* ========================================
+ * BREAKPOINT VARIABLES
+ * Reference values (not used directly in media queries)
+ * ======================================== */
+
+:root {
+  --breakpoint-xs: 320px;   /* Small phones (iPhone SE) */
+  --breakpoint-sm: 576px;   /* Large phones */
+  --breakpoint-md: 768px;   /* Tablets */
+  --breakpoint-lg: 992px;   /* Tablet landscape / Small desktop */
+  --breakpoint-xl: 1200px;  /* Desktop */
+  --breakpoint-2xl: 1400px; /* Large desktop */
+}
+
+/* ========================================
+ * BASE (MOBILE)
+ * 320px - 575px
+ * These styles apply to ALL screens, no media query needed
+ * Start here, then enhance for larger screens
+ * ======================================== */
+
+/* All base styles in other CSS files apply here */
+/* No @media query needed - this is the foundation */
+
+/* ========================================
+ * SMALL+ (Large Phones)
+ * 576px and above
+ * ======================================== */
+
+@media (min-width: 576px) {
+  :root {
+    /* Enhanced spacing for larger phones */
+    --space-responsive: 1.1;
+  }
+
+  /* Container slightly constrained */
+  .container {
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  /* Buttons can be slightly larger */
+  .btn {
+    padding: var(--space-sm) var(--space-lg);
+  }
+
+  /* Grid: Allow 2 columns on large phones */
+  .grid-responsive {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+/* ========================================
+ * MEDIUM+ (Tablets)
+ * 768px and above
+ * ======================================== */
+
+@media (min-width: 768px) {
+  :root {
+    /* Increased spacing for tablets */
+    --space-responsive: 1.2;
+  }
+
+  /* Container for tablet */
+  .container {
+    max-width: 720px;
+  }
+
+  /* Hide mobile navigation, show desktop nav */
+  .bottom-tabs {
+    display: none;
+  }
+
+  .sidebar-left {
+    display: block;
+  }
+
+  /* Grid: 2-3 columns on tablet */
+  .grid-responsive {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  /* Flex layouts can switch to row */
+  .flex-col-mobile {
+    flex-direction: row;
+  }
+
+  /* Header can expand */
+  .app-header {
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  /* Cards get more padding */
+  .card {
+    padding: var(--space-lg);
+  }
+
+  /* Modals can be wider */
+  .modal-content {
+    max-width: 600px;
+  }
+}
+
+/* ========================================
+ * LARGE+ (Tablet Landscape / Small Desktop)
+ * 992px and above
+ * ======================================== */
+
+@media (min-width: 992px) {
+  :root {
+    --space-responsive: 1.3;
+  }
+
+  /* Container for small desktop */
+  .container {
+    max-width: 960px;
+  }
+
+  /* Grid: 3-4 columns */
+  .grid-responsive {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  /* Sidebar sticky behavior */
+  .sidebar-left {
+    position: sticky;
+    top: 0;
+    height: calc(100vh - var(--header-height-desktop));
+  }
+
+  /* Larger modals */
+  .modal-content {
+    max-width: 800px;
+  }
+}
+
+/* ========================================
+ * XL+ (Desktop)
+ * 1200px and above
+ * ======================================== */
+
+@media (min-width: 1200px) {
+  :root {
+    --space-responsive: 1.4;
+  }
+
+  /* Container for desktop */
+  .container {
+    max-width: 1140px;
+  }
+
+  /* Full desktop layout */
+  .main-container {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-xl);
+  }
+
+  .sidebar-left {
+    width: 300px;
+    flex-shrink: 0;
+  }
+
+  .main-content {
+    flex: 1;
+  }
+
+  /* Grid: 4 columns possible */
+  .grid-responsive {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  /* Modals can be even larger */
+  .modal-content {
+    max-width: 900px;
+  }
+
+  /* Desktop-specific features */
+  .desktop-only {
+    display: block;
+  }
+
+  .mobile-only {
+    display: none;
+  }
+}
+
+/* ========================================
+ * 2XL+ (Large Desktop / Wide Screens)
+ * 1400px and above
+ * ======================================== */
+
+@media (min-width: 1400px) {
+  /* Container for wide screens */
+  .container {
+    max-width: 1320px;
+  }
+
+  /* Even more spacing */
+  .grid-responsive {
+    gap: var(--space-2xl);
+  }
+
+  /* Wider modals for very large screens */
+  .modal-content {
+    max-width: 1000px;
+  }
+
+  /* Sidebar can be slightly wider */
+  .sidebar-left {
+    width: 320px;
+  }
+}
+
+/* ========================================
+ * ORIENTATION-SPECIFIC STYLES
+ * Handle landscape mode on mobile devices
+ * ======================================== */
+
+/* Mobile landscape: Reduce vertical spacing */
+@media (orientation: landscape) and (max-height: 500px) {
+  :root {
+    /* Tighter spacing in landscape */
+    --space-md: 8px;
+    --space-lg: 12px;
+  }
+
+  .app-header {
+    padding: var(--space-sm);
+  }
+
+  /* Bottom navigation smaller in landscape */
+  .bottom-tabs {
+    min-height: 48px;
+  }
+
+  .tab-label {
+    display: none; /* Hide labels to save space */
+  }
+
+  /* Reduce modal padding */
+  .modal-content {
+    padding: var(--space-md);
+    max-height: 90vh;
+  }
+}
+
+/* ========================================
+ * CONTAINER QUERIES (Future-Ready)
+ * When container queries have better support, we can use these
+ * For now, commented out for reference
+ * ======================================== */
+
+/*
+@container (min-width: 768px) {
+  .card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+*/
+
+/* ========================================
+ * UTILITY CLASSES
+ * Show/hide based on breakpoint
+ * ======================================== */
+
+/* Hide on mobile */
+.hide-mobile {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hide-mobile {
+    display: block;
+  }
+}
+
+/* Show only on mobile */
+.show-mobile {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .show-mobile {
+    display: none;
+  }
+}
+
+/* Hide on tablet */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .hide-tablet {
+    display: none;
+  }
+}
+
+/* Show only on tablet */
+.show-tablet {
+  display: none;
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .show-tablet {
+    display: block;
+  }
+}
+
+/* Hide on desktop */
+@media (min-width: 1200px) {
+  .hide-desktop {
+    display: none;
+  }
+}
+
+/* Show only on desktop */
+.show-desktop {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .show-desktop {
+    display: block;
+  }
+}
+
+/* ========================================
+ * PRINT MEDIA QUERY
+ * Optimize for printing
+ * ======================================== */
+
+@media print {
+  /* Hide non-essential elements */
+  .no-print,
+  .bottom-tabs,
+  .sidebar-left,
+  .app-header,
+  .app-footer {
+    display: none !important;
+  }
+
+  /* Full width for print */
+  .container {
+    max-width: 100%;
+  }
+
+  /* Remove shadows and effects */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+}
+
+/* ========================================
+ * TOUCH DEVICE DETECTION
+ * Adjust styles for touch vs mouse
+ * ======================================== */
+
+/* Touch devices: Larger tap targets */
+@media (hover: none) and (pointer: coarse) {
+  .btn,
+  .tab,
+  .menu-item {
+    min-height: var(--tap-target-optimal);
+    min-width: var(--tap-target-optimal);
+  }
+
+  /* Remove hover effects on touch */
+  .btn:hover,
+  .card:hover {
+    transform: none;
+  }
+}
+
+/* Mouse devices: Enable hover effects */
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+  }
+}
+
+/* ========================================
+ * EXAMPLES & BEST PRACTICES
+ *
+ * ❌ WRONG (Desktop-first):
+ * .element {
+ *   width: 1200px;
+ * }
+ * @media (max-width: 768px) {
+ *   .element {
+ *     width: 100%;
+ *   }
+ * }
+ *
+ * ✅ RIGHT (Mobile-first):
+ * .element {
+ *   width: 100%;
+ * }
+ * @media (min-width: 768px) {
+ *   .element {
+ *     width: 750px;
+ *   }
+ * }
+ * @media (min-width: 1200px) {
+ *   .element {
+ *     width: 1200px;
+ *   }
+ * }
+ * ======================================== */
