@@ -12,6 +12,8 @@ function DinaDocumentation() {
   const [loading, setLoading] = useState(true);
   const [selectedPerp, setSelectedPerp] = useState(null);
   const [viewMode, setViewMode] = useState('overview'); // 'overview', 'list', 'details', 'centers', 'international', 'wanted'
+  const [statusFilter, setStatusFilter] = useState('all'); // 🎯 NEW: Filter for wanted agents view
+  const [expandedAgentId, setExpandedAgentId] = useState(null); // 🎯 NEW: Track which agent card is expanded
 
   // 🎯 COMPREHENSIVE DINA AGENTS DATABASE - Research Updated October 2025
   const dinaAgentsDatabase = [
@@ -272,16 +274,19 @@ function DinaDocumentation() {
   ];
 
   // 📊 Calculate wanted agents statistics
+  // 🎯 NOW USES MONGODB DATA (perpetrators state) - Falls back to hardcoded if empty
   const calculateWantedStats = () => {
+    const dataSource = perpetrators.length > 0 ? perpetrators : dinaAgentsDatabase;
+
     return {
       totalAgents: 1097, // Army's official 2008 list
-      documented: dinaAgentsDatabase.length,
-      atLarge: dinaAgentsDatabase.filter(a => a.status.includes('AT LARGE')).length,
-      convicted: dinaAgentsDatabase.filter(a => a.legalStatus?.convicted).length,
-      imprisoned: dinaAgentsDatabase.filter(a => a.status === 'CONVICTED - IMPRISONED').length,
-      deceased: dinaAgentsDatabase.filter(a => a.status.includes('DECEASED')).length,
-      unprosecuted: dinaAgentsDatabase.filter(a => !a.legalStatus?.convicted && !a.status.includes('DECEASED')).length,
-      neverProsecuted: dinaAgentsDatabase.filter(a => a.legalStatus?.prosecution?.includes('NEVER')).length
+      documented: dataSource.length,
+      atLarge: dataSource.filter(a => a.status?.includes('AT LARGE')).length,
+      convicted: dataSource.filter(a => a.legalStatus?.convicted).length,
+      imprisoned: dataSource.filter(a => a.status === 'CONVICTED - IMPRISONED').length,
+      deceased: dataSource.filter(a => a.status?.includes('DECEASED')).length,
+      unprosecuted: dataSource.filter(a => !a.legalStatus?.convicted && !a.status?.includes('DECEASED')).length,
+      neverProsecuted: dataSource.filter(a => a.legalStatus?.prosecution?.includes('NEVER')).length
     };
   };
 
@@ -373,6 +378,28 @@ function DinaDocumentation() {
   const changeView = (mode) => {
     setViewMode(mode);
     setSelectedPerp(null);
+  };
+
+  // 🎯 Filter wanted agents by status - Uses MongoDB data!
+  const getFilteredWantedAgents = () => {
+    const dataSource = perpetrators.length > 0 ? perpetrators : dinaAgentsDatabase;
+
+    if (statusFilter === 'all') {
+      return dataSource;
+    }
+
+    return dataSource.filter(agent => {
+      switch (statusFilter) {
+        case 'at-large':
+          return agent.status?.includes('AT LARGE');
+        case 'imprisoned':
+          return agent.status === 'CONVICTED - IMPRISONED';
+        case 'never-prosecuted':
+          return agent.legalStatus?.prosecution?.includes('NEVER');
+        default:
+          return true;
+      }
+    });
   };
 
   if (loading) {
@@ -563,158 +590,230 @@ function DinaDocumentation() {
               <h3>📋 Comprehensive DINA Agents Database</h3>
               <p className="database-note">Following Simon Wiesenthal Nazi-hunting precedent: NO statute of limitations for crimes against humanity, nyaa~!</p>
 
-              {/* Filter by Status */}
+              {/* Filter by Status - 🎯 NOW INTERACTIVE! */}
               <div className="status-filter">
-                <button className="filter-btn active">ALL ({dinaAgentsDatabase.length})</button>
-                <button className="filter-btn warning">AT LARGE ({calculateWantedStats().atLarge})</button>
-                <button className="filter-btn success">IMPRISONED ({calculateWantedStats().imprisoned})</button>
-                <button className="filter-btn critical">NEVER PROSECUTED ({calculateWantedStats().neverProsecuted})</button>
+                <button
+                  className={`filter-btn ${statusFilter === 'all' ? 'active' : ''}`}
+                  onClick={() => setStatusFilter('all')}
+                >
+                  ALL ({perpetrators.length > 0 ? perpetrators.length : dinaAgentsDatabase.length})
+                </button>
+                <button
+                  className={`filter-btn warning ${statusFilter === 'at-large' ? 'active' : ''}`}
+                  onClick={() => setStatusFilter('at-large')}
+                >
+                  AT LARGE ({calculateWantedStats().atLarge})
+                </button>
+                <button
+                  className={`filter-btn success ${statusFilter === 'imprisoned' ? 'active' : ''}`}
+                  onClick={() => setStatusFilter('imprisoned')}
+                >
+                  IMPRISONED ({calculateWantedStats().imprisoned})
+                </button>
+                <button
+                  className={`filter-btn critical ${statusFilter === 'never-prosecuted' ? 'active' : ''}`}
+                  onClick={() => setStatusFilter('never-prosecuted')}
+                >
+                  NEVER PROSECUTED ({calculateWantedStats().neverProsecuted})
+                </button>
               </div>
 
-              {/* Agents Grid */}
-              <div className="wanted-agents-grid">
-                {dinaAgentsDatabase.map((agent, index) => (
-                  <div key={index} className={`wanted-agent-card ${agent.status.includes('AT LARGE') ? 'at-large' : ''} ${agent.status.includes('NEVER PROSECUTED') ? 'impunity' : ''}`}>
+              {/* Agents Grid - 🎯 MODERN COLLAPSIBLE CARDS WITH MONGODB DATA! */}
+              <div className="wanted-agents-grid-modern">
+                {getFilteredWantedAgents().map((agent, index) => {
+                  const agentId = `agent-${index}`;
+                  const isExpanded = expandedAgentId === agentId;
 
-                    {/* Status Badge */}
-                    <div className={`status-badge ${
-                      agent.status.includes('AT LARGE') ? 'warning' :
-                      agent.status === 'CONVICTED - IMPRISONED' ? 'success' :
-                      agent.status.includes('NEVER PROSECUTED') ? 'critical' :
-                      agent.status.includes('DECEASED') && agent.legalStatus?.convicted ? 'deceased-convicted' :
-                      'deceased'
-                    }`}>
-                      {agent.status}
-                    </div>
-
-                    {/* Agent Info */}
-                    <div className="agent-header">
-                      <h3>{agent.fullName}</h3>
-                      {agent.codename && <div className="agent-codename">🎭 Codename: "{agent.codename}"</div>}
-                      {agent.alias && <div className="agent-alias">Alias: {agent.alias}</div>}
-                      <div className="agent-rank">{agent.rank || agent.role}</div>
-                    </div>
-
-                    {/* Role & Organization */}
-                    <div className="agent-section">
-                      <strong>Role:</strong> {agent.role}
-                    </div>
-                    <div className="agent-section">
-                      <strong>Organization:</strong> {agent.organization.join(', ')}
-                    </div>
-
-                    {/* Research & Work Capabilities */}
-                    {agent.researchCapability && (
-                      <div className="agent-capabilities research-capability">
-                        <h4>🔍 Research Capability</h4>
-                        <p>{agent.researchCapability}</p>
-                      </div>
-                    )}
-                    {agent.workCapability && (
-                      <div className="agent-capabilities work-capability">
-                        <h4>⚡ Work Capability</h4>
-                        <p>{agent.workCapability}</p>
-                      </div>
-                    )}
-
-                    {/* Legal Status */}
-                    <div className="agent-legal-status">
-                      <h4>⚖️ Legal Status</h4>
-                      <div className="legal-detail">
-                        <strong>Convicted:</strong> {agent.legalStatus?.convicted ? '✅ YES' : '⚠️ NO'}
-                      </div>
-                      <div className="legal-detail">
-                        <strong>Current Status:</strong> {agent.legalStatus?.currentStatus}
-                      </div>
-                      {agent.legalStatus?.sentences && (
-                        <div className="legal-detail sentences">
-                          <strong>Sentences:</strong> {agent.legalStatus.sentences}
-                        </div>
-                      )}
-                      {agent.legalStatus?.charges && (
-                        <div className="legal-detail charges">
-                          <strong>Charges:</strong> {agent.legalStatus.charges}
-                        </div>
-                      )}
-                      {agent.legalStatus?.prisonLocation && (
-                        <div className="legal-detail">
-                          <strong>Location:</strong> {agent.legalStatus.prisonLocation}
-                        </div>
-                      )}
-                      {agent.legalStatus?.extraditionStatus && (
-                        <div className="legal-detail extradition">
-                          <strong>🚨 Extradition:</strong> {agent.legalStatus.extraditionStatus}
-                        </div>
-                      )}
-                      {agent.legalStatus?.prosecution && (
-                        <div className="legal-detail prosecution-status critical">
-                          <strong>⚠️ Prosecution:</strong> {agent.legalStatus.prosecution}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Crimes */}
-                    <div className="agent-crimes">
-                      <h4>💀 Crimes Accused</h4>
-                      <ul>
-                        {agent.crimesAccused.slice(0, 5).map((crime, i) => (
-                          <li key={i}>{crime}</li>
-                        ))}
-                        {agent.crimesAccused.length > 5 && <li>... and {agent.crimesAccused.length - 5} more</li>}
-                      </ul>
-                    </div>
-
-                    {/* Notable Operations */}
-                    {agent.notableOperations && agent.notableOperations.length > 0 && (
-                      <div className="agent-operations">
-                        <h4>🎯 Notable Operations</h4>
-                        <ul>
-                          {agent.notableOperations.map((op, i) => (
-                            <li key={i}>{op}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {/* Timeline */}
-                    {agent.timeline && agent.timeline.length > 0 && (
-                      <div className="agent-timeline">
-                        <h4>📅 Timeline</h4>
-                        <ul>
-                          {agent.timeline.map((event, i) => (
-                            <li key={i}>{event}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {/* Significance */}
-                    {agent.significance && (
-                      <div className={`agent-significance ${agent.significance.includes('⚠️') ? 'critical' : ''}`}>
-                        <strong>🎯 Significance:</strong> {agent.significance}
-                      </div>
-                    )}
-
-                    {/* Tags */}
-                    <div className="agent-tags">
-                      {agent.tags.map((tag, i) => (
-                        <span key={i} className={`tag ${
-                          tag.includes('AT LARGE') || tag.includes('UNPROSECUTED') ? 'tag-warning' :
-                          tag.includes('CONVICTED') || tag.includes('IMPRISONED') ? 'tag-success' :
-                          tag.includes('NEVER PROSECUTED') || tag.includes('IMPUNITY') || tag.includes('⚠️') ? 'tag-critical' :
-                          'tag-default'
+                  return (
+                    <div
+                      key={index}
+                      className={`wanted-agent-card-modern ${
+                        agent.status.includes('AT LARGE') ? 'at-large-card' : ''
+                      } ${
+                        agent.status.includes('NEVER PROSECUTED') ? 'impunity-card' : ''
+                      } ${
+                        isExpanded ? 'expanded' : ''
+                      }`}
+                      onClick={() => setExpandedAgentId(isExpanded ? null : agentId)}
+                    >
+                      {/* COMPACT PREVIEW (Always Visible) */}
+                      <div className="agent-preview">
+                        {/* Prominent Status Badge */}
+                        <div className={`status-badge-modern ${
+                          agent.status.includes('AT LARGE') ? 'badge-warning' :
+                          agent.status === 'CONVICTED - IMPRISONED' ? 'badge-success' :
+                          agent.status.includes('NEVER PROSECUTED') ? 'badge-critical' :
+                          agent.status.includes('DECEASED') && agent.legalStatus?.convicted ? 'badge-deceased-convicted' :
+                          'badge-deceased'
                         }`}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                          {agent.status}
+                        </div>
 
-                    {/* Verification Status */}
-                    <div className="agent-verification">
-                      <strong>Verification:</strong> {agent.verificationStatus}
+                        {/* Agent Name & Identity */}
+                        <h3 className="agent-name-modern">{agent.fullName}</h3>
+                        {agent.alias && <div className="agent-alias-modern">"{agent.alias}"</div>}
+                        <div className="agent-role-modern">{agent.role}</div>
+
+                        {/* Quick Stats */}
+                        <div className="agent-quick-stats">
+                          <span className="stat-convicted">
+                            {agent.legalStatus?.convicted ? '✅ CONVICTED' : '⚠️ UNPROSECUTED'}
+                          </span>
+                          <span className="stat-crimes">
+                            💀 {agent.crimesAccused?.length || 0} crimes
+                          </span>
+                        </div>
+
+                        {/* Expand Indicator */}
+                        <div className="expand-indicator">
+                          {isExpanded ? '▲ Click to collapse' : '▼ Click for full details'}
+                        </div>
+                      </div>
+
+                      {/* DETAILED VIEW (Expandable) */}
+                      {isExpanded && (
+                        <div className="agent-details-expanded" onClick={(e) => e.stopPropagation()}>
+                          {/* Identity Section */}
+                          {agent.codename && (
+                            <div className="detail-section-modern">
+                              <h4>🎭 Codename</h4>
+                              <p>"{agent.codename}"</p>
+                            </div>
+                          )}
+
+                          {/* Organization */}
+                          <div className="detail-section-modern">
+                            <h4>🏢 Organization</h4>
+                            <p>{agent.organization.join(', ')}</p>
+                          </div>
+
+                          {/* Legal Status */}
+                          <div className="detail-section-modern legal-section">
+                            <h4>⚖️ Legal Status</h4>
+                            <div className="legal-grid">
+                              <div className="legal-item">
+                                <strong>Convicted:</strong> {agent.legalStatus?.convicted ? '✅ YES' : '⚠️ NO'}
+                              </div>
+                              <div className="legal-item">
+                                <strong>Current:</strong> {agent.legalStatus?.currentStatus}
+                              </div>
+                              {agent.legalStatus?.sentences && (
+                                <div className="legal-item highlight">
+                                  <strong>Sentences:</strong> {agent.legalStatus.sentences}
+                                </div>
+                              )}
+                              {agent.legalStatus?.prisonLocation && (
+                                <div className="legal-item">
+                                  <strong>Location:</strong> {agent.legalStatus.prisonLocation}
+                                </div>
+                              )}
+                              {agent.legalStatus?.extraditionStatus && (
+                                <div className="legal-item critical">
+                                  <strong>🚨 Extradition:</strong> {agent.legalStatus.extraditionStatus}
+                                </div>
+                              )}
+                              {agent.legalStatus?.prosecution && (
+                                <div className="legal-item critical">
+                                  <strong>⚠️ Prosecution:</strong> {agent.legalStatus.prosecution}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Crimes */}
+                          <div className="detail-section-modern crimes-section">
+                            <h4>💀 Crimes Accused</h4>
+                            <ul className="crimes-list-modern">
+                              {agent.crimesAccused.map((crime, i) => (
+                                <li key={i}>{crime}</li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          {/* Capabilities (Collapsible within expanded view) */}
+                          {agent.researchCapability && (
+                            <div className="detail-section-modern">
+                              <h4>🔍 Research Capability</h4>
+                              <p className="capability-text">{agent.researchCapability}</p>
+                            </div>
+                          )}
+
+                          {agent.workCapability && (
+                            <div className="detail-section-modern">
+                              <h4>⚡ Work Capability</h4>
+                              <p className="capability-text">{agent.workCapability}</p>
+                            </div>
+                          )}
+
+                          {/* Notable Operations */}
+                          {agent.notableOperations && agent.notableOperations.length > 0 && (
+                            <div className="detail-section-modern">
+                              <h4>🎯 Notable Operations</h4>
+                              <ul className="operations-list-modern">
+                                {agent.notableOperations.map((op, i) => (
+                                  <li key={i}>{op}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+
+                          {/* Timeline */}
+                          {agent.timeline && agent.timeline.length > 0 && (
+                            <div className="detail-section-modern timeline-section">
+                              <h4>📅 Timeline</h4>
+                              <ul className="timeline-list-modern">
+                                {agent.timeline.map((event, i) => (
+                                  <li key={i}>{event}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+
+                          {/* Significance */}
+                          {agent.significance && (
+                            <div className={`detail-section-modern significance-section ${agent.significance.includes('⚠️') ? 'critical-significance' : ''}`}>
+                              <h4>🎯 Significance</h4>
+                              <p>{agent.significance}</p>
+                            </div>
+                          )}
+
+                          {/* Tags */}
+                          <div className="detail-section-modern tags-section">
+                            <h4>🏷️ Tags</h4>
+                            <div className="tags-modern">
+                              {agent.tags.map((tag, i) => (
+                                <span key={i} className={`tag-modern ${
+                                  tag.includes('AT LARGE') || tag.includes('UNPROSECUTED') ? 'tag-warning-modern' :
+                                  tag.includes('CONVICTED') || tag.includes('IMPRISONED') ? 'tag-success-modern' :
+                                  tag.includes('NEVER PROSECUTED') || tag.includes('IMPUNITY') || tag.includes('⚠️') ? 'tag-critical-modern' :
+                                  'tag-default-modern'
+                                }`}>
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Verification */}
+                          <div className="detail-section-modern verification-section">
+                            <p><strong>Verification:</strong> {agent.verificationStatus}</p>
+                          </div>
+
+                          {/* Close Button */}
+                          <button
+                            className="close-details-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setExpandedAgentId(null);
+                            }}
+                          >
+                            ✖ Close Details
+                          </button>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               {/* Additional Context */}

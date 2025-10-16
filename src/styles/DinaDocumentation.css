@@ -1853,3 +1853,536 @@
     font-size: 13px;
   }
 }
+
+/* ============================================ */
+/* 🐾✨ MODERN WANTED AGENTS - COLLAPSIBLE CARDS ✨🐾 */
+/* ============================================ */
+
+/* Modern Grid Layout */
+.wanted-agents-grid-modern {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+/* Modern Agent Card - Collapsible */
+.wanted-agent-card-modern {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.wanted-agent-card-modern:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(255, 215, 0, 0.3);
+  border-color: #FFD700;
+}
+
+.wanted-agent-card-modern.at-large-card {
+  border-color: rgba(255, 107, 107, 0.6);
+  background: rgba(255, 107, 107, 0.03);
+}
+
+.wanted-agent-card-modern.at-large-card:hover {
+  border-color: #ff6b6b;
+  box-shadow: 0 20px 60px rgba(255, 107, 107, 0.5);
+}
+
+.wanted-agent-card-modern.impunity-card {
+  border-color: rgba(255, 71, 87, 0.6);
+  background: rgba(255, 71, 87, 0.03);
+}
+
+.wanted-agent-card-modern.impunity-card:hover {
+  border-color: #ff4757;
+  box-shadow: 0 20px 60px rgba(255, 71, 87, 0.5);
+}
+
+.wanted-agent-card-modern.expanded {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Agent Preview (Always Visible) */
+.agent-preview {
+  padding: 25px;
+  position: relative;
+}
+
+/* Modern Status Badge - PROMINENT! */
+.status-badge-modern {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.badge-warning {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%);
+  color: #fff;
+  animation: pulseWarning 2s infinite;
+}
+
+.badge-success {
+  background: linear-gradient(135deg, #2ed573 0%, #26de81 100%);
+  color: #fff;
+}
+
+.badge-critical {
+  background: linear-gradient(135deg, #ff4757 0%, #ff3838 100%);
+  color: #fff;
+  animation: pulseCritical 1.5s infinite;
+}
+
+.badge-deceased-convicted {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #1a1a2e;
+  font-weight: 900;
+}
+
+.badge-deceased {
+  background: linear-gradient(135deg, #666 0%, #555 100%);
+  color: #ccc;
+}
+
+@keyframes pulseWarning {
+  0%, 100% { 
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.6);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.9);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes pulseCritical {
+  0%, 100% { 
+    box-shadow: 0 4px 12px rgba(255, 71, 87, 0.6);
+    opacity: 1;
+  }
+  50% { 
+    box-shadow: 0 6px 24px rgba(255, 71, 87, 1);
+    opacity: 0.9;
+  }
+}
+
+/* Agent Name & Identity */
+.agent-name-modern {
+  font-size: 24px;
+  font-weight: 900;
+  color: #FFD700;
+  margin-bottom: 8px;
+  margin-top: 10px;
+  line-height: 1.2;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.agent-alias-modern {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 0, 0.15) 100%);
+  color: #FFD700;
+  padding: 6px 14px;
+  border-radius: 8px;
+  display: inline-block;
+  font-size: 14px;
+  margin: 8px 0;
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  font-style: italic;
+  font-weight: 600;
+}
+
+.agent-role-modern {
+  color: #4ecdc4;
+  font-size: 15px;
+  margin: 12px 0;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* Quick Stats */
+.agent-quick-stats {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+
+.agent-quick-stats .stat-convicted,
+.agent-quick-stats .stat-crimes {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.agent-quick-stats .stat-convicted {
+  border: 2px solid;
+}
+
+/* Expand Indicator */
+.expand-indicator {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.wanted-agent-card-modern:hover .expand-indicator {
+  color: #FFD700;
+}
+
+/* Expanded Details Section */
+.agent-details-expanded {
+  padding: 25px;
+  padding-top: 0;
+  animation: expandDetails 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
+}
+
+@keyframes expandDetails {
+  from {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    max-height: 2000px;
+    transform: translateY(0);
+  }
+}
+
+/* Detail Sections - Modern */
+.detail-section-modern {
+  margin: 18px 0;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  border-left: 4px solid #4ecdc4;
+  transition: all 0.3s ease;
+}
+
+.detail-section-modern:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(5px);
+}
+
+.detail-section-modern h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #4ecdc4;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.detail-section-modern p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.capability-text {
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Legal Section */
+.legal-section {
+  border-left-color: #FFD700;
+}
+
+.legal-section h4 {
+  color: #FFD700;
+}
+
+.legal-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.legal-item {
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  font-size: 13px;
+  border-left: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.legal-item.highlight {
+  background: rgba(255, 107, 107, 0.1);
+  border-left-color: #ff6b6b;
+  color: #ff6b6b;
+  font-weight: 700;
+}
+
+.legal-item.critical {
+  background: rgba(255, 71, 87, 0.15);
+  border-left-color: #ff4757;
+  border: 2px solid rgba(255, 71, 87, 0.5);
+  color: #ff4757;
+  font-weight: 700;
+}
+
+/* Crimes Section */
+.crimes-section {
+  border-left-color: #ff6b6b;
+}
+
+.crimes-section h4 {
+  color: #ff6b6b;
+}
+
+.crimes-list-modern {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.crimes-list-modern li {
+  padding: 9px 14px;
+  margin: 6px 0;
+  background: rgba(255, 107, 107, 0.08);
+  border-left: 3px solid #ff6b6b;
+  border-radius: 6px;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.crimes-list-modern li:hover {
+  background: rgba(255, 107, 107, 0.15);
+  transform: translateX(3px);
+}
+
+/* Operations List */
+.operations-list-modern {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.operations-list-modern li {
+  padding: 9px 14px;
+  margin: 6px 0;
+  background: rgba(255, 165, 2, 0.08);
+  border-left: 3px solid #ffa502;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+/* Timeline Section */
+.timeline-section {
+  border-left-color: #4ecdc4;
+}
+
+.timeline-list-modern {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.timeline-list-modern li {
+  padding: 9px 14px;
+  margin: 6px 0;
+  background: rgba(78, 205, 196, 0.08);
+  border-left: 3px solid #4ecdc4;
+  border-radius: 6px;
+  font-size: 13px;
+  position: relative;
+  padding-left: 30px;
+}
+
+.timeline-list-modern li::before {
+  content: "●";
+  position: absolute;
+  left: 12px;
+  color: #4ecdc4;
+  font-size: 16px;
+}
+
+/* Significance Section */
+.significance-section {
+  border-left-color: #FFD700;
+  background: rgba(255, 215, 0, 0.05);
+}
+
+.significance-section h4 {
+  color: #FFD700;
+}
+
+.critical-significance {
+  border-left-color: #ff4757;
+  background: rgba(255, 71, 87, 0.08);
+}
+
+.critical-significance h4 {
+  color: #ff4757;
+}
+
+/* Tags Section */
+.tags-section {
+  border-left-color: #ffa502;
+}
+
+.tags-modern {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tag-modern {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+.tag-modern:hover {
+  transform: scale(1.05);
+}
+
+.tag-warning-modern {
+  background: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+  border: 1px solid #ff6b6b;
+}
+
+.tag-success-modern {
+  background: rgba(46, 213, 115, 0.2);
+  color: #2ed573;
+  border: 1px solid #2ed573;
+}
+
+.tag-critical-modern {
+  background: rgba(255, 71, 87, 0.2);
+  color: #ff4757;
+  border: 1px solid #ff4757;
+}
+
+.tag-default-modern {
+  background: rgba(255, 215, 0, 0.2);
+  color: #FFD700;
+  border: 1px solid #FFD700;
+}
+
+/* Verification Section */
+.verification-section {
+  border-left-color: #4ecdc4;
+  background: rgba(78, 205, 196, 0.05);
+  text-align: center;
+}
+
+/* Close Button */
+.close-details-btn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.close-details-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 107, 107, 0.5);
+}
+
+/* Mobile Responsive - Modern Cards */
+@media (max-width: 768px) {
+  .wanted-agents-grid-modern {
+    grid-template-columns: 1fr;
+  }
+
+  .status-badge-modern {
+    position: static;
+    display: inline-block;
+    margin-bottom: 15px;
+  }
+
+  .agent-name-modern {
+    font-size: 20px;
+    margin-top: 0;
+  }
+
+  .agent-preview {
+    padding: 20px;
+  }
+
+  .agent-details-expanded {
+    padding: 20px;
+    padding-top: 0;
+  }
+
+  .legal-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .agent-name-modern {
+    font-size: 18px;
+  }
+
+  .agent-role-modern {
+    font-size: 14px;
+  }
+
+  .agent-quick-stats {
+    flex-direction: column;
+  }
+
+  .agent-quick-stats .stat-convicted,
+  .agent-quick-stats .stat-crimes {
+    width: 100%;
+    text-align: center;
+  }
+
+  .detail-section-modern {
+    padding: 14px;
+  }
+
+  .detail-section-modern h4 {
+    font-size: 14px;
+  }
+
+  .close-details-btn {
+    padding: 12px;
+    font-size: 13px;
+  }
+}
+
+/* 🐾 *purrs in modern UX* 😻✨ */
