@@ -1,0 +1,56 @@
+/* NEKO LOADING SPINNER - Mobile-First */
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  padding: var(--space-xl);
+}
+
+.neko-spinner {
+  text-align: center;
+}
+
+.spinner-paw {
+  font-size: clamp(3rem, 10vw, 5rem);
+  animation: spin 1s linear infinite;
+  margin-bottom: var(--space-md);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-message {
+  font-size: var(--font-lg);
+  color: var(--neko-primary);
+  font-weight: bold;
+  text-shadow: 0 0 10px var(--neko-primary);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .spinner-paw {
+    animation: none;
+  }
+
+  .loading-message {
+    animation: none;
+  }
+}

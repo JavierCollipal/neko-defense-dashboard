@@ -1,5 +1,6 @@
 // 🐾 ASCII TV Display Component
 import React from 'react';
+import './AsciiTvDisplay.css';
 
 function AsciiTvDisplay({ artPiece, total, current }) {
   if (!artPiece) {

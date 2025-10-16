@@ -1,0 +1,112 @@
+/* PWA INSTALL PROMPT - Mobile-First */
+
+.pwa-install-prompt {
+  position: fixed;
+  bottom: calc(var(--bottom-nav-height) + var(--space-md));
+  left: var(--space-md);
+  right: var(--space-md);
+  z-index: var(--z-notification);
+
+  animation: slideUp var(--transition-base);
+}
+
+.prompt-content {
+  background: var(--neko-dark);
+  border: 2px solid var(--neko-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  box-shadow: 0 0 30px rgba(255, 20, 147, 0.5);
+
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.prompt-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.prompt-text {
+  flex: 1;
+}
+
+.prompt-text h3 {
+  margin: 0 0 var(--space-xs) 0;
+  font-size: var(--font-base);
+  color: var(--neko-primary);
+}
+
+.prompt-text p {
+  margin: 0;
+  font-size: var(--font-sm);
+  color: var(--neko-secondary);
+}
+
+.prompt-actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.btn-install {
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--neko-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: bold;
+  font-size: var(--font-sm);
+  font-family: 'Courier New', monospace;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  min-height: var(--tap-target-comfortable);
+}
+
+.btn-install:hover {
+  background: #ff33a1;
+  transform: scale(1.05);
+}
+
+.btn-dismiss {
+  background: transparent;
+  border: 2px solid var(--neko-secondary);
+  border-radius: var(--radius-md);
+  color: var(--neko-secondary);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: var(--space-sm);
+  min-width: var(--tap-target-comfortable);
+  min-height: var(--tap-target-comfortable);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+}
+
+.btn-dismiss:hover {
+  background: rgba(0, 255, 255, 0.1);
+  border-color: var(--neko-primary);
+  color: var(--neko-primary);
+}
+
+/* Desktop: Position differently */
+@media (min-width: 768px) {
+  .pwa-install-prompt {
+    bottom: var(--space-lg);
+    left: auto;
+    right: var(--space-lg);
+    max-width: 400px;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
