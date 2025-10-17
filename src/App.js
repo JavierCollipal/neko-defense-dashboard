@@ -17,6 +17,7 @@ const NekoArcAbilities = lazy(() => import('./components/NekoArcAbilities'));
 const VideoMaker = lazy(() => import('./components/VideoMaker'));
 const YouTubePlaylist = lazy(() => import('./components/YouTubePlaylist'));
 const IngestionEnrichmentDashboard = lazy(() => import('./components/IngestionEnrichmentDashboard'));
+const ConfessionsBlog = lazy(() => import('./components/ConfessionsBlog'));
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
               <Route path="/video" element={<VideoMaker />} />
               <Route path="/youtube" element={<YouTubePlaylist />} />
               <Route path="/rag" element={<IngestionEnrichmentDashboard />} />
+              <Route path="/confessions" element={<ConfessionsBlog />} />
             </Routes>
           </Suspense>
         </Layout>

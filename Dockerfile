@@ -59,6 +59,7 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 # Create startup script
 RUN echo '#!/bin/sh' > /app/startup.sh && \
     echo 'echo "🐾 Starting Neko Defense Dashboard, nyaa~!"' >> /app/startup.sh && \
+    echo 'export API_PORT=4000' >> /app/startup.sh && \
     echo 'cd /app && node server/index.js &' >> /app/startup.sh && \
     echo 'nginx -g "daemon off;"' >> /app/startup.sh && \
     chmod +x /app/startup.sh

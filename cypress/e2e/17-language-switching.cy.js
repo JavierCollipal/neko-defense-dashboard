@@ -73,26 +73,20 @@ describe('🌍⚡ LANGUAGE SWITCHING & I18N ⚡🌍', () => {
     it('should display all available languages', () => {
       cy.getByDataCy('language-list').should('be.visible');
 
-      // Verify all language options exist
+      // Verify all 5 configured language options exist
       cy.getByDataCy('language-option-en').should('be.visible');
-      cy.getByDataCy('language-option-es').should('be.visible');
-      cy.getByDataCy('language-option-fr').should('be.visible');
-      cy.getByDataCy('language-option-de').should('be.visible');
-      cy.getByDataCy('language-option-ja').should('be.visible');
-      cy.getByDataCy('language-option-pt').should('be.visible');
-      cy.getByDataCy('language-option-ru').should('be.visible');
       cy.getByDataCy('language-option-zh').should('be.visible');
+      cy.getByDataCy('language-option-hi').should('be.visible');
+      cy.getByDataCy('language-option-es').should('be.visible');
+      cy.getByDataCy('language-option-ar').should('be.visible');
     });
 
     it('should display native names for each language', () => {
       cy.getByDataCy('language-option-en').should('contain', 'English');
-      cy.getByDataCy('language-option-es').should('contain', 'Español');
-      cy.getByDataCy('language-option-fr').should('contain', 'Français');
-      cy.getByDataCy('language-option-de').should('contain', 'Deutsch');
-      cy.getByDataCy('language-option-ja').should('contain', '日本語');
-      cy.getByDataCy('language-option-pt').should('contain', 'Português');
-      cy.getByDataCy('language-option-ru').should('contain', 'Русский');
       cy.getByDataCy('language-option-zh').should('contain', '中文');
+      cy.getByDataCy('language-option-hi').should('contain', 'हिन्दी');
+      cy.getByDataCy('language-option-es').should('contain', 'Español');
+      cy.getByDataCy('language-option-ar').should('contain', 'العربية');
     });
 
     it('should highlight currently active language', () => {
@@ -121,20 +115,28 @@ describe('🌍⚡ LANGUAGE SWITCHING & I18N ⚡🌍', () => {
       cy.getByDataCy('current-flag').should('contain', '🇪🇸');
     });
 
-    it('should switch to French', () => {
+    it('should switch to Chinese', () => {
       cy.getByDataCy('language-button').click();
-      cy.getByDataCy('language-option-fr').click();
+      cy.getByDataCy('language-option-zh').click();
 
-      cy.getByDataCy('current-lang-code').should('have.text', 'FR');
-      cy.getByDataCy('current-flag').should('contain', '🇫🇷');
+      cy.getByDataCy('current-lang-code').should('have.text', 'ZH');
+      cy.getByDataCy('current-flag').should('contain', '🇨🇳');
     });
 
-    it('should switch to Japanese', () => {
+    it('should switch to Hindi', () => {
       cy.getByDataCy('language-button').click();
-      cy.getByDataCy('language-option-ja').click();
+      cy.getByDataCy('language-option-hi').click();
 
-      cy.getByDataCy('current-lang-code').should('have.text', 'JA');
-      cy.getByDataCy('current-flag').should('contain', '🇯🇵');
+      cy.getByDataCy('current-lang-code').should('have.text', 'HI');
+      cy.getByDataCy('current-flag').should('contain', '🇮🇳');
+    });
+
+    it('should switch to Arabic', () => {
+      cy.getByDataCy('language-button').click();
+      cy.getByDataCy('language-option-ar').click();
+
+      cy.getByDataCy('current-lang-code').should('have.text', 'AR');
+      cy.getByDataCy('current-flag').should('contain', '🇸🇦');
     });
 
     it('should persist language selection on page reload', () => {
@@ -153,8 +155,9 @@ describe('🌍⚡ LANGUAGE SWITCHING & I18N ⚡🌍', () => {
     it('should switch languages multiple times consecutively', () => {
       const languages = [
         { code: 'es', flag: '🇪🇸' },
-        { code: 'fr', flag: '🇫🇷' },
-        { code: 'de', flag: '🇩🇪' },
+        { code: 'zh', flag: '🇨🇳' },
+        { code: 'hi', flag: '🇮🇳' },
+        { code: 'ar', flag: '🇸🇦' },
         { code: 'en', flag: '🇬🇧' }
       ];
 
@@ -176,6 +179,39 @@ describe('🌍⚡ LANGUAGE SWITCHING & I18N ⚡🌍', () => {
       cy.contains('SISTEMA DE DEFENSA NEKO-ARC').should('be.visible');
     });
 
+    it('should translate dashboard header to Chinese', () => {
+      cy.getByDataCy('language-button').click();
+      cy.getByDataCy('language-option-zh').click();
+
+      // Wait for translations to load
+      cy.wait(500);
+
+      // Verify Chinese translation
+      cy.contains('猫猫防御系统').should('be.visible');
+    });
+
+    it('should translate dashboard header to Hindi', () => {
+      cy.getByDataCy('language-button').click();
+      cy.getByDataCy('language-option-hi').click();
+
+      // Wait for translations to load
+      cy.wait(500);
+
+      // Verify Hindi translation
+      cy.contains('नेको-आर्क रक्षा प्रणाली').should('be.visible');
+    });
+
+    it('should translate dashboard header to Arabic', () => {
+      cy.getByDataCy('language-button').click();
+      cy.getByDataCy('language-option-ar').click();
+
+      // Wait for translations to load
+      cy.wait(500);
+
+      // Verify Arabic translation
+      cy.contains('نظام الدفاع نيكو-آرك').should('be.visible');
+    });
+
     it('should translate threat categories to Spanish', () => {
       cy.getByDataCy('language-button').click();
       cy.getByDataCy('language-option-es').click();
@@ -185,20 +221,6 @@ describe('🌍⚡ LANGUAGE SWITCHING & I18N ⚡🌍', () => {
 
       // Check for Spanish category names
       cy.get('.category-switcher').should('be.visible');
-    });
-
-    it('should translate dashboard header to French', () => {
-      cy.getByDataCy('language-button').click();
-      cy.getByDataCy('language-option-fr').click();
-
-      cy.contains('SYSTÈME DE DÉFENSE NEKO-ARC').should('be.visible');
-    });
-
-    it('should translate dashboard header to Japanese', () => {
-      cy.getByDataCy('language-button').click();
-      cy.getByDataCy('language-option-ja').click();
-
-      cy.contains('ネコアーク防衛システム').should('be.visible');
     });
 
     it('should translate all visible UI elements', () => {
@@ -302,8 +324,8 @@ describe('🌍⚡ LANGUAGE SWITCHING & I18N ⚡🌍', () => {
 
       // Language switcher should still work
       cy.getByDataCy('language-button').click();
-      cy.getByDataCy('language-option-fr').click();
-      cy.getByDataCy('current-lang-code').should('have.text', 'FR');
+      cy.getByDataCy('language-option-hi').click();
+      cy.getByDataCy('current-lang-code').should('have.text', 'HI');
     });
   });
 
@@ -323,13 +345,13 @@ describe('🌍⚡ LANGUAGE SWITCHING & I18N ⚡🌍', () => {
     it('should maintain language when navigating views', () => {
       // Change language
       cy.getByDataCy('language-button').click();
-      cy.getByDataCy('language-option-ja').click();
+      cy.getByDataCy('language-option-zh').click();
 
       // Navigate to different view
       cy.navigateToThreatActors();
 
       // Verify language persisted
-      cy.getByDataCy('current-lang-code').should('have.text', 'JA');
+      cy.getByDataCy('current-lang-code').should('have.text', 'ZH');
     });
 
     it('should translate content in Threat Actors view', () => {
@@ -349,27 +371,80 @@ describe('🌍⚡ LANGUAGE SWITCHING & I18N ⚡🌍', () => {
   describe('💾 LocalStorage Persistence', () => {
     it('should save language preference to localStorage', () => {
       cy.getByDataCy('language-button').click();
-      cy.getByDataCy('language-option-de').click();
+      cy.getByDataCy('language-option-hi').click();
 
       // Check localStorage
       cy.window().then((win) => {
         const storedLang = win.localStorage.getItem('i18nextLng');
-        expect(storedLang).to.equal('de');
+        expect(storedLang).to.equal('hi');
       });
     });
 
     it('should load language from localStorage on startup', () => {
       // Set language in localStorage
       cy.window().then((win) => {
-        win.localStorage.setItem('i18nextLng', 'ru');
+        win.localStorage.setItem('i18nextLng', 'ar');
       });
 
       // Reload page
       cy.reload();
       cy.wait('@getAsciiArt');
 
-      // Verify Russian loaded
-      cy.getByDataCy('current-lang-code').should('have.text', 'RU');
+      // Verify Arabic loaded
+      cy.getByDataCy('current-lang-code').should('have.text', 'AR');
+    });
+  });
+
+  describe('🌍 Right-to-Left (RTL) Support for Arabic', () => {
+    it('should set document direction to RTL when Arabic is selected', () => {
+      cy.getByDataCy('language-button').click();
+      cy.getByDataCy('language-option-ar').click();
+
+      // Verify document direction is RTL
+      cy.get('html').should('have.attr', 'dir', 'rtl');
+      cy.get('html').should('have.attr', 'lang', 'ar');
+    });
+
+    it('should set document direction to LTR when switching from Arabic to English', () => {
+      // First switch to Arabic
+      cy.getByDataCy('language-button').click();
+      cy.getByDataCy('language-option-ar').click();
+      cy.get('html').should('have.attr', 'dir', 'rtl');
+
+      // Then switch to English
+      cy.getByDataCy('language-button').click();
+      cy.getByDataCy('language-option-en').click();
+      cy.get('html').should('have.attr', 'dir', 'ltr');
+      cy.get('html').should('have.attr', 'lang', 'en');
+    });
+
+    it('should properly display Arabic text with RTL layout', () => {
+      cy.getByDataCy('language-button').click();
+      cy.getByDataCy('language-option-ar').click();
+
+      // Wait for translation
+      cy.wait(500);
+
+      // Verify Arabic content is visible
+      cy.contains('نظام الدفاع نيكو-آرك').should('be.visible');
+
+      // Verify RTL layout is applied
+      cy.get('html').should('have.attr', 'dir', 'rtl');
+    });
+
+    it('should maintain RTL layout after page reload', () => {
+      // Switch to Arabic
+      cy.getByDataCy('language-button').click();
+      cy.getByDataCy('language-option-ar').click();
+
+      // Reload page
+      cy.reload();
+      cy.wait('@getAsciiArt');
+
+      // Verify RTL persisted
+      cy.get('html').should('have.attr', 'dir', 'rtl');
+      cy.get('html').should('have.attr', 'lang', 'ar');
+      cy.getByDataCy('current-lang-code').should('have.text', 'AR');
     });
   });
 });

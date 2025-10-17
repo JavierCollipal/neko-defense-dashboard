@@ -631,6 +631,232 @@ app.get('/api/video-maker/download/:filename', (req, res) => {
   });
 });
 
+// 📝⚖️ CONFESSIONS BLOG API ENDPOINTS - COMMUNITY REPORTING SYSTEM ⚖️📝
+
+// Submit a new confession/report
+app.post('/api/confessions/submit', async (req, res) => {
+  try {
+    console.log('📝 [Confessions API] New confession submission received, nyaa~!');
+
+    const {
+      category,
+      title,
+      description,
+      evidence_links,
+      threat_actor_name,
+      threat_actor_location,
+      submitted_by,
+      contact_info,
+      priority
+    } = req.body;
+
+    // Validation
+    if (!category || !title || !description) {
+      return res.status(400).json({
+        success: false,
+        error: 'Category, title, and description are required!'
+      });
+    }
+
+    // Generate unique confession ID
+    const confession_id = `confession_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+    // Create confession document
+    const confession = {
+      confession_id,
+      category, // predators, pedophiles, evidence, general
+      title,
+      description,
+      evidence_links: evidence_links || [],
+      threat_actor_name: threat_actor_name || 'Anonymous Report',
+      threat_actor_location: threat_actor_location || 'Unknown',
+      submitted_by: submitted_by || 'Anonymous',
+      contact_info: contact_info || 'Not provided',
+      priority: priority || 'medium', // low, medium, high, critical
+      status: 'pending', // pending, approved, rejected
+      submitted_at: new Date(),
+      moderated_at: null,
+      moderation_notes: '',
+      views: 0,
+      upvotes: 0
+    };
+
+    // Insert into MongoDB
+    await db.collection('confessions').insertOne(confession);
+
+    console.log(`✅ [Confessions API] Confession submitted: ${confession_id}`);
+    res.json({
+      success: true,
+      message: 'Confession submitted for moderation! Thank you for reporting, nyaa~! 🐾',
+      confession_id,
+      status: 'pending'
+    });
+  } catch (error) {
+    console.error('❌ [Confessions API] Submission failed:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Get all approved confessions (public access)
+app.get('/api/confessions', async (req, res) => {
+  try {
+    const category = req.query.category;
+    const limit = parseInt(req.query.limit) || 50;
+    console.log('📖 [Confessions API] Fetching approved confessions, desu~');
+
+    let filter = { status: 'approved' };
+    if (category && category !== 'all') {
+      filter.category = category;
+    }
+
+    const confessions = await db.collection('confessions')
+      .find(filter)
+      .sort({ submitted_at: -1 })
+      .limit(limit)
+      .toArray();
+
+    console.log(`✅ [Confessions API] Retrieved ${confessions.length} approved confessions`);
+    res.json({
+      success: true,
+      count: confessions.length,
+      data: confessions
+    });
+  } catch (error) {
+    console.error('❌ [Confessions API] Failed to fetch confessions:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Get confession by ID
+app.get('/api/confessions/:id', async (req, res) => {
+  try {
+    console.log('🔍 [Confessions API] Fetching confession:', req.params.id);
+
+    const confession = await db.collection('confessions')
+      .findOne({ confession_id: req.params.id });
+
+    if (!confession) {
+      return res.status(404).json({
+        success: false,
+        error: 'Confession not found'
+      });
+    }
+
+    // Increment view count
+    await db.collection('confessions').updateOne(
+      { confession_id: req.params.id },
+      { $inc: { views: 1 } }
+    );
+
+    console.log('✅ [Confessions API] Confession found:', confession.title);
+    res.json({ success: true, data: confession });
+  } catch (error) {
+    console.error('❌ [Confessions API] Error fetching confession:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Get pending confessions (moderation queue - ADMIN ONLY)
+app.get('/api/confessions/pending', async (req, res) => {
+  try {
+    console.log('⚖️ [Confessions API] Fetching pending confessions for moderation');
+
+    const pending = await db.collection('confessions')
+      .find({ status: 'pending' })
+      .sort({ submitted_at: 1 }) // Oldest first
+      .toArray();
+
+    console.log(`✅ [Confessions API] Found ${pending.length} pending confessions`);
+    res.json({
+      success: true,
+      count: pending.length,
+      data: pending
+    });
+  } catch (error) {
+    console.error('❌ [Confessions API] Failed to fetch pending confessions:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Moderate confession (approve/reject - ADMIN ONLY)
+app.put('/api/confessions/:id/moderate', async (req, res) => {
+  try {
+    const { action, notes } = req.body; // action: 'approve' or 'reject'
+    console.log(`⚖️ [Confessions API] Moderating confession: ${req.params.id} - ${action}`);
+
+    if (!action || !['approve', 'reject'].includes(action)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid action. Must be "approve" or "reject"'
+      });
+    }
+
+    const update = {
+      status: action === 'approve' ? 'approved' : 'rejected',
+      moderated_at: new Date(),
+      moderation_notes: notes || ''
+    };
+
+    const result = await db.collection('confessions').updateOne(
+      { confession_id: req.params.id },
+      { $set: update }
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'Confession not found'
+      });
+    }
+
+    console.log(`✅ [Confessions API] Confession ${action}ed: ${req.params.id}`);
+    res.json({
+      success: true,
+      message: `Confession ${action}ed successfully, nyaa~!`,
+      status: update.status
+    });
+  } catch (error) {
+    console.error('❌ [Confessions API] Moderation failed:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Get confession statistics
+app.get('/api/confessions/stats', async (req, res) => {
+  try {
+    console.log('📊 [Confessions API] Calculating confession statistics');
+
+    const total = await db.collection('confessions').countDocuments();
+    const approved = await db.collection('confessions').countDocuments({ status: 'approved' });
+    const pending = await db.collection('confessions').countDocuments({ status: 'pending' });
+    const rejected = await db.collection('confessions').countDocuments({ status: 'rejected' });
+
+    // Count by category
+    const categories = await db.collection('confessions').aggregate([
+      { $match: { status: 'approved' } },
+      { $group: { _id: '$category', count: { $sum: 1 } } }
+    ]).toArray();
+
+    const stats = {
+      total,
+      approved,
+      pending,
+      rejected,
+      by_category: categories.reduce((acc, cat) => {
+        acc[cat._id] = cat.count;
+        return acc;
+      }, {}),
+      last_updated: new Date()
+    };
+
+    console.log('✅ [Confessions API] Statistics calculated');
+    res.json({ success: true, data: stats });
+  } catch (error) {
+    console.error('❌ [Confessions API] Failed to calculate stats:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // Start server
 connectDB().then(() => {
   app.listen(PORT, () => {
