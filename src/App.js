@@ -15,6 +15,7 @@ const ValechV2Dashboard = lazy(() => import('./components/ValechV2Dashboard'));
 const DinaDocumentationInternational = lazy(() => import('./components/DinaDocumentationInternational'));
 const NekoArcAbilities = lazy(() => import('./components/NekoArcAbilities'));
 const VideoMaker = lazy(() => import('./components/VideoMaker'));
+const YouTubeVideoGenerator = lazy(() => import('./components/YouTubeVideoGenerator'));
 const YouTubePlaylist = lazy(() => import('./components/YouTubePlaylist'));
 const IngestionEnrichmentDashboard = lazy(() => import('./components/IngestionEnrichmentDashboard'));
 const ConfessionsBlog = lazy(() => import('./components/ConfessionsBlog'));
@@ -32,6 +33,7 @@ function App() {
               <Route path="/dina" element={<DinaDocumentationInternational />} />
               <Route path="/abilities" element={<NekoArcAbilities />} />
               <Route path="/video" element={<VideoMaker />} />
+              <Route path="/youtube-generator" element={<YouTubeVideoGenerator />} />
               <Route path="/youtube" element={<YouTubePlaylist />} />
               <Route path="/rag" element={<IngestionEnrichmentDashboard />} />
               <Route path="/confessions" element={<ConfessionsBlog />} />

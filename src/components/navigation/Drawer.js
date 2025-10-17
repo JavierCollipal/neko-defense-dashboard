@@ -6,7 +6,8 @@ import './Drawer.css';
 const menuItems = [
   { path: '/confessions', icon: '📝', label: 'Confessions Blog' },
   { path: '/dina', icon: '📚', label: 'DINA Documentation' },
-  { path: '/video', icon: '🎬', label: 'Video Maker' },
+  { path: '/video', icon: '🎬', label: 'Video Overlay Maker' },
+  { path: '/youtube-generator', icon: '🎥', label: 'YouTube Video Generator' },
   { path: '/youtube', icon: '📺', label: 'YouTube Channel' },
   { path: '/rag', icon: '🗄️', label: 'RAG System' },
   { path: '/timeline', icon: '📅', label: 'DINA Timeline' },
