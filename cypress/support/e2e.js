@@ -20,20 +20,17 @@ beforeEach(() => {
     fixture: 'ascii-art.json'
   }).as('getAsciiArt');
 
-  cy.intercept('GET', '**/api/stats', {
-    fixture: 'stats.json'
-  }).as('getStats');
-
-  cy.intercept('GET', '**/api/threats/summary', {
-    fixture: 'threats-summary.json'
-  }).as('getThreatsSummary');
-
-  // NEW: Intercept threat counts endpoint, nyaa~! 📊
+  // FIX: App actually calls /api/threat-counts, not /api/stats
   cy.intercept('GET', '**/api/threat-counts', {
     fixture: 'threat-counts.json'
   }).as('getThreatCounts');
 
-  // NEW: Intercept threat actors endpoint with category filtering, desu! 🎯
+  // DEPRECATED: App doesn't use this endpoint anymore
+  // cy.intercept('GET', '**/api/threats/summary', {
+  //   fixture: 'threats-summary.json'
+  // }).as('getThreatsSummary');
+
+  // Intercept threat actors endpoint with category filtering, desu! 🎯
   cy.intercept('GET', '**/api/threat-actors', {
     fixture: 'threat-actors-all.json'
   }).as('getThreatActors');

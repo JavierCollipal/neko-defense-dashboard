@@ -117,7 +117,6 @@ describe('🏠 Dashboard Loading & Initial State', () => {
 
     // Verify all API calls were made
     cy.wait('@getAsciiArt').its('response.statusCode').should('eq', 200);
-    cy.wait('@getStats').its('response.statusCode').should('eq', 200);
-    cy.wait('@getThreatsSummary').its('response.statusCode').should('eq', 200);
+    cy.wait('@getThreatCounts').its('response.statusCode').should('eq', 200);
   });
 });

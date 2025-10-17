@@ -48,6 +48,10 @@ const YouTubePlaylist = () => {
     window.open(channelInfo.channelUrl, '_blank', 'noopener,noreferrer');
   };
 
+  const openDinaPlaylist = () => {
+    window.open('https://www.youtube.com/playlist?list=PL-2OQDhuBcBnq9I-hk2qwoeIQsolRgMdM', '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className="youtube-playlist-container">
       {/* 🎬 Header Section */}
@@ -59,6 +63,34 @@ const YouTubePlaylist = () => {
         <button className="youtube-subscribe-btn" onClick={openChannelPage}>
           🔴 VISIT CHANNEL & SUBSCRIBE
         </button>
+      </div>
+
+      {/* 🎯 DINA VIDEO PLAYLIST PROOF - FEATURED */}
+      <div className="dina-playlist-featured">
+        <div className="dina-featured-header">
+          <h2>🎯 DINA VIDEO PLAYLIST PROOF</h2>
+          <p className="dina-featured-subtitle">
+            Complete video documentation of DINA human rights violations
+          </p>
+        </div>
+        <div className="dina-featured-content">
+          <div className="dina-featured-info">
+            <ul className="dina-info-list">
+              <li>📹 <strong>Evidence-Based:</strong> Documentary proof of DINA crimes</li>
+              <li>🛡️ <strong>Human Rights:</strong> Victims' testimonies & documentation</li>
+              <li>🌍 <strong>Historical Record:</strong> Chile's dictatorship (1973-1990)</li>
+              <li>⚖️ <strong>Justice:</strong> Supporting accountability & memory</li>
+            </ul>
+          </div>
+          <div className="dina-featured-action">
+            <button className="dina-playlist-btn" onClick={openDinaPlaylist}>
+              📺 OPEN DINA VIDEO PLAYLIST
+            </button>
+            <p className="dina-playlist-cta">
+              Watch full playlist on YouTube
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* 📊 Channel Stats */}

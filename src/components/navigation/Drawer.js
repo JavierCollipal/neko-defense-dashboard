@@ -8,7 +8,7 @@ const menuItems = [
   { path: '/dina', icon: '📚', label: 'DINA Documentation' },
   { path: '/video', icon: '🎬', label: 'Video Overlay Maker' },
   { path: '/youtube-generator', icon: '🎥', label: 'YouTube Video Generator' },
-  { path: '/youtube', icon: '📺', label: 'YouTube Channel' },
+  { path: '/youtube', icon: '📺', label: 'DINA Video Playlist' },
   { path: '/rag', icon: '🗄️', label: 'RAG System' },
   { path: '/timeline', icon: '📅', label: 'DINA Timeline' },
   { path: '/map', icon: '🗺️', label: 'Centers Map' }

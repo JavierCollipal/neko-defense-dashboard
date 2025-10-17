@@ -14,8 +14,7 @@ Cypress.Commands.add('visitDashboard', () => {
 
   // Wait for API calls to complete
   cy.wait('@getAsciiArt');
-  cy.wait('@getStats');
-  cy.wait('@getThreatsSummary');
+  cy.wait('@getThreatCounts');
 
   // Verify dashboard loaded
   cy.get('.App-header').should('be.visible');

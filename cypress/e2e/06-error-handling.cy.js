@@ -11,9 +11,9 @@ describe('🛡️ Error Handling & Edge Cases', () => {
         body: { success: false, error: 'Internal server error' }
       }).as('getAsciiArtError');
 
-      cy.intercept('GET', '**/api/stats', {
-        fixture: 'stats.json'
-      }).as('getStats');
+      cy.intercept('GET', '**/api/threat-counts', {
+        fixture: 'threat-counts.json'
+      }).as('getThreatCounts');
 
       cy.intercept('GET', '**/api/threats/summary', {
         fixture: 'threats-summary.json'
@@ -31,10 +31,10 @@ describe('🛡️ Error Handling & Edge Cases', () => {
         fixture: 'ascii-art.json'
       }).as('getAsciiArt');
 
-      cy.intercept('GET', '**/api/stats', {
+      cy.intercept('GET', '**/api/threat-counts', {
         statusCode: 500,
         body: { success: false, error: 'Stats unavailable' }
-      }).as('getStatsError');
+      }).as('getThreatCountsError');
 
       cy.intercept('GET', '**/api/threats/summary', {
         fixture: 'threats-summary.json'
@@ -52,9 +52,9 @@ describe('🛡️ Error Handling & Edge Cases', () => {
         fixture: 'ascii-art.json'
       }).as('getAsciiArt');
 
-      cy.intercept('GET', '**/api/stats', {
-        fixture: 'stats.json'
-      }).as('getStats');
+      cy.intercept('GET', '**/api/threat-counts', {
+        fixture: 'threat-counts.json'
+      }).as('getThreatCounts');
 
       cy.intercept('GET', '**/api/threats/summary', {
         statusCode: 404,
@@ -74,10 +74,10 @@ describe('🛡️ Error Handling & Edge Cases', () => {
         body: { success: false }
       }).as('getAsciiArtError');
 
-      cy.intercept('GET', '**/api/stats', {
+      cy.intercept('GET', '**/api/threat-counts', {
         statusCode: 500,
         body: { success: false }
-      }).as('getStatsError');
+      }).as('getThreatCountsError');
 
       cy.intercept('GET', '**/api/threats/summary', {
         statusCode: 500,
@@ -97,9 +97,9 @@ describe('🛡️ Error Handling & Edge Cases', () => {
         fixture: 'ascii-art.json'
       }).as('getAsciiArtDelay');
 
-      cy.intercept('GET', '**/api/stats', {
-        fixture: 'stats.json'
-      }).as('getStats');
+      cy.intercept('GET', '**/api/threat-counts', {
+        fixture: 'threat-counts.json'
+      }).as('getThreatCounts');
 
       cy.intercept('GET', '**/api/threats/summary', {
         fixture: 'threats-summary.json'
@@ -118,9 +118,9 @@ describe('🛡️ Error Handling & Edge Cases', () => {
         body: { success: true, data: [] }
       }).as('getAsciiArtEmpty');
 
-      cy.intercept('GET', '**/api/stats', {
-        fixture: 'stats.json'
-      }).as('getStats');
+      cy.intercept('GET', '**/api/threat-counts', {
+        fixture: 'threat-counts.json'
+      }).as('getThreatCounts');
 
       cy.intercept('GET', '**/api/threats/summary', {
         fixture: 'threats-summary.json'
@@ -138,16 +138,16 @@ describe('🛡️ Error Handling & Edge Cases', () => {
         fixture: 'ascii-art.json'
       }).as('getAsciiArt');
 
-      cy.intercept('GET', '**/api/stats', {
+      cy.intercept('GET', '**/api/threat-counts', {
         body: { success: true, data: null }
-      }).as('getStatsNull');
+      }).as('getThreatCountsNull');
 
       cy.intercept('GET', '**/api/threats/summary', {
         fixture: 'threats-summary.json'
       }).as('getThreatsSummary');
 
       cy.visit('/');
-      cy.wait('@getStatsNull');
+      cy.wait('@getThreatCountsNull');
 
       // Stats section should handle null gracefully
       cy.get('.stats-section').should('exist');
@@ -158,9 +158,9 @@ describe('🛡️ Error Handling & Edge Cases', () => {
         fixture: 'ascii-art.json'
       }).as('getAsciiArt');
 
-      cy.intercept('GET', '**/api/stats', {
-        fixture: 'stats.json'
-      }).as('getStats');
+      cy.intercept('GET', '**/api/threat-counts', {
+        fixture: 'threat-counts.json'
+      }).as('getThreatCounts');
 
       cy.intercept('GET', '**/api/threats/summary', {
         body: {
@@ -189,9 +189,9 @@ describe('🛡️ Error Handling & Edge Cases', () => {
         body: { success: true, data: [{ invalid: 'structure' }] }
       }).as('getAsciiArtMalformed');
 
-      cy.intercept('GET', '**/api/stats', {
-        fixture: 'stats.json'
-      }).as('getStats');
+      cy.intercept('GET', '**/api/threat-counts', {
+        fixture: 'threat-counts.json'
+      }).as('getThreatCounts');
 
       cy.intercept('GET', '**/api/threats/summary', {
         fixture: 'threats-summary.json'
@@ -208,9 +208,9 @@ describe('🛡️ Error Handling & Edge Cases', () => {
         fixture: 'ascii-art.json'
       }).as('getAsciiArt');
 
-      cy.intercept('GET', '**/api/stats', {
-        fixture: 'stats.json'
-      }).as('getStats');
+      cy.intercept('GET', '**/api/threat-counts', {
+        fixture: 'threat-counts.json'
+      }).as('getThreatCounts');
 
       cy.intercept('GET', '**/api/threats/summary', {
         body: {
@@ -245,10 +245,10 @@ describe('🛡️ Error Handling & Edge Cases', () => {
         fixture: 'ascii-art.json'
       }).as('getAsciiArtSlow');
 
-      cy.intercept('GET', '**/api/stats', {
+      cy.intercept('GET', '**/api/threat-counts', {
         delay: 2000,
-        fixture: 'stats.json'
-      }).as('getStatsSlow');
+        fixture: 'threat-counts.json'
+      }).as('getThreatCountsSlow');
 
       cy.intercept('GET', '**/api/threats/summary', {
         delay: 2000,
@@ -262,7 +262,7 @@ describe('🛡️ Error Handling & Edge Cases', () => {
 
       // Eventually should load
       cy.wait('@getAsciiArtSlow', { timeout: 5000 });
-      cy.wait('@getStatsSlow', { timeout: 5000 });
+      cy.wait('@getThreatCountsSlow', { timeout: 5000 });
       cy.wait('@getThreatsSummarySlow', { timeout: 5000 });
 
       cy.get('.App-header').should('be.visible');
@@ -280,9 +280,9 @@ describe('🛡️ Error Handling & Edge Cases', () => {
         body: { success: true, data: largeDataset }
       }).as('getAsciiArtLarge');
 
-      cy.intercept('GET', '**/api/stats', {
-        fixture: 'stats.json'
-      }).as('getStats');
+      cy.intercept('GET', '**/api/threat-counts', {
+        fixture: 'threat-counts.json'
+      }).as('getThreatCounts');
 
       cy.intercept('GET', '**/api/threats/summary', {
         fixture: 'threats-summary.json'
@@ -340,14 +340,14 @@ describe('🛡️ Error Handling & Edge Cases', () => {
     it('should maintain consistency after API retry', () => {
       let callCount = 0;
 
-      cy.intercept('GET', '**/api/stats', (req) => {
+      cy.intercept('GET', '**/api/threat-counts', (req) => {
         callCount++;
         if (callCount === 1) {
           req.reply({ statusCode: 500 });
         } else {
-          req.reply({ fixture: 'stats.json' });
+          req.reply({ fixture: 'threat-counts.json' });
         }
-      }).as('getStatsRetry');
+      }).as('getThreatCountsRetry');
 
       cy.intercept('GET', '**/api/ascii-art', {
         fixture: 'ascii-art.json'
