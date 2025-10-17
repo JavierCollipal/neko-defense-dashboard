@@ -54,6 +54,9 @@ function CategorySwitcher({ activeCategory, onCategoryChange, threatCounts }) {
   const { t } = useTranslation();
   const CATEGORIES = getCategoriesWithTranslation(t);
 
+  // 🐾 NEKO PROTECTION: Handle undefined, null, or missing threatCounts
+  const safeThreatCounts = threatCounts || {};
+
   return (
     <div className="category-switcher">
       <div className="switcher-header">
@@ -76,7 +79,7 @@ function CategorySwitcher({ activeCategory, onCategoryChange, threatCounts }) {
                 <div className="category-priority">{category.priority}</div>
               )}
               <div className="category-count">
-                {threatCounts[category.id] || 0} {t('categories.detected')}
+                {safeThreatCounts[category.id] || 0} {t('categories.detected')}
               </div>
             </div>
             {category.priority && (

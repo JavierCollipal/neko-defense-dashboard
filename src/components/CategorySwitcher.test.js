@@ -1,7 +1,47 @@
 // 🐾⚡ NEKO-ARC TESTS - CategorySwitcher Component ⚡🐾
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { I18nextProvider } from 'react-i18next';
+import i18n from 'i18next';
 import CategorySwitcher from './CategorySwitcher';
+
+// 🌐 Setup i18n for tests, nyaa~!
+i18n.init({
+  lng: 'en',
+  fallbackLng: 'en',
+  resources: {
+    en: {
+      translation: {
+        categories: {
+          header: 'Threat Categories',
+          fortress_badge: 'FORTRESS MODE',
+          all_threats: 'All Threats',
+          predators: 'Predators',
+          pedophiles: 'Pedophiles',
+          dina_network: 'DINA Network',
+          ransomware: 'Ransomware',
+          state_sponsored: 'State Sponsored',
+          crypto_crime: 'Crypto Crime',
+          priority_critical: 'CRITICAL',
+          priority_maximum: 'MAXIMUM ALERT',
+          priority_high: 'HIGH',
+          detected: 'detected',
+          active_monitoring: 'Active Monitoring',
+          neko_guardian: 'NEKO Guardian Active'
+        }
+      }
+    }
+  }
+});
+
+// 🎨 Wrapper component with i18n provider, desu!
+const renderWithI18n = (component) => {
+  return render(
+    <I18nextProvider i18n={i18n}>
+      {component}
+    </I18nextProvider>
+  );
+};
 
 describe('CategorySwitcher Component', () => {
   const mockOnCategoryChange = jest.fn();
@@ -21,7 +61,7 @@ describe('CategorySwitcher Component', () => {
 
   describe('🎯 Rendering Tests', () => {
     it('renders all 7 categories', () => {
-      render(
+      renderWithI18n(
         <CategorySwitcher
           activeCategory="all"
           onCategoryChange={mockOnCategoryChange}
@@ -39,7 +79,7 @@ describe('CategorySwitcher Component', () => {
     });
 
     it('displays threat counts for all categories', () => {
-      render(
+      renderWithI18n(
         <CategorySwitcher
           activeCategory="all"
           onCategoryChange={mockOnCategoryChange}
@@ -58,7 +98,7 @@ describe('CategorySwitcher Component', () => {
     });
 
     it('handles missing threat counts by defaulting to 0', () => {
-      render(
+      renderWithI18n(
         <CategorySwitcher
           activeCategory="all"
           onCategoryChange={mockOnCategoryChange}
@@ -71,8 +111,41 @@ describe('CategorySwitcher Component', () => {
       expect(zeroDetected.length).toBe(7); // All 7 categories show "0 detected"
     });
 
+    it('handles undefined threatCounts prop without crashing', () => {
+      // 🐾 THIS IS THE BUG FIX TEST - Component should not crash when threatCounts is undefined
+      renderWithI18n(
+        <CategorySwitcher
+          activeCategory="all"
+          onCategoryChange={mockOnCategoryChange}
+          // No threatCounts prop passed at all
+        />
+      );
+
+      // Should render all categories and default to "0 detected"
+      expect(screen.getByText('All Threats')).toBeInTheDocument();
+      expect(screen.getByText('Predators')).toBeInTheDocument();
+      const zeroDetected = screen.getAllByText(/0.*detected/i);
+      expect(zeroDetected.length).toBe(7); // All 7 categories show "0 detected"
+    });
+
+    it('handles null threatCounts prop without crashing', () => {
+      // 🐾 Edge case - Component should handle null as well
+      renderWithI18n(
+        <CategorySwitcher
+          activeCategory="all"
+          onCategoryChange={mockOnCategoryChange}
+          threatCounts={null}
+        />
+      );
+
+      // Should render all categories and default to "0 detected"
+      expect(screen.getByText('All Threats')).toBeInTheDocument();
+      const zeroDetected = screen.getAllByText(/0.*detected/i);
+      expect(zeroDetected.length).toBe(7);
+    });
+
     it('highlights active category with "active" class', () => {
-      const { container } = render(
+      const { container } = renderWithI18n(
         <CategorySwitcher
           activeCategory="predators"
           onCategoryChange={mockOnCategoryChange}
@@ -88,7 +161,7 @@ describe('CategorySwitcher Component', () => {
 
   describe('🎮 Event Handler Tests', () => {
     it('calls onCategoryChange with correct ID when category is clicked', () => {
-      render(
+      renderWithI18n(
         <CategorySwitcher
           activeCategory="all"
           onCategoryChange={mockOnCategoryChange}
@@ -103,7 +176,7 @@ describe('CategorySwitcher Component', () => {
     });
 
     it('calls onCategoryChange for all categories', () => {
-      render(
+      renderWithI18n(
         <CategorySwitcher
           activeCategory="all"
           onCategoryChange={mockOnCategoryChange}
@@ -131,7 +204,7 @@ describe('CategorySwitcher Component', () => {
 
   describe('🚨 Priority Categories', () => {
     it('shows priority badge for priority categories', () => {
-      render(
+      renderWithI18n(
         <CategorySwitcher
           activeCategory="all"
           onCategoryChange={mockOnCategoryChange}
@@ -145,7 +218,7 @@ describe('CategorySwitcher Component', () => {
     });
 
     it('applies "priority" class to priority categories', () => {
-      const { container } = render(
+      const { container } = renderWithI18n(
         <CategorySwitcher
           activeCategory="all"
           onCategoryChange={mockOnCategoryChange}
@@ -165,7 +238,7 @@ describe('CategorySwitcher Component', () => {
     });
 
     it('shows alert pulse for priority categories', () => {
-      const { container } = render(
+      const { container } = renderWithI18n(
         <CategorySwitcher
           activeCategory="all"
           onCategoryChange={mockOnCategoryChange}
@@ -179,7 +252,7 @@ describe('CategorySwitcher Component', () => {
     });
 
     it('does not show priority badge for non-priority categories', () => {
-      render(
+      renderWithI18n(
         <CategorySwitcher
           activeCategory="ransomware"
           onCategoryChange={mockOnCategoryChange}
@@ -196,7 +269,7 @@ describe('CategorySwitcher Component', () => {
 
   describe('🎨 Visual Styling', () => {
     it('applies correct border color from category config', () => {
-      const { container } = render(
+      const { container } = renderWithI18n(
         <CategorySwitcher
           activeCategory="all"
           onCategoryChange={mockOnCategoryChange}
