@@ -8,6 +8,8 @@
     "test": "react-scripts test --coverage --watchAll=false",
     "test:watch": "react-scripts test",
     "test:coverage": "react-scripts test --coverage --watchAll=false --collectCoverageFrom='src/**/*.{js,jsx}' --coverageThreshold='{\"global\":{\"lines\":100,\"branches\":100,\"functions\":100,\"statements\":100}}'",
+    "test:tabs": "jest tests/tabs-puppeteer.test.js --testTimeout=60000",
+    "test:tabs:server": "start-server-and-test start http://localhost:3000 test:tabs",
     "server": "node server/index.js",
     "dev": "concurrently \"npm run server\" \"npm start\"",
     "cypress": "cypress open",
@@ -42,11 +44,14 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
+    "axe-core": "^4.11.0",
     "concurrently": "^8.2.2",
     "cypress": "^15.4.0",
+    "cypress-axe": "^1.7.0",
     "cypress-real-events": "^1.15.0",
     "jest-canvas-mock": "^2.5.2",
     "mongodb": "^6.20.0",
+    "puppeteer": "^24.25.0",
     "start-server-and-test": "^2.1.2"
   },
   "jest": {

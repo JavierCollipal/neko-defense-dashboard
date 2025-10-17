@@ -6,6 +6,7 @@ import './Drawer.css';
 const menuItems = [
   { path: '/dina', icon: '📚', label: 'DINA Documentation' },
   { path: '/video', icon: '🎬', label: 'Video Maker' },
+  { path: '/youtube', icon: '📺', label: 'YouTube Channel' },
   { path: '/rag', icon: '🗄️', label: 'RAG System' },
   { path: '/timeline', icon: '📅', label: 'DINA Timeline' },
   { path: '/map', icon: '🗺️', label: 'Centers Map' }

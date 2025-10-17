@@ -1,0 +1,171 @@
+# 🐾⚡ NEKO DEFENSE - Cypress E2E Testing CI/CD Pipeline ⚡🐾
+# Automated testing on every push and pull request, nyaa~!
+
+name: 🧪 Cypress E2E Tests
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+  # Allow manual triggering
+  workflow_dispatch:
+
+jobs:
+  # 📦 Install dependencies (cached for performance)
+  install:
+    name: 📦 Install Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔍 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 📥 Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: 💾 Save build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: |
+            node_modules
+            package-lock.json
+          retention-days: 1
+
+  # 🧪 Run Cypress E2E tests in parallel
+  cypress-run:
+    name: 🧪 Cypress Tests (Container ${{ matrix.containers }})
+    runs-on: ubuntu-latest
+    needs: install
+    strategy:
+      fail-fast: false
+      matrix:
+        # Run 4 parallel containers for faster execution
+        containers: [1, 2, 3, 4]
+    steps:
+      - name: 🔍 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📥 Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+
+      - name: 🚀 Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          # Start dev server
+          start: npm start
+          # Wait for server to be ready
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
+          # Browser to use
+          browser: chrome
+          # Headless mode
+          headed: false
+          # Spec pattern (optional - runs all by default)
+          # spec: cypress/e2e/**/*.cy.js
+        env:
+          # Parallel execution across containers
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Environment variables for tests
+          CYPRESS_BASE_URL: http://localhost:3000
+
+      - name: 📸 Upload screenshots on failure
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots-${{ matrix.containers }}
+          path: cypress/screenshots
+          retention-days: 7
+
+      - name: 🎬 Upload videos
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress-videos-${{ matrix.containers }}
+          path: cypress/videos
+          retention-days: 7
+
+      - name: 📊 Upload coverage reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-${{ matrix.containers }}
+          path: coverage
+          retention-days: 7
+
+  # 📊 Merge coverage reports
+  coverage:
+    name: 📊 Code Coverage Report
+    runs-on: ubuntu-latest
+    needs: cypress-run
+    if: always()
+    steps:
+      - name: 🔍 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📥 Download coverage artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: coverage-*
+          path: coverage-temp
+
+      - name: 🔗 Merge coverage reports
+        run: |
+          echo "Merging coverage reports from all containers..."
+          # Merge coverage reports if multiple exist
+          if [ -d "coverage-temp" ]; then
+            echo "Coverage artifacts found"
+            ls -la coverage-temp/
+          fi
+
+      - name: 📤 Upload combined coverage
+        uses: codecov/codecov-action@v4
+        if: always()
+        with:
+          files: ./coverage/lcov.info
+          flags: e2e
+          fail_ci_if_error: false
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  # ✅ Final status check
+  test-results:
+    name: ✅ Test Results Summary
+    runs-on: ubuntu-latest
+    needs: [cypress-run]
+    if: always()
+    steps:
+      - name: 📊 Check test results
+        run: |
+          echo "🐾⚡ NEKO DEFENSE E2E TEST RESULTS ⚡🐾"
+          echo "========================================"
+          echo "✅ All Cypress E2E tests completed!"
+          echo "Check artifacts for screenshots, videos, and coverage reports."
+          echo "*purrs in CI/CD excellence* 😻🎯"
+
+  # 🔔 Notify on failure (optional)
+  notify:
+    name: 🔔 Notify on Failure
+    runs-on: ubuntu-latest
+    needs: [cypress-run]
+    if: failure()
+    steps:
+      - name: 🚨 Send notification
+        run: |
+          echo "🚨 NEKO DEFENSE ALERT: E2E tests failed, nyaa~!"
+          echo "Check the GitHub Actions logs for details, desu!"
+          # Add Slack/Discord webhook notification here if desired

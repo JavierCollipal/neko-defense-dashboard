@@ -203,6 +203,48 @@ Cypress.Commands.add('verifyTvWindowOpened', (urlPattern) => {
   console.log('✅ [verifyTvWindowOpened] TV window verified, desu!');
 });
 
+/**
+ * 🎯 Custom command to select elements by data-cy attribute (BEST PRACTICE!)
+ * @param {string} selector - The data-cy attribute value
+ * @example cy.getByDataCy('language-button')
+ */
+Cypress.Commands.add('getByDataCy', (selector) => {
+  return cy.get(`[data-cy="${selector}"]`);
+});
+
+/**
+ * 📝 Custom command to fill form fields
+ * @param {Object} formData - Key-value pairs of field names and values
+ * @example cy.fillForm({ email: 'test@example.com', password: '123456' })
+ */
+Cypress.Commands.add('fillForm', (formData) => {
+  Object.entries(formData).forEach(([field, value]) => {
+    cy.getByDataCy(`${field}-input`).clear().type(value);
+  });
+});
+
+/**
+ * ⏱️ Custom command to wait for API with response verification
+ * @param {string} alias - The intercept alias (without @)
+ * @example cy.waitForAPI('getThreatActors')
+ */
+Cypress.Commands.add('waitForAPI', (alias) => {
+  cy.wait(`@${alias}`).its('response.statusCode').should('eq', 200);
+});
+
+/**
+ * ♿ Custom command to check accessibility with custom options
+ * @param {string|object} context - Context selector or axe options
+ * @param {object} options - Axe options (rules, etc.)
+ * @example cy.checkA11y()
+ * @example cy.checkA11y('[data-cy="modal"]')
+ * @example cy.checkA11y(null, { rules: { 'color-contrast': { enabled: true } } })
+ */
+Cypress.Commands.add('checkA11y', (context, options) => {
+  cy.injectAxe();
+  cy.checkA11y(context, options);
+});
+
 // 🐾 NEKO POWER - Add chainable logging
 Cypress.Commands.overwrite('log', (originalFn, message) => {
   console.log(`🐾 [NEKO LOG] ${message}`);

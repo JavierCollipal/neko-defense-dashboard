@@ -8,6 +8,9 @@ import '@cypress/code-coverage/support';
 // Import real events plugin
 import 'cypress-real-events';
 
+// Import cypress-axe for accessibility testing
+import 'cypress-axe';
+
 // 🛡️ NEKO BEFORE HOOKS
 beforeEach(() => {
   console.log('🐾 [NEKO E2E] Test starting, nyaa~!');
