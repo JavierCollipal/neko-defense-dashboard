@@ -1,0 +1,179 @@
+/* 🐾⚡ NEKO DEFENSE DASHBOARD - Top Navigation Tabs ⚡🐾 */
+
+.top-tabs {
+  width: 100%;
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+  border-bottom: 2px solid #00ff41;
+  box-shadow: 0 2px 10px rgba(0, 255, 65, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 0.5rem 0;
+}
+
+.top-tabs-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #00ff41 #16213e;
+}
+
+/* Custom scrollbar for webkit browsers */
+.top-tabs-container::-webkit-scrollbar {
+  height: 4px;
+}
+
+.top-tabs-container::-webkit-scrollbar-track {
+  background: #16213e;
+}
+
+.top-tabs-container::-webkit-scrollbar-thumb {
+  background: #00ff41;
+  border-radius: 2px;
+}
+
+.top-tab-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(0, 255, 65, 0.1);
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  border-radius: 8px;
+  color: #00ff41;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+/* CRT scanline effect */
+.top-tab-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1) 0px,
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.top-tab-button:hover {
+  background: rgba(0, 255, 65, 0.2);
+  border-color: #00ff41;
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
+  transform: translateY(-2px);
+}
+
+.top-tab-button.active {
+  background: linear-gradient(135deg, rgba(0, 255, 65, 0.3), rgba(0, 255, 255, 0.3));
+  border-color: #00ffff;
+  color: #00ffff;
+  box-shadow:
+    0 0 15px rgba(0, 255, 255, 0.5),
+    inset 0 0 10px rgba(0, 255, 65, 0.2);
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 15px rgba(0, 255, 255, 0.5),
+      inset 0 0 10px rgba(0, 255, 65, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 20px rgba(0, 255, 255, 0.7),
+      inset 0 0 15px rgba(0, 255, 65, 0.3);
+  }
+}
+
+.top-tab-icon {
+  font-size: 1.2rem;
+  display: inline-block;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+.top-tab-button.active .top-tab-icon {
+  animation: spin-float 3s ease-in-out infinite;
+}
+
+@keyframes spin-float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(5deg);
+  }
+}
+
+.top-tab-label {
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 5px currentColor;
+}
+
+.top-tab-button.active .top-tab-label {
+  font-weight: 700;
+  text-shadow:
+    0 0 10px currentColor,
+    0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+/* Responsive: Hide on mobile (we have bottom tabs for mobile) */
+@media (max-width: 768px) {
+  .top-tabs {
+    display: none;
+  }
+}
+
+/* Tablet adjustments */
+@media (max-width: 1024px) {
+  .top-tab-button {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .top-tab-icon {
+    font-size: 1rem;
+  }
+}
+
+/* Accessibility: Focus styles */
+.top-tab-button:focus-visible {
+  outline: 2px solid #00ffff;
+  outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+  .top-tabs {
+    display: none;
+  }
+}

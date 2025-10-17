@@ -1,6 +1,7 @@
 import React from 'react';
 import { useIsMobile } from '../../hooks/useMediaQuery';
 import { BottomTabs } from '../navigation/BottomTabs';
+import { TopTabs } from '../navigation/TopTabs';
 import { Drawer } from '../navigation/Drawer';
 import { Header } from './Header';
 import PWAInstallPrompt from '../PWAInstallPrompt';
@@ -12,6 +13,7 @@ export const Layout = ({ children }) => {
   return (
     <div className="layout">
       <Header />
+      <TopTabs />
       <Drawer />
 
       <main className="layout-main">
