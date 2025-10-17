@@ -1,5 +1,6 @@
+'use client';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useApp } from '../../contexts/AppContext';
 import './Drawer.css';
 
@@ -9,9 +10,7 @@ const menuItems = [
   { path: '/video', icon: '🎬', label: 'Video Overlay Maker' },
   { path: '/youtube-generator', icon: '🎥', label: 'YouTube Video Generator' },
   { path: '/youtube', icon: '📺', label: 'DINA Video Playlist' },
-  { path: '/rag', icon: '🗄️', label: 'RAG System' },
-  { path: '/timeline', icon: '📅', label: 'DINA Timeline' },
-  { path: '/map', icon: '🗺️', label: 'Centers Map' }
+  { path: '/rag', icon: '🗄️', label: 'RAG System' }
 ];
 
 export const Drawer = () => {
@@ -79,7 +78,7 @@ export const Drawer = () => {
           {menuItems.map(item => (
             <li key={item.path}>
               <Link
-                to={item.path}
+                href={item.path}
                 className="menu-item"
                 onClick={handleLinkClick}
               >

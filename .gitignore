@@ -108,3 +108,4 @@ dump/
 *.cert
 
 # ✨ Keep your repo clean and BASED, desu! 😻
+.next

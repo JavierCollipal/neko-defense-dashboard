@@ -1,5 +1,7 @@
+'use client';
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import './BottomTabs.css';
 
 const tabs = [
@@ -10,16 +12,16 @@ const tabs = [
 ];
 
 export const BottomTabs = () => {
-  const location = useLocation();
+  const pathname = usePathname();
 
   return (
     <nav className="bottom-tabs" role="navigation" aria-label="Primary navigation">
       {tabs.map(tab => {
-        const isActive = location.pathname === tab.path;
+        const isActive = pathname === tab.path;
         return (
           <Link
             key={tab.path}
-            to={tab.path}
+            href={tab.path}
             className={`tab ${isActive ? 'active' : ''}`}
             aria-current={isActive ? 'page' : undefined}
           >

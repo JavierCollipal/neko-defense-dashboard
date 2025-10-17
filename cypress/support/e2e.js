@@ -16,14 +16,23 @@ beforeEach(() => {
   console.log('🐾 [NEKO E2E] Test starting, nyaa~!');
 
   // Intercept API calls to prevent real backend dependencies
-  cy.intercept('GET', '**/api/ascii-art', {
+  // Using explicit localhost pattern
+  cy.intercept('GET', 'http://localhost:3000/api/ascii-art', {
     fixture: 'ascii-art.json'
   }).as('getAsciiArt');
 
+  cy.intercept('GET', '/api/ascii-art', {
+    fixture: 'ascii-art.json'
+  }).as('getAsciiArtRelative');
+
   // FIX: App actually calls /api/threat-counts, not /api/stats
-  cy.intercept('GET', '**/api/threat-counts', {
+  cy.intercept('GET', 'http://localhost:3000/api/threat-counts', {
     fixture: 'threat-counts.json'
   }).as('getThreatCounts');
+
+  cy.intercept('GET', '/api/threat-counts', {
+    fixture: 'threat-counts.json'
+  }).as('getThreatCountsRelative');
 
   // DEPRECATED: App doesn't use this endpoint anymore
   // cy.intercept('GET', '**/api/threats/summary', {
