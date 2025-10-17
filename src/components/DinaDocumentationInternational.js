@@ -207,6 +207,12 @@ const DinaDocumentationInternational = () => {
         >
           ⏰ TIMELINE
         </button>
+        <button
+          className={`nav-button ${viewMode === 'agents' ? 'active' : ''}`}
+          onClick={() => changeView('agents')}
+        >
+          👤 ALL AGENTS ({perpetrators.length})
+        </button>
       </div>
 
       {/* Main Content Area */}
@@ -630,6 +636,115 @@ const DinaDocumentationInternational = () => {
 
         {viewMode === 'timeline' && (
           <DinaTimeline language={language} />
+        )}
+
+        {/* ALL AGENTS VIEW - Comprehensive Table */}
+        {viewMode === 'agents' && (
+          <div className="all-agents-section">
+            <h2>👤 ALL DINA AGENTS - COMPREHENSIVE DATABASE</h2>
+            <p className="section-subtitle">Complete list of documented high-profile DINA agents - Research updated October 2025</p>
+
+            <div className="agents-stats-banner">
+              <div className="stat-item">
+                <strong>{perpetrators.length}</strong>
+                <span>Documented Agents</span>
+              </div>
+              <div className="stat-item success">
+                <strong>{perpetrators.filter(p => p.legalStatus?.convicted).length}</strong>
+                <span>Convicted</span>
+              </div>
+              <div className="stat-item warning">
+                <strong>{perpetrators.filter(p => p.status?.includes('AT LARGE')).length}</strong>
+                <span>At Large</span>
+              </div>
+              <div className="stat-item critical">
+                <strong>{perpetrators.filter(p => p.status?.includes('NEVER PROSECUTED')).length}</strong>
+                <span>Never Prosecuted</span>
+              </div>
+            </div>
+
+            {perpetrators.length === 0 ? (
+              <div className="no-data-message">
+                <p>⚠️ No agents loaded from database.</p>
+                <p>Make sure the NestJS API is running on port {API_URL.includes('4000') ? '4000' : '5001'}</p>
+              </div>
+            ) : (
+              <div className="agents-table-container">
+                <table className="agents-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Full Name</th>
+                      <th>Alias</th>
+                      <th>Role</th>
+                      <th>Rank</th>
+                      <th>Status</th>
+                      <th>Legal Status</th>
+                      <th>Crimes</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {perpetrators.map((agent, index) => (
+                      <tr key={index} className={
+                        agent.status?.includes('AT LARGE') ? 'row-at-large' :
+                        agent.status?.includes('NEVER PROSECUTED') ? 'row-impunity' :
+                        agent.status === 'CONVICTED - IMPRISONED' ? 'row-convicted' :
+                        ''
+                      }>
+                        <td>{index + 1}</td>
+                        <td className="name-cell">
+                          <strong>{agent.fullName}</strong>
+                        </td>
+                        <td className="alias-cell">
+                          {agent.alias || '-'}
+                        </td>
+                        <td className="role-cell">{agent.role}</td>
+                        <td className="rank-cell">{agent.rank || '-'}</td>
+                        <td>
+                          <span className={`status-badge-table ${
+                            agent.status?.includes('AT LARGE') ? 'badge-warning' :
+                            agent.status?.includes('NEVER PROSECUTED') ? 'badge-critical' :
+                            agent.status === 'CONVICTED - IMPRISONED' ? 'badge-success' :
+                            'badge-default'
+                          }`}>
+                            {agent.status || 'Unknown'}
+                          </span>
+                        </td>
+                        <td className="legal-cell">
+                          <span className={agent.legalStatus?.convicted ? 'convicted-yes' : 'convicted-no'}>
+                            {agent.legalStatus?.convicted ? '⚖️ CONVICTED' : '⚠️ UNPROSECUTED'}
+                          </span>
+                          {agent.legalStatus?.sentences && (
+                            <div className="sentences-mini">{agent.legalStatus.sentences}</div>
+                          )}
+                        </td>
+                        <td className="crimes-cell">
+                          {agent.crimesAccused?.length || 0} documented
+                        </td>
+                        <td>
+                          <button
+                            className="view-btn-table"
+                            onClick={() => showDetails(agent)}
+                          >
+                            View Details →
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            <div className="agents-footer-note">
+              <h4>📚 Database Information</h4>
+              <p><strong>Total Known DINA Agents:</strong> 1,097 (2008 Chilean Army official list)</p>
+              <p><strong>This Database:</strong> {perpetrators.length} high-profile agents with comprehensive research</p>
+              <p><strong>Sources:</strong> National Security Archive, Chilean court records, International court records, survivor testimonies, human rights organizations</p>
+              <p><strong>Methodology:</strong> Following Simon Wiesenthal Nazi-hunting precedent - systematic documentation for accountability and justice</p>
+            </div>
+          </div>
         )}
 
         {viewMode === 'details' && selectedPerp && (
