@@ -26,10 +26,65 @@ env:
   NEXT_PUBLIC_GRAPHQL_URL: ${{ secrets.NEXT_PUBLIC_GRAPHQL_URL || 'https://bass-gain-pairs-pad.trycloudflare.com' }}
 
 jobs:
-  # ==================== JOB 1: TEST ====================
+  # ==================== JOB 1: PRE-DEPLOYMENT VALIDATION ====================
+  validate:
+    name: Pre-Deployment Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔍 Check for common issues
+        run: |
+          echo "🐾 Running pre-deployment validation, nyaa~!"
+
+          # ❌ Check for react-scripts (should NOT exist)
+          if grep -q '"react-scripts"' package.json; then
+            echo "❌ ERROR: react-scripts found in package.json!"
+            echo "⚠️  Remove react-scripts before deploying Next.js"
+            exit 1
+          fi
+          echo "✅ No react-scripts found"
+
+          # ❌ Check for test files in src/ (should NOT exist)
+          if find src -name "*.test.js" -o -name "*.test.jsx" | grep -q .; then
+            echo "❌ ERROR: Test files found in src/ directory!"
+            echo "⚠️  Delete all *.test.js files before deployment"
+            exit 1
+          fi
+          echo "✅ No test files found"
+
+          # ❌ Check for src/pages/ directory (should NOT exist in Next.js App Router)
+          if [ -d "src/pages" ]; then
+            echo "❌ ERROR: src/pages/ directory found!"
+            echo "⚠️  Rename to src/page-components/ to avoid Next.js routing confusion"
+            exit 1
+          fi
+          echo "✅ No src/pages/ directory"
+
+          # ✅ Check for app/ directory (should exist)
+          if [ ! -d "app" ]; then
+            echo "❌ ERROR: app/ directory not found!"
+            echo "⚠️  Next.js App Router requires an app/ directory"
+            exit 1
+          fi
+          echo "✅ app/ directory exists"
+
+          # ✅ Check for next.config.js (should exist)
+          if [ ! -f "next.config.js" ]; then
+            echo "❌ ERROR: next.config.js not found!"
+            exit 1
+          fi
+          echo "✅ next.config.js exists"
+
+          echo "🎉 All pre-deployment checks passed, desu~!"
+
+  # ==================== JOB 2: TEST ====================
   test:
     name: Run Tests
     runs-on: ubuntu-latest
+    needs: validate
 
     steps:
       - name: 📥 Checkout code
@@ -54,7 +109,7 @@ jobs:
       - name: ✅ Tests completed
         run: echo "🎉 All tests passed, desu~!"
 
-  # ==================== JOB 2: BUILD ====================
+  # ==================== JOB 3: BUILD ====================
   build:
     name: Build Next.js App
     runs-on: ubuntu-latest
@@ -92,7 +147,7 @@ jobs:
             package.json
           retention-days: 7
 
-  # ==================== JOB 3: DEPLOY TO VERCEL ====================
+  # ==================== JOB 4: DEPLOY TO VERCEL ====================
   deploy-vercel:
     name: Deploy Frontend to Vercel
     runs-on: ubuntu-latest
@@ -111,30 +166,60 @@ jobs:
       - name: 📦 Install Vercel CLI
         run: npm install -g vercel
 
-      - name: 🚀 Deploy to Vercel
+      - name: 🔗 Link Vercel project
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
         run: |
-          echo "🐾 Deploying to Vercel, nyaa~!"
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "⚠️ VERCEL_TOKEN not set, skipping deployment"
+            exit 0
+          fi
 
-          # Set environment variables for deployment
-          vercel --token=$VERCEL_TOKEN \
-            --env NEXT_PUBLIC_API_URL=${{ env.NEXT_PUBLIC_API_URL }} \
-            --env NEXT_PUBLIC_GRAPHQL_URL=${{ env.NEXT_PUBLIC_GRAPHQL_URL }} \
-            --prod \
-            --yes
+          echo "🐾 Linking Vercel project, nyaa~!"
+
+          # Create .vercel directory
+          mkdir -p .vercel
+
+          # Create project.json with IDs
+          cat > .vercel/project.json << EOF
+          {
+            "orgId": "$VERCEL_ORG_ID",
+            "projectId": "$VERCEL_PROJECT_ID"
+          }
+          EOF
+
+          echo "✅ Vercel project linked!"
+
+      - name: 🚀 Deploy to Vercel Production
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          NEXT_PUBLIC_API_URL: ${{ env.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_GRAPHQL_URL: ${{ env.NEXT_PUBLIC_GRAPHQL_URL }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "⚠️ VERCEL_TOKEN not set, skipping deployment"
+            exit 0
+          fi
+
+          echo "🐾 Deploying to Vercel production, nyaa~!"
+          echo "📊 Environment variables:"
+          echo "  NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL"
+          echo "  NEXT_PUBLIC_GRAPHQL_URL=$NEXT_PUBLIC_GRAPHQL_URL"
+
+          # Deploy with production flag (same command that worked!)
+          vercel --prod --yes --token="$VERCEL_TOKEN"
 
           echo "✅ Deployed to Vercel successfully, desu~!"
-        continue-on-error: true # Don't fail if Vercel secrets not set
 
       - name: 📝 Deployment info
         run: |
           echo "🎉 Frontend deployed!"
-          echo "🌐 Check your Vercel dashboard for the deployment URL"
+          echo "🌐 Production URL: https://neko-defense-dashboard.vercel.app"
+          echo "🔍 Check Vercel dashboard: https://vercel.com/dashboard"
 
-  # ==================== JOB 4: DEPLOY REST API ====================
+  # ==================== JOB 5: DEPLOY REST API ====================
   deploy-api:
     name: Deploy REST API to Railway
     runs-on: ubuntu-latest
@@ -165,7 +250,7 @@ jobs:
           echo "✅ REST API deployment initiated, desu~!"
         continue-on-error: true # Don't fail if Railway secrets not set
 
-  # ==================== JOB 5: DEPLOY GRAPHQL API ====================
+  # ==================== JOB 6: DEPLOY GRAPHQL API ====================
   deploy-graphql:
     name: Deploy GraphQL API to Railway
     runs-on: ubuntu-latest
@@ -196,7 +281,7 @@ jobs:
           echo "✅ GraphQL API deployment initiated, desu~!"
         continue-on-error: true # Don't fail if Railway secrets not set
 
-  # ==================== JOB 6: NOTIFY SUCCESS ====================
+  # ==================== JOB 7: NOTIFY SUCCESS ====================
   notify:
     name: Notify Deployment Success
     runs-on: ubuntu-latest
