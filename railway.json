@@ -1,0 +1,43 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": "npm install"
+  },
+  "deploy": {
+    "startCommand": "npm run server",
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  },
+  "env": {
+    "MONGODB_URI": {
+      "description": "MongoDB Atlas connection string",
+      "required": true
+    },
+    "MONGODB_DATABASE": {
+      "description": "MongoDB database name",
+      "default": "neko-defense-system"
+    },
+    "API_PORT": {
+      "description": "Port for REST API server",
+      "default": "5001"
+    },
+    "NODE_ENV": {
+      "description": "Node environment",
+      "default": "production"
+    },
+    "ALLOWED_ORIGINS": {
+      "description": "Comma-separated list of allowed CORS origins (leave empty for smart defaults)",
+      "default": ""
+    }
+  },
+  "services": [
+    {
+      "name": "neko-api",
+      "type": "web",
+      "env": {
+        "PORT": "5001"
+      }
+    }
+  ]
+}

@@ -12,6 +12,9 @@ const { translateDocuments, getUserLanguage } = require('./translation-service')
 const app = express();
 const PORT = process.env.API_PORT || 5001;
 
+// Trust proxy (required for Cloudflare, Vercel, Railway, etc.)
+app.set('trust proxy', 1);
+
 // 🔒 MongoDB Configuration (from environment variables only!)
 const MONGODB_URI = process.env.MONGODB_URI;
 const DB_NAME = process.env.MONGODB_DATABASE || "neko-defense-system";
@@ -34,14 +37,36 @@ app.use(helmet({
   crossOriginEmbedderPolicy: false
 }));
 
-// CORS: Only allow specific origins
-const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:5001').split(',');
+// CORS: Environment-aware origin whitelist, nyaa~! 🌍🔒
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001,http://localhost:5001').split(',');
+
+// Smart CORS handler for development AND production
 app.use(cors({
   origin: function(origin, callback) {
-    // Allow requests with no origin (mobile apps, curl, etc)
+    // Allow requests with no origin (mobile apps, curl, Postman, etc)
     if (!origin) return callback(null, true);
 
+    // Allow all trycloudflare.com tunnels (temporary testing)
+    if (origin.includes('trycloudflare.com')) {
+      console.log(`✅ [CORS] Allowed Cloudflare tunnel: ${origin}`);
+      return callback(null, true);
+    }
+
+    // Allow all vercel.app deployments (production)
+    if (origin.includes('vercel.app')) {
+      console.log(`✅ [CORS] Allowed Vercel deployment: ${origin}`);
+      return callback(null, true);
+    }
+
+    // Allow all railway.app deployments (production)
+    if (origin.includes('railway.app')) {
+      console.log(`✅ [CORS] Allowed Railway deployment: ${origin}`);
+      return callback(null, true);
+    }
+
+    // Check explicit whitelist
     if (allowedOrigins.indexOf(origin) !== -1) {
+      console.log(`✅ [CORS] Allowed whitelisted origin: ${origin}`);
       callback(null, true);
     } else {
       console.log(`🚫 [SECURITY] Blocked origin: ${origin}`);
