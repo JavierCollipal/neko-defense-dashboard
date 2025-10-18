@@ -7,7 +7,7 @@ import LoadingSpinner from './components/LoadingSpinner';
 import './styles/App.css';
 
 // Eager load: Dashboard (home page)
-import { Dashboard } from './pages/Dashboard';
+import { Dashboard } from './page-components/Dashboard';
 
 // Lazy load: All other pages for code splitting
 const ThreatActors = lazy(() => import('./components/ThreatActors'));
