@@ -59,7 +59,7 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci --legacy-peer-deps
 
-      - name: 🏗️ Build React application
+      - name: 🏗️ Build Next.js application
         run: npm run build
         env:
           CI: false  # Prevent warnings from failing build
@@ -68,14 +68,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-output
-          path: build
+          path: .next
           retention-days: 1
 
       - name: 📊 Check build size
         run: |
           echo "🐾 Build completed successfully, nyaa~!"
-          du -sh build
-          ls -lh build/static/js/*.js | head -5
+          du -sh .next
+          ls -lh .next/static/chunks/*.js | head -5
 
   # ═══════════════════════════════════════════════════════════
   # 🧪 STAGE 3: UNIT & INTEGRATION TESTS
