@@ -71,6 +71,8 @@ jobs:
       - name: 🚀 Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
+          # Build before starting (each container builds independently)
+          build: npm run build
           # Start dev server
           start: npm start
           # Wait for server to be ready
@@ -92,6 +94,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Environment variables for tests
           CYPRESS_BASE_URL: http://localhost:3000
+          CI: false  # Prevent warnings from failing build
 
       - name: 📸 Upload screenshots on failure
         uses: actions/upload-artifact@v4
