@@ -1,0 +1,276 @@
+{
+  "timestamp": "2025-10-19T04:14:58.406Z",
+  "browser": "Chromium (Puppeteer)",
+  "baseUrl": "http://localhost:3000",
+  "summary": {
+    "screenshotsCaptured": 9,
+    "routesTested": 8,
+    "interactionTests": 2,
+    "networkRequests": 24,
+    "errors": 0
+  },
+  "details": {
+    "screenshots": [
+      {
+        "route": "home",
+        "path": "/home/wakibaka/Documents/github/neko-defense-dashboard/puppeteer-screenshots/home-desktop.png",
+        "viewport": "desktop"
+      },
+      {
+        "route": "threats",
+        "path": "/home/wakibaka/Documents/github/neko-defense-dashboard/puppeteer-screenshots/threats-desktop.png",
+        "viewport": "desktop"
+      },
+      {
+        "route": "dina",
+        "path": "/home/wakibaka/Documents/github/neko-defense-dashboard/puppeteer-screenshots/dina-desktop.png",
+        "viewport": "desktop"
+      },
+      {
+        "route": "analytics",
+        "path": "/home/wakibaka/Documents/github/neko-defense-dashboard/puppeteer-screenshots/analytics-desktop.png",
+        "viewport": "desktop"
+      },
+      {
+        "route": "abilities",
+        "path": "/home/wakibaka/Documents/github/neko-defense-dashboard/puppeteer-screenshots/abilities-desktop.png",
+        "viewport": "desktop"
+      },
+      {
+        "route": "blog",
+        "path": "/home/wakibaka/Documents/github/neko-defense-dashboard/puppeteer-screenshots/blog-desktop.png",
+        "viewport": "desktop"
+      },
+      {
+        "route": "videos",
+        "path": "/home/wakibaka/Documents/github/neko-defense-dashboard/puppeteer-screenshots/videos-desktop.png",
+        "viewport": "desktop"
+      },
+      {
+        "route": "rag",
+        "path": "/home/wakibaka/Documents/github/neko-defense-dashboard/puppeteer-screenshots/rag-desktop.png",
+        "viewport": "desktop"
+      },
+      {
+        "route": "home",
+        "path": "/home/wakibaka/Documents/github/neko-defense-dashboard/puppeteer-screenshots/home-mobile.png",
+        "viewport": "mobile"
+      }
+    ],
+    "interactions": [
+      {
+        "type": "scroll",
+        "position": 500,
+        "success": true
+      },
+      {
+        "type": "category_detection",
+        "data": {
+          "name": "categories.all_threats",
+          "count": "0 categories.detected"
+        },
+        "success": true
+      }
+    ],
+    "performance": [
+      {
+        "route": "home",
+        "loadTime": 1197,
+        "url": "http://localhost:3000/"
+      },
+      {
+        "route": "threats",
+        "loadTime": 1034,
+        "url": "http://localhost:3000/threats"
+      },
+      {
+        "route": "dina",
+        "loadTime": 1031,
+        "url": "http://localhost:3000/dina"
+      },
+      {
+        "route": "analytics",
+        "loadTime": 1053,
+        "url": "http://localhost:3000/valech"
+      },
+      {
+        "route": "abilities",
+        "loadTime": 1157,
+        "url": "http://localhost:3000/abilities"
+      },
+      {
+        "route": "blog",
+        "loadTime": 1179,
+        "url": "http://localhost:3000/confessions"
+      },
+      {
+        "route": "videos",
+        "loadTime": 1055,
+        "url": "http://localhost:3000/youtube"
+      },
+      {
+        "route": "rag",
+        "loadTime": 1070,
+        "url": "http://localhost:3000/rag"
+      },
+      {
+        "route": "home",
+        "metrics": {
+          "Timestamp": 10141.267457,
+          "Documents": 5,
+          "Frames": 1,
+          "JSEventListeners": 1676,
+          "Nodes": 2453,
+          "LayoutCount": 3100,
+          "RecalcStyleCount": 3076,
+          "LayoutDuration": 1.161438,
+          "RecalcStyleDuration": 1.541205,
+          "ScriptDuration": 2.528647,
+          "TaskDuration": 9.503676,
+          "JSHeapUsedSize": 49037492,
+          "JSHeapTotalSize": 62562304
+        }
+      }
+    ],
+    "networkRequests": [
+      {
+        "url": "http://localhost:3000/threats",
+        "method": "GET",
+        "resourceType": "document"
+      },
+      {
+        "url": "http://localhost:3000/_next/static/css/app/layout.css?v=1760847295881",
+        "method": "GET",
+        "resourceType": "stylesheet"
+      },
+      {
+        "url": "http://localhost:3000/_next/static/css/app/threats/page.css?v=1760847295881",
+        "method": "GET",
+        "resourceType": "stylesheet"
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/webpack.js?v=1760847295881",
+        "method": "GET",
+        "resourceType": "script"
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/main-app.js?v=1760847295881",
+        "method": "GET",
+        "resourceType": "script"
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/app-pages-internals.js",
+        "method": "GET",
+        "resourceType": "script"
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/app/threats/page.js",
+        "method": "GET",
+        "resourceType": "script"
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/app/layout.js",
+        "method": "GET",
+        "resourceType": "script"
+      },
+      {
+        "url": "http://localhost:5001/api/threat-actors?lang=en",
+        "method": "GET",
+        "resourceType": "fetch"
+      },
+      {
+        "url": "http://localhost:5001/api/threat-actors?lang=en",
+        "method": "GET",
+        "resourceType": "fetch"
+      },
+      {
+        "url": "http://localhost:3000/",
+        "method": "GET",
+        "resourceType": "document"
+      },
+      {
+        "url": "http://localhost:3000/_next/static/css/app/layout.css?v=1760847296923",
+        "method": "GET",
+        "resourceType": "stylesheet"
+      },
+      {
+        "url": "http://localhost:3000/_next/static/css/app/page.css?v=1760847296923",
+        "method": "GET",
+        "resourceType": "stylesheet"
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/webpack.js?v=1760847296923",
+        "method": "GET",
+        "resourceType": "script"
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/main-app.js?v=1760847296923",
+        "method": "GET",
+        "resourceType": "script"
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/app-pages-internals.js",
+        "method": "GET",
+        "resourceType": "script"
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/app/page.js",
+        "method": "GET",
+        "resourceType": "script"
+      },
+      {
+        "url": "http://localhost:3000/_next/static/chunks/app/layout.js",
+        "method": "GET",
+        "resourceType": "script"
+      },
+      {
+        "url": "http://localhost:5001/api/threat-actors?category=all",
+        "method": "GET",
+        "resourceType": "fetch"
+      },
+      {
+        "url": "http://localhost:3000/api/ascii-art",
+        "method": "GET",
+        "resourceType": "fetch"
+      },
+      {
+        "url": "http://localhost:3000/api/threat-counts",
+        "method": "GET",
+        "resourceType": "fetch"
+      },
+      {
+        "url": "http://localhost:5001/api/threat-actors?category=all",
+        "method": "GET",
+        "resourceType": "fetch"
+      },
+      {
+        "url": "http://localhost:3000/api/ascii-art",
+        "method": "GET",
+        "resourceType": "fetch"
+      },
+      {
+        "url": "http://localhost:3000/api/threat-counts",
+        "method": "GET",
+        "resourceType": "fetch"
+      }
+    ],
+    "jsExecutions": [
+      {
+        "customGreeting": "🐾 NYA NYA NYA~! Puppeteer is in control, desu~! ⚡",
+        "metadata": {
+          "url": "http://localhost:3000/",
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+          "viewport": {
+            "width": 436,
+            "height": 945
+          },
+          "screenResolution": {
+            "width": 375,
+            "height": 812
+          }
+        }
+      }
+    ],
+    "errors": []
+  }
+}
