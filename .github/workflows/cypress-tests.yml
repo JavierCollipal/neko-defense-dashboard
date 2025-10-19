@@ -74,11 +74,15 @@ jobs:
           browser: chrome
           # Headless mode
           headed: false
+          # ☁️ CYPRESS CLOUD RECORDING ENABLED!
+          record: true
+          parallel: true  # ⚡ 4 parallel containers for MAXIMUM SPEED!
           # Spec pattern (optional - runs all by default)
           # spec: cypress/e2e/**/*.cy.js
         env:
-          # Parallel execution across containers
+          # ☁️ Parallel execution across containers with Cloud recording
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_PROJECT_ID: 9xzw4h  # ☁️ Cloud project ID
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Environment variables for tests
           CYPRESS_BASE_URL: http://localhost:3000

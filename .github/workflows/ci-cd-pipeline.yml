@@ -147,8 +147,11 @@ jobs:
           wait-on-timeout: 120
           browser: chrome
           spec: 'cypress/e2e/**/*.cy.js'
+          record: true  # ☁️ CYPRESS CLOUD RECORDING ENABLED!
         env:
           CYPRESS_BASE_URL: http://localhost:3000
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}  # ☁️ Cloud recording key
+          CYPRESS_PROJECT_ID: 9xzw4h  # ☁️ Cloud project ID
 
       - name: 📸 Upload screenshots on failure
         uses: actions/upload-artifact@v4
