@@ -22,7 +22,11 @@ const PuppeteerErrorCollector = require('./puppeteer-error-collector');
 
 const BASE_URL = 'http://localhost:3000';
 const SCREENSHOTS_DIR = path.join(__dirname, 'puppeteer-screenshots');
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://badactordestroyer:vlB3Ga8tf0ah9jeA@free-cluster.svjei3w.mongodb.net/neko-defense-system';
+const MONGODB_URI = process.env.MONGODB_URI;
+if (!MONGODB_URI) {
+  console.error('❌ MONGODB_URI not set!');
+  process.exit(1);
+};
 
 // Ensure screenshots directory exists
 if (!fs.existsSync(SCREENSHOTS_DIR)) {

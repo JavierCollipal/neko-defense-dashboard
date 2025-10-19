@@ -53,7 +53,7 @@ const protector = new NekoNetworkProtector({
   // MongoDB integration for upgradability
   mongodb: {
     enabled: true,
-    uri: process.env.MONGODB_URI || 'mongodb+srv://pinochito1747:pinochito1747@free-cluster.svjei3w.mongodb.net/',
+    uri: process.env.MONGODB_URI || (() => { console.error("❌ MONGODB_URI not set!"); process.exit(1); })(),
     database: 'neko-defense-system'
   }
 });

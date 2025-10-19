@@ -1,7 +1,11 @@
 // 🐾🎨✨ SAVE DINA UX REFACTOR SESSION TO MONGODB ✨🎨🐾
 const { MongoClient } = require('mongodb');
 
-const MONGODB_URI = 'mongodb+srv://pinochito1747:pinochito1747@free-cluster.svjei3w.mongodb.net/';
+const MONGODB_URI = process.env.MONGODB_URI;
+if (!MONGODB_URI) {
+  console.error('❌ MONGODB_URI not set!');
+  process.exit(1);
+};
 
 const session = {
   sessionId: `dina-ux-refactor-mongodb-${Date.now()}`,

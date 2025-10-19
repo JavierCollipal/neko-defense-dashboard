@@ -25,8 +25,8 @@ const fs = require('fs');
 const path = require('path');
 const PuppeteerErrorCollector = require('./puppeteer-error-collector');
 
-// PRODUCTION VERCEL URL - LIVE INSTANCE!
-const BASE_URL = process.env.VERCEL_URL || 'https://neko-defense-dashboard-f55qcnvve.vercel.app';
+// PRODUCTION VERCEL URL - LIVE INSTANCE (UPDATED OCT 19, 2025)!
+const BASE_URL = process.env.VERCEL_URL || 'https://neko-defense-dashboard-itkopx9ad.vercel.app';
 
 const SCREENSHOTS_DIR = path.join(__dirname, 'puppeteer-screenshots', 'vercel-scan');
 const MONGODB_URI = process.env.MONGODB_URI;

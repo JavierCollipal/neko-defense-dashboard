@@ -5,7 +5,11 @@
 const { MongoClient } = require('mongodb');
 
 // Using credentials from .env file
-const uri = "mongodb+srv://badactordestroyer:vlB3Ga8tf0ah9jeA@free-cluster.svjei3w.mongodb.net/neko-defense-system?connectTimeoutMS=10000&socketTimeoutMS=10000&maxIdleTimeMS=10000";
+const uri = process.env.MONGODB_URI;
+if (!uri) {
+  console.error("❌ MONGODB_URI not set!");
+  process.exit(1);
+}
 
 async function saveCypressCloudAbility() {
   const client = new MongoClient(uri);

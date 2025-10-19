@@ -1,7 +1,11 @@
 // 🐾⚡ Enrich MongoDB Collections - Next.js Vercel Deployment - Oct 18, 2025 ⚡🐾
 const { MongoClient } = require('mongodb');
 
-const uri = process.env.MONGODB_URI || 'mongodb+srv://badactordestroyer:vlB3Ga8tf0ah9jeA@free-cluster.svjei3w.mongodb.net/neko-defense-system';
+const uri = process.env.MONGODB_URI;
+if (!uri) {
+  console.error('❌ MONGODB_URI not set!');
+  process.exit(1);
+};
 const dbName = 'neko-defense-system';
 
 async function enrichCollections() {

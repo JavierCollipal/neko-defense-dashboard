@@ -1,7 +1,11 @@
 // 🐾🌍 SAVE i18n IMPLEMENTATION SESSION - COMPLETE INTERNATIONALIZATION 🌍🐾
 const { MongoClient } = require('mongodb');
 
-const MONGO_URI = 'mongodb+srv://wakibaka:LQ1C8RyFORM6qj1e@ncapcluster.mongodb.net/?retryWrites=true&w=majority&appName=NcapCluster';
+const MONGO_URI = process.env.MONGODB_URI;
+if (!MONGO_URI) {
+  console.error('❌ MONGODB_URI not set!');
+  process.exit(1);
+}
 const DB_NAME = 'neko_intelligence';
 
 async function saveI18nSession() {

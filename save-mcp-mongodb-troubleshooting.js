@@ -1,6 +1,10 @@
 const { MongoClient } = require('mongodb');
 
-const MONGODB_URI = 'mongodb+srv://pinochito1747:pinochito1747@free-cluster.svjei3w.mongodb.net/';
+const MONGODB_URI = process.env.MONGODB_URI;
+if (!MONGODB_URI) {
+  console.error('❌ MONGODB_URI not set!');
+  process.exit(1);
+};
 
 async function saveMCPMongoDBTroubleshooting() {
   const client = new MongoClient(MONGODB_URI);
@@ -240,7 +244,7 @@ async function saveMCPMongoDBTroubleshooting() {
               "command": "npx",
               "args": ["-y", "@harryelv/mongodb-mcp-server"],
               "env": {
-                "MONGODB_CONNECTION_STRING": "mongodb+srv://pinochito1747:pinochito1747@free-cluster.svjei3w.mongodb.net/",
+                "MONGODB_CONNECTION_STRING": "mongodb+srv://user:pass@cluster.mongodb.net/",
                 "MONGODB_DATABASE": "neko_defense_system"
               }
             }

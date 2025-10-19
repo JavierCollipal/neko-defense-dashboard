@@ -2,8 +2,8 @@
 const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
-  // ☁️ CYPRESS CLOUD PROJECT ID
-  projectId: 'jhwwrs',
+  // ☁️ CYPRESS CLOUD PROJECT ID (CORRECT ID - Rule 1.0)
+  projectId: '9xzw4h',
 
   e2e: {
     baseUrl: 'http://localhost:3000',

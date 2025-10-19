@@ -484,7 +484,7 @@ async function enrichMongoDBWithDeployment() {
         },
         database: {
           platform: 'MongoDB Atlas',
-          connection: 'mongodb+srv://pinochito1747:pinochito1747@free-cluster.svjei3w.mongodb.net/',
+          // Connection configured via environment variable
           status: 'Connected ✅'
         }
       },

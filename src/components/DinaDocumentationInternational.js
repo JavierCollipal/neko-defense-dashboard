@@ -5,8 +5,8 @@ import GlobalThreatMap from './GlobalThreatMap';
 import DinaTimeline from './DinaTimeline';
 import '../styles/DinaDocumentationInternational.css';
 
-// 🎯 API URL - NestJS backend runs on port 4000, nyaa~!
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000/api';
+// 🎯 API URL - Use Next.js API routes (works in dev AND production!)
+const API_URL = '/api';
 
 const DinaDocumentationInternational = () => {
   const [language, setLanguage] = useState('en');

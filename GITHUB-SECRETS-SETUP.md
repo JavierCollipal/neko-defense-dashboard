@@ -18,10 +18,12 @@ Go to your GitHub repository → **Settings** → **Secrets and variables** → 
 
 ```
 Name: MONGODB_URI
-Value: mongodb+srv://pinochito1747:pinochito1747@free-cluster.svjei3w.mongodb.net/
+Value: mongodb+srv://pinochito1747:pinochito1747@free-cluster.svjei3w.mongodb.net/neko-defense-system
 ```
 
 **Why:** Allows deployed apps to connect to your MongoDB database
+
+**⚠️ IMPORTANT:** Must include database name `/neko-defense-system` at the end!
 
 ---
 
@@ -64,7 +66,28 @@ Value: <your-project-id>
 
 ---
 
-### **3. Railway (API Deployment)** 🚂
+### **3. Cypress Cloud (E2E Testing)** ☁️🧪
+
+#### **CYPRESS_RECORD_KEY** (Required for test recording)
+```
+Name: CYPRESS_RECORD_KEY
+Value: 72f44521-8447-4cc2-8d48-a6112813ce57
+```
+
+**How to get:**
+1. Go to https://cloud.cypress.io/projects/9xzw4h/settings
+2. Navigate to "Record Keys" section
+3. Copy the existing key or create a new one
+
+**Why:** Enables parallel test recording to Cypress Cloud dashboard
+
+**Project ID:** `9xzw4h` (already configured in cypress.config.js)
+
+**Dashboard URL:** https://cloud.cypress.io/projects/9xzw4h
+
+---
+
+### **4. Railway (API Deployment)** 🚂
 
 #### **RAILWAY_TOKEN** (Required)
 ```
@@ -80,7 +103,7 @@ Value: <your-railway-token>
 
 ---
 
-### **4. Production API URLs** 🌐
+### **5. Production API URLs** 🌐
 
 After deploying your APIs to Railway, set these:
 
@@ -102,7 +125,8 @@ Value: https://neko-graphql.up.railway.app
 
 ## ✅ Verification Checklist
 
-- [ ] MONGODB_URI secret added
+- [ ] MONGODB_URI secret added (with `/neko-defense-system` database!)
+- [ ] CYPRESS_RECORD_KEY secret added (for Cypress Cloud ☁️)
 - [ ] VERCEL_TOKEN secret added
 - [ ] VERCEL_ORG_ID secret added
 - [ ] VERCEL_PROJECT_ID secret added
@@ -125,12 +149,13 @@ Once all secrets are added:
 
 2. **Check GitHub Actions:**
    - Go to your repo → **Actions** tab
-   - You should see "Deploy to Production" workflow running
+   - You should see "🚀 CI/CD Pipeline (Optimized)" workflow running
    - Click on it to see live logs
 
 3. **Verify Deployments:**
    - Frontend: Check Vercel dashboard (vercel.com/dashboard)
    - APIs: Check Railway dashboard (railway.app/dashboard)
+   - Cypress Tests: Check Cypress Cloud (cloud.cypress.io/projects/9xzw4h)
 
 ---
 

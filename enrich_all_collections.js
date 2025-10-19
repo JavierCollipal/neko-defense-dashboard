@@ -1,7 +1,11 @@
 // 🐾⚡ NEKO DEFENSE - Comprehensive Collection Enrichment ⚡🐾
 const { MongoClient } = require('mongodb');
 
-const uri = "mongodb+srv://pinochito1747:pinochito1747@free-cluster.svjei3w.mongodb.net/";
+const uri = process.env.MONGODB_URI;
+if (!uri) {
+  console.error("❌ MONGODB_URI not set!");
+  process.exit(1);
+}
 const dbName = "neko-defense-system";
 
 async function enrichAllCollections() {
