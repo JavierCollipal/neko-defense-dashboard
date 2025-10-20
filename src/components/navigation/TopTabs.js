@@ -7,6 +7,7 @@ import './TopTabs.css';
 const topTabs = [
   { path: '/', icon: '🏠', label: 'Home' },
   { path: '/threats', icon: '🎯', label: 'Threats' },
+  { path: '/family-tracker', icon: '💀', label: 'Family Tracker' },
   { path: '/dina', icon: '📚', label: 'DINA' },
   { path: '/valech', icon: '📊', label: 'Analytics' },
   { path: '/abilities', icon: '⚡', label: 'Abilities' },
