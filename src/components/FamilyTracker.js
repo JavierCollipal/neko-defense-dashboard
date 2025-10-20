@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import '../styles/FamilyTracker.css';
 
-// 🎯 API URL
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
+// 🎯 API URL - Use Next.js API routes directly
+const API_URL = '/api';
 
 function FamilyTracker() {
   const { i18n } = useTranslation();
