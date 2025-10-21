@@ -2,9 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/ValechV2Dashboard.css';
 
-// 🎯 API URL
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
-
 function ValechV2Dashboard() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,8 +14,27 @@ function ValechV2Dashboard() {
   const fetchV2Stats = async () => {
     try {
       setLoading(true);
-      // TODO: Create actual API endpoint for v2 stats
-      // For now, use hardcoded data from our implementation
+
+      // ✅ FIXED: Now calling actual API endpoint!
+      const response = await fetch('/api/valech/stats');
+
+      if (!response.ok) {
+        throw new Error(`API returned ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStats(result.data);
+      } else {
+        throw new Error(result.error || 'Failed to fetch stats');
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.error('❌ Failed to fetch V2 stats:', error);
+
+      // Fallback to hardcoded data if API fails
       setStats({
         version: '2.0.0',
         implementationDate: 'October 12, 2025',
@@ -51,9 +67,7 @@ function ValechV2Dashboard() {
           'Complete 8-Step Pipeline'
         ]
       });
-      setLoading(false);
-    } catch (error) {
-      console.error('Failed to fetch V2 stats:', error);
+
       setLoading(false);
     }
   };
