@@ -155,10 +155,12 @@ class DashboardAuditor {
 
       // Scroll down to trigger lazy loading
       console.log('🗡️ Noel: Scrolling to check lazy-loaded components...');
+      // @ts-ignore - window exists in browser context
       await this.page.evaluate('window.scrollTo(0, document.body.scrollHeight)');
       await new Promise(resolve => setTimeout(resolve, 2000));
 
       // Scroll back up
+      // @ts-ignore - window exists in browser context
       await this.page.evaluate('window.scrollTo(0, 0)');
       await new Promise(resolve => setTimeout(resolve, 1000));
 

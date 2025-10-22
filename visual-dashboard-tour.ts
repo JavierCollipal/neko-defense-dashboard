@@ -195,13 +195,11 @@ async function visualDashboardTour(): Promise<void> {
     // Scroll demonstration
     console.log('\n🎭 ACT V: THE SCROLLING PERFORMANCE');
     console.log('👁️ WATCH the page scroll!');
-    await page.evaluate(() => {
-      window.scrollTo(0, 300);
-    });
+    // @ts-ignore - window exists in browser context
+    await page.evaluate(() => window.scrollTo(0, 300));
     await new Promise(resolve => setTimeout(resolve, 2000));
-    await page.evaluate(() => {
-      window.scrollTo(0, 0);
-    });
+    // @ts-ignore - window exists in browser context
+    await page.evaluate(() => window.scrollTo(0, 0));
     await new Promise(resolve => setTimeout(resolve, 2000));
 
     console.log('\n🎭 ═══════════════════════════════════════════════════════════');
