@@ -1,4 +1,5 @@
 'use client';
+import '../src/i18n/config'; // Initialize i18n FIRST
 import { AppProvider } from '../src/contexts/AppContext';
 import { Layout as NekoLayout } from '../src/components/layout/Layout';
 
