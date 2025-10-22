@@ -1131,3 +1131,108 @@
     font-size: 14px;
   }
 }
+
+/* 📺 YouTube Channel Section - Horror Adult Series, Familia Yiyo */
+.youtube-channel-section {
+  margin-top: 40px;
+  padding: 30px;
+  background: linear-gradient(135deg, #c41111 0%, #8a0000 100%);
+  border: 3px solid #ff0000;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(255, 0, 0, 0.4);
+  animation: youtube-glow 3s ease-in-out infinite;
+}
+
+@keyframes youtube-glow {
+  0%, 100% {
+    box-shadow: 0 8px 32px rgba(255, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 12px 48px rgba(255, 0, 0, 0.7);
+  }
+}
+
+.youtube-channel-section h3 {
+  color: #ffffff;
+  font-size: 28px;
+  margin-bottom: 15px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.youtube-description {
+  color: #ffcccc;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.youtube-channel-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  background: #ffffff;
+  color: #c41111;
+  padding: 20px 40px;
+  border-radius: 50px;
+  font-size: 22px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  border: 3px solid #ff0000;
+}
+
+.youtube-channel-link:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 12px 40px rgba(255, 0, 0, 0.6);
+  background: linear-gradient(135deg, #ffffff 0%, #ffe6e6 100%);
+}
+
+.youtube-icon {
+  font-size: 32px;
+  color: #ff0000;
+  animation: youtube-pulse 2s ease-in-out infinite;
+}
+
+@keyframes youtube-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.channel-name {
+  color: #c41111;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.youtube-content-note {
+  margin-top: 20px;
+  color: #ffffff;
+  font-size: 14px;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+/* Mobile Responsive YouTube Section */
+@media (max-width: 768px) {
+  .youtube-channel-section {
+    padding: 20px;
+  }
+
+  .youtube-channel-section h3 {
+    font-size: 22px;
+  }
+
+  .youtube-channel-link {
+    padding: 15px 30px;
+    font-size: 18px;
+  }
+
+  .youtube-icon {
+    font-size: 24px;
+  }
+}

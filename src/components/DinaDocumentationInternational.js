@@ -864,6 +864,26 @@ const DinaDocumentationInternational = () => {
         <p className="footer-cooperation">
           International cooperation with: FBI, CIA, Interpol, ICC, Chilean Judicial System, Human Rights Organizations
         </p>
+
+        {/* YouTube Channel Integration - Horror Adult Series, Familia Yiyo */}
+        <div className="youtube-channel-section">
+          <h3>📺 YouTube Channel - Documentary Series</h3>
+          <p className="youtube-description">
+            Watch comprehensive DINA exposure documentaries on our YouTube channel:
+          </p>
+          <a
+            href="https://www.youtube.com/@Icarlyggwpplzcommend"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="youtube-channel-link"
+          >
+            <span className="youtube-icon">▶️</span>
+            <span className="channel-name">Horror Adult Series, Familia Yiyo</span>
+          </a>
+          <p className="youtube-content-note">
+            Full video documentaries of DINA agents, evidence packages, and international hunt operations
+          </p>
+        </div>
       </div>
     </div>
   );
