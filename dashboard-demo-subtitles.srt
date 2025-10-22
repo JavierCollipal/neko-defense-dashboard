@@ -1,0 +1,143 @@
+1
+00:00:00,000 --> 00:00:03,000
+🐾 Neko-Arc: NYAAA~! Time to show off our beautiful dashboard, desu~!
+
+2
+00:00:03,000 --> 00:00:06,000
+🎭 Mario: ACT I: THE CURTAIN RISES! The Neko Defense Theater opens!
+
+3
+00:00:06,000 --> 00:00:09,000
+🗡️ Noel: Let's see if this actually works without crashing...
+
+4
+00:00:09,000 --> 00:00:12,000
+🐾 Neko: Navigating to localhost:3000 - our BEAUTIFUL dashboard, nyaa~! 🏠
+
+5
+00:00:12,000 --> 00:00:15,000
+🎭 Mario: ACT II: THE JOURNEY BEGINS! We venture into the digital realm!
+
+6
+00:00:15,000 --> 00:00:18,000
+🐾 Neko: *swishes tail triumphantly* LOADED! Look at that beautiful Neko banner! 💖
+
+7
+00:00:18,000 --> 00:00:21,000
+🎭 Mario: *wipes theatrical tear* BEHOLD! The homepage in all its GLORY!
+
+8
+00:00:21,000 --> 00:00:24,000
+🗡️ Noel: HTTP 200. Page rendered. Component hydration complete. Impressive.
+
+9
+00:00:24,000 --> 00:00:27,000
+🐾 Neko: *clicks paw on Threats tab* Let's see our threat actors, nyaa~! 🎯
+
+10
+00:00:27,000 --> 00:00:30,000
+🎭 Mario: ACT III: THE GALLERY OF VILLAINS! We shall meet our adversaries!
+
+11
+00:00:30,000 --> 00:00:33,000
+🗡️ Noel: Client-side navigation executed. React Router transition completed.
+
+12
+00:00:33,000 --> 00:00:36,000
+🎭 Mario: *orchestra swells* THE THREAT ACTORS APPEAR! Each one, a story of defeat!
+
+13
+00:00:36,000 --> 00:00:39,000
+🐾 Neko: *bounces* Now let's check DINA intelligence, nyaa~! 📚
+
+14
+00:00:39,000 --> 00:00:42,000
+🎭 Mario: ACT IV: THE LIBRARY OF SECRETS! The DINA archives await!
+
+15
+00:00:42,000 --> 00:00:45,000
+🗡️ Noel: Navigating to /dina endpoint. Intelligence database access...
+
+16
+00:00:45,000 --> 00:00:48,000
+🐾 Neko: DINA page loaded! So much intelligence documentation, desu~! 📖
+
+17
+00:00:48,000 --> 00:00:51,000
+🎭 Mario: *dramatic gasp* The DINA network revealed! What INTRIGUE!
+
+18
+00:00:51,000 --> 00:00:54,000
+🗡️ Noel: DINA collection rendered. Card components instantiated. No errors.
+
+19
+00:00:54,000 --> 00:00:57,000
+🎭 Mario: *lowers voice dramatically* And now... the Memorial of Fallen Heroes...
+
+20
+00:00:57,000 --> 00:01:00,000
+🐾 Neko: *ears droop respectfully* The Family Tracker... honoring the fallen, nyaa... 💀
+
+21
+00:01:00,000 --> 00:01:03,000
+🗡️ Noel: Accessing /family-tracker. Chilean Carabineros memorial database.
+
+22
+00:01:03,000 --> 00:01:06,000
+🐾 Neko: *bows head* Remembering those who served and protected, desu... 🕯️
+
+23
+00:01:06,000 --> 00:01:09,000
+🎭 Mario: *removes hat* May their sacrifice never be forgotten... 🎩
+
+24
+00:01:09,000 --> 00:01:12,000
+🗡️ Noel: 1,245 officers documented. Each name, a life of service.
+
+25
+00:01:12,000 --> 00:01:15,000
+🐾 Neko: *perks up* Ooh! Let's check our abilities list, nyaa~! ⚡
+
+26
+00:01:15,000 --> 00:01:18,000
+🎭 Mario: ACT V: THE ARSENAL OF POWER! Our learned capabilities!
+
+27
+00:01:18,000 --> 00:01:21,000
+🗡️ Noel: Abilities collection query executed. Rendering skill database.
+
+28
+00:01:21,000 --> 00:01:24,000
+🐾 Neko: *swishes tail proudly* Look at ALL the skills we've learned! 99+ abilities! 💖
+
+29
+00:01:24,000 --> 00:01:27,000
+🎭 Mario: *applauds* BRAVO! A library of MASTERY!
+
+30
+00:01:27,000 --> 00:01:30,000
+🐾 Neko: *clicks language button* Let's switch to Spanish, nyaa~! 🇨🇱
+
+31
+00:01:30,000 --> 00:01:33,000
+🎭 Mario: ACT VI: THE LINGUISTIC TRANSFORMATION! Español appears!
+
+32
+00:01:33,000 --> 00:01:36,000
+🗡️ Noel: Testing i18n functionality. Language switch event triggered.
+
+33
+00:01:36,000 --> 00:01:39,000
+🐾 Neko: *navigates back home* And that's our dashboard tour, nyaa~! 🏠
+
+34
+00:01:39,000 --> 00:01:42,000
+🎭 Mario: FINALE: THE CURTAIN FALLS! What a PERFORMANCE!
+
+35
+00:01:42,000 --> 00:01:45,000
+🗡️ Noel: Demonstration complete. All navigation routes tested. Zero crashes.
+
+36
+00:01:45,000 --> 00:01:48,000
+🐾🎭🗡️ ALL THREE: PERFECT demonstration! Ready for YouTube! 🎬✨

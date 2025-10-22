@@ -7,10 +7,15 @@ import './TopTabs.css';
 const topTabs = [
   { path: '/', icon: '🏠', label: 'Home' },
   { path: '/threats', icon: '🎯', label: 'Threats' },
+  { path: '/honeypots', icon: '🍯', label: 'Honeypots' },
+  { path: '/case-patterns', icon: '📚', label: 'Patterns' },
+  { path: '/hunts', icon: '🔍', label: 'Hunts' },
+  { path: '/evidence', icon: '📦', label: 'Evidence' },
+  { path: '/operations', icon: '⚡', label: 'Operations' },
   { path: '/family-tracker', icon: '💀', label: 'Family Tracker' },
-  { path: '/dina', icon: '📚', label: 'DINA' },
+  { path: '/dina', icon: '📖', label: 'DINA' },
   { path: '/valech', icon: '📊', label: 'Analytics' },
-  { path: '/abilities', icon: '⚡', label: 'Abilities' },
+  { path: '/abilities', icon: '🎭', label: 'Abilities' },
   { path: '/confessions', icon: '📝', label: 'Blog' },
   { path: '/youtube', icon: '📺', label: 'Videos' },
   { path: '/rag', icon: '🗄️', label: 'RAG' }
