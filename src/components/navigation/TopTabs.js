@@ -16,6 +16,7 @@ const topTabs = [
   { path: '/dina', icon: '📖', label: 'DINA' },
   { path: '/valech', icon: '📊', label: 'Analytics' },
   { path: '/abilities', icon: '🎭', label: 'Abilities' },
+  { path: '/personality-workflow', icon: '🎭🧠', label: 'Personalities' },
   { path: '/confessions', icon: '📝', label: 'Blog' },
   { path: '/youtube', icon: '📺', label: 'Videos' },
   { path: '/rag', icon: '🗄️', label: 'RAG' }
