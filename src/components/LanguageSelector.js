@@ -3,6 +3,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAutoTranslation } from '../hooks/useAutoTranslation';
+import AutoTranslationPrompt from './AutoTranslationPrompt';
 import './LanguageSelector.css';
 
 const LanguageSelector = ({ userId = 'default-user', onLanguageChange }) => {
@@ -11,6 +13,19 @@ const LanguageSelector = ({ userId = 'default-user', onLanguageChange }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [saveStatus, setSaveStatus] = useState('');
+
+  // 🌍 Auto-translation integration
+  const {
+    autoTranslationEnabled,
+    locationConsent,
+    isLoading: isDetectingLocation,
+    detectedLocation,
+    suggestedLanguage,
+    showLanguagePrompt,
+    enableAutoTranslation,
+    disableAutoTranslation,
+    setManualLanguageOverride
+  } = useAutoTranslation();
 
   // 🌍 Supported languages with beautiful metadata, desu~!
   const languages = [
@@ -114,6 +129,9 @@ const LanguageSelector = ({ userId = 'default-user', onLanguageChange }) => {
       setSelectedLanguage(languageCode);
       setIsDropdownOpen(false);
 
+      // Mark as manual override (disables auto-translation)
+      setManualLanguageOverride(languageCode);
+
       // Update i18n immediately
       await i18n.changeLanguage(languageCode);
 
@@ -129,6 +147,19 @@ const LanguageSelector = ({ userId = 'default-user', onLanguageChange }) => {
     } catch (error) {
       console.error('❌ [Language Selector] Error changing language:', error);
     }
+  };
+
+  // 🌍 Handle auto-translation prompt responses
+  const handleAutoTranslationAccept = () => {
+    enableAutoTranslation(true);
+  };
+
+  const handleAutoTranslationDecline = () => {
+    disableAutoTranslation();
+  };
+
+  const handleEnableWithoutLocation = () => {
+    enableAutoTranslation(false);
   };
 
   // 🔍 Get current language metadata
@@ -151,6 +182,16 @@ const LanguageSelector = ({ userId = 'default-user', onLanguageChange }) => {
 
   return (
     <div className="language-selector-container">
+      {/* Auto-translation consent prompt */}
+      <AutoTranslationPrompt
+        isVisible={showLanguagePrompt}
+        detectedLocation={detectedLocation}
+        suggestedLanguage={suggestedLanguage}
+        onAccept={handleAutoTranslationAccept}
+        onDecline={handleAutoTranslationDecline}
+        onEnableWithoutLocation={handleEnableWithoutLocation}
+      />
+
       <div className={`language-selector ${isDropdownOpen ? 'open' : ''}`}>
 
         {/* Current Language Display */}
@@ -162,6 +203,12 @@ const LanguageSelector = ({ userId = 'default-user', onLanguageChange }) => {
           <span className="language-flag">{currentLang.flag}</span>
           <span className="language-name">{currentLang.nativeName}</span>
           <span className="language-code">({currentLang.code.toUpperCase()})</span>
+          {autoTranslationEnabled && (
+            <span className="auto-translation-indicator" title="Auto-translation enabled">🌍</span>
+          )}
+          {isDetectingLocation && (
+            <span className="location-detecting" title="Detecting location...">📍</span>
+          )}
           <span className={`dropdown-arrow ${isDropdownOpen ? 'up' : 'down'}`}>▼</span>
         </button>
 
