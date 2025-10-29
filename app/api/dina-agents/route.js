@@ -22,7 +22,7 @@ export async function GET(request) {
   try {
     await client.connect();
     const db = client.db('neko-defense-system');
-    const collection = db.collection('dina-agents');
+    const collection = db.collection('dina_agents_comprehensive_backup');
 
     // Fetch all DINA agents
     const dinaAgents = await collection.find({}).toArray();
