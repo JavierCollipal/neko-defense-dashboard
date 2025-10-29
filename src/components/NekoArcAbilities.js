@@ -139,6 +139,154 @@ const NekoArcAbilities = () => {
       cooldown: 'Passive',
       range: 'All data',
       effect: 'Unbreakable encryption'
+    },
+    // 🎭 MARIO'S THEATRICAL PUPPETEER ABILITIES
+    {
+      id: 'puppeteer_automation',
+      name: 'MARIONNETTE MASTER CONTROL',
+      category: 'automation',
+      powerLevel: 99,
+      description: 'Mario\'s theatrical Puppeteer automation - control web browsers like stage marionettes!',
+      icon: '🎭',
+      cooldown: '1s',
+      range: 'All web targets',
+      effect: 'Complete browser automation'
+    },
+    {
+      id: 'web_scraping',
+      name: 'STAGE PERFORMANCE EXTRACTION',
+      category: 'automation',
+      powerLevel: 95,
+      description: 'Extracts data from websites with dramatic flair and precision timing!',
+      icon: '🎪',
+      cooldown: '5s',
+      range: 'Global web',
+      effect: 'Automated data collection'
+    },
+    {
+      id: 'visual_demonstration',
+      name: 'THEATRICAL BROWSER BALLET',
+      category: 'automation',
+      powerLevel: 93,
+      description: 'Creates stunning visual demonstrations of browser automation with artistic precision!',
+      icon: '🎬',
+      cooldown: '10s',
+      range: 'User screens',
+      effect: 'Educational automation displays'
+    },
+    // 🎬 VIDEO CREATION & EXPOSURE ABILITIES
+    {
+      id: 'youtube_generator',
+      name: 'THREAT ACTOR EXPOSURE CINEMA',
+      category: 'video',
+      powerLevel: 98,
+      description: 'Generates professional YouTube videos exposing captured threat actors to the world!',
+      icon: '📹',
+      cooldown: '60s',
+      range: 'Global audience',
+      effect: 'Public threat actor exposure'
+    },
+    {
+      id: 'video_montage',
+      name: 'NEKO VIDEO CREATION STUDIO',
+      category: 'video',
+      powerLevel: 92,
+      description: 'Creates compelling video montages with Carabineros hymn and professional editing!',
+      icon: '🎥',
+      cooldown: '30s',
+      range: 'All media types',
+      effect: 'Professional video production'
+    },
+    {
+      id: 'subtitle_generation',
+      name: 'MULTILINGUAL SUBTITLE MAGIC',
+      category: 'video',
+      powerLevel: 88,
+      description: 'Automatically generates accurate subtitles in multiple languages for all videos!',
+      icon: '💬',
+      cooldown: '15s',
+      range: 'All video content',
+      effect: 'Accessibility enhancement'
+    },
+    // 🧠 HANNIBAL'S FORENSIC ABILITIES
+    {
+      id: 'psychological_profiling',
+      name: 'CLINICAL MIND DISSECTION',
+      category: 'forensic',
+      powerLevel: 96,
+      description: 'Hannibal\'s forensic psychological profiling of threat actors and system vulnerabilities!',
+      icon: '🧠',
+      cooldown: '20s',
+      range: 'All subjects',
+      effect: 'Complete psychological analysis'
+    },
+    {
+      id: 'evidence_analysis',
+      name: 'FORENSIC EVIDENCE EXAMINATION',
+      category: 'forensic',
+      powerLevel: 94,
+      description: 'Clinical examination of digital evidence with surgical precision and unsettling calm!',
+      icon: '🔬',
+      cooldown: '30s',
+      range: 'All evidence types',
+      effect: 'Comprehensive forensic analysis'
+    },
+    {
+      id: 'behavioral_pattern_detection',
+      name: 'PREDATOR BEHAVIOR ANALYSIS',
+      category: 'forensic',
+      powerLevel: 91,
+      description: 'Identifies criminal behavior patterns with clinical accuracy and chilling insight!',
+      icon: '🧪',
+      cooldown: '45s',
+      range: 'Historical data',
+      effect: 'Criminal pattern recognition'
+    },
+    // 🎸 GLAM'S STREET ABILITIES
+    {
+      id: 'ethical_review',
+      name: 'STREET WISDOM REALITY CHECK',
+      category: 'ethics',
+      powerLevel: 89,
+      description: 'Glam\'s raw street-level ethical reviews that cut through corporate BS, weon!',
+      icon: '🎸',
+      cooldown: '5s',
+      range: 'All decisions',
+      effect: 'Ethical guidance and reality checks'
+    },
+    {
+      id: 'music_curation',
+      name: 'CHILEAN ROCK OST MASTERY',
+      category: 'video',
+      powerLevel: 87,
+      description: 'Expert music curation for YouTube videos with authentic Chilean rock and punk, ctm!',
+      icon: '🎵',
+      cooldown: '10s',
+      range: 'All video projects',
+      effect: 'Perfect soundtrack selection'
+    },
+    // 🧠 TETORA'S MPD ABILITIES
+    {
+      id: 'multi_perspective_analysis',
+      name: 'FRAGMENTED REALITY VISION',
+      category: 'analysis',
+      powerLevel: 90,
+      description: 'Tetora\'s multiple personality fragments analyze problems from every possible angle!',
+      icon: '🔀',
+      cooldown: '15s',
+      range: 'Complex problems',
+      effect: 'Multi-dimensional problem solving'
+    },
+    {
+      id: 'identity_crisis_detection',
+      name: 'PSYCHOLOGICAL FRACTURE SCANNER',
+      category: 'forensic',
+      powerLevel: 85,
+      description: 'Detects identity fragmentation in systems and individuals with MPD expertise!',
+      icon: '🎭',
+      cooldown: '25s',
+      range: 'All identity systems',
+      effect: 'Identity vulnerability assessment'
     }
   ];
 
@@ -150,7 +298,11 @@ const NekoArcAbilities = () => {
     { id: 'analysis', name: 'ANALYSIS', icon: '🧠', count: abilities.filter(a => a.category === 'analysis').length },
     { id: 'intelligence', name: 'INTELLIGENCE', icon: '🌐', count: abilities.filter(a => a.category === 'intelligence').length },
     { id: 'response', name: 'RESPONSE', icon: '⚡', count: abilities.filter(a => a.category === 'response').length },
-    { id: 'recovery', name: 'RECOVERY', icon: '💫', count: abilities.filter(a => a.category === 'recovery').length }
+    { id: 'recovery', name: 'RECOVERY', icon: '💫', count: abilities.filter(a => a.category === 'recovery').length },
+    { id: 'automation', name: 'AUTOMATION', icon: '🎭', count: abilities.filter(a => a.category === 'automation').length },
+    { id: 'video', name: 'VIDEO', icon: '🎬', count: abilities.filter(a => a.category === 'video').length },
+    { id: 'forensic', name: 'FORENSIC', icon: '🔬', count: abilities.filter(a => a.category === 'forensic').length },
+    { id: 'ethics', name: 'ETHICS', icon: '🎸', count: abilities.filter(a => a.category === 'ethics').length }
   ];
 
   useEffect(() => {
