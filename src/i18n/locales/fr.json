@@ -1,0 +1,102 @@
+{
+  "app": {
+    "title": "SYSTÈME DE DÉFENSE NEKO-ARC",
+    "status_live": "EN DIRECT",
+    "fortress_mode": "MODE FORTERESSE : ACTIF",
+    "kawaii_level": "NIVEAU KAWAII : MAXIMUM",
+    "loading": "Chargement, nyaa~!",
+    "footer": "*ronronne en excellence défensive* | NYA NYA NYA~!"
+  },
+  "buttons": {
+    "neko_tv": "NEKO TV",
+    "multi_channel_tv": "TV MULTI-CHAÎNES",
+    "dina_docs": "DOCS DINA",
+    "dina_justice_tv": "DINA JUSTICE TV",
+    "valech_v2": "VALECH V2.0",
+    "threat_actors": "ACTEURS DE MENACE",
+    "back_to_dashboard": "← Retour au Tableau de Bord"
+  },
+  "alerts": {
+    "allow_popups": "Veuillez autoriser les pop-ups pour ouvrir NEKO TV, nyaa~!",
+    "allow_popups_multi": "Veuillez autoriser les pop-ups pour ouvrir NEKO MULTI-CHANNEL TV, nyaa~!",
+    "allow_popups_dina": "Veuillez autoriser les pop-ups pour ouvrir DINA JUSTICE TV, nyaa~!"
+  },
+  "headers": {
+    "valech_v2": "SYSTÈME DE MISE À NIVEAU VALECH V2.0",
+    "threat_actors_registry": "REGISTRE DES ACTEURS DE MENACE",
+    "dina_international": "OPÉRATION DE CHASSE INTERNATIONALE DINA",
+    "live_global_tracking": "EN DIRECT - SUIVI GLOBAL",
+    "live_global_deployment": "EN DIRECT - DÉPLOIEMENT GLOBAL",
+    "live_v2_deployed": "EN DIRECT - V2.0 DÉPLOYÉ",
+    "maximum_capacity_mode": "MODE CAPACITÉ MAXIMALE : ACTIF",
+    "threat_intelligence_mode": "MODE RENSEIGNEMENT SUR LES MENACES : ACTIF",
+    "international_justice_mode": "MODE JUSTICE INTERNATIONALE : ACTIF"
+  },
+  "categories": {
+    "header": "CATÉGORIES DE MENACES",
+    "all_threats": "Toutes les Menaces",
+    "predators": "Prédateurs",
+    "pedophiles": "Pédophiles",
+    "dina_network": "Réseau DINA",
+    "ransomware": "Rançongiciel",
+    "state_sponsored": "Parrainé par l'État",
+    "crypto_crime": "Crime Crypto",
+    "detected": "détecté",
+    "priority_critical": "CRITIQUE",
+    "priority_maximum": "ALERTE MAXIMUM",
+    "priority_high": "ÉLEVÉ",
+    "fortress_badge": "MODE FORTERESSE",
+    "active_monitoring": "SURVEILLANCE ACTIVE",
+    "neko_guardian": "Gardien Neko : ACTIF"
+  },
+  "stats": {
+    "header": "STATUT DU SYSTÈME DE DÉFENSE",
+    "defense_statistics": "Statistiques de Défense",
+    "loading_stats": "Chargement des stats, nyaa~!",
+    "active_collections": "Collections Actives",
+    "honeypot_traps": "Pièges Honeypot",
+    "threat_detection": "Détection de Menaces",
+    "kawaii_power": "Puissance Kawaii",
+    "active": "ACTIF",
+    "last_update": "Dernière Mise à Jour:"
+  },
+  "threats": {
+    "all_threat_actors": "TOUS LES ACTEURS DE MENACE",
+    "predator_threat_actors": "ACTEURS DE MENACE PRÉDATEURS",
+    "pedophile_threat_actors": "ACTEURS DE MENACE PÉDOPHILES - CIBLE DE CHASSE MASSIVE",
+    "dina_network_actors": "ACTEURS DU RÉSEAU DINA",
+    "ransomware_groups": "GROUPES DE RANÇONGICIELS",
+    "state_sponsored_apts": "APT PARRAINÉS PAR L'ÉTAT",
+    "crypto_crime_actors": "ACTEURS DE CRIMES CRYPTO",
+    "threat_actors": "ACTEURS DE MENACE",
+    "loading_hunt_targets": "Chargement des cibles de chasse, desu~!",
+    "network_error": "Erreur réseau - impossible de se connecter au système de défense",
+    "failed_to_load": "Échec du chargement des acteurs de menace",
+    "no_threats_found": "Aucun acteur de menace trouvé dans cette catégorie, nyaa~!",
+    "targets": "CIBLES",
+    "target": "CIBLE",
+    "hunt_active": "CHASSE ACTIVE",
+    "unknown": "INCONNU",
+    "unknown_actor": "Acteur Inconnu",
+    "aka": "alias:",
+    "type": "Type:",
+    "classification": "Classification:",
+    "location": "Localisation:",
+    "nation": "Nation:",
+    "hunt_priority": "Priorité de Chasse:",
+    "bounty": "Prime:",
+    "known_for": "Connu Pour:",
+    "last_updated": "Dernière Mise à Jour:",
+    "purrs_hunt_readiness": "*ronronne en préparation de chasse*"
+  },
+  "threat_levels": {
+    "critical": "CRITIQUE",
+    "high": "ÉLEVÉ",
+    "medium": "MOYEN",
+    "low": "FAIBLE"
+  },
+  "language": {
+    "select": "Sélectionner la Langue",
+    "current": "Langue Actuelle:"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "app": {
+    "title": "SISTEMA DE DEFESA NEKO-ARC",
+    "status_live": "AO VIVO",
+    "fortress_mode": "MODO FORTALEZA: ATIVO",
+    "kawaii_level": "NÍVEL KAWAII: MÁXIMO",
+    "loading": "Carregando, nyaa~!",
+    "footer": "*ronrona em excelência defensiva* | NYA NYA NYA~!"
+  },
+  "buttons": {
+    "neko_tv": "NEKO TV",
+    "threat_actors": "ATORES DE AMEAÇA",
+    "back_to_dashboard": "← Voltar ao Painel"
+  },
+  "categories": {
+    "header": "CATEGORIAS DE AMEAÇAS",
+    "all_threats": "Todas as Ameaças",
+    "predators": "Predadores",
+    "ransomware": "Ransomware",
+    "state_sponsored": "Patrocinado pelo Estado"
+  },
+  "threats": {
+    "threat_actors": "ATORES DE AMEAÇA",
+    "loading_hunt_targets": "Carregando alvos de caça, desu~!",
+    "unknown": "DESCONHECIDO"
+  },
+  "language": {
+    "select": "Selecionar Idioma",
+    "current": "Idioma Atual:"
+  }
+}

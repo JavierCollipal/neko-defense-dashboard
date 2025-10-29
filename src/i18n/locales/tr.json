@@ -1,0 +1,26 @@
+{
+  "app": {
+    "title": "NEKO-ARC SAVUNMA SİSTEMİ",
+    "status_live": "CANLI",
+    "loading": "Yükleniyor, nyaa~!",
+    "footer": "*savunma mükemmelliğinde mırıldanır* | NYA NYA NYA~!"
+  },
+  "buttons": {
+    "neko_tv": "NEKO TV",
+    "threat_actors": "TEHDİT AKTÖRLERİ",
+    "back_to_dashboard": "← Panoya Dön"
+  },
+  "categories": {
+    "header": "TEHDİT KATEGORİLERİ",
+    "all_threats": "Tüm Tehditler",
+    "ransomware": "Fidye Yazılımı"
+  },
+  "threats": {
+    "threat_actors": "TEHDİT AKTÖRLERİ",
+    "unknown": "BİLİNMEYEN"
+  },
+  "language": {
+    "select": "Dil Seç",
+    "current": "Mevcut Dil:"
+  }
+}

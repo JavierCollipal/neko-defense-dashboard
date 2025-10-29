@@ -1,6 +1,7 @@
 import React from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { useIsMobile } from '../../hooks/useMediaQuery';
+import LanguageSelector from '../LanguageSelector';
 import './Header.css';
 
 export const Header = () => {
@@ -22,10 +23,22 @@ export const Header = () => {
 
         <div className="neko-banner">
           <h1>🐾 NEKO DEFENSE SYSTEM ⚡</h1>
+          {isMobile && (
+            <div className="mobile-language-selector">
+              <LanguageSelector
+                userId="current-user"
+                onLanguageChange={(lang) => console.log('🌍 Mobile language changed to:', lang)}
+              />
+            </div>
+          )}
         </div>
 
         {!isMobile && (
           <div className="header-actions">
+            <LanguageSelector
+              userId="current-user"
+              onLanguageChange={(lang) => console.log('🌍 Language changed to:', lang)}
+            />
             <button className="tv-window-button">📺 TV Windows</button>
           </div>
         )}

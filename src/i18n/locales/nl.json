@@ -1,0 +1,26 @@
+{
+  "app": {
+    "title": "NEKO-ARC VERDEDIGINGSSYSTEEM",
+    "status_live": "LIVE",
+    "loading": "Laden, nyaa~!",
+    "footer": "*spint van defensieve excellentie* | NYA NYA NYA~!"
+  },
+  "buttons": {
+    "neko_tv": "NEKO TV",
+    "threat_actors": "BEDREIGERS",
+    "back_to_dashboard": "← Terug naar Dashboard"
+  },
+  "categories": {
+    "header": "BEDREIGINGSCATEGORIEËN",
+    "all_threats": "Alle Bedreigingen",
+    "ransomware": "Ransomware"
+  },
+  "threats": {
+    "threat_actors": "BEDREIGERS",
+    "unknown": "ONBEKEND"
+  },
+  "language": {
+    "select": "Selecteer Taal",
+    "current": "Huidige Taal:"
+  }
+}

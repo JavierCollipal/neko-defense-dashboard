@@ -78,7 +78,24 @@
 /* Header Actions (Desktop) */
 .header-actions {
   display: flex;
+  align-items: center;
   gap: var(--space-sm);
+}
+
+/* Mobile Language Selector */
+.mobile-language-selector {
+  margin-top: var(--space-sm);
+  display: flex;
+  justify-content: center;
+}
+
+/* Language selector in header adjustments */
+.header-actions .language-selector-container {
+  order: -1; /* Place language selector first in header actions */
+}
+
+.mobile-language-selector .language-selector-container {
+  transform: scale(0.9); /* Slightly smaller for mobile */
 }
 
 .tv-window-button {

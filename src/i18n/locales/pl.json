@@ -1,0 +1,26 @@
+{
+  "app": {
+    "title": "SYSTEM OBRONY NEKO-ARC",
+    "status_live": "NA ŻYWO",
+    "loading": "Ładowanie, nyaa~!",
+    "footer": "*mruczy z obronnej doskonałości* | NYA NYA NYA~!"
+  },
+  "buttons": {
+    "neko_tv": "NEKO TV",
+    "threat_actors": "AKTORZY ZAGROŻEŃ",
+    "back_to_dashboard": "← Powrót do Panelu"
+  },
+  "categories": {
+    "header": "KATEGORIE ZAGROŻEŃ",
+    "all_threats": "Wszystkie Zagrożenia",
+    "ransomware": "Oprogramowanie Ransomware"
+  },
+  "threats": {
+    "threat_actors": "AKTORZY ZAGROŻEŃ",
+    "unknown": "NIEZNANY"
+  },
+  "language": {
+    "select": "Wybierz Język",
+    "current": "Bieżący Język:"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "app": {
+    "title": "СИСТЕМА ЗАЩИТЫ НЕКО-АРК",
+    "status_live": "В ПРЯМОМ ЭФИРЕ",
+    "fortress_mode": "РЕЖИМ КРЕПОСТИ: АКТИВЕН",
+    "kawaii_level": "УРОВЕНЬ КАВАЙИ: МАКСИМУМ",
+    "loading": "Загрузка, ня~!",
+    "footer": "*мурлычет от оборонительного превосходства* | НЯ НЯ НЯ~!"
+  },
+  "buttons": {
+    "neko_tv": "НЕКО ТВ",
+    "multi_channel_tv": "МНОГОКАНАЛЬНОЕ ТВ",
+    "dina_docs": "ДОКУМЕНТЫ ДИНА",
+    "dina_justice_tv": "ДИНА СПРАВЕДЛИВОСТЬ ТВ",
+    "valech_v2": "ВАЛЕХ V2.0",
+    "threat_actors": "АКТОРЫ УГРОЗ",
+    "back_to_dashboard": "← Назад к Панели"
+  },
+  "categories": {
+    "header": "КАТЕГОРИИ УГРОЗ",
+    "all_threats": "Все Угрозы",
+    "predators": "Хищники",
+    "ransomware": "Вымогательское ПО",
+    "state_sponsored": "Государственные",
+    "crypto_crime": "Крипто-Преступления"
+  },
+  "threats": {
+    "threat_actors": "АКТОРЫ УГРОЗ",
+    "loading_hunt_targets": "Загрузка целей охоты, десу~!",
+    "unknown": "НЕИЗВЕСТНО"
+  },
+  "language": {
+    "select": "Выбрать Язык",
+    "current": "Текущий Язык:"
+  }
+}

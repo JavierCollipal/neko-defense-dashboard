@@ -1,0 +1,102 @@
+{
+  "app": {
+    "title": "ネコアーク防衛システム",
+    "status_live": "ライブ",
+    "fortress_mode": "要塞モード：アクティブ",
+    "kawaii_level": "カワイイレベル：最大",
+    "loading": "読み込み中、にゃあ~！",
+    "footer": "*守備の優秀さでゴロゴロ* | ニャー ニャー ニャー~!"
+  },
+  "buttons": {
+    "neko_tv": "ネコTV",
+    "multi_channel_tv": "マルチチャンネルTV",
+    "dina_docs": "DINAドキュメント",
+    "dina_justice_tv": "DINA正義TV",
+    "valech_v2": "VALECH V2.0",
+    "threat_actors": "脅威アクター",
+    "back_to_dashboard": "← ダッシュボードに戻る"
+  },
+  "alerts": {
+    "allow_popups": "ネコTVを開くためにポップアップを許可してください、にゃあ~！",
+    "allow_popups_multi": "ネコマルチチャンネルTVを開くためにポップアップを許可してください、にゃあ~！",
+    "allow_popups_dina": "DINA正義TVを開くためにポップアップを許可してください、にゃあ~！"
+  },
+  "headers": {
+    "valech_v2": "VALECH V2.0アップグレードシステム",
+    "threat_actors_registry": "脅威アクター登録",
+    "dina_international": "DINA国際ハント作戦",
+    "live_global_tracking": "ライブ - グローバル追跡",
+    "live_global_deployment": "ライブ - グローバル展開",
+    "live_v2_deployed": "ライブ - V2.0展開済み",
+    "maximum_capacity_mode": "最大容量モード：アクティブ",
+    "threat_intelligence_mode": "脅威インテリジェンスモード：アクティブ",
+    "international_justice_mode": "国際正義モード：アクティブ"
+  },
+  "categories": {
+    "header": "脅威カテゴリ",
+    "all_threats": "すべての脅威",
+    "predators": "捕食者",
+    "pedophiles": "小児性愛者",
+    "dina_network": "DINAネットワーク",
+    "ransomware": "ランサムウェア",
+    "state_sponsored": "国家スポンサー",
+    "crypto_crime": "暗号犯罪",
+    "detected": "検出済み",
+    "priority_critical": "クリティカル",
+    "priority_maximum": "最大警告",
+    "priority_high": "高",
+    "fortress_badge": "要塞モード",
+    "active_monitoring": "アクティブ監視",
+    "neko_guardian": "ネコガーディアン：オン"
+  },
+  "stats": {
+    "header": "防衛システム状態",
+    "defense_statistics": "防衛統計",
+    "loading_stats": "統計を読み込み中、にゃあ~！",
+    "active_collections": "アクティブコレクション",
+    "honeypot_traps": "ハニーポットトラップ",
+    "threat_detection": "脅威検出",
+    "kawaii_power": "カワイイパワー",
+    "active": "アクティブ",
+    "last_update": "最終更新："
+  },
+  "threats": {
+    "all_threat_actors": "すべての脅威アクター",
+    "predator_threat_actors": "捕食者脅威アクター",
+    "pedophile_threat_actors": "小児性愛者脅威アクター - 大量ハントターゲット",
+    "dina_network_actors": "DINAネットワークアクター",
+    "ransomware_groups": "ランサムウェアグループ",
+    "state_sponsored_apts": "国家スポンサーAPT",
+    "crypto_crime_actors": "暗号犯罪アクター",
+    "threat_actors": "脅威アクター",
+    "loading_hunt_targets": "ハントターゲットを読み込み中、です~！",
+    "network_error": "ネットワークエラー - 防衛システムに接続できません",
+    "failed_to_load": "脅威アクターの読み込みに失敗しました",
+    "no_threats_found": "このカテゴリで脅威アクターが見つかりませんでした、にゃあ~！",
+    "targets": "ターゲット",
+    "target": "ターゲット",
+    "hunt_active": "ハントアクティブ",
+    "unknown": "不明",
+    "unknown_actor": "不明なアクター",
+    "aka": "別名：",
+    "type": "タイプ：",
+    "classification": "分類：",
+    "location": "場所：",
+    "nation": "国家：",
+    "hunt_priority": "ハント優先度：",
+    "bounty": "賞金：",
+    "known_for": "知られている理由：",
+    "last_updated": "最終更新：",
+    "purrs_hunt_readiness": "*ハント準備でゴロゴロ*"
+  },
+  "threat_levels": {
+    "critical": "クリティカル",
+    "high": "高",
+    "medium": "中",
+    "low": "低"
+  },
+  "language": {
+    "select": "言語を選択",
+    "current": "現在の言語："
+  }
+}

@@ -9,6 +9,9 @@ require('dotenv').config();
 // 🌍 Translation Service with MongoDB Caching, nyaa~!
 const { translateDocuments, getUserLanguage } = require('./translation-service');
 
+// 🌟 Enhanced Translation Service v2.0 - Multi-provider with quality scoring, nyaa~!
+const { EnhancedTranslationService } = require('./enhanced-translation-service');
+
 const app = express();
 const PORT = process.env.API_PORT || 5001;
 
@@ -28,6 +31,7 @@ if (!MONGODB_URI) {
 
 let db;
 let client;
+let enhancedTranslationService;
 
 // 🛡️ SECURITY MIDDLEWARE 🛡️
 
@@ -101,6 +105,11 @@ async function connectDB() {
     await client.connect();
     db = client.db(DB_NAME);
     console.log('✅ Connected to MongoDB Atlas, nyaa~!');
+
+    // 🌟 Initialize Enhanced Translation Service v2.0, desu~!
+    enhancedTranslationService = new EnhancedTranslationService(db);
+    await enhancedTranslationService.initialize();
+    console.log('🌍✨ Enhanced Translation Service v2.0 initialized with multi-provider support, nyaa~!');
   } catch (error) {
     console.error('❌ MongoDB connection failed:', error.message);
     process.exit(1);
@@ -113,6 +122,571 @@ async function connectDB() {
 app.get('/api/health', (req, res) => {
   res.json({ status: 'LEGENDARY', message: 'Neko Defense API is purring perfectly! 🐾✨' });
 });
+
+// ============================================================================
+// 🌍✨ ENHANCED TRANSLATION API v2.0 - Multi-Provider Excellence, nyaa~! ✨🌍
+// ============================================================================
+
+// Enhanced translation endpoint with quality scoring and multi-provider fallback
+app.post('/api/translate/enhanced', async (req, res) => {
+  try {
+    console.log('🌟 [Enhanced Translation API] Processing enhanced translation request, desu~!');
+
+    const { text, targetLang, sourceLang, context, preferredProvider } = req.body;
+
+    if (!text || !targetLang) {
+      return res.status(400).json({
+        success: false,
+        error: 'Text and target language are required!'
+      });
+    }
+
+    const startTime = Date.now();
+    const result = await enhancedTranslationService.translateWithQuality(
+      text,
+      targetLang,
+      sourceLang || 'auto',
+      context,
+      preferredProvider
+    );
+    const processingTime = Date.now() - startTime;
+
+    console.log(`✅ [Enhanced Translation] Translation completed in ${processingTime}ms with quality score: ${result.quality.overallScore}`);
+
+    res.json({
+      success: true,
+      data: {
+        translatedText: result.translatedText,
+        sourceLang: result.sourceLang,
+        targetLang: result.targetLang,
+        provider: result.provider,
+        quality: result.quality,
+        cached: result.cached || false,
+        processingTime: `${processingTime}ms`
+      }
+    });
+  } catch (error) {
+    console.error('❌ [Enhanced Translation API] Error:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Bulk translation endpoint for multiple texts
+app.post('/api/translate/bulk', async (req, res) => {
+  try {
+    console.log('📦 [Bulk Translation API] Processing bulk translation request, nyaa~!');
+
+    const { texts, targetLang, sourceLang, context } = req.body;
+
+    if (!texts || !Array.isArray(texts) || !targetLang) {
+      return res.status(400).json({
+        success: false,
+        error: 'Texts array and target language are required!'
+      });
+    }
+
+    if (texts.length > 100) {
+      return res.status(400).json({
+        success: false,
+        error: 'Maximum 100 texts per bulk request!'
+      });
+    }
+
+    const startTime = Date.now();
+    const results = await enhancedTranslationService.translateBulk(
+      texts,
+      targetLang,
+      sourceLang || 'auto',
+      context
+    );
+    const processingTime = Date.now() - startTime;
+
+    console.log(`✅ [Bulk Translation] Translated ${texts.length} items in ${processingTime}ms`);
+
+    res.json({
+      success: true,
+      data: {
+        results,
+        totalTexts: texts.length,
+        averageQuality: results.reduce((sum, r) => sum + r.quality.overallScore, 0) / results.length,
+        processingTime: `${processingTime}ms`
+      }
+    });
+  } catch (error) {
+    console.error('❌ [Bulk Translation API] Error:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Translation quality analysis endpoint
+app.post('/api/translate/analyze-quality', async (req, res) => {
+  try {
+    console.log('🔍 [Quality Analysis API] Analyzing translation quality, desu~!');
+
+    const { originalText, translatedText, targetLang, sourceLang } = req.body;
+
+    if (!originalText || !translatedText || !targetLang) {
+      return res.status(400).json({
+        success: false,
+        error: 'Original text, translated text, and target language are required!'
+      });
+    }
+
+    const qualityMetrics = await enhancedTranslationService.analyzeQuality(
+      originalText,
+      translatedText,
+      sourceLang || 'auto',
+      targetLang
+    );
+
+    console.log('✅ [Quality Analysis] Analysis completed with overall score:', qualityMetrics.overallScore);
+
+    res.json({
+      success: true,
+      data: qualityMetrics
+    });
+  } catch (error) {
+    console.error('❌ [Quality Analysis API] Error:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Translation cache statistics
+app.get('/api/translate/cache/stats', async (req, res) => {
+  try {
+    console.log('📊 [Translation Cache API] Fetching cache statistics, nyaa~!');
+
+    const stats = await enhancedTranslationService.getCacheStats();
+
+    console.log('✅ [Translation Cache] Statistics retrieved');
+    res.json({
+      success: true,
+      data: stats
+    });
+  } catch (error) {
+    console.error('❌ [Translation Cache API] Error:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Clear translation cache
+app.delete('/api/translate/cache/clear', async (req, res) => {
+  try {
+    console.log('🧹 [Translation Cache API] Clearing translation cache, desu~!');
+
+    const { language, olderThan } = req.query;
+    const deletedCount = await enhancedTranslationService.clearCache(language, olderThan);
+
+    console.log(`✅ [Translation Cache] Cleared ${deletedCount} cache entries`);
+    res.json({
+      success: true,
+      message: `Cleared ${deletedCount} translation cache entries, nyaa~!`,
+      deletedCount
+    });
+  } catch (error) {
+    console.error('❌ [Translation Cache API] Error:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Translation provider status and configuration
+app.get('/api/translate/providers/status', async (req, res) => {
+  try {
+    console.log('⚙️ [Translation Providers API] Fetching provider status, nyaa~!');
+
+    const providerStatus = await enhancedTranslationService.getProviderStatus();
+
+    console.log('✅ [Translation Providers] Status retrieved for all providers');
+    res.json({
+      success: true,
+      data: providerStatus
+    });
+  } catch (error) {
+    console.error('❌ [Translation Providers API] Error:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Translation metrics and usage statistics
+app.get('/api/translate/metrics', async (req, res) => {
+  try {
+    console.log('📈 [Translation Metrics API] Fetching usage metrics, desu~!');
+
+    const { startDate, endDate } = req.query;
+    const metrics = await enhancedTranslationService.getUsageMetrics(startDate, endDate);
+
+    console.log('✅ [Translation Metrics] Usage metrics retrieved');
+    res.json({
+      success: true,
+      data: metrics
+    });
+  } catch (error) {
+    console.error('❌ [Translation Metrics API] Error:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Supported languages with enhanced metadata
+app.get('/api/translate/languages', async (req, res) => {
+  try {
+    console.log('🌍 [Translation Languages API] Fetching supported languages, nyaa~!');
+
+    const languages = await enhancedTranslationService.getSupportedLanguages();
+
+    console.log(`✅ [Translation Languages] Retrieved ${languages.length} supported languages`);
+    res.json({
+      success: true,
+      count: languages.length,
+      data: languages
+    });
+  } catch (error) {
+    console.error('❌ [Translation Languages API] Error:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Language detection
+app.post('/api/translate/detect-language', async (req, res) => {
+  try {
+    console.log('🔍 [Language Detection API] Detecting language, desu~!');
+
+    const { text } = req.body;
+
+    if (!text) {
+      return res.status(400).json({
+        success: false,
+        error: 'Text is required for language detection!'
+      });
+    }
+
+    const detection = await enhancedTranslationService.detectLanguage(text);
+
+    console.log(`✅ [Language Detection] Detected language: ${detection.language} (confidence: ${detection.confidence})`);
+    res.json({
+      success: true,
+      data: detection
+    });
+  } catch (error) {
+    console.error('❌ [Language Detection API] Error:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Context-aware translation for specific domains
+app.post('/api/translate/domain-specific', async (req, res) => {
+  try {
+    console.log('🎯 [Domain Translation API] Processing domain-specific translation, nyaa~!');
+
+    const { text, targetLang, domain, sourceLang } = req.body;
+
+    if (!text || !targetLang || !domain) {
+      return res.status(400).json({
+        success: false,
+        error: 'Text, target language, and domain are required!'
+      });
+    }
+
+    const result = await enhancedTranslationService.translateWithDomain(
+      text,
+      targetLang,
+      domain,
+      sourceLang || 'auto'
+    );
+
+    console.log(`✅ [Domain Translation] Domain-specific translation completed for domain: ${domain}`);
+    res.json({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('❌ [Domain Translation API] Error:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Translation A/B testing endpoint
+app.post('/api/translate/ab-test', async (req, res) => {
+  try {
+    console.log('🧪 [A/B Testing API] Running translation A/B test, desu~!');
+
+    const { text, targetLang, sourceLang, providers } = req.body;
+
+    if (!text || !targetLang || !providers || !Array.isArray(providers)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Text, target language, and providers array are required!'
+      });
+    }
+
+    const results = await enhancedTranslationService.compareProviders(
+      text,
+      targetLang,
+      providers,
+      sourceLang || 'auto'
+    );
+
+    console.log(`✅ [A/B Testing] Compared ${providers.length} providers`);
+    res.json({
+      success: true,
+      data: results
+    });
+  } catch (error) {
+    console.error('❌ [A/B Testing API] Error:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ============================================================================
+// 👤🌍 USER LANGUAGE PREFERENCES API - Persistent Language Settings, nyaa~! 🌍👤
+// ============================================================================
+
+// Get user language preference
+app.get('/api/user/language-preference/:userId', async (req, res) => {
+  try {
+    console.log('👤 [User Preferences API] Fetching language preference for user:', req.params.userId);
+
+    const userId = req.params.userId;
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        error: 'User ID is required!'
+      });
+    }
+
+    const userPreference = await db.collection('user_language_preferences')
+      .findOne({ userId: userId });
+
+    if (!userPreference) {
+      // Return default preference if none exists
+      console.log('👤 [User Preferences] No preference found, returning default (en)');
+      return res.json({
+        success: true,
+        data: {
+          userId: userId,
+          language: 'en',
+          isDefault: true,
+          lastUpdated: new Date()
+        }
+      });
+    }
+
+    console.log(`✅ [User Preferences] Found preference: ${userPreference.language} for user ${userId}`);
+    res.json({
+      success: true,
+      data: {
+        userId: userPreference.userId,
+        language: userPreference.language,
+        isDefault: false,
+        lastUpdated: userPreference.lastUpdated,
+        createdAt: userPreference.createdAt
+      }
+    });
+  } catch (error) {
+    console.error('❌ [User Preferences API] Error fetching preference:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Set/Update user language preference
+app.post('/api/user/language-preference', async (req, res) => {
+  try {
+    console.log('👤 [User Preferences API] Setting language preference, nyaa~!');
+
+    const { userId, language, userAgent, ipAddress } = req.body;
+
+    if (!userId || !language) {
+      return res.status(400).json({
+        success: false,
+        error: 'User ID and language are required!'
+      });
+    }
+
+    // Validate language code
+    const supportedLanguages = ['en', 'es', 'fr', 'de', 'it', 'pt', 'ru', 'ja', 'ko', 'zh', 'ar', 'hi', 'nl', 'tr', 'pl'];
+    if (!supportedLanguages.includes(language)) {
+      return res.status(400).json({
+        success: false,
+        error: `Unsupported language: ${language}. Supported: ${supportedLanguages.join(', ')}`
+      });
+    }
+
+    const now = new Date();
+    const preferenceData = {
+      userId: userId,
+      language: language,
+      lastUpdated: now,
+      userAgent: userAgent || null,
+      ipAddress: ipAddress || null
+    };
+
+    // Upsert (update if exists, insert if doesn't)
+    const result = await db.collection('user_language_preferences').updateOne(
+      { userId: userId },
+      {
+        $set: preferenceData,
+        $setOnInsert: { createdAt: now }
+      },
+      { upsert: true }
+    );
+
+    console.log(`✅ [User Preferences] Language preference set to ${language} for user ${userId}`);
+    res.json({
+      success: true,
+      message: `Language preference updated to ${language}, nyaa~!`,
+      data: {
+        userId: userId,
+        language: language,
+        isNew: result.upsertedCount > 0,
+        lastUpdated: now
+      }
+    });
+  } catch (error) {
+    console.error('❌ [User Preferences API] Error setting preference:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Get language preference statistics
+app.get('/api/user/language-stats', async (req, res) => {
+  try {
+    console.log('📊 [User Preferences API] Fetching language usage statistics, desu~!');
+
+    const pipeline = [
+      {
+        $group: {
+          _id: '$language',
+          count: { $sum: 1 },
+          lastUsed: { $max: '$lastUpdated' }
+        }
+      },
+      {
+        $sort: { count: -1 }
+      }
+    ];
+
+    const languageStats = await db.collection('user_language_preferences')
+      .aggregate(pipeline)
+      .toArray();
+
+    const totalUsers = await db.collection('user_language_preferences').countDocuments();
+
+    const statsWithPercentages = languageStats.map(stat => ({
+      language: stat._id,
+      count: stat.count,
+      percentage: Math.round((stat.count / totalUsers) * 100),
+      lastUsed: stat.lastUsed
+    }));
+
+    console.log(`✅ [User Preferences] Statistics calculated for ${totalUsers} users`);
+    res.json({
+      success: true,
+      data: {
+        totalUsers: totalUsers,
+        languageBreakdown: statsWithPercentages,
+        generatedAt: new Date()
+      }
+    });
+  } catch (error) {
+    console.error('❌ [User Preferences API] Error fetching stats:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Bulk get language preferences for multiple users
+app.post('/api/user/language-preferences/bulk', async (req, res) => {
+  try {
+    console.log('👥 [User Preferences API] Fetching bulk language preferences, nyaa~!');
+
+    const { userIds } = req.body;
+
+    if (!userIds || !Array.isArray(userIds)) {
+      return res.status(400).json({
+        success: false,
+        error: 'UserIds array is required!'
+      });
+    }
+
+    if (userIds.length > 100) {
+      return res.status(400).json({
+        success: false,
+        error: 'Maximum 100 user IDs per bulk request!'
+      });
+    }
+
+    const preferences = await db.collection('user_language_preferences')
+      .find({ userId: { $in: userIds } })
+      .toArray();
+
+    // Create a map for fast lookup
+    const preferenceMap = {};
+    preferences.forEach(pref => {
+      preferenceMap[pref.userId] = {
+        language: pref.language,
+        lastUpdated: pref.lastUpdated,
+        createdAt: pref.createdAt
+      };
+    });
+
+    // Fill in defaults for users without preferences
+    const results = userIds.map(userId => ({
+      userId: userId,
+      language: preferenceMap[userId]?.language || 'en',
+      isDefault: !preferenceMap[userId],
+      lastUpdated: preferenceMap[userId]?.lastUpdated || null,
+      createdAt: preferenceMap[userId]?.createdAt || null
+    }));
+
+    console.log(`✅ [User Preferences] Bulk fetch completed for ${userIds.length} users`);
+    res.json({
+      success: true,
+      data: results,
+      totalRequested: userIds.length,
+      foundPreferences: preferences.length,
+      defaultsProvided: userIds.length - preferences.length
+    });
+  } catch (error) {
+    console.error('❌ [User Preferences API] Error in bulk fetch:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Delete user language preference (GDPR compliance)
+app.delete('/api/user/language-preference/:userId', async (req, res) => {
+  try {
+    console.log('🗑️ [User Preferences API] Deleting language preference for user:', req.params.userId);
+
+    const userId = req.params.userId;
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        error: 'User ID is required!'
+      });
+    }
+
+    const result = await db.collection('user_language_preferences')
+      .deleteOne({ userId: userId });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'No language preference found for this user'
+      });
+    }
+
+    console.log(`✅ [User Preferences] Language preference deleted for user ${userId}`);
+    res.json({
+      success: true,
+      message: 'Language preference deleted successfully, nyaa~!',
+      deletedUserId: userId
+    });
+  } catch (error) {
+    console.error('❌ [User Preferences API] Error deleting preference:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+console.log('🌍✨ Enhanced Translation API v2.0 endpoints loaded successfully, nyaa~!');
+console.log('👤💾 User Language Preferences API loaded with persistent storage, desu~!');
 
 // Get all ASCII art
 app.get('/api/ascii-art', async (req, res) => {

@@ -19,6 +19,7 @@ const YouTubeVideoGenerator = lazy(() => import('./components/YouTubeVideoGenera
 const YouTubePlaylist = lazy(() => import('./components/YouTubePlaylist'));
 const IngestionEnrichmentDashboard = lazy(() => import('./components/IngestionEnrichmentDashboard'));
 const ConfessionsBlog = lazy(() => import('./components/ConfessionsBlog'));
+const TranslationDashboard = lazy(() => import('./components/TranslationDashboard'));
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
               <Route path="/youtube" element={<YouTubePlaylist />} />
               <Route path="/rag" element={<IngestionEnrichmentDashboard />} />
               <Route path="/confessions" element={<ConfessionsBlog />} />
+              <Route path="/translation" element={<TranslationDashboard />} />
             </Routes>
           </Suspense>
         </Layout>

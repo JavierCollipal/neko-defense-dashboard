@@ -1,0 +1,102 @@
+{
+  "app": {
+    "title": "NEKO-ARC VERTEIDIGUNGSSYSTEM",
+    "status_live": "LIVE",
+    "fortress_mode": "FESTUNGSMODUS: AKTIV",
+    "kawaii_level": "KAWAII STUFE: MAXIMUM",
+    "loading": "Lädt, nyaa~!",
+    "footer": "*schnurrt in defensiver Exzellenz* | NYA NYA NYA~!"
+  },
+  "buttons": {
+    "neko_tv": "NEKO TV",
+    "multi_channel_tv": "MEHRKANALFERNSEHEN",
+    "dina_docs": "DINA DOCS",
+    "dina_justice_tv": "DINA JUSTIZ TV",
+    "valech_v2": "VALECH V2.0",
+    "threat_actors": "BEDROHUNGSAKTEURE",
+    "back_to_dashboard": "← Zurück zum Dashboard"
+  },
+  "alerts": {
+    "allow_popups": "Bitte erlauben Sie Pop-ups, um NEKO TV zu öffnen, nyaa~!",
+    "allow_popups_multi": "Bitte erlauben Sie Pop-ups, um NEKO MEHRKANALFERNSEHEN zu öffnen, nyaa~!",
+    "allow_popups_dina": "Bitte erlauben Sie Pop-ups, um DINA JUSTIZ TV zu öffnen, nyaa~!"
+  },
+  "headers": {
+    "valech_v2": "VALECH V2.0 UPGRADE-SYSTEM",
+    "threat_actors_registry": "BEDROHUNGSAKTEURE REGISTER",
+    "dina_international": "DINA INTERNATIONALE JAGDOPERATION",
+    "live_global_tracking": "LIVE - GLOBALE VERFOLGUNG",
+    "live_global_deployment": "LIVE - GLOBALER EINSATZ",
+    "live_v2_deployed": "LIVE - V2.0 EINGESETZT",
+    "maximum_capacity_mode": "MAXIMALE KAPAZITÄTSMODUS: AKTIV",
+    "threat_intelligence_mode": "BEDROHUNGSANALYSE-MODUS: AKTIV",
+    "international_justice_mode": "INTERNATIONALER JUSTIZMODUS: AKTIV"
+  },
+  "categories": {
+    "header": "BEDROHUNGSKATEGORIEN",
+    "all_threats": "Alle Bedrohungen",
+    "predators": "Raubtiere",
+    "pedophiles": "Pädophile",
+    "dina_network": "DINA Netzwerk",
+    "ransomware": "Ransomware",
+    "state_sponsored": "Staatlich gesponsert",
+    "crypto_crime": "Krypto-Kriminalität",
+    "detected": "erkannt",
+    "priority_critical": "KRITISCH",
+    "priority_maximum": "MAXIMALER ALARM",
+    "priority_high": "HOCH",
+    "fortress_badge": "FESTUNGSMODUS",
+    "active_monitoring": "AKTIVE ÜBERWACHUNG",
+    "neko_guardian": "Neko Wächter: AN"
+  },
+  "stats": {
+    "header": "VERTEIDIGUNGSSYSTEM STATUS",
+    "defense_statistics": "Verteidigungsstatistiken",
+    "loading_stats": "Lade Statistiken, nyaa~!",
+    "active_collections": "Aktive Sammlungen",
+    "honeypot_traps": "Honeypot-Fallen",
+    "threat_detection": "Bedrohungserkennung",
+    "kawaii_power": "Kawaii-Kraft",
+    "active": "AKTIV",
+    "last_update": "Letzte Aktualisierung:"
+  },
+  "threats": {
+    "all_threat_actors": "ALLE BEDROHUNGSAKTEURE",
+    "predator_threat_actors": "RAUBTIER BEDROHUNGSAKTEURE",
+    "pedophile_threat_actors": "PÄDOPHILE BEDROHUNGSAKTEURE - MASSENJAGDZIEL",
+    "dina_network_actors": "DINA NETZWERK AKTEURE",
+    "ransomware_groups": "RANSOMWARE GRUPPEN",
+    "state_sponsored_apts": "STAATLICH GESPONSERTE APTs",
+    "crypto_crime_actors": "KRYPTO-KRIMINALITÄTS AKTEURE",
+    "threat_actors": "BEDROHUNGSAKTEURE",
+    "loading_hunt_targets": "Lade Jagdziele, desu~!",
+    "network_error": "Netzwerkfehler - Verbindung zum Verteidigungssystem nicht möglich",
+    "failed_to_load": "Fehler beim Laden der Bedrohungsakteure",
+    "no_threats_found": "Keine Bedrohungsakteure in dieser Kategorie gefunden, nyaa~!",
+    "targets": "ZIELE",
+    "target": "ZIEL",
+    "hunt_active": "JAGD AKTIV",
+    "unknown": "UNBEKANNT",
+    "unknown_actor": "Unbekannter Akteur",
+    "aka": "alias:",
+    "type": "Typ:",
+    "classification": "Klassifizierung:",
+    "location": "Standort:",
+    "nation": "Nation:",
+    "hunt_priority": "Jagdpriorität:",
+    "bounty": "Kopfgeld:",
+    "known_for": "Bekannt für:",
+    "last_updated": "Zuletzt aktualisiert:",
+    "purrs_hunt_readiness": "*schnurrt in Jagdbereitschaft*"
+  },
+  "threat_levels": {
+    "critical": "KRITISCH",
+    "high": "HOCH",
+    "medium": "MITTEL",
+    "low": "NIEDRIG"
+  },
+  "language": {
+    "select": "Sprache Auswählen",
+    "current": "Aktuelle Sprache:"
+  }
+}

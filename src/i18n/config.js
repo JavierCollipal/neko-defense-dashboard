@@ -11,6 +11,16 @@ import zhTranslation from './locales/zh.json';
 import hiTranslation from './locales/hi.json';
 import esTranslation from './locales/es.json';
 import arTranslation from './locales/ar.json';
+import frTranslation from './locales/fr.json';
+import deTranslation from './locales/de.json';
+import jaTranslation from './locales/ja.json';
+import ruTranslation from './locales/ru.json';
+import ptTranslation from './locales/pt.json';
+import koTranslation from './locales/ko.json';
+import itTranslation from './locales/it.json';
+import nlTranslation from './locales/nl.json';
+import trTranslation from './locales/tr.json';
+import plTranslation from './locales/pl.json';
 
 // Language resources configuration
 const resources = {
@@ -28,6 +38,36 @@ const resources = {
   },
   ar: {
     translation: arTranslation
+  },
+  fr: {
+    translation: frTranslation
+  },
+  de: {
+    translation: deTranslation
+  },
+  ja: {
+    translation: jaTranslation
+  },
+  ru: {
+    translation: ruTranslation
+  },
+  pt: {
+    translation: ptTranslation
+  },
+  ko: {
+    translation: koTranslation
+  },
+  it: {
+    translation: itTranslation
+  },
+  nl: {
+    translation: nlTranslation
+  },
+  tr: {
+    translation: trTranslation
+  },
+  pl: {
+    translation: plTranslation
   }
 };
 
@@ -69,42 +109,127 @@ i18n
     }
   });
 
-// Language metadata for UI display
+// Language metadata for UI display (15 languages total!)
 export const languages = [
   {
     code: 'en',
     name: 'English',
     nativeName: 'English',
     flag: '🇬🇧',
-    dir: 'ltr'
-  },
-  {
-    code: 'zh',
-    name: 'Chinese',
-    nativeName: '中文',
-    flag: '🇨🇳',
-    dir: 'ltr'
-  },
-  {
-    code: 'hi',
-    name: 'Hindi',
-    nativeName: 'हिन्दी',
-    flag: '🇮🇳',
-    dir: 'ltr'
+    dir: 'ltr',
+    priority: 1
   },
   {
     code: 'es',
     name: 'Spanish',
     nativeName: 'Español',
     flag: '🇪🇸',
-    dir: 'ltr'
+    dir: 'ltr',
+    priority: 2
+  },
+  {
+    code: 'zh',
+    name: 'Chinese',
+    nativeName: '中文',
+    flag: '🇨🇳',
+    dir: 'ltr',
+    priority: 3
+  },
+  {
+    code: 'hi',
+    name: 'Hindi',
+    nativeName: 'हिन्दी',
+    flag: '🇮🇳',
+    dir: 'ltr',
+    priority: 4
   },
   {
     code: 'ar',
     name: 'Arabic',
     nativeName: 'العربية',
     flag: '🇸🇦',
-    dir: 'rtl' // Right-to-left for Arabic
+    dir: 'rtl', // Right-to-left for Arabic
+    priority: 5
+  },
+  {
+    code: 'fr',
+    name: 'French',
+    nativeName: 'Français',
+    flag: '🇫🇷',
+    dir: 'ltr',
+    priority: 6
+  },
+  {
+    code: 'de',
+    name: 'German',
+    nativeName: 'Deutsch',
+    flag: '🇩🇪',
+    dir: 'ltr',
+    priority: 7
+  },
+  {
+    code: 'ja',
+    name: 'Japanese',
+    nativeName: '日本語',
+    flag: '🇯🇵',
+    dir: 'ltr',
+    priority: 8
+  },
+  {
+    code: 'ru',
+    name: 'Russian',
+    nativeName: 'Русский',
+    flag: '🇷🇺',
+    dir: 'ltr',
+    priority: 9
+  },
+  {
+    code: 'pt',
+    name: 'Portuguese',
+    nativeName: 'Português',
+    flag: '🇧🇷',
+    dir: 'ltr',
+    priority: 10
+  },
+  {
+    code: 'ko',
+    name: 'Korean',
+    nativeName: '한국어',
+    flag: '🇰🇷',
+    dir: 'ltr',
+    priority: 11
+  },
+  {
+    code: 'it',
+    name: 'Italian',
+    nativeName: 'Italiano',
+    flag: '🇮🇹',
+    dir: 'ltr',
+    priority: 12
+  },
+  {
+    code: 'nl',
+    name: 'Dutch',
+    nativeName: 'Nederlands',
+    flag: '🇳🇱',
+    dir: 'ltr',
+    priority: 13
+  },
+  {
+    code: 'tr',
+    name: 'Turkish',
+    nativeName: 'Türkçe',
+    flag: '🇹🇷',
+    dir: 'ltr',
+    priority: 14
+  },
+  {
+    code: 'pl',
+    name: 'Polish',
+    nativeName: 'Polski',
+    flag: '🇵🇱',
+    dir: 'ltr',
+    priority: 15
   }
 ];
 
