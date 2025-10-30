@@ -499,7 +499,6 @@ function VideoMaker() {
             <p>This might take a moment depending on file size!</p>
             <p className="neko-message">*purrs while processing* NYA NYA NYA~! ✨</p>
           </div>
-          </div>
         </div>
       )}
     </div>
