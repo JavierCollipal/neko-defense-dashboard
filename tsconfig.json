@@ -34,6 +34,8 @@
     "node_modules",
     "dist",
     "build",
-    "scripts"
+    "scripts",
+    "puppeteer-test-valech.ts",
+    "puppeteer-verify-valech.ts"
   ]
 }

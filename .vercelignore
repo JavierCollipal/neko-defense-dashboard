@@ -1,0 +1,13 @@
+# Puppeteer test files - not needed in production
+puppeteer-test-valech.ts
+puppeteer-verify-valech.ts
+
+# Testing screenshots
+/tmp/*.png
+
+# MongoDB scripts
+scripts/
+
+# Documentation
+*.md
+!README.md
