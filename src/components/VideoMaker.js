@@ -502,6 +502,8 @@ function VideoMaker() {
         </div>
       )}
     </div>
+  )}
+  </div>
   );
 }
 

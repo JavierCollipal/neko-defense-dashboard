@@ -202,7 +202,7 @@ const LanguageSelector = ({ userId = 'default-user', onLanguageChange }) => {
         >
           <span className="language-flag">{currentLang.flag}</span>
           <span className="language-name">{currentLang.nativeName}</span>
-          <span className="language-code">({currentLang.code.toUpperCase()})</span>
+          <span className="language-code">({currentLang.code?.toUpperCase() || 'N/A'})</span>
           {autoTranslationEnabled && (
             <span className="auto-translation-indicator" title="Auto-translation enabled">🌍</span>
           )}
@@ -264,7 +264,7 @@ const LanguageSelector = ({ userId = 'default-user', onLanguageChange }) => {
                     <span className="option-english">{language.name}</span>
                     <span className="option-region">{language.region}</span>
                   </div>
-                  <span className="option-code">{language.code.toUpperCase()}</span>
+                  <span className="option-code">{language.code?.toUpperCase() || 'N/A'}</span>
                   {language.code === selectedLanguage && (
                     <span className="option-checkmark">✓</span>
                   )}

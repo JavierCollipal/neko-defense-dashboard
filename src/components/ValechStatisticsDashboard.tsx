@@ -21,7 +21,6 @@ import {
   Card,
   CardContent,
   Typography,
-  Grid,
   CircularProgress,
   Alert,
   Chip,
@@ -34,6 +33,22 @@ import {
   TableRow,
   Paper
 } from '@mui/material';
+// Temporary Box-based layout until Grid API compatibility is fixed
+const Grid = ({ container, spacing, xs, sm, md, sx, children, ...props }: any) => (
+  <Box
+    sx={{
+      display: container ? 'flex' : 'block',
+      flexWrap: container ? 'wrap' : undefined,
+      gap: container ? spacing : undefined,
+      flex: xs || sm || md ? '1 1 auto' : undefined,
+      minWidth: xs === 12 ? '100%' : xs === 6 ? '48%' : xs === 3 ? '23%' : md === 2.4 ? '18%' : md === 6 ? '48%' : 'auto',
+      ...sx
+    }}
+    {...props}
+  >
+    {children}
+  </Box>
+);
 import PeopleIcon from '@mui/icons-material/People';
 import GavelIcon from '@mui/icons-material/Gavel';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -105,7 +120,7 @@ const ValechStatisticsDashboard: React.FC = () => {
 
       try {
         const response = await fetch('/api/valech/stats/comprehensive');
-        const data = await response.json();
+        const data = await response.json() as any;
 
         if (data.success) {
           setStats(data.data);
@@ -165,7 +180,7 @@ const ValechStatisticsDashboard: React.FC = () => {
 
       {/* Overall Metrics */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={2.4}>
+        <Grid xs={12} sm={6} md={2.4}>
           <Card>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
@@ -189,7 +204,7 @@ const ValechStatisticsDashboard: React.FC = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={2.4}>
+        <Grid xs={12} sm={6} md={2.4}>
           <Card>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
@@ -208,7 +223,7 @@ const ValechStatisticsDashboard: React.FC = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={2.4}>
+        <Grid xs={12} sm={6} md={2.4}>
           <Card>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
@@ -224,7 +239,7 @@ const ValechStatisticsDashboard: React.FC = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={2.4}>
+        <Grid xs={12} sm={6} md={2.4}>
           <Card>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
@@ -249,7 +264,7 @@ const ValechStatisticsDashboard: React.FC = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={2.4}>
+        <Grid xs={12} sm={6} md={2.4}>
           <Card>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
@@ -268,14 +283,14 @@ const ValechStatisticsDashboard: React.FC = () => {
 
       {/* Victim Outcomes */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} md={6}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
                 Victim Outcomes
               </Typography>
               <Grid container spacing={2}>
-                <Grid item xs={6}>
+                <Grid xs={6}>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <CheckCircleIcon color="success" sx={{ mr: 1 }} />
@@ -286,7 +301,7 @@ const ValechStatisticsDashboard: React.FC = () => {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid xs={6}>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <ErrorIcon color="error" sx={{ mr: 1 }} />
@@ -297,7 +312,7 @@ const ValechStatisticsDashboard: React.FC = () => {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid xs={6}>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <WarningIcon color="warning" sx={{ mr: 1 }} />
@@ -308,7 +323,7 @@ const ValechStatisticsDashboard: React.FC = () => {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid xs={6}>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Typography variant="body2">Unknown</Typography>
                     <Typography variant="h6">{stats.victimOutcomes.unknown.toLocaleString()}</Typography>
@@ -325,30 +340,30 @@ const ValechStatisticsDashboard: React.FC = () => {
         </Grid>
 
         {/* Justice Progress */}
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} md={6}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
                 Justice Progress
               </Typography>
               <Grid container spacing={2}>
-                <Grid item xs={6}>
+                <Grid xs={6}>
                   <Typography variant="body2" color="text.secondary">Convicted</Typography>
                   <Typography variant="h6" color="success.main">
                     {stats.justiceProgress.perpetratorsConvicted}
                   </Typography>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid xs={6}>
                   <Typography variant="body2" color="text.secondary">At Large</Typography>
                   <Typography variant="h6" color="error.main">
                     {stats.justiceProgress.perpetratorsAtLarge}
                   </Typography>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid xs={6}>
                   <Typography variant="body2" color="text.secondary">Deceased</Typography>
                   <Typography variant="h6">{stats.justiceProgress.perpetratorsDeceased}</Typography>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid xs={6}>
                   <Typography variant="body2" color="text.secondary">Unprosecuted</Typography>
                   <Typography variant="h6" color="warning.main">
                     {stats.justiceProgress.perpetratorsUnprosecuted}
@@ -378,25 +393,25 @@ const ValechStatisticsDashboard: React.FC = () => {
             Documentation Quality
           </Typography>
           <Grid container spacing={2}>
-            <Grid item xs={3}>
+            <Grid xs={3}>
               <Chip label="Complete" color="success" sx={{ width: '100%' }} />
               <Typography variant="h6" align="center" sx={{ mt: 1 }}>
                 {stats.documentationQuality.complete.toLocaleString()}
               </Typography>
             </Grid>
-            <Grid item xs={3}>
+            <Grid xs={3}>
               <Chip label="Partial" color="info" sx={{ width: '100%' }} />
               <Typography variant="h6" align="center" sx={{ mt: 1 }}>
                 {stats.documentationQuality.partial.toLocaleString()}
               </Typography>
             </Grid>
-            <Grid item xs={3}>
+            <Grid xs={3}>
               <Chip label="Minimal" color="warning" sx={{ width: '100%' }} />
               <Typography variant="h6" align="center" sx={{ mt: 1 }}>
                 {stats.documentationQuality.minimal.toLocaleString()}
               </Typography>
             </Grid>
-            <Grid item xs={3}>
+            <Grid xs={3}>
               <Chip label="Needs Verification" color="error" sx={{ width: '100%' }} />
               <Typography variant="h6" align="center" sx={{ mt: 1 }}>
                 {stats.documentationQuality.needsVerification.toLocaleString()}

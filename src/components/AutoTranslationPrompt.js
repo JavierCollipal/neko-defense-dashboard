@@ -17,6 +17,9 @@ const AutoTranslationPrompt = ({
   if (!isVisible) return null;
 
   const getLanguageName = (code) => {
+    // Fix: Add null check before calling .toUpperCase()
+    if (!code) return 'Unknown';
+
     const languages = {
       'es': 'Español',
       'en': 'English',
@@ -75,24 +78,26 @@ const AutoTranslationPrompt = ({
         )}
 
         {/* Suggested Language */}
-        <div className="mb-4">
-          <p className="text-gray-300 mb-3">
-            {t('autoTranslation.prompt.suggestion', 'Based on your location, we recommend')}:
-          </p>
-          <div className="bg-blue-600 bg-opacity-20 border border-blue-500 rounded-lg p-3">
-            <div className="flex items-center">
-              <span className="text-2xl mr-3">💬</span>
-              <div>
-                <p className="text-blue-400 font-medium">
-                  {getLanguageName(suggestedLanguage)}
-                </p>
-                <p className="text-gray-400 text-sm">
-                  {t('autoTranslation.prompt.automaticTranslation', 'Automatic translation')}
-                </p>
+        {suggestedLanguage && (
+          <div className="mb-4">
+            <p className="text-gray-300 mb-3">
+              {t('autoTranslation.prompt.suggestion', 'Based on your location, we recommend')}:
+            </p>
+            <div className="bg-blue-600 bg-opacity-20 border border-blue-500 rounded-lg p-3">
+              <div className="flex items-center">
+                <span className="text-2xl mr-3">💬</span>
+                <div>
+                  <p className="text-blue-400 font-medium">
+                    {getLanguageName(suggestedLanguage)}
+                  </p>
+                  <p className="text-gray-400 text-sm">
+                    {t('autoTranslation.prompt.automaticTranslation', 'Automatic translation')}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Privacy Notice */}
         <div className="bg-yellow-600 bg-opacity-20 border border-yellow-500 rounded-lg p-3 mb-4">

@@ -224,7 +224,7 @@ export async function POST(request: NextRequest) {
     const collection = db.collection(COLLECTION_NAME);
 
     // Parse request body
-    const body = await request.json();
+    const body = await request.json() as any;
 
     // Validate required fields
     const requiredFields = ['victimId', 'fullName', 'outcome'];

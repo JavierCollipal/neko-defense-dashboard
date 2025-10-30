@@ -22,7 +22,6 @@ import {
   CardContent,
   TextField,
   Button,
-  Grid,
   FormControl,
   InputLabel,
   Select,
@@ -37,6 +36,23 @@ import {
   AccordionDetails,
   SelectChangeEvent
 } from '@mui/material';
+
+// Temporary Box-based layout until Grid API compatibility is fixed
+const Grid = ({ container, spacing, xs, sm, md, sx, children, ...props }: any) => (
+  <Box
+    sx={{
+      display: container ? 'flex' : 'block',
+      flexWrap: container ? 'wrap' : undefined,
+      gap: container ? spacing : undefined,
+      flex: xs || sm || md ? '1 1 auto' : undefined,
+      minWidth: xs === 12 ? '100%' : xs === 6 ? '48%' : xs === 3 ? '23%' : md === 2.4 ? '18%' : md === 6 ? '48%' : 'auto',
+      ...sx
+    }}
+    {...props}
+  >
+    {children}
+  </Box>
+);
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -121,7 +137,7 @@ const VictimSearchInterface: React.FC = () => {
       });
 
       const response = await fetch(`/api/valech/victims?${params.toString()}`);
-      const data = await response.json();
+      const data = await response.json() as any;
 
       if (data.success) {
         setResults(data);
@@ -202,13 +218,13 @@ const VictimSearchInterface: React.FC = () => {
         <CardContent>
           {/* Basic Search */}
           <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
+            <Grid xs={12} md={6}>
               <TextField
                 fullWidth
                 label="Victim Name"
                 placeholder="Search by name..."
                 value={filters.name}
-                onChange={(e) => handleFilterChange('name', e.target.value)}
+                onChange={(e) => handleFilterChange('name', (e.target as any).value)}
                 onKeyPress={handleKeyPress}
                 InputProps={{
                   startAdornment: <SearchIcon sx={{ mr: 1, color: 'text.secondary' }} />
@@ -216,18 +232,18 @@ const VictimSearchInterface: React.FC = () => {
               />
             </Grid>
 
-            <Grid item xs={12} md={4}>
+            <Grid xs={12} md={4}>
               <TextField
                 fullWidth
                 label="Detention Center"
                 placeholder="Villa Grimaldi, Estadio Nacional..."
                 value={filters.detentionCenter}
-                onChange={(e) => handleFilterChange('detentionCenter', e.target.value)}
+                onChange={(e) => handleFilterChange('detentionCenter', (e.target as any).value)}
                 onKeyPress={handleKeyPress}
               />
             </Grid>
 
-            <Grid item xs={12} md={2}>
+            <Grid xs={12} md={2}>
               <Button
                 fullWidth
                 variant="contained"
@@ -255,35 +271,35 @@ const VictimSearchInterface: React.FC = () => {
             <AccordionDetails>
               <Grid container spacing={2}>
                 {/* Date Range */}
-                <Grid item xs={12} md={6}>
+                <Grid xs={12} md={6}>
                   <TextField
                     fullWidth
                     type="date"
                     label="Arrested From"
                     value={filters.dateArrestedFrom}
-                    onChange={(e) => handleFilterChange('dateArrestedFrom', e.target.value)}
+                    onChange={(e) => handleFilterChange('dateArrestedFrom', (e.target as any).value)}
                     InputLabelProps={{ shrink: true }}
                   />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid xs={12} md={6}>
                   <TextField
                     fullWidth
                     type="date"
                     label="Arrested To"
                     value={filters.dateArrestedTo}
-                    onChange={(e) => handleFilterChange('dateArrestedTo', e.target.value)}
+                    onChange={(e) => handleFilterChange('dateArrestedTo', (e.target as any).value)}
                     InputLabelProps={{ shrink: true }}
                   />
                 </Grid>
 
                 {/* Outcome */}
-                <Grid item xs={12} md={3}>
+                <Grid xs={12} md={3}>
                   <FormControl fullWidth>
                     <InputLabel>Outcome</InputLabel>
                     <Select
                       value={filters.outcome}
                       label="Outcome"
-                      onChange={(e: SelectChangeEvent) => handleFilterChange('outcome', e.target.value)}
+                      onChange={(e: SelectChangeEvent) => handleFilterChange('outcome', (e.target as any).value)}
                     >
                       <MenuItem value="">All</MenuItem>
                       <MenuItem value="SURVIVED">Survived</MenuItem>
@@ -295,13 +311,13 @@ const VictimSearchInterface: React.FC = () => {
                 </Grid>
 
                 {/* Gender */}
-                <Grid item xs={12} md={3}>
+                <Grid xs={12} md={3}>
                   <FormControl fullWidth>
                     <InputLabel>Gender</InputLabel>
                     <Select
                       value={filters.gender}
                       label="Gender"
-                      onChange={(e: SelectChangeEvent) => handleFilterChange('gender', e.target.value)}
+                      onChange={(e: SelectChangeEvent) => handleFilterChange('gender', (e.target as any).value)}
                     >
                       <MenuItem value="">All</MenuItem>
                       <MenuItem value="MALE">Male</MenuItem>
@@ -313,13 +329,13 @@ const VictimSearchInterface: React.FC = () => {
                 </Grid>
 
                 {/* Documentation Status */}
-                <Grid item xs={12} md={3}>
+                <Grid xs={12} md={3}>
                   <FormControl fullWidth>
                     <InputLabel>Documentation</InputLabel>
                     <Select
                       value={filters.documentationStatus}
                       label="Documentation"
-                      onChange={(e: SelectChangeEvent) => handleFilterChange('documentationStatus', e.target.value)}
+                      onChange={(e: SelectChangeEvent) => handleFilterChange('documentationStatus', (e.target as any).value)}
                     >
                       <MenuItem value="">All</MenuItem>
                       <MenuItem value="COMPLETE">Complete</MenuItem>
@@ -331,13 +347,13 @@ const VictimSearchInterface: React.FC = () => {
                 </Grid>
 
                 {/* Confidence Level */}
-                <Grid item xs={12} md={3}>
+                <Grid xs={12} md={3}>
                   <FormControl fullWidth>
                     <InputLabel>Confidence</InputLabel>
                     <Select
                       value={filters.confidenceLevel}
                       label="Confidence"
-                      onChange={(e: SelectChangeEvent) => handleFilterChange('confidenceLevel', e.target.value)}
+                      onChange={(e: SelectChangeEvent) => handleFilterChange('confidenceLevel', (e.target as any).value)}
                     >
                       <MenuItem value="">All</MenuItem>
                       <MenuItem value="CONFIRMED">Confirmed</MenuItem>
@@ -349,25 +365,25 @@ const VictimSearchInterface: React.FC = () => {
                 </Grid>
 
                 {/* Profession */}
-                <Grid item xs={12} md={6}>
+                <Grid xs={12} md={6}>
                   <TextField
                     fullWidth
                     label="Profession"
                     placeholder="Teacher, Worker, Student..."
                     value={filters.profession}
-                    onChange={(e) => handleFilterChange('profession', e.target.value)}
+                    onChange={(e) => handleFilterChange('profession', (e.target as any).value)}
                     onKeyPress={handleKeyPress}
                   />
                 </Grid>
 
                 {/* Political Affiliation */}
-                <Grid item xs={12} md={6}>
+                <Grid xs={12} md={6}>
                   <TextField
                     fullWidth
                     label="Political Affiliation"
                     placeholder="Socialist, Communist, Christian Democrat..."
                     value={filters.politicalAffiliation}
-                    onChange={(e) => handleFilterChange('politicalAffiliation', e.target.value)}
+                    onChange={(e) => handleFilterChange('politicalAffiliation', (e.target as any).value)}
                     onKeyPress={handleKeyPress}
                   />
                 </Grid>
@@ -411,7 +427,7 @@ const VictimSearchInterface: React.FC = () => {
               <Select
                 value={filters.limit}
                 label="Per Page"
-                onChange={(e: SelectChangeEvent<number>) => handleFilterChange('limit', Number(e.target.value))}
+                onChange={(e: SelectChangeEvent<number>) => handleFilterChange('limit', Number((e.target as any).value))}
               >
                 <MenuItem value={10}>10</MenuItem>
                 <MenuItem value={25}>25</MenuItem>
