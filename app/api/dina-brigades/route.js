@@ -1,12 +1,12 @@
-// 🐾 NEKO DEFENSE DASHBOARD - DINA Agents API Route
-// Next.js API route to fetch DINA agents from MongoDB Atlas
+// 🐾 NEKO DEFENSE DASHBOARD - DINA Brigades API Route
+// Next.js API route to fetch DINA brigade structures from MongoDB Atlas
 
 import { MongoClient } from 'mongodb';
 import { NextResponse } from 'next/server';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-// GET /api/dina-agents
+// GET /api/dina-brigades
 export async function GET(request) {
   // Return mock data if MongoDB URI not configured
   if (!MONGODB_URI) {
@@ -22,15 +22,15 @@ export async function GET(request) {
   try {
     await client.connect();
     const db = client.db('neko-defense-system');
-    const collection = db.collection('dina-agents');
+    const collection = db.collection('dina_brigades_structure');
 
-    // Fetch all DINA agents
-    const dinaAgents = await collection.find({}).toArray();
+    // Fetch all brigade structures
+    const brigades = await collection.find({}).toArray();
 
     return NextResponse.json({
       success: true,
-      data: dinaAgents,
-      count: dinaAgents.length
+      data: brigades,
+      count: brigades.length
     });
 
   } catch (error) {
@@ -39,7 +39,7 @@ export async function GET(request) {
       {
         success: false,
         error: error.message,
-        message: 'Failed to fetch DINA agents'
+        message: 'Failed to fetch DINA brigades'
       },
       { status: 500 }
     );
