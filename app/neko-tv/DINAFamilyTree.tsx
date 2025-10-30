@@ -39,6 +39,7 @@ interface Brigade {
   specialty?: string;
   commanders?: any[];
   operations?: any;
+  _type?: string;
 }
 
 interface Props {
