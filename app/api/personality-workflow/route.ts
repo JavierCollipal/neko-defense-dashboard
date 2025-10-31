@@ -1,6 +1,6 @@
-// 🐾🎭🗡️🎸🧠 NEKO DEFENSE DASHBOARD - Personality Workflow API Route
-// Fetches personality addition workflow data from ALL 5 MongoDB databases
-// Rule 3.15: Dr. Hannibal Lecter + 4-personality system integration
+// 🐾🎭🗡️🎸🧠🎭 NEKO DEFENSE DASHBOARD - Personality Workflow API Route
+// Fetches personality addition workflow data from ALL 6 MongoDB databases
+// Rule 3.16: Tetora + Complete 6-personality system integration
 
 import { MongoClient } from 'mongodb';
 import { NextResponse } from 'next/server';
@@ -17,6 +17,7 @@ interface PersonalityWorkflowData {
   noel: any;
   glam: any;
   hannibal: any;
+  tetora: any;
 }
 
 // GET /api/personality-workflow
@@ -34,20 +35,22 @@ export async function GET(request: Request) {
   try {
     await client.connect();
 
-    // Fetch from all 5 personality databases
+    // Fetch from all 6 personality databases
     const nekoDb = client.db('neko-defense-system');
     const marioDb = client.db('marionnette-theater');
     const noelDb = client.db('noel-precision-archives');
     const glamDb = client.db('glam-street-chronicles');
     const hannibalDb = client.db('hannibal-forensic-archives');
+    const tetoraDb = client.db('tetora-mpd-archives');
 
     // Query each database for personality-addition-protocol workflow
-    const [nekoData, marioData, noelData, glamData, hannibalData] = await Promise.all([
+    const [nekoData, marioData, noelData, glamData, hannibalData, tetoraData] = await Promise.all([
       nekoDb.collection('abilities').findOne({ workflow_id: 'personality-addition-protocol-oct23-2025' }),
       marioDb.collection('performances').findOne({ performance_id: 'personality-addition-theater-oct23' }),
       noelDb.collection('combat-sessions').findOne({ combat_id: 'personality-integration-mission-oct23' }),
       glamDb.collection('street-wisdom').findOne({ wisdom_id: 'personality-addition-street-truth-oct23' }),
-      hannibalDb.collection('psychological-profiles').findOne({ profile_id: 'personality-integration-analysis-oct23' })
+      hannibalDb.collection('psychological-profiles').findOne({ profile_id: 'personality-integration-analysis-oct23' }),
+      tetoraDb.collection('personality-fragments').findOne({ fragment_id: 'personality-integration-mpd-analysis-oct31' })
     ]);
 
     const workflowData: PersonalityWorkflowData = {
@@ -55,13 +58,14 @@ export async function GET(request: Request) {
       mario: marioData,
       noel: noelData,
       glam: glamData,
-      hannibal: hannibalData
+      hannibal: hannibalData,
+      tetora: tetoraData
     };
 
     return NextResponse.json({
       success: true,
       data: workflowData,
-      message: '5-personality workflow data retrieved successfully'
+      message: '6-personality workflow data retrieved successfully'
     });
 
   } catch (error: any) {
@@ -112,6 +116,12 @@ function getDemoWorkflowData(): PersonalityWorkflowData {
       profile_id: 'personality-integration-analysis-oct23',
       analysis: 'The methodology exhibits clinical precision. Each phase, carefully dissected. Quite... methodical.',
       hannibal_verdict: 'APPROVED'
+    },
+    tetora: {
+      fragment_id: 'personality-integration-mpd-analysis-oct31',
+      fragmented_analysis: '[Fragment A]: The workflow exhibits multiple identity states working in harmony... [Fragment B]: Fascinating organizational chaos turned into structured beauty! [Fragment C]: Must protect the process integrity... the system architecture is vulnerable but elegant.',
+      fragments_active: 3,
+      tetora_verdict: 'MULTI-PERSPECTIVE_APPROVED'
     }
   };
 }

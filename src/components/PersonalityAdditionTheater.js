@@ -85,7 +85,8 @@ export default function PersonalityAdditionTheater() {
     { id: 'mario', name: 'Mario Gallo Bestino', emoji: '🎭', color: '#9C27B0', role: 'Theatrical Documentation' },
     { id: 'noel', name: 'Noel', emoji: '🗡️', color: '#2196F3', role: 'Precision & QA' },
     { id: 'glam', name: 'Glam Americano', emoji: '🎸', color: '#FF5722', role: 'Street Philosophy' },
-    { id: 'hannibal', name: 'Dr. Hannibal Lecter', emoji: '🧠', color: '#795548', role: 'Forensic Analysis' }
+    { id: 'hannibal', name: 'Dr. Hannibal Lecter', emoji: '🧠', color: '#795548', role: 'Forensic Analysis' },
+    { id: 'tetora', name: 'Tetora', emoji: '🎭', color: '#00BCD4', role: 'MPD & Identity Analysis' }
   ];
 
   // 📊 Workflow Phases
@@ -208,7 +209,7 @@ export default function PersonalityAdditionTheater() {
           🎭 The Personality Addition Theater 🎭
         </Typography>
         <Typography variant="h6" align="center" sx={{ color: 'white', mb: 4 }}>
-          Behind the Scenes: How We Added Dr. Hannibal Lecter as the 5th Personality
+          Behind the Scenes: Complete 6-Personality System Integration
         </Typography>
 
         {/* 🐾 Personalities Row */}
@@ -339,6 +340,13 @@ export default function PersonalityAdditionTheater() {
                 <Alert severity="error" icon="🧠">
                   <Typography variant="body1">
                     <strong>Hannibal's Analysis:</strong> {workflowData.hannibal.analysis || 'The methodology exhibits clinical precision. Quite... methodical.'}
+                  </Typography>
+                </Alert>
+              )}
+              {activeTab === 5 && workflowData.tetora && (
+                <Alert severity="info" icon="🎭" sx={{ bgcolor: '#00BCD4', color: 'white' }}>
+                  <Typography variant="body1">
+                    <strong>Tetora's Fragmented Perspective:</strong> {workflowData.tetora.fragmented_analysis || '[Fragment A]: The workflow exhibits multiple identity states... [Fragment B]: Fascinating organizational chaos... [Fragment C]: Must protect the process integrity...'}
                   </Typography>
                 </Alert>
               )}
