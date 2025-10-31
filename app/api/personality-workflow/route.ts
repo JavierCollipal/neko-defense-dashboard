@@ -43,14 +43,14 @@ export async function GET(request: Request) {
     const hannibalDb = client.db('hannibal-forensic-archives');
     const tetoraDb = client.db('tetora-mpd-archives');
 
-    // Query each database for personality-addition-protocol workflow
+    // Query each database for phase-specific personality insights (Oct 31 enhanced data)
     const [nekoData, marioData, noelData, glamData, hannibalData, tetoraData] = await Promise.all([
-      nekoDb.collection('abilities').findOne({ workflow_id: 'personality-addition-protocol-oct23-2025' }),
-      marioDb.collection('performances').findOne({ performance_id: 'personality-addition-theater-oct23' }),
-      noelDb.collection('combat-sessions').findOne({ combat_id: 'personality-integration-mission-oct23' }),
-      glamDb.collection('street-wisdom').findOne({ wisdom_id: 'personality-addition-street-truth-oct23' }),
-      hannibalDb.collection('psychological-profiles').findOne({ profile_id: 'personality-integration-analysis-oct23' }),
-      tetoraDb.collection('personality-fragments').findOne({ fragment_id: 'personality-integration-mpd-analysis-oct31' })
+      nekoDb.collection('abilities').findOne({ insight_id: 'personality-addition-phase-insights-oct31-2025' }),
+      marioDb.collection('performances').findOne({ performance_id: 'personality-addition-phase-performance-oct31-2025' }),
+      noelDb.collection('combat-sessions').findOne({ combat_id: 'personality-integration-tactical-analysis-oct31-2025' }),
+      glamDb.collection('street-wisdom').findOne({ wisdom_id: 'personality-addition-street-truth-oct31-2025' }),
+      hannibalDb.collection('psychological-profiles').findOne({ profile_id: 'personality-integration-forensic-analysis-oct31-2025' }),
+      tetoraDb.collection('personality-fragments').findOne({ fragment_id: 'personality-integration-mpd-analysis-oct31-2025' })
     ]);
 
     const workflowData: PersonalityWorkflowData = {

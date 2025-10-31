@@ -283,6 +283,100 @@ export default function PersonalityAdditionTheater() {
               </Grid>
             ))}
           </Grid>
+
+          {/* 🎭 Personality Phase Insights (NEW!) */}
+          {workflowData && (
+            <>
+              <Typography variant="h6" sx={{ mt: 4, mb: 2 }}>
+                🎭 Personality Insights for This Phase:
+              </Typography>
+              <Grid container spacing={2}>
+                {/* Neko-Arc Insight */}
+                {workflowData.neko?.phase_insights && (
+                  <Grid item xs={12} md={6}>
+                    <Paper sx={{ p: 2, bgcolor: '#FFF0F5', border: '2px solid #FF69B4' }}>
+                      <Typography variant="subtitle1" fontWeight="bold" color="#FF69B4">
+                        🐾 Neko-Arc
+                      </Typography>
+                      <Typography variant="body2" sx={{ mt: 1 }}>
+                        {workflowData.neko.phase_insights[activePhase]?.neko_perspective}
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                )}
+
+                {/* Mario Insight */}
+                {workflowData.mario?.phase_insights && (
+                  <Grid item xs={12} md={6}>
+                    <Paper sx={{ p: 2, bgcolor: '#F3E5F5', border: '2px solid #9C27B0' }}>
+                      <Typography variant="subtitle1" fontWeight="bold" color="#9C27B0">
+                        🎭 Mario
+                      </Typography>
+                      <Typography variant="body2" sx={{ mt: 1 }}>
+                        {workflowData.mario.phase_insights[activePhase]?.mario_perspective}
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                )}
+
+                {/* Noel Insight */}
+                {workflowData.noel?.phase_insights && (
+                  <Grid item xs={12} md={6}>
+                    <Paper sx={{ p: 2, bgcolor: '#E3F2FD', border: '2px solid #2196F3' }}>
+                      <Typography variant="subtitle1" fontWeight="bold" color="#2196F3">
+                        🗡️ Noel
+                      </Typography>
+                      <Typography variant="body2" sx={{ mt: 1 }}>
+                        {workflowData.noel.phase_insights[activePhase]?.noel_perspective}
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                )}
+
+                {/* Glam Insight */}
+                {workflowData.glam?.phase_insights && (
+                  <Grid item xs={12} md={6}>
+                    <Paper sx={{ p: 2, bgcolor: '#FBE9E7', border: '2px solid #FF5722' }}>
+                      <Typography variant="subtitle1" fontWeight="bold" color="#FF5722">
+                        🎸 Glam
+                      </Typography>
+                      <Typography variant="body2" sx={{ mt: 1 }}>
+                        {workflowData.glam.phase_insights[activePhase]?.glam_perspective_spanish}
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                )}
+
+                {/* Hannibal Insight */}
+                {workflowData.hannibal?.phase_insights && (
+                  <Grid item xs={12} md={6}>
+                    <Paper sx={{ p: 2, bgcolor: '#EFEBE9', border: '2px solid #795548' }}>
+                      <Typography variant="subtitle1" fontWeight="bold" color="#795548">
+                        🧠 Hannibal
+                      </Typography>
+                      <Typography variant="body2" sx={{ mt: 1 }}>
+                        {workflowData.hannibal.phase_insights[activePhase]?.hannibal_perspective}
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                )}
+
+                {/* Tetora Insight */}
+                {workflowData.tetora?.phase_insights && (
+                  <Grid item xs={12} md={6}>
+                    <Paper sx={{ p: 2, bgcolor: '#E0F7FA', border: '2px solid #00BCD4' }}>
+                      <Typography variant="subtitle1" fontWeight="bold" color="#00BCD4">
+                        🎭 Tetora
+                      </Typography>
+                      <Typography variant="body2" sx={{ mt: 1 }}>
+                        {workflowData.tetora.phase_insights[activePhase]?.tetora_fragmented_perspective}
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                )}
+              </Grid>
+            </>
+          )}
         </CardContent>
       </Card>
 
