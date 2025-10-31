@@ -7,7 +7,8 @@ import './Drawer.css';
 const menuItems = [
   { path: '/confessions', icon: '📝', label: 'Confessions Blog' },
   { path: '/dina', icon: '📚', label: 'DINA Documentation' },
-  { path: '/video', icon: '🎬', label: 'Video Maker & Personalities' },
+  { path: '/neko-tv', icon: '🎬', label: 'Neko TV Arc - DINA Family Tree' },
+  { path: '/video', icon: '🎨', label: 'Video Maker & Personalities' },
   { path: '/youtube-generator', icon: '🎥', label: 'YouTube Video Generator' },
   { path: '/youtube', icon: '📺', label: 'DINA Video Playlist' },
   { path: '/rag', icon: '🗄️', label: 'RAG System' }

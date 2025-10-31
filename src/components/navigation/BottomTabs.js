@@ -7,6 +7,7 @@ import './BottomTabs.css';
 const tabs = [
   { path: '/', icon: '🏠', label: 'Home' },
   { path: '/threats', icon: '🎯', label: 'Threats' },
+  { path: '/neko-tv', icon: '🎬', label: 'Neko TV' },
   { path: '/valech', icon: '📊', label: 'Analytics' },
   { path: '/abilities', icon: '⚡', label: 'Actions' }
 ];
