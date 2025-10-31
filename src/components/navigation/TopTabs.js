@@ -14,6 +14,7 @@ const topTabs = [
   { path: '/operations', icon: '⚡', label: 'Operations' },
   { path: '/family-tracker', icon: '💀', label: 'Family Tracker' },
   { path: '/dina', icon: '📖', label: 'DINA' },
+  { path: '/elvira-chanco', icon: '🚨', label: 'Elvira Chanco' },
   { path: '/neko-tv', icon: '🎬', label: 'Neko TV Arc' },
   { path: '/valech', icon: '📊', label: 'Analytics' },
   { path: '/abilities', icon: '🎭', label: 'Abilities' },
