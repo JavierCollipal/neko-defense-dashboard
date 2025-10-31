@@ -13,12 +13,12 @@ export default function NekoTVPage() {
       try {
         // Fetch DINA agents
         const agentsResponse = await fetch('/api/dina-agents');
-        const agentsData = await agentsResponse.json();
+        const agentsData = await agentsResponse.json() as any;
         setAgents(agentsData.data || agentsData);
 
         // Fetch brigade structure
         const brigadesResponse = await fetch('/api/dina-brigades');
-        const brigadesData = await brigadesResponse.json();
+        const brigadesData = await brigadesResponse.json() as any;
         setBrigades(brigadesData.data || brigadesData);
 
         setLoading(false);
