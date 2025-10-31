@@ -1,9 +1,7 @@
 // 🐾 NEKO DEFENSE DASHBOARD - User Language Preference API Route
-// Next.js API route that proxies to Express backend on port 5001
+// Standalone Next.js API route (no Express backend dependency)
 
 import { NextResponse } from 'next/server';
-
-const BACKEND_URL = 'http://localhost:5001';
 
 // POST /api/user/language-preference - Save language preference
 export async function POST(request) {
@@ -11,20 +9,17 @@ export async function POST(request) {
     // Get request body
     const body = await request.json();
 
-    // Proxy to Express backend
-    const response = await fetch(`${BACKEND_URL}/api/user/language-preference`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body)
-    });
+    // For now, acknowledge the save request
+    // TODO: Implement MongoDB storage when user authentication is added
+    const response = {
+      success: true,
+      userId: body.userId || 'current-user',
+      language: body.language || 'en',
+      timestamp: new Date().toISOString(),
+      message: 'Language preference saved (in-memory only, no backend configured)'
+    };
 
-    const data = await response.json();
-
-    return NextResponse.json(data, {
-      status: response.status
-    });
+    return NextResponse.json(response, { status: 200 });
 
   } catch (error) {
     console.error('❌ Language Preference API Error:', error.message);

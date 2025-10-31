@@ -1,28 +1,24 @@
 // 🐾 NEKO DEFENSE DASHBOARD - Get User Language Preference API Route
-// Next.js API route that proxies to Express backend on port 5001
+// Standalone Next.js API route (no Express backend dependency)
 
 import { NextResponse } from 'next/server';
-
-const BACKEND_URL = 'http://localhost:5001';
 
 // GET /api/user/language-preference/[userId] - Get language preference for user
 export async function GET(request, { params }) {
   try {
     const { userId } = params;
 
-    // Proxy to Express backend
-    const response = await fetch(`${BACKEND_URL}/api/user/language-preference/${userId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    });
+    // For now, return a default language preference
+    // TODO: Implement MongoDB storage when user authentication is added
+    const defaultPreference = {
+      success: true,
+      userId: userId,
+      language: 'en', // Default to English
+      timestamp: new Date().toISOString(),
+      message: 'Default language preference (no backend configured)'
+    };
 
-    const data = await response.json();
-
-    return NextResponse.json(data, {
-      status: response.status
-    });
+    return NextResponse.json(defaultPreference, { status: 200 });
 
   } catch (error) {
     console.error('❌ Get Language Preference API Error:', error.message);
