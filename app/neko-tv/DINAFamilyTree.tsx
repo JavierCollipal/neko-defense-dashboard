@@ -132,10 +132,24 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
     // Agent nodes (Level 3) - excluding Contreras
     const otherAgents = agents.filter(a => a.agentId !== 'contreras-manuel');
 
-    otherAgents.forEach((agent, index) => {
-      const agentId = `agent-${agent.agentId}`;
+    // Group agents by category for better layout
+    const seniorAgents = otherAgents.filter(a =>
+      a.role.includes('Second-in-Command') ||
+      a.role.includes('Operations Chief') ||
+      a.role.includes('Operations Officer')
+    );
+    const villaGrimaldiAgents = otherAgents.filter(a =>
+      a.role.includes('Villa Grimaldi') &&
+      !seniorAgents.includes(a)
+    );
+    const otherDINAAgents = otherAgents.filter(a =>
+      !seniorAgents.includes(a) &&
+      !villaGrimaldiAgents.includes(a)
+    );
 
-      // Determine status color
+    // Layout senior agents (row 1)
+    seniorAgents.forEach((agent, index) => {
+      const agentId = `agent-${agent.agentId}`;
       let statusColor = 'from-gray-600 to-gray-800 border-gray-400';
       if (agent.status.includes('CONVICTED')) {
         statusColor = 'from-yellow-600 to-yellow-800 border-yellow-400';
@@ -165,19 +179,115 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
             </div>
           ),
         },
-        position: { x: 100 + (index * 280), y: 500 },
+        position: { x: 200 + (index * 350), y: 500 },
         targetPosition: Position.Top,
       });
 
-      // Try to connect agent to their brigade
-      // For now, connect to first matching brigade or directly to Contreras
-      let connected = false;
+      // Connect senior agents directly to Contreras
+      edges.push({
+        id: `contreras-${agentId}`,
+        source: 'contreras',
+        target: agentId,
+        type: 'smoothstep',
+        animated: true,
+        style: { stroke: '#ef4444', strokeWidth: 2 },
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: '#ef4444',
+        },
+      });
+    });
 
+    // Layout Villa Grimaldi agents (row 2)
+    villaGrimaldiAgents.forEach((agent, index) => {
+      const agentId = `agent-${agent.agentId}`;
+      let statusColor = 'from-gray-600 to-gray-800 border-gray-400';
+      if (agent.status.includes('CONVICTED')) {
+        statusColor = 'from-yellow-600 to-yellow-800 border-yellow-400';
+      } else if (agent.status.includes('NEVER PROSECUTED')) {
+        statusColor = 'from-green-600 to-green-800 border-green-400';
+      }
+
+      nodes.push({
+        id: agentId,
+        type: 'output',
+        data: {
+          label: (
+            <div className={`px-3 py-2 bg-gradient-to-br ${statusColor} rounded-lg border-2 shadow-xl hover:shadow-2xl transition-all hover:scale-105`}>
+              <div className="text-white font-semibold text-xs">{agent.fullName}</div>
+              {agent.codename && (
+                <div className="text-gray-200 text-xs italic">"{agent.codename}"</div>
+              )}
+              <div className="text-gray-300 text-xs mt-1">🏛️ Villa Grimaldi</div>
+              <div className="text-xs mt-1 font-semibold">
+                {agent.status.includes('CONVICTED') && '⚖️ CONVICTED'}
+                {agent.status.includes('NEVER PROSECUTED') && '🔓 UNPROSECUTED'}
+                {agent.status.includes('DECEASED') && ' 💀'}
+              </div>
+            </div>
+          ),
+        },
+        position: { x: 100 + (index * 250), y: 700 },
+        targetPosition: Position.Top,
+      });
+
+      // Connect to Contreras
+      edges.push({
+        id: `contreras-${agentId}`,
+        source: 'contreras',
+        target: agentId,
+        type: 'smoothstep',
+        animated: false,
+        style: { stroke: '#8b5cf6', strokeWidth: 1 },
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: '#8b5cf6',
+        },
+      });
+    });
+
+    // Layout other DINA agents (row 3)
+    otherDINAAgents.forEach((agent, index) => {
+      const agentId = `agent-${agent.agentId}`;
+      let statusColor = 'from-gray-600 to-gray-800 border-gray-400';
+      if (agent.status.includes('CONVICTED')) {
+        statusColor = 'from-yellow-600 to-yellow-800 border-yellow-400';
+      } else if (agent.status.includes('AT LARGE')) {
+        statusColor = 'from-red-600 to-red-800 border-red-400';
+      } else if (agent.status.includes('NEVER PROSECUTED')) {
+        statusColor = 'from-green-600 to-green-800 border-green-400';
+      }
+
+      nodes.push({
+        id: agentId,
+        type: 'output',
+        data: {
+          label: (
+            <div className={`px-3 py-2 bg-gradient-to-br ${statusColor} rounded-lg border-2 shadow-xl hover:shadow-2xl transition-all hover:scale-105`}>
+              <div className="text-white font-semibold text-xs">{agent.fullName}</div>
+              {agent.codename && (
+                <div className="text-gray-200 text-xs italic">"{agent.codename}"</div>
+              )}
+              <div className="text-gray-300 text-xs mt-1">{agent.role}</div>
+              <div className="text-xs mt-1 font-semibold">
+                {agent.status.includes('CONVICTED') && '⚖️ CONVICTED'}
+                {agent.status.includes('AT LARGE') && '🚨 AT LARGE'}
+                {agent.status.includes('NEVER PROSECUTED') && '🔓 UNPROSECUTED'}
+                {agent.status.includes('DECEASED') && ' 💀'}
+              </div>
+            </div>
+          ),
+        },
+        position: { x: 150 + (index * 280), y: 900 },
+        targetPosition: Position.Top,
+      });
+
+      // Try to connect to matching brigade
+      let connected = false;
       if (agent.organization && agent.organization.length > 0) {
-        // Try to find matching brigade
         const matchingBrigade = brigadesFiltered.find(b =>
-          b.name.includes('Lautaro') && agent.fullName.includes('Krassnoff') ||
-          b.name.includes('Lautaro') && agent.fullName.includes('Rivas')
+          (b.name.includes('Lautaro') && agent.fullName.includes('Rivas')) ||
+          (b.name.includes('Caupolicán') && agent.fullName.includes('Krassnoff'))
         );
 
         if (matchingBrigade) {
@@ -197,7 +307,6 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
         }
       }
 
-      // If no brigade connection, connect directly to Contreras
       if (!connected) {
         edges.push({
           id: `contreras-${agentId}`,
@@ -226,7 +335,7 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
   }, []);
 
   return (
-    <div className="w-full h-[800px] bg-gradient-to-br from-gray-900 via-purple-900/20 to-indigo-900/20 rounded-xl border border-cyan-500/30">
+    <div className="w-full h-[1100px] bg-gradient-to-br from-gray-900 via-purple-900/20 to-indigo-900/20 rounded-xl border border-cyan-500/30">
       <ReactFlow
         nodes={nodes}
         edges={edges}
