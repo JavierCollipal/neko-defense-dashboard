@@ -499,7 +499,8 @@ async function main() {
 }
 
 // Export for use as module
-export { TerminalErrorCollector, TerminalError, ErrorPattern };
+export { TerminalErrorCollector };
+export type { TerminalError, ErrorPattern };
 
 // Run if executed directly
 if (require.main === module) {

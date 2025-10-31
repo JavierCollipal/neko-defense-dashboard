@@ -16,7 +16,8 @@
     "cypress:headless": "cypress run",
     "e2e": "start-server-and-test dev http://localhost:3001 cypress",
     "e2e:headless": "start-server-and-test dev http://localhost:3001 cypress:headless",
-    "test:e2e": "npm run e2e:headless"
+    "test:e2e": "npm run e2e:headless",
+    "prepare": "husky"
   },
   "dependencies": {
     "@apollo/client": "^3.14.0",
@@ -60,7 +61,9 @@
     "cypress": "^15.4.0",
     "cypress-axe": "^1.7.0",
     "cypress-real-events": "^1.15.0",
+    "husky": "^9.1.7",
     "jest-canvas-mock": "^2.5.2",
+    "lint-staged": "^16.2.6",
     "puppeteer": "^24.25.0",
     "start-server-and-test": "^2.1.2",
     "typescript": "^5.9.3"
