@@ -1,17 +1,19 @@
-# Puppeteer test files - not needed in production
-puppeteer-test-valech.ts
-puppeteer-verify-valech.ts
-puppeteer-translation-e2e.ts
+# Exclude Puppeteer test files from Vercel build
+# These files contain browser-specific code that shouldn't be compiled server-side
 
-# MongoDB documentation scripts
-save-*.ts
+puppeteer-*.ts
+puppeteer-*.js
+**/puppeteer-*.ts
+**/puppeteer-*.js
 
-# Testing screenshots
-/tmp/*.png
+# Test directories
+__tests__/
+**/__tests__/
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
 
-# MongoDB scripts
-scripts/
-
-# Documentation
-*.md
-!README.md
+# Development files
+.env.local
+.env.*.local

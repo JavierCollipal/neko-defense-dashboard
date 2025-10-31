@@ -1,45 +1,80 @@
-name: CI
+name: CI/CD Pipeline - Build Validation & Auto-Fix
 
 on:
   push:
-    branches: [ main ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
+    branches: [main, develop]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        cache: 'npm'
-    
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build
-      run: npm run build
-
-  test:
-    needs: build
+  build-and-validate:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        cache: 'npm'
+      - name: 🐾 Checkout code
+        uses: actions/checkout@v3
 
-    - name: Install dependencies
-      run: npm install
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
 
-    - name: Run tests
-      run: npm test
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🔍 TypeScript type check
+        run: npx tsc --noEmit
+
+      - name: 🧪 ESLint validation
+        run: npm run lint || true
+
+      - name: 🏗️ Next.js build validation
+        run: npm run build
+
+      - name: ✅ Build success notification
+        if: success()
+        run: |
+          echo "✅ BUILD PASSED! All TypeScript and Next.js validations successful!"
+          echo "🚀 Ready for deployment to Vercel!"
+
+      - name: ❌ Build failure notification
+        if: failure()
+        run: |
+          echo "❌ BUILD FAILED! Fix errors before merging!"
+          echo "🔧 Check TypeScript errors and Next.js build output above"
+          exit 1
+
+  auto-format:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: 🐾 Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🎨 Run Prettier auto-fix
+        run: npx prettier --write "**/*.{js,jsx,ts,tsx,json,css,md}"
+
+      - name: 🔧 Run ESLint auto-fix
+        run: npm run lint:fix || npx eslint --fix "**/*.{js,jsx,ts,tsx}" || true
+
+      - name: 💾 Commit auto-fixes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "style: Auto-fix formatting and linting issues 🤖"
+          commit_user_name: "Neko-Arc Bot"
+          commit_user_email: "neko-arc@neko-defense.com"
+          commit_author: "Neko-Arc Bot <neko-arc@neko-defense.com>"

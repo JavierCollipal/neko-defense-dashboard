@@ -3,23 +3,58 @@
 import { useState, useEffect } from 'react';
 import DINAFamilyTree from './DINAFamilyTree';
 
+interface DINAAgent {
+  agentId: string;
+  fullName: string;
+  codename?: string;
+  alias?: string;
+  role: string;
+  rank?: string;
+  organization: string[];
+  status: string;
+  threatLevel: string;
+  crimesAccused: string[];
+  notableOperations?: string[];
+  legalStatus: {
+    convicted: boolean;
+    currentStatus: string;
+    sentences?: string;
+  };
+}
+
+interface Brigade {
+  id: string;
+  name: string;
+  specialty?: string;
+  commanders?: any[];
+  operations?: any;
+  _type?: string;
+}
+
+interface APIResponse {
+  success: boolean;
+  data: any[];
+  count?: number;
+  message?: string;
+}
+
 export default function NekoTVPage() {
-  const [loading, setLoading] = useState(true);
-  const [agents, setAgents] = useState([]);
-  const [brigades, setBrigades] = useState([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [agents, setAgents] = useState<DINAAgent[]>([]);
+  const [brigades, setBrigades] = useState<Brigade[]>([]);
 
   useEffect(() => {
     async function fetchDINAData() {
       try {
         // Fetch DINA agents
         const agentsResponse = await fetch('/api/dina-agents');
-        const agentsData = await agentsResponse.json() as any;
-        setAgents(agentsData.data || agentsData);
+        const agentsData: APIResponse = await agentsResponse.json();
+        setAgents((agentsData.data || agentsData) as DINAAgent[]);
 
         // Fetch brigade structure
         const brigadesResponse = await fetch('/api/dina-brigades');
-        const brigadesData = await brigadesResponse.json() as any;
-        setBrigades(brigadesData.data || brigadesData);
+        const brigadesData: APIResponse = await brigadesResponse.json();
+        setBrigades((brigadesData.data || brigadesData) as Brigade[]);
 
         setLoading(false);
       } catch (error) {
