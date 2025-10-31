@@ -3,6 +3,9 @@ import { NextResponse } from 'next/server';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
+// Force dynamic rendering (prevents build errors when MONGODB_URI not set)
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   if (!MONGODB_URI) {
     return NextResponse.json(

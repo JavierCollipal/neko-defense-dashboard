@@ -22,10 +22,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { MongoClient } from 'mongodb';
 
-const MONGODB_URI = process.env.MONGODB_URI!;
+// Force dynamic rendering (no static generation during build)
+export const dynamic = 'force-dynamic';
+
+const MONGODB_URI = process.env.MONGODB_URI;
 const DATABASE_NAME = 'neko-defense-system';
 
 export async function GET(request: NextRequest) {
+  // Check if MongoDB URI is configured
+  if (!MONGODB_URI) {
+    console.log('[Valech Stats] MONGODB_URI not configured - returning demo mode');
+    return NextResponse.json({
+      success: false,
+      error: 'Database not configured',
+      code: 'MONGODB_NOT_CONFIGURED',
+      message: 'MongoDB URI not set in environment variables'
+    }, { status: 503 });
+  }
+
   const client = new MongoClient(MONGODB_URI);
   const startTime = Date.now();
 

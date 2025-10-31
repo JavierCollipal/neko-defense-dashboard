@@ -42,6 +42,9 @@ const COLLECTION_NAME = 'valech_victims';
  *   - sortBy: string field name (default: fullName)
  *   - sortOrder: asc | desc (default: asc)
  */
+// Force dynamic rendering (prevents build errors when MONGODB_URI not set)
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   const client = new MongoClient(MONGODB_URI);
   const startTime = Date.now();

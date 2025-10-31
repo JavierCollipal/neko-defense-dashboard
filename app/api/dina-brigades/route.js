@@ -7,6 +7,9 @@ import { NextResponse } from 'next/server';
 const MONGODB_URI = process.env.MONGODB_URI;
 
 // GET /api/dina-brigades
+// Force dynamic rendering (prevents build errors when MONGODB_URI not set)
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
   // Return mock data if MongoDB URI not configured
   if (!MONGODB_URI) {

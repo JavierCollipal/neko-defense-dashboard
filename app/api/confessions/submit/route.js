@@ -12,6 +12,9 @@ if (!MONGODB_URI) {
 }
 
 // POST /api/confessions/submit
+// Force dynamic rendering (prevents build errors when MONGODB_URI not set)
+export const dynamic = 'force-dynamic';
+
 export async function POST(request) {
   // Return demo success if MongoDB URI not configured
   if (!MONGODB_URI) {

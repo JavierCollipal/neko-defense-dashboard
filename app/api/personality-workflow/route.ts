@@ -21,6 +21,9 @@ interface PersonalityWorkflowData {
 }
 
 // GET /api/personality-workflow
+// Force dynamic rendering (prevents build errors when MONGODB_URI not set)
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: Request) {
   if (!MONGODB_URI) {
     return NextResponse.json({

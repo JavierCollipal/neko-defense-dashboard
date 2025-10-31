@@ -12,6 +12,9 @@ if (!MONGODB_URI) {
 }
 
 // GET /api/confessions?category=all
+// Force dynamic rendering (prevents build errors when MONGODB_URI not set)
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
   // Parse query parameters
   const { searchParams } = new URL(request.url);

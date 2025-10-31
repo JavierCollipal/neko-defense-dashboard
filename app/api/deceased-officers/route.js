@@ -12,6 +12,9 @@ if (!MONGODB_URI) {
 }
 
 // GET /api/deceased-officers
+// Force dynamic rendering (prevents build errors when MONGODB_URI not set)
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
   // Return empty array if MongoDB URI not configured (dev/demo mode)
   if (!MONGODB_URI) {
