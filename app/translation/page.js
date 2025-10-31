@@ -57,11 +57,11 @@ export default function TranslationDashboard() {
   };
 
   return (
-    <div className="translation-dashboard min-h-screen p-6 bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
+    <div className="translation-dashboard min-h-screen p-4 sm:p-6 bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
       <div className="max-w-4xl mx-auto">
         {/* Animated Header with Neko TV Style */}
         <div className="text-center mb-8 animate-fadeIn">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent mb-2">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent mb-2">
             🌍✨ {t('translation.dashboard.title', 'Translation Management Dashboard')} ✨🐾
           </h1>
           <p className="text-gray-400">Powered by AI • MongoDB Atlas • Neko Arc Technology</p>
@@ -73,7 +73,7 @@ export default function TranslationDashboard() {
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
               <span className="animate-pulse">📊</span> Current Language Status
             </h2>
-            <div className="grid grid-cols-3 gap-4 text-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-center">
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
                 <p className="text-gray-400 text-sm mb-1">Current Language</p>
                 <p className="text-blue-400 font-bold text-xl">{currentLanguage.toUpperCase()}</p>
