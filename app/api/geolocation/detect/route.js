@@ -3,6 +3,9 @@
 
 import { NextResponse } from 'next/server';
 
+// Force dynamic rendering for this route (requires request headers)
+export const dynamic = 'force-dynamic';
+
 // Use a reliable, free geolocation service
 const GEOLOCATION_API = 'http://ip-api.com/json';
 
