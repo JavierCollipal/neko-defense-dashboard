@@ -1,8 +1,11 @@
 // 🐾⚖️🌍 DINA DOCUMENTATION INTERNATIONAL - COMPREHENSIVE VERSION 🌍⚖️🐾
 // Research updated October 2025 - Full comprehensive data from MongoDB
 import React, { useState, useEffect } from 'react';
+import { ApolloProvider } from '@apollo/client';
 import GlobalThreatMap from './GlobalThreatMap';
 import DinaTimeline from './DinaTimeline';
+import DinaArmyList from './DinaArmyList';
+import apolloClient from '../lib/apolloClient';
 import '../styles/DinaDocumentationInternational.css';
 
 // 🎯 API URL - Use Next.js API routes (works in dev AND production!)
@@ -212,6 +215,12 @@ const DinaDocumentationInternational = () => {
           onClick={() => changeView('agents')}
         >
           👤 ALL AGENTS ({perpetrators.length})
+        </button>
+        <button
+          className={`nav-button ${viewMode === '2008-army-list' ? 'active' : ''}`}
+          onClick={() => changeView('2008-army-list')}
+        >
+          📋 2008 ARMY LIST (1,097)
         </button>
       </div>
 
@@ -849,6 +858,13 @@ const DinaDocumentationInternational = () => {
               </div>
             </div>
           </div>
+        )}
+
+        {/* 2008 ARMY LIST VIEW - GraphQL Integration */}
+        {viewMode === '2008-army-list' && (
+          <ApolloProvider client={apolloClient}>
+            <DinaArmyList />
+          </ApolloProvider>
         )}
       </div>
 
