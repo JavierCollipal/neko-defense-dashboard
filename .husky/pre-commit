@@ -1,30 +1,16 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
 
-echo "🔍 PRE-COMMIT VALIDATION INITIATED..."
-echo ""
+# 🐾⚡ NEKO DEFENSE PRE-COMMIT HOOK ⚡🐾
+# Auto-fix ESLint errors in staged files only
 
-# Step 1: TypeScript type checking
-echo "1️⃣ Running TypeScript type check..."
-npx tsc --noEmit
+echo "🐾 Running lint-staged to fix staged files, nyaa~!"
+npx lint-staged
+
 if [ $? -ne 0 ]; then
-  echo "❌ TypeScript errors detected! Commit blocked."
-  echo "⚠️ Fix TypeScript errors before committing."
+  echo "❌ Some lint errors couldn't be auto-fixed!"
+  echo "Please fix the remaining errors and try again, desu~!"
   exit 1
 fi
-echo "✅ TypeScript type check passed!"
-echo ""
 
-# Step 2: Build verification
-echo "2️⃣ Running Next.js build..."
-npm run build
-if [ $? -ne 0 ]; then
-  echo "❌ Build failed! Commit blocked."
-  echo "⚠️ Fix build errors before committing."
-  exit 1
-fi
-echo "✅ Build successful!"
-echo ""
-
-echo "🎉 ALL PRE-COMMIT CHECKS PASSED!"
-echo "✅ Proceeding with commit..."
+echo "✅ All staged files linted successfully, nyaa~!"
