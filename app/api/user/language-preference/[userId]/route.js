@@ -6,7 +6,9 @@ import { NextResponse } from 'next/server';
 // GET /api/user/language-preference/[userId] - Get language preference for user
 export async function GET(request, { params }) {
   try {
-    const { userId } = params;
+    // Next.js 14+ requires awaiting params
+    const resolvedParams = await params;
+    const { userId } = resolvedParams;
 
     // For now, return a default language preference
     // TODO: Implement MongoDB storage when user authentication is added

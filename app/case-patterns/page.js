@@ -50,10 +50,53 @@ export default function CasePatternsPage() {
           }}>
             <h3>{pattern.title || 'Untitled Pattern'}</h3>
             <p><strong>Category:</strong> {pattern.category || 'Unknown'}</p>
-            <p><strong>Problem:</strong> {typeof pattern.problem === 'object' ? JSON.stringify(pattern.problem) : (pattern.problem || 'No description')}</p>
-            <p><strong>Solution:</strong> {typeof pattern.solution === 'object' ? JSON.stringify(pattern.solution) : (pattern.solution || 'No solution')}</p>
-            <p><strong>Reusability:</strong> {pattern.reusability || 'Unknown'}</p>
-            {pattern.difficulty && <p><strong>Difficulty:</strong> {pattern.difficulty}</p>}
+
+            {/* Problem */}
+            <div style={{ marginTop: '1rem' }}>
+              <strong>Problem:</strong>
+              <p style={{ marginLeft: '1rem' }}>
+                {typeof pattern.problem === 'string' ? pattern.problem : JSON.stringify(pattern.problem)}
+              </p>
+            </div>
+
+            {/* Solution */}
+            {pattern.solution && (
+              <div style={{ marginTop: '1rem' }}>
+                <strong>Solution:</strong>
+                {typeof pattern.solution === 'object' ? (
+                  <div style={{ marginLeft: '1rem' }}>
+                    {pattern.solution.approach && <p><em>Approach:</em> {pattern.solution.approach}</p>}
+                    {pattern.solution.steps && Array.isArray(pattern.solution.steps) && (
+                      <div>
+                        <em>Steps:</em>
+                        <ol>
+                          {pattern.solution.steps.map((step, i) => (
+                            <li key={i}>{String(step)}</li>
+                          ))}
+                        </ol>
+                      </div>
+                    )}
+                    {pattern.solution.outcome && <p><em>Outcome:</em> {pattern.solution.outcome}</p>}
+                  </div>
+                ) : (
+                  <p style={{ marginLeft: '1rem' }}>{String(pattern.solution)}</p>
+                )}
+              </div>
+            )}
+
+            {/* Tags */}
+            {pattern.tags && Array.isArray(pattern.tags) && pattern.tags.length > 0 && (
+              <div style={{ marginTop: '1rem' }}>
+                <strong>Tags:</strong> {pattern.tags.map(tag => String(tag)).join(', ')}
+              </div>
+            )}
+
+            {/* Metadata */}
+            <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              {pattern.difficulty && <span><strong>Difficulty:</strong> {pattern.difficulty}</span>}
+              {pattern.reusability && <span><strong>Reusability:</strong> {pattern.reusability}</span>}
+              {pattern.estimatedTime && <span><strong>Time:</strong> {pattern.estimatedTime}</span>}
+            </div>
           </div>
         ))}
       </div>
