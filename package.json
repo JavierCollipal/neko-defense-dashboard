@@ -25,6 +25,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.4",
     "@mui/material": "^7.3.4",
+    "@types/recharts": "^2.0.1",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "@vitalets/google-translate-api": "^9.2.1",
@@ -45,7 +46,8 @@
     "react-dom": "^18.2.0",
     "react-i18next": "^16.0.1",
     "react-responsive": "^10.0.1",
-    "reactflow": "^11.11.4"
+    "reactflow": "^11.11.4",
+    "recharts": "^3.3.0"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.14.7",
