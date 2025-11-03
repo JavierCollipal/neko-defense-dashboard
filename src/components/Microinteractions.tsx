@@ -50,7 +50,7 @@ export function Ripple({ children, color = 'rgba(255, 255, 255, 0.5)', duration 
   const [ripples, setRipples] = useState<Array<{ x: number; y: number; id: number }>>([]);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
+    const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const id = Date.now();
