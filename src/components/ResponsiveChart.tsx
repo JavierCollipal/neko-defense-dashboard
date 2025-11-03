@@ -47,7 +47,7 @@ export function ResponsiveLineChart({
 
   // Gesture handlers
   const handleTouchStart = (e: React.TouchEvent) => {
-    if (!enableGestures) return;
+    if (!enableGestures) {return;}
 
     if (e.touches.length === 1) {
       setTouchStart({ x: e.touches[0].clientX, y: e.touches[0].clientY });
@@ -57,7 +57,7 @@ export function ResponsiveLineChart({
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!enableGestures) return;
+    if (!enableGestures) {return;}
 
     if (isPinching && e.touches.length === 2) {
       const distance = Math.hypot(
@@ -69,7 +69,7 @@ export function ResponsiveLineChart({
   };
 
   const handleTouchEnd = () => {
-    if (!enableGestures) return;
+    if (!enableGestures) {return;}
     setTouchStart(null);
     setIsPinching(false);
   };

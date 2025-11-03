@@ -10,7 +10,7 @@ export default function EvidencePage() {
     async function fetchEvidence() {
       try {
         const response = await fetch('/api/evidence-packages');
-        if (!response.ok) throw new Error('Failed to fetch evidence packages');
+        if (!response.ok) {throw new Error('Failed to fetch evidence packages');}
         const result = await response.json();
         setEvidence(result.data || []);
       } catch (err) {
@@ -22,19 +22,19 @@ export default function EvidencePage() {
     fetchEvidence();
   }, []);
 
-  if (loading) return (
+  if (loading) {return (
     <div style={{ padding: '2rem', textAlign: 'center' }}>
       <h1>📦 Evidence Packages</h1>
       <p>Loading evidence data...</p>
     </div>
-  );
+  );}
 
-  if (error) return (
+  if (error) {return (
     <div style={{ padding: '2rem', textAlign: 'center', color: 'red' }}>
       <h1>📦 Evidence Packages</h1>
       <p>Error: {error}</p>
     </div>
-  );
+  );}
 
   return (
     <div style={{ padding: '2rem' }}>

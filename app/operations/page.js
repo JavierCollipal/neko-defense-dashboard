@@ -10,7 +10,7 @@ export default function OperationsPage() {
     async function fetchOperations() {
       try {
         const response = await fetch('/api/ready-operations');
-        if (!response.ok) throw new Error('Failed to fetch ready operations');
+        if (!response.ok) {throw new Error('Failed to fetch ready operations');}
         const result = await response.json();
         setOperations(result.data || []);
       } catch (err) {
@@ -22,19 +22,19 @@ export default function OperationsPage() {
     fetchOperations();
   }, []);
 
-  if (loading) return (
+  if (loading) {return (
     <div style={{ padding: '2rem', textAlign: 'center' }}>
       <h1>⚡ Ready Operations</h1>
       <p>Loading queued operations...</p>
     </div>
-  );
+  );}
 
-  if (error) return (
+  if (error) {return (
     <div style={{ padding: '2rem', textAlign: 'center', color: 'red' }}>
       <h1>⚡ Ready Operations</h1>
       <p>Error: {error}</p>
     </div>
-  );
+  );}
 
   return (
     <div style={{ padding: '2rem' }}>

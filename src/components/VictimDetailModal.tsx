@@ -66,11 +66,11 @@ interface VictimDetailModalProps {
 }
 
 const VictimDetailModal: React.FC<VictimDetailModalProps> = ({ victim, open, onClose }) => {
-  if (!victim) return null;
+  if (!victim) {return null;}
 
   // Format date
   const formatDate = (date: string | Date | undefined): string => {
-    if (!date) return 'Unknown';
+    if (!date) {return 'Unknown';}
     try {
       return new Date(date).toLocaleDateString('es-CL', {
         year: 'numeric',
@@ -84,7 +84,7 @@ const VictimDetailModal: React.FC<VictimDetailModalProps> = ({ victim, open, onC
 
   // Calculate age at arrest
   const calculateAge = (birthDate: Date | string | undefined, arrestDate: Date | string | undefined): string => {
-    if (!birthDate || !arrestDate) return 'Unknown';
+    if (!birthDate || !arrestDate) {return 'Unknown';}
     try {
       const birth = new Date(birthDate);
       const arrest = new Date(arrestDate);

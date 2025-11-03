@@ -38,7 +38,7 @@ class PuppeteerErrorCollector {
   }
 
   async saveConsoleError(type, message, context = {}) {
-    if (!this.collection) return;
+    if (!this.collection) {return;}
 
     const errorDoc = {
       type: 'console_error',
@@ -60,7 +60,7 @@ class PuppeteerErrorCollector {
   }
 
   async saveJavaScriptError(error, context = {}) {
-    if (!this.collection) return;
+    if (!this.collection) {return;}
 
     const errorDoc = {
       type: 'javascript_error',
@@ -82,7 +82,7 @@ class PuppeteerErrorCollector {
   }
 
   async saveFailedRequest(status, url, context = {}) {
-    if (!this.collection) return;
+    if (!this.collection) {return;}
 
     const errorDoc = {
       type: 'failed_request',
@@ -104,7 +104,7 @@ class PuppeteerErrorCollector {
   }
 
   async createSessionSummary(metadata = {}) {
-    if (!this.collection) return;
+    if (!this.collection) {return;}
 
     const summary = {
       type: 'session_summary',

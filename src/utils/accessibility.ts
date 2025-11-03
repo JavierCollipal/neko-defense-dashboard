@@ -36,7 +36,7 @@ export function checkColorContrast(
  */
 function getLuminance(color: string): number {
   const rgb = hexToRgb(color);
-  if (!rgb) return 0;
+  if (!rgb) {return 0;}
 
   const [r, g, b] = [rgb.r, rgb.g, rgb.b].map(val => {
     val = val / 255;
@@ -80,8 +80,8 @@ export function generateAriaLabel(
   state?: string
 ): string {
   let label = element;
-  if (context) label += `, ${context}`;
-  if (state) label += `, ${state}`;
+  if (context) {label += `, ${context}`;}
+  if (state) {label += `, ${state}`;}
   return label;
 }
 
@@ -97,7 +97,7 @@ export function trapFocus(element: HTMLElement): () => void {
   const lastElement = focusableElements[focusableElements.length - 1];
 
   function handleTab(e: KeyboardEvent) {
-    if (e.key !== 'Tab') return;
+    if (e.key !== 'Tab') {return;}
 
     if (e.shiftKey && document.activeElement === firstElement) {
       e.preventDefault();

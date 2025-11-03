@@ -48,7 +48,7 @@ const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000,ht
 app.use(cors({
   origin: function(origin, callback) {
     // Allow requests with no origin (mobile apps, curl, Postman, etc)
-    if (!origin) return callback(null, true);
+    if (!origin) {return callback(null, true);}
 
     // Allow all trycloudflare.com tunnels (temporary testing)
     if (origin.includes('trycloudflare.com')) {
@@ -1045,7 +1045,7 @@ app.get('/api/dina/perpetrators', async (req, res) => {
     const userLang = getUserLanguage(req);
     console.log('🎯 [DINA API] Fetching DINA perpetrators, nyaa~ | Language:', userLang);
 
-    let perpetrators = await db.collection('dina_perpetrators')
+    const perpetrators = await db.collection('dina_perpetrators')
       .find({ id: { $exists: true } })
       .toArray();
 
@@ -1303,7 +1303,7 @@ app.get('/api/confessions', async (req, res) => {
     const limit = parseInt(req.query.limit) || 50;
     console.log('📖 [Confessions API] Fetching approved confessions, desu~');
 
-    let filter = { status: 'approved' };
+    const filter = { status: 'approved' };
     if (category && category !== 'all') {
       filter.category = category;
     }

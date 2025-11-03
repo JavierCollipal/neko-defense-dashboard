@@ -120,7 +120,7 @@ async function silentDashboardAudit() {
     { path: '/family-tracker', name: 'Family Tracker', fallback: '/' }
   ];
 
-  let totalRoutes = routes.length;
+  const totalRoutes = routes.length;
   let routesWithErrors = 0;
 
   for (let i = 0; i < routes.length; i++) {

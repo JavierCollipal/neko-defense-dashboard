@@ -49,7 +49,7 @@ export const useAutoTranslation = () => {
   }, []);
 
   const detectLocationAndSuggestLanguage = async () => {
-    if (isLoading) return;
+    if (isLoading) {return;}
 
     setIsLoading(true);
     console.log('🌍 Starting automatic location detection...');

@@ -26,11 +26,11 @@ async function scrapeDinaPage() {
   const page = await browser.newPage();
 
   page.on('console', msg => {
-    if (msg.type() === 'error') console.log(`❌ [ERROR]: ${msg.text()}`);
+    if (msg.type() === 'error') {console.log(`❌ [ERROR]: ${msg.text()}`);}
   });
 
   const outputDir = path.join(__dirname, 'puppeteer-screenshots');
-  if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
+  if (!fs.existsSync(outputDir)) {fs.mkdirSync(outputDir, { recursive: true });}
 
   try {
     console.log('📍 Navigating to /dina page...');

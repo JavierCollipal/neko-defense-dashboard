@@ -65,8 +65,8 @@ const TranslationDashboard = () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
-      if (language) params.append('language', language);
-      if (olderThan) params.append('olderThan', olderThan);
+      if (language) {params.append('language', language);}
+      if (olderThan) {params.append('olderThan', olderThan);}
 
       const response = await fetch(`/api/translate/cache/clear?${params}`, {
         method: 'DELETE'

@@ -40,10 +40,10 @@ function ValechDataViewer() {
       const centersData = await centersRes.json();
       const perpetratorsData = await perpetratorsRes.json();
 
-      if (victimsData.success) setVictims(victimsData.data);
-      if (statsData.success) setStats(statsData.data);
-      if (centersData.success) setDetentionCenters(centersData.data);
-      if (perpetratorsData.success) setPerpetrators(perpetratorsData.data);
+      if (victimsData.success) {setVictims(victimsData.data);}
+      if (statsData.success) {setStats(statsData.data);}
+      if (centersData.success) {setDetentionCenters(centersData.data);}
+      if (perpetratorsData.success) {setPerpetrators(perpetratorsData.data);}
 
       setLoading(false);
     } catch (error) {
@@ -59,10 +59,10 @@ function ValechDataViewer() {
       let url = `${API_URL}/valech/search/advanced?`;
       const params = [];
 
-      if (filters.search) params.push(`name=${encodeURIComponent(filters.search)}`);
-      if (filters.outcome) params.push(`outcome=${encodeURIComponent(filters.outcome)}`);
-      if (filters.detentionCenter) params.push(`detentionCenter=${encodeURIComponent(filters.detentionCenter)}`);
-      if (filters.perpetrator) params.push(`perpetrator=${encodeURIComponent(filters.perpetrator)}`);
+      if (filters.search) {params.push(`name=${encodeURIComponent(filters.search)}`);}
+      if (filters.outcome) {params.push(`outcome=${encodeURIComponent(filters.outcome)}`);}
+      if (filters.detentionCenter) {params.push(`detentionCenter=${encodeURIComponent(filters.detentionCenter)}`);}
+      if (filters.perpetrator) {params.push(`perpetrator=${encodeURIComponent(filters.perpetrator)}`);}
 
       url += params.join('&');
 
@@ -96,11 +96,11 @@ function ValechDataViewer() {
   };
 
   const getOutcomeColor = (outcome) => {
-    if (!outcome) return 'outcome-unknown';
-    if (outcome.includes('SURVIVED')) return 'outcome-survived';
-    if (outcome.includes('EXECUTED')) return 'outcome-executed';
-    if (outcome.includes('DISAPPEARED')) return 'outcome-disappeared';
-    if (outcome.includes('ASSASSINATED')) return 'outcome-assassinated';
+    if (!outcome) {return 'outcome-unknown';}
+    if (outcome.includes('SURVIVED')) {return 'outcome-survived';}
+    if (outcome.includes('EXECUTED')) {return 'outcome-executed';}
+    if (outcome.includes('DISAPPEARED')) {return 'outcome-disappeared';}
+    if (outcome.includes('ASSASSINATED')) {return 'outcome-assassinated';}
     return 'outcome-unknown';
   };
 

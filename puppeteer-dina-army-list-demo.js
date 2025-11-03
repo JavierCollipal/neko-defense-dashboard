@@ -91,7 +91,7 @@ async function demonstrateDINAArmyList() {
     await page.evaluate(() => {
       const buttons = Array.from(document.querySelectorAll('button'));
       const targetButton = buttons.find(btn => btn.textContent.includes('2008 ARMY LIST'));
-      if (targetButton) targetButton.click();
+      if (targetButton) {targetButton.click();}
     });
     
     await new Promise(resolve => setTimeout(resolve, 1500));

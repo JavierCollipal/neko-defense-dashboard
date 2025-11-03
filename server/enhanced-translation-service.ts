@@ -10,7 +10,7 @@ import { MongoClient, Db, Collection, ObjectId } from 'mongodb';
 
 interface TranslationProvider {
   name: string;
-  apiFunction: Function;
+  apiFunction: (...args: any[]) => any;
   priority: number;
   quality: number;
   costPerChar: number;
@@ -249,7 +249,7 @@ export class EnhancedTranslationService {
       }
 
       let bestResult: any = null;
-      let errors: string[] = [];
+      const errors: string[] = [];
 
       for (const provider of availableProviders) {
         try {
@@ -277,7 +277,7 @@ export class EnhancedTranslationService {
             }
 
             // If quality is high enough, stop trying other providers
-            if (quality.overallScore >= 85) break;
+            if (quality.overallScore >= 85) {break;}
           }
         } catch (error: any) {
           errors.push(`${provider!.name}: ${error.message}`);
@@ -349,7 +349,7 @@ export class EnhancedTranslationService {
       // Prepare all translation tasks
       for (const field of translatableFields) {
         const value = document[field];
-        if (!value) continue;
+        if (!value) {continue;}
 
         const context = `${collectionName}.${field}`;
 
@@ -483,7 +483,7 @@ export class EnhancedTranslationService {
 
   private applyTechnicalTerms(text: string, targetLang: string): string {
     const terms = TECHNICAL_TERM_DICTIONARY[targetLang];
-    if (!terms) return text;
+    if (!terms) {return text;}
 
     let processedText = text;
     for (const [english, translated] of Object.entries(terms)) {
@@ -620,7 +620,7 @@ export class EnhancedTranslationService {
     sourceLang: string = 'en',
     context?: string
   ): Promise<string[]> {
-    if (!Array.isArray(textArray)) return textArray;
+    if (!Array.isArray(textArray)) {return textArray;}
 
     const translations = await Promise.all(
       textArray.map(async (text) => {
@@ -638,7 +638,7 @@ export class EnhancedTranslationService {
     sourceLang: string = 'en',
     context?: string
   ): Promise<any> {
-    if (!obj || typeof obj !== 'object') return obj;
+    if (!obj || typeof obj !== 'object') {return obj;}
 
     const translated: any = {};
 
@@ -690,7 +690,7 @@ export class EnhancedTranslationService {
     const translated = { ...document };
 
     for (const [field, value] of Object.entries(translations)) {
-      if (field.endsWith('_updated_at')) continue;
+      if (field.endsWith('_updated_at')) {continue;}
       translated[field] = value;
     }
 

@@ -74,7 +74,7 @@ class CompressedErrorHandler {
     }
 
     // Return generic error type
-    if (error.name) return error.name.toUpperCase();
+    if (error.name) {return error.name.toUpperCase();}
     return 'UNKNOWN_ERROR';
   }
 

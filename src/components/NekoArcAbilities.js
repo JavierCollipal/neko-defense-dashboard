@@ -317,16 +317,16 @@ const NekoArcAbilities = () => {
     : abilities.filter(a => a.category === selectedCategory);
 
   const getPowerLevelColor = (level) => {
-    if (level >= 95) return '#ff00ff'; // MAXIMUM PINK
-    if (level >= 90) return '#ff0066'; // HOT PINK
-    if (level >= 85) return '#ff3399'; // MEDIUM PINK
+    if (level >= 95) {return '#ff00ff';} // MAXIMUM PINK
+    if (level >= 90) {return '#ff0066';} // HOT PINK
+    if (level >= 85) {return '#ff3399';} // MEDIUM PINK
     return '#ff66cc'; // SOFT PINK
   };
 
   const getPowerLevelLabel = (level) => {
-    if (level >= 95) return 'LEGENDARY';
-    if (level >= 90) return 'ULTIMATE';
-    if (level >= 85) return 'SUPREME';
+    if (level >= 95) {return 'LEGENDARY';}
+    if (level >= 90) {return 'ULTIMATE';}
+    if (level >= 85) {return 'SUPREME';}
     return 'ELITE';
   };
 

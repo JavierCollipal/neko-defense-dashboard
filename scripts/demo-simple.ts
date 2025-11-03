@@ -58,7 +58,7 @@ class SimpleDashboardDemo {
   }
 
   private async captureScreenshot(routeName: string): Promise<void> {
-    if (!this.page) return;
+    if (!this.page) {return;}
 
     const filename = routeName.replace(/\//g, '-') + '.png';
     const filepath = path.join(this.screenshotDir, filename);
@@ -71,7 +71,7 @@ class SimpleDashboardDemo {
   }
 
   async demonstrateRoute(route: string, routeName: string): Promise<void> {
-    if (!this.page) return;
+    if (!this.page) {return;}
 
     const separator = '='.repeat(60);
     console.log('\n' + separator);

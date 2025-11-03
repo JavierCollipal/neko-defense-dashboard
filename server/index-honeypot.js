@@ -52,14 +52,14 @@ app.use(async (req, res, next) => {
   };
 
   // Calculate threat score
-  if (req.path.includes('admin')) attackData.threat_score += 20;
-  if (req.path.includes('wp-')) attackData.threat_score += 15;
-  if (req.path.includes('.php')) attackData.threat_score += 15;
-  if (req.path.includes('login')) attackData.threat_score += 10;
+  if (req.path.includes('admin')) {attackData.threat_score += 20;}
+  if (req.path.includes('wp-')) {attackData.threat_score += 15;}
+  if (req.path.includes('.php')) {attackData.threat_score += 15;}
+  if (req.path.includes('login')) {attackData.threat_score += 10;}
   if (req.path.includes('..')) { attackData.threat_score += 50; attackData.threat_indicators.push('PATH_TRAVERSAL'); }
   if (req.body && JSON.stringify(req.body).includes('<script')) { attackData.threat_score += 40; attackData.threat_indicators.push('XSS_ATTEMPT'); }
   if (req.query && JSON.stringify(req.query).includes('union')) { attackData.threat_score += 45; attackData.threat_indicators.push('SQL_INJECTION'); }
-  if (!req.headers['user-agent'] || req.headers['user-agent'].includes('bot')) attackData.threat_score += 5;
+  if (!req.headers['user-agent'] || req.headers['user-agent'].includes('bot')) {attackData.threat_score += 5;}
 
   attackData.is_suspicious = attackData.threat_score >= 10;
 
@@ -184,7 +184,7 @@ app.get('/api/health', (req, res) => {
 });
 
 app.get('/api/stats', async (req, res) => {
-  if (!db) return res.json({ error: 'Database not connected' });
+  if (!db) {return res.json({ error: 'Database not connected' });}
 
   const totalAttacks = await db.collection('internet_attacks').countDocuments();
   const suspiciousAttacks = await db.collection('internet_attacks').countDocuments({ is_suspicious: true });
@@ -205,7 +205,7 @@ app.get('/api/stats', async (req, res) => {
 });
 
 app.get('/api/threats/live', async (req, res) => {
-  if (!db) return res.json({ error: 'Database not connected' });
+  if (!db) {return res.json({ error: 'Database not connected' });}
 
   const recentAttacks = await db.collection('internet_attacks')
     .find({ is_suspicious: true })
@@ -221,7 +221,7 @@ app.get('/api/threats/live', async (req, res) => {
 });
 
 app.get('/api/threats/high', async (req, res) => {
-  if (!db) return res.json({ error: 'Database not connected' });
+  if (!db) {return res.json({ error: 'Database not connected' });}
 
   const highThreats = await db.collection('high_threat_attacks')
     .find()
@@ -310,7 +310,7 @@ async function startServer() {
 // Graceful shutdown
 process.on('SIGINT', async () => {
   console.log('\n🛑 Shutting down honeypot server, nyaa~...');
-  if (mongoClient) await mongoClient.close();
+  if (mongoClient) {await mongoClient.close();}
   process.exit(0);
 });
 

@@ -10,7 +10,7 @@ export default function HuntsPage() {
     async function fetchHunts() {
       try {
         const response = await fetch('/api/hunt-conversations');
-        if (!response.ok) throw new Error('Failed to fetch hunt conversations');
+        if (!response.ok) {throw new Error('Failed to fetch hunt conversations');}
         const result = await response.json();
         setHunts(result.data || []);
       } catch (err) {
@@ -22,19 +22,19 @@ export default function HuntsPage() {
     fetchHunts();
   }, []);
 
-  if (loading) return (
+  if (loading) {return (
     <div style={{ padding: '2rem', textAlign: 'center' }}>
       <h1>🔍 Hunt Conversations</h1>
       <p>Loading hunt operations...</p>
     </div>
-  );
+  );}
 
-  if (error) return (
+  if (error) {return (
     <div style={{ padding: '2rem', textAlign: 'center', color: 'red' }}>
       <h1>🔍 Hunt Conversations</h1>
       <p>Error: {error}</p>
     </div>
-  );
+  );}
 
   return (
     <div style={{ padding: '2rem' }}>

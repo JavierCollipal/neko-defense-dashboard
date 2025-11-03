@@ -116,8 +116,8 @@ const VictimSearchInterface: React.FC = () => {
 
   // Active filter count
   const activeFilterCount = Object.entries(filters).filter(([key, value]) => {
-    if (key === 'page' || key === 'limit' || key === 'sortBy' || key === 'sortOrder') return false;
-    if (key === 'nameExact') return false;
+    if (key === 'page' || key === 'limit' || key === 'sortBy' || key === 'sortOrder') {return false;}
+    if (key === 'nameExact') {return false;}
     return value !== '' && value !== false;
   }).length;
 

@@ -37,7 +37,7 @@ class TranslationSystemTester {
 
   // 🎭 Save performance to marionnette-theater database (Mario's specialty!)
   async savePerformance(performanceData) {
-    if (!this.db) return;
+    if (!this.db) {return;}
 
     try {
       await this.db.collection('performances').insertOne({

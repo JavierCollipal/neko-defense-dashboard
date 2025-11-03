@@ -207,8 +207,8 @@ async function investigateValechPage() {
       errors.forEach((err, idx) => {
         console.log(`\n${idx + 1}. [${err.type.toUpperCase()}]`);
         console.log(`   Message: ${err.message}`);
-        if (err.url) console.log(`   URL: ${err.url}`);
-        if (err.status) console.log(`   Status: ${err.status}`);
+        if (err.url) {console.log(`   URL: ${err.url}`);}
+        if (err.status) {console.log(`   Status: ${err.status}`);}
       });
       console.log('');
     } else {

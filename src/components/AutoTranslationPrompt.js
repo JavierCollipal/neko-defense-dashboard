@@ -14,11 +14,11 @@ const AutoTranslationPrompt = ({
 }) => {
   const { t } = useTranslation();
 
-  if (!isVisible) return null;
+  if (!isVisible) {return null;}
 
   const getLanguageName = (code) => {
     // Fix: Add null check before calling .toUpperCase()
-    if (!code) return 'Unknown';
+    if (!code) {return 'Unknown';}
 
     const languages = {
       'es': 'Español',

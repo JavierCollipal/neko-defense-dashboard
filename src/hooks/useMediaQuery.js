@@ -52,8 +52,8 @@ export function useBreakpoint() {
   const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1199px)');
   const isDesktop = useMediaQuery('(min-width: 1200px)');
 
-  if (isMobile) return 'mobile';
-  if (isTablet) return 'tablet';
-  if (isDesktop) return 'desktop';
+  if (isMobile) {return 'mobile';}
+  if (isTablet) {return 'tablet';}
+  if (isDesktop) {return 'desktop';}
   return 'mobile'; // default fallback
 }

@@ -39,7 +39,7 @@ const DinaDocumentationInternational = () => {
       console.log('🐾 [DINA] Stats response status:', statsResponse.status);
       const statsData = await statsResponse.json();
       console.log('🐾 [DINA] Stats data:', statsData);
-      if (statsData.success) setStats(statsData.data);
+      if (statsData.success) {setStats(statsData.data);}
 
       // Fetch DINA perpetrators (comprehensive collection!)
       console.log('🐾 [DINA] Fetching perpetrators from:', `${API_URL}/dina/perpetrators`);

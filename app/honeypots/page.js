@@ -10,7 +10,7 @@ export default function HoneypotsPage() {
     async function fetchHoneypots() {
       try {
         const response = await fetch('/api/honeypots');
-        if (!response.ok) throw new Error('Failed to fetch honeypots');
+        if (!response.ok) {throw new Error('Failed to fetch honeypots');}
         const result = await response.json();
         setHoneypots(result.data || []);
       } catch (err) {
@@ -22,19 +22,19 @@ export default function HoneypotsPage() {
     fetchHoneypots();
   }, []);
 
-  if (loading) return (
+  if (loading) {return (
     <div style={{ padding: '2rem', textAlign: 'center' }}>
       <h1>🍯 Honeypot Triggers</h1>
       <p>Loading honeypot data...</p>
     </div>
-  );
+  );}
 
-  if (error) return (
+  if (error) {return (
     <div style={{ padding: '2rem', textAlign: 'center', color: 'red' }}>
       <h1>🍯 Honeypot Triggers</h1>
       <p>Error: {error}</p>
     </div>
-  );
+  );}
 
   return (
     <div style={{ padding: '2rem' }}>

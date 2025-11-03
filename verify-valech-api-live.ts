@@ -55,7 +55,7 @@ async function verifyValechAPILive() {
 
   const page: Page = await browser.newPage();
 
-  let consoleErrors: string[] = [];
+  const consoleErrors: string[] = [];
   let apiCallDetected = false;
 
   // Monitor console

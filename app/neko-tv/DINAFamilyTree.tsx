@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import ReactFlow, {
   Node,
   Edge,
@@ -357,8 +357,8 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
         />
         <MiniMap
           nodeColor={(node) => {
-            if (node.type === 'input') return '#dc2626';
-            if (node.type === 'output') return '#a855f7';
+            if (node.type === 'input') {return '#dc2626';}
+            if (node.type === 'output') {return '#a855f7';}
             return '#6366f1';
           }}
           className="bg-black/60 backdrop-blur-md border border-purple-500/30 rounded-lg"

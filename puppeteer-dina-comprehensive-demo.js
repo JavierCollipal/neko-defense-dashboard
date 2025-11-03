@@ -80,7 +80,7 @@ async function comprehensiveDemonstration() {
     // FRAME 3: Navigation buttons area
     await page.evaluate(() => {
       const navArea = document.querySelector('.dina-container, .navigation, header, .nav-section');
-      if (navArea) navArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (navArea) {navArea.scrollIntoView({ behavior: 'smooth', block: 'start' });}
     });
     await new Promise(resolve => setTimeout(resolve, 1000));
     await captureWithCommentary(page, 'Navigation Button Panel', {
@@ -96,7 +96,7 @@ async function comprehensiveDemonstration() {
     await page.evaluate(() => {
       const buttons = Array.from(document.querySelectorAll('button'));
       const target = buttons.find(btn => btn.textContent.includes('2008 ARMY LIST') || btn.textContent.includes('ARMY LIST'));
-      if (target) target.click();
+      if (target) {target.click();}
     });
     await new Promise(resolve => setTimeout(resolve, 2000));
     await captureWithCommentary(page, '2008 Army List Button Activated', {
@@ -122,7 +122,7 @@ async function comprehensiveDemonstration() {
     // FRAME 6: Component header closeup
     await page.evaluate(() => {
       const container = document.querySelector('.dina-army-list-container');
-      if (container) container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (container) {container.scrollIntoView({ behavior: 'smooth', block: 'start' });}
     });
     await new Promise(resolve => setTimeout(resolve, 1500));
     await captureWithCommentary(page, 'Component Header - Title and Description', {
@@ -161,7 +161,7 @@ async function comprehensiveDemonstration() {
     // FRAME 9: Full component view
     await page.evaluate(() => {
       const container = document.querySelector('.dina-army-list-container');
-      if (container) container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (container) {container.scrollIntoView({ behavior: 'smooth', block: 'center' });}
     });
     await new Promise(resolve => setTimeout(resolve, 1500));
     await captureWithCommentary(page, 'Complete Component Overview', {

@@ -123,7 +123,7 @@ const GlobalThreatMap = ({ language = 'en' }) => {
 
   const drawMap = () => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {return;}
 
     const ctx = canvas.getContext('2d');
     const width = canvas.width;

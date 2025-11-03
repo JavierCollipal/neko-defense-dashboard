@@ -108,10 +108,10 @@ export async function GET(request: NextRequest) {
     };
 
     outcomeAggregation.forEach((item: any) => {
-      if (item._id === 'SURVIVED') outcomes.survived = item.count;
-      else if (item._id === 'KILLED') outcomes.killed = item.count;
-      else if (item._id === 'DISAPPEARED') outcomes.disappeared = item.count;
-      else if (item._id === 'UNKNOWN') outcomes.unknown = item.count;
+      if (item._id === 'SURVIVED') {outcomes.survived = item.count;}
+      else if (item._id === 'KILLED') {outcomes.killed = item.count;}
+      else if (item._id === 'DISAPPEARED') {outcomes.disappeared = item.count;}
+      else if (item._id === 'UNKNOWN') {outcomes.unknown = item.count;}
     });
 
     const survivalRate = totalVictims > 0
@@ -173,10 +173,10 @@ export async function GET(request: NextRequest) {
     };
 
     qualityAggregation.forEach((item: any) => {
-      if (item._id === 'COMPLETE') quality.complete = item.count;
-      else if (item._id === 'PARTIAL') quality.partial = item.count;
-      else if (item._id === 'MINIMAL') quality.minimal = item.count;
-      else if (item._id === 'NEEDS_VERIFICATION') quality.needsVerification = item.count;
+      if (item._id === 'COMPLETE') {quality.complete = item.count;}
+      else if (item._id === 'PARTIAL') {quality.partial = item.count;}
+      else if (item._id === 'MINIMAL') {quality.minimal = item.count;}
+      else if (item._id === 'NEEDS_VERIFICATION') {quality.needsVerification = item.count;}
     });
 
     const completenessRate = totalVictims > 0
@@ -203,10 +203,10 @@ export async function GET(request: NextRequest) {
     };
 
     genderAggregation.forEach((item: any) => {
-      if (item._id === 'MALE') gender.male = item.count;
-      else if (item._id === 'FEMALE') gender.female = item.count;
-      else if (item._id === 'OTHER') gender.other = item.count;
-      else if (item._id === 'UNKNOWN') gender.unknown = item.count;
+      if (item._id === 'MALE') {gender.male = item.count;}
+      else if (item._id === 'FEMALE') {gender.female = item.count;}
+      else if (item._id === 'OTHER') {gender.other = item.count;}
+      else if (item._id === 'UNKNOWN') {gender.unknown = item.count;}
     });
 
     // ============================================================
@@ -257,7 +257,7 @@ export async function GET(request: NextRequest) {
     const timelineMap: any = {};
     timelineAggregation.forEach((item: any) => {
       const year = item._id.year;
-      if (!year) return;  // Skip null years
+      if (!year) {return;}  // Skip null years
 
       if (!timelineMap[year]) {
         timelineMap[year] = { year, arrests: 0, deaths: 0, disappeared: 0 };

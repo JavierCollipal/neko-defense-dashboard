@@ -80,7 +80,7 @@ class DashboardDemonstration {
   }
 
   private setupErrorMonitoring(): void {
-    if (!this.page) return;
+    if (!this.page) {return;}
 
     // Monitor console messages
     this.page.on('console', async (msg) => {
@@ -146,7 +146,7 @@ class DashboardDemonstration {
   }
 
   private async captureScreenshot(routeName: string): Promise<void> {
-    if (!this.page) return;
+    if (!this.page) {return;}
 
     const filename = `${routeName.replace(/\//g, '-')}.png`;
     const filepath = path.join(this.screenshotDir, filename);
@@ -159,7 +159,7 @@ class DashboardDemonstration {
   }
 
   async demonstrateRoute(route: string, routeName: string): Promise<void> {
-    if (!this.page) return;
+    if (!this.page) {return;}
 
     console.log(`\n👁️  NAVIGATING TO: ${routeName} (${route})`);
     console.log('👀 WATCH the browser!');

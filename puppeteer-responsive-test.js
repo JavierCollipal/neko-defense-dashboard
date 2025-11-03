@@ -95,10 +95,10 @@ async function testResponsiveDesign() {
       // Check for responsive elements
       const gridCols = await page.evaluate(() => {
         const statusGrid = document.querySelector('.grid.grid-cols-1');
-        if (!statusGrid) return 'NOT FOUND';
+        if (!statusGrid) {return 'NOT FOUND';}
 
         const classes = statusGrid.className;
-        if (classes.includes('sm:grid-cols-2')) return 'MOBILE-FIRST ✅';
+        if (classes.includes('sm:grid-cols-2')) {return 'MOBILE-FIRST ✅';}
         return 'STATIC GRID ❌';
       });
 

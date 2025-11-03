@@ -110,7 +110,7 @@ async function translateDocument(document, targetLang, db, collectionName) {
     for (const field of translatableFields) {
       const value = document[field];
 
-      if (!value) continue;
+      if (!value) {continue;}
 
       if (Array.isArray(value)) {
         // Translate arrays
@@ -247,7 +247,7 @@ function applyTranslations(document, translations) {
   const translated = { ...document };
 
   for (const [field, value] of Object.entries(translations)) {
-    if (field.endsWith('_updated_at')) continue; // Skip metadata fields
+    if (field.endsWith('_updated_at')) {continue;} // Skip metadata fields
     translated[field] = value;
   }
 

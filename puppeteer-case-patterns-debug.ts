@@ -177,8 +177,8 @@ async function investigateCasePatterns() {
       console.log('🔍 DETAILED ERRORS:\n');
       errors.forEach((err, idx) => {
         console.log(`   ${idx + 1}. [${err.type.toUpperCase()}] ${err.message}`);
-        if (err.url) console.log(`      URL: ${err.url}`);
-        if (err.statusCode) console.log(`      Status: ${err.statusCode}`);
+        if (err.url) {console.log(`      URL: ${err.url}`);}
+        if (err.statusCode) {console.log(`      Status: ${err.statusCode}`);}
       });
     }
 

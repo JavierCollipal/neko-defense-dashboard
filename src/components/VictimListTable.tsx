@@ -73,7 +73,7 @@ const VictimListTable: React.FC<VictimListTableProps> = ({ victims, loading = fa
 
   // Format date
   const formatDate = (date: string | Date | undefined): string => {
-    if (!date) return 'Unknown';
+    if (!date) {return 'Unknown';}
     try {
       return new Date(date).toLocaleDateString('es-CL', {
         year: 'numeric',

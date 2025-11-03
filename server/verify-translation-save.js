@@ -89,8 +89,8 @@ async function verifyTranslationSave() {
       console.log('\n💖 Translation system session successfully saved, nyaa~! 😻🌍✨\n');
     } else {
       console.log('⚠️ SOME VERIFICATIONS FAILED!');
-      if (!conversationExists) console.log('   ❌ Conversation missing');
-      if (!patternExists) console.log('   ❌ Case pattern missing');
+      if (!conversationExists) {console.log('   ❌ Conversation missing');}
+      if (!patternExists) {console.log('   ❌ Case pattern missing');}
       console.log('\n');
     }
 

@@ -90,7 +90,7 @@ async function demonstrateFamilyTracker() {
       console.log('🗑️ WATCH me clear the search!');
       await page.evaluate(() => {
         const input = document.querySelector('.search-input');
-        if (input) input.value = '';
+        if (input) {input.value = '';}
       });
       await new Promise(resolve => setTimeout(resolve, 2000));
     }

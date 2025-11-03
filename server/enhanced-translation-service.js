@@ -125,7 +125,7 @@ class EnhancedTranslationService {
       };
 
       // Calculate scores
-      let scores = {
+      const scores = {
         lengthScore: this.scoreLengthRatio(metrics.lengthRatio),
         contentScore: metrics.hasContent ? 100 : 0,
         uniquenessScore: metrics.notIdentical ? 100 : 0,
@@ -162,9 +162,9 @@ class EnhancedTranslationService {
 
   // Score length ratio (ideal is 0.8-1.2)
   scoreLengthRatio(ratio) {
-    if (ratio >= 0.8 && ratio <= 1.2) return 100;
-    if (ratio >= 0.6 && ratio <= 1.4) return 80;
-    if (ratio >= 0.4 && ratio <= 1.6) return 60;
+    if (ratio >= 0.8 && ratio <= 1.2) {return 100;}
+    if (ratio >= 0.6 && ratio <= 1.4) {return 80;}
+    if (ratio >= 0.4 && ratio <= 1.6) {return 60;}
     return 40;
   }
 
@@ -180,14 +180,14 @@ class EnhancedTranslationService {
 
   // Get quality grade
   getQualityGrade(score) {
-    if (score >= 90) return 'A+';
-    if (score >= 85) return 'A';
-    if (score >= 80) return 'B+';
-    if (score >= 75) return 'B';
-    if (score >= 70) return 'C+';
-    if (score >= 65) return 'C';
-    if (score >= 60) return 'D+';
-    if (score >= 55) return 'D';
+    if (score >= 90) {return 'A+';}
+    if (score >= 85) {return 'A';}
+    if (score >= 80) {return 'B+';}
+    if (score >= 75) {return 'B';}
+    if (score >= 70) {return 'C+';}
+    if (score >= 65) {return 'C';}
+    if (score >= 60) {return 'D+';}
+    if (score >= 55) {return 'D';}
     return 'F';
   }
 
@@ -312,7 +312,7 @@ class EnhancedTranslationService {
   // Clear cache
   async clearCache(language = null, olderThan = null) {
     try {
-      let filter = {};
+      const filter = {};
 
       if (language) {
         filter.targetLang = language;
@@ -373,9 +373,9 @@ class EnhancedTranslationService {
   // Get usage metrics
   async getUsageMetrics(startDate = null, endDate = null) {
     try {
-      let dateFilter = {};
-      if (startDate) dateFilter.$gte = new Date(startDate);
-      if (endDate) dateFilter.$lte = new Date(endDate);
+      const dateFilter = {};
+      if (startDate) {dateFilter.$gte = new Date(startDate);}
+      if (endDate) {dateFilter.$lte = new Date(endDate);}
 
       const filter = Object.keys(dateFilter).length > 0 ? { timestamp: dateFilter } : {};
 
