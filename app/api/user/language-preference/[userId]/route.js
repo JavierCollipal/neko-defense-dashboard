@@ -14,8 +14,12 @@ export async function GET(request, { params }) {
     // TODO: Implement MongoDB storage when user authentication is added
     const defaultPreference = {
       success: true,
+      data: {
+        language: 'en', // Default to English
+        isDefault: true, // This is a default preference
+        lastUpdated: null // Never updated
+      },
       userId: userId,
-      language: 'en', // Default to English
       timestamp: new Date().toISOString(),
       message: 'Default language preference (no backend configured)'
     };

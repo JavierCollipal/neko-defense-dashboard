@@ -11,11 +11,16 @@ export async function POST(request) {
 
     // For now, acknowledge the save request
     // TODO: Implement MongoDB storage when user authentication is added
+    const now = new Date();
     const response = {
       success: true,
+      data: {
+        language: body.language || 'en',
+        isDefault: false, // User explicitly set this
+        lastUpdated: now.toISOString()
+      },
       userId: body.userId || 'current-user',
-      language: body.language || 'en',
-      timestamp: new Date().toISOString(),
+      timestamp: now.toISOString(),
       message: 'Language preference saved (in-memory only, no backend configured)'
     };
 
