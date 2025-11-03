@@ -14,8 +14,8 @@
     "dev:all": "concurrently \"npm run server\" \"npm run dev\"",
     "cypress": "cypress open",
     "cypress:headless": "cypress run",
-    "e2e": "start-server-and-test dev http://localhost:3001 cypress",
-    "e2e:headless": "start-server-and-test dev http://localhost:3001 cypress:headless",
+    "e2e": "start-server-and-test dev http://localhost:3000 cypress",
+    "e2e:headless": "start-server-and-test dev http://localhost:3000 cypress:headless",
     "test:e2e": "npm run e2e:headless",
     "prepare": "husky"
   },
