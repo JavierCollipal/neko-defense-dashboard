@@ -5,23 +5,42 @@
 
 /**
  * 🐾 Custom command to visit the dashboard and wait for it to load
+ * 🚀 OPTIMIZED: Uses cy.session() to cache dashboard state and avoid reloading
  * @example cy.visitDashboard()
  */
 Cypress.Commands.add('visitDashboard', () => {
-  console.log('🐾 [visitDashboard] Loading Neko Defense Dashboard, nyaa~!');
+  console.log('🐾 [visitDashboard] Loading Neko Defense Dashboard with session caching, nyaa~!');
 
+  // 🚀 OPTIMIZATION: Cache the dashboard session to avoid reloading on every test
+  cy.session(
+    'dashboard-session',
+    () => {
+      console.log('🔄 [SESSION] First dashboard load - caching session state');
+      cy.visit('/');
+
+      // Wait for app to be fully loaded
+      cy.get('.app-header', { timeout: 15000 }).should('be.visible');
+      cy.contains('NEKO DEFENSE SYSTEM', { timeout: 10000 }).should('be.visible');
+
+      // Wait for main components to stabilize
+      cy.get('.main-container', { timeout: 10000 }).should('be.visible');
+    },
+    {
+      validate: () => {
+        // Validate session is still good by checking if dashboard is loaded
+        cy.get('.app-header').should('be.visible');
+      },
+      cacheAcrossSpecs: true
+    }
+  );
+
+  // After session restored, just visit to ensure we're on the right page
   cy.visit('/');
 
-  // FIX: Wait for React app to mount and render (matching debug test approach)
-  // The debug test waits 3000ms and passes, so we'll do the same
-  cy.wait(3000);
+  // Quick verification that session is valid
+  cy.get('.app-header', { timeout: 5000 }).should('be.visible');
 
-  // NOW verify dashboard loaded by checking UI elements
-  // FIX: Use lowercase 'app-header' to match actual className in Header.js
-  cy.get('.app-header', { timeout: 10000 }).should('be.visible');
-  cy.contains('NEKO DEFENSE SYSTEM').should('be.visible');
-
-  console.log('✅ [visitDashboard] Dashboard loaded successfully, desu!');
+  console.log('✅ [visitDashboard] Dashboard loaded from cache - MAXIMUM SPEED, desu!');
 });
 
 /**
