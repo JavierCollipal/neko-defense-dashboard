@@ -18,7 +18,6 @@ module.exports = defineConfig({
     // 🚀 OPTIMIZATION: Disable video in CI to save 20-30% execution time
     // Videos only recorded on failures for debugging
     video: false,
-    videoUploadOnPasses: false,
     videosFolder: 'cypress/videos',
     screenshotsFolder: 'cypress/screenshots',
     screenshotOnRunFailure: true,
@@ -42,9 +41,6 @@ module.exports = defineConfig({
     // 🚀 EXPERIMENTAL OPTIMIZATIONS
     experimentalMemoryManagement: true,
     numTestsKeptInMemory: 10,
-
-    // 🎯 SESSION CACHING ENABLED
-    experimentalSessionAndOrigin: true,
 
     setupNodeEvents(on, config) {
       // 🧪 Code coverage plugin
