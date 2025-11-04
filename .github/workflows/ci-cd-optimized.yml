@@ -18,7 +18,7 @@
 #
 # ═══════════════════════════════════════════════════════════════════════════════
 
-name: 🚀 CI/CD Ultra-Optimized (Target: <15min)
+name: 🚀 CI/CD Ultra-Optimized (Target 15min)
 
 on:
   push:
