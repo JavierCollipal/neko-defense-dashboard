@@ -182,19 +182,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-
 
-      # ⚡ OPTIMIZATION 8: Download build artifacts instead of rebuilding
-      - name: 📥 Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: nextjs-build
-
       - name: 📦 Install dependencies
         run: npm ci --legacy-peer-deps
 
-      # ⚡ OPTIMIZATION 9: Cypress Cloud parallel recording
+      # ⚡ OPTIMIZATION 8: Cypress Cloud parallel recording
       - name: 🎭 Run Cypress E2E tests (Container ${{ matrix.containers }})
         uses: cypress-io/github-action@v6
         with:
+          build: npm run build
           start: npm start
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
