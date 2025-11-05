@@ -1,9 +1,10 @@
 // 🐾⚡ NEKO DEFENSE DASHBOARD - Cypress E2E Configuration ⚡🐾
+require('dotenv').config();
 const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
-  // ☁️ CYPRESS CLOUD PROJECT ID (CORRECT ID - Rule 1.0)
-  projectId: '9xzw4h',
+  // ☁️ CYPRESS CLOUD PROJECT ID (from .env - CORRECTED Nov 5, 2025)
+  projectId: process.env.CYPRESS_PROJECT_ID || 'jhwwrs',
 
   e2e: {
     baseUrl: 'http://localhost:3000',

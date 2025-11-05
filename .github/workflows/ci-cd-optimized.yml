@@ -38,8 +38,8 @@ concurrency:
 
 env:
   NODE_VERSION: '20'
-  # Cypress Cloud (Rule 1.0)
-  CYPRESS_PROJECT_ID: '9xzw4h'
+  # Cypress Cloud (from GitHub secrets - CORRECTED Nov 5, 2025)
+  CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
 
 jobs:
   # ═══════════════════════════════════════════════════════════════════════════
@@ -253,7 +253,7 @@ jobs:
             echo "🎉 ALL CHECKS PASSED - LIGHTNING FAST! ⚡💖"
             echo ""
             echo "☁️ Cypress Cloud Dashboard:"
-            echo "   https://cloud.cypress.io/projects/9xzw4h"
+            echo "   https://cloud.cypress.io/projects/jhwwrs"
             echo ""
             echo "*purrs in ULTRA-OPTIMIZED CI/CD excellence* 😻🚀"
           else
