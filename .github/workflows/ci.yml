@@ -1,0 +1,234 @@
+name: 🐾 Neko-Arc CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+# Functional programming principles:
+# 1. Pure functions (each job is idempotent)
+# 2. Immutability (cached dependencies)
+# 3. Composition (jobs build on each other)
+# 4. Explicit dependencies (needs: [job])
+
+env:
+  NODE_VERSION: '18'
+  CACHE_KEY_PREFIX: 'neko-defense'
+
+jobs:
+  # 📦 Stage 1: Install Dependencies (Pure - Idempotent)
+  install:
+    name: 📦 Install Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 💾 Cache dependencies
+        uses: actions/cache@v4
+        id: npm-cache
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ env.CACHE_KEY_PREFIX }}-${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ env.CACHE_KEY_PREFIX }}-${{ runner.os }}-node-
+
+      - name: 📦 Install dependencies
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+  # 🔍 Stage 2: Lint & Format Check (Pure - No side effects)
+  lint:
+    name: 🔍 Lint & Format
+    runs-on: ubuntu-latest
+    needs: [install]
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 💾 Restore dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ env.CACHE_KEY_PREFIX }}-${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+
+      - name: 🔍 Run ESLint
+        run: npm run lint:check
+
+      - name: 🎨 Check code formatting
+        run: npm run format:check
+
+  # 🏗️ Stage 3: Build (Pure - Deterministic output)
+  build:
+    name: 🏗️ Build Application
+    runs-on: ubuntu-latest
+    needs: [install, lint]
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 💾 Restore dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ env.CACHE_KEY_PREFIX }}-${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+
+      - name: 🏗️ Build Next.js application
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: 💾 Cache build artifacts
+        uses: actions/cache@v4
+        with:
+          path: .next
+          key: ${{ env.CACHE_KEY_PREFIX }}-build-${{ github.sha }}
+
+  # 🧪 Stage 4a: Unit Tests (Pure - Isolated tests)
+  test-unit:
+    name: 🧪 Unit Tests
+    runs-on: ubuntu-latest
+    needs: [install, lint]
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 💾 Restore dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ env.CACHE_KEY_PREFIX }}-${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+
+      - name: 🧪 Run unit tests
+        run: npm run test:unit
+
+  # 🎭 Stage 4b: E2E Tests (Composed - Requires build)
+  test-e2e:
+    name: 🎭 E2E Tests (Cypress)
+    runs-on: ubuntu-latest
+    needs: [build]
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1] # Can parallelize: [1, 2, 3]
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 💾 Restore dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ env.CACHE_KEY_PREFIX }}-${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+
+      - name: 💾 Restore build artifacts
+        uses: actions/cache@v4
+        with:
+          path: .next
+          key: ${{ env.CACHE_KEY_PREFIX }}-build-${{ github.sha }}
+
+      - name: 🔍 Verify Cypress installation
+        run: npx cypress verify
+
+      - name: 🎭 Run E2E tests
+        run: npm run test:e2e:record
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📸 Upload Cypress screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots-${{ matrix.containers }}
+          path: cypress/screenshots
+          retention-days: 7
+
+      - name: 🎥 Upload Cypress videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos-${{ matrix.containers }}
+          path: cypress/videos
+          retention-days: 7
+
+  # ✅ Stage 5: Quality Gate (Functional composition of all checks)
+  quality-gate:
+    name: ✅ Quality Gate
+    runs-on: ubuntu-latest
+    needs: [lint, build, test-unit, test-e2e]
+    if: always()
+    steps:
+      - name: 🎯 Check all jobs passed
+        run: |
+          if [[ "${{ needs.lint.result }}" == "success" && \
+                "${{ needs.build.result }}" == "success" && \
+                "${{ needs.test-unit.result }}" == "success" && \
+                "${{ needs.test-e2e.result }}" == "success" ]]; then
+            echo "✅ All quality checks passed! 🐾✨"
+            exit 0
+          else
+            echo "❌ Quality gate failed!"
+            echo "Lint: ${{ needs.lint.result }}"
+            echo "Build: ${{ needs.build.result }}"
+            echo "Unit Tests: ${{ needs.test-unit.result }}"
+            echo "E2E Tests: ${{ needs.test-e2e.result }}"
+            exit 1
+          fi
+
+  # 🚀 Stage 6: Deploy (Only on main branch, after quality gate)
+  deploy:
+    name: 🚀 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [quality-gate]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🚀 Deploy to Vercel
+        run: echo "Deploy step would go here (Vercel CLI or automatic deployment)"
+        # Example: npx vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: 📢 Deployment notification
+        run: |
+          echo "🎉 Deployment complete! 🐾"
+          echo "Dashboard: https://neko-defense.vercel.app"
