@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "data": [
+    {
+      "name": "🐾 NEKO GUARDIAN",
+      "art": ["    /\\_/\\", "   ( o.o )", "    > ^ <", "  FORTRESS", "   ACTIVE"],
+      "category": "neko",
+      "threat_level": "PROTECTED",
+      "description": "NEKO Guardian system active and monitoring, nyaa~!",
+      "timestamp": "2025-10-11T00:00:00Z"
+    },
+    {
+      "name": "🛡️ DEFENSE SHIELD",
+      "art": ["   ___", "  /   \\", " |  D  |", "  \\___/", " PROTECTED"],
+      "category": "defense",
+      "threat_level": "SECURE",
+      "description": "Defense systems operational, desu!",
+      "timestamp": "2025-10-11T00:00:00Z"
+    },
+    {
+      "name": "⚡ THREAT DETECTED",
+      "art": ["  !!! ", " /   \\", "| ! ! |", " \\___/", " ALERT"],
+      "category": "alert",
+      "threat_level": "HIGH",
+      "description": "Threat actor detected and being tracked!",
+      "timestamp": "2025-10-11T00:00:00Z"
+    }
+  ]
+}

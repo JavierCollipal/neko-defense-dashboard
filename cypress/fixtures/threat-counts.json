@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "data": {
+    "all": 8,
+    "predators": 2,
+    "pedophiles": 3,
+    "dina_network": 1,
+    "ransomware": 1,
+    "state_sponsored": 1,
+    "crypto_crime": 1
+  }
+}

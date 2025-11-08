@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐾📺 NEKO-ARC TV MULTI-CHANNEL - LIVE</title>
+  <style>
+    :root {
+      --neko-primary: #00ffff;
+      --neko-secondary: #ff1493;
+      --neko-accent: #ffd700;
+      --neko-danger: #ff0033;
+      --neko-success: #00ff41;
+      --tv-glow: rgba(0, 255, 255, 0.6);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      font-family: 'Courier New', monospace;
+      color: var(--neko-primary);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* CRT Screen Effect */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 255, 255, 0.03) 0px,
+        rgba(0, 255, 255, 0.03) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+      z-index: 1000;
+      animation: scanline 8s linear infinite;
+    }
+
+    @keyframes scanline {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(10px); }
+    }
+
+    /* TV Container */
+    .tv-container {
+      position: relative;
+      width: 95vw;
+      max-width: 1400px;
+      background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0f 100%);
+      border: 20px solid #2a2a3e;
+      border-radius: 30px;
+      padding: 30px;
+      box-shadow:
+        0 0 50px rgba(0, 255, 255, 0.3),
+        inset 0 0 30px rgba(0, 0, 0, 0.8);
+    }
+
+    /* TV Header */
+    .tv-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .tv-title {
+      font-size: 2rem;
+      font-weight: bold;
+      text-shadow: 0 0 10px var(--tv-glow), 0 0 20px var(--tv-glow);
+      animation: title-glow 2s ease-in-out infinite;
+      margin-bottom: 10px;
+    }
+
+    @keyframes title-glow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      color: var(--neko-danger);
+      font-weight: bold;
+    }
+
+    .live-dot {
+      width: 12px;
+      height: 12px;
+      background: var(--neko-danger);
+      border-radius: 50%;
+      animation: pulse-live 1s ease-in-out infinite;
+    }
+
+    @keyframes pulse-live {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.3); }
+    }
+
+    /* Tab Navigation */
+    .tab-navigation {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      border-radius: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .tab-button {
+      padding: 10px 15px;
+      background: rgba(0, 255, 255, 0.1);
+      border: 2px solid var(--neko-primary);
+      border-radius: 8px;
+      color: var(--neko-primary);
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .tab-button:hover {
+      background: rgba(0, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
+    }
+
+    .tab-button.active {
+      background: var(--neko-primary);
+      color: #000;
+      border-color: var(--neko-accent);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+    }
+
+    /* TV Screen */
+    .tv-screen {
+      background: #000;
+      border: 5px solid #333;
+      border-radius: 15px;
+      padding: 30px;
+      position: relative;
+      box-shadow:
+        inset 0 0 50px rgba(0, 255, 255, 0.1),
+        0 0 30px rgba(0, 255, 255, 0.2);
+      min-height: 500px;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    /* Tab Content */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ASCII Gallery Tab */
+    .ascii-display {
+      font-family: 'Courier New', monospace;
+      font-size: 10px;
+      line-height: 1.1;
+      white-space: pre;
+      color: var(--neko-primary);
+      text-shadow: 0 0 5px var(--tv-glow);
+      text-align: center;
+      animation: flicker 0.15s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.97; }
+    }
+
+    /* Live Stats Tab */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .stat-box {
+      background: rgba(0, 255, 255, 0.1);
+      border: 2px solid var(--neko-primary);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat-icon {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--neko-success);
+      text-shadow: 0 0 10px var(--neko-success);
+      margin: 10px 0;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--neko-accent);
+    }
+
+    /* Threat Map Tab */
+    .threat-map {
+      text-align: center;
+    }
+
+    .world-map {
+      font-size: 10px;
+      line-height: 1.1;
+      color: var(--neko-success);
+      white-space: pre;
+      margin: 20px 0;
+    }
+
+    .threat-legend {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 15px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 5px;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      animation: pulse-dot 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.7; }
+    }
+
+    /* Activity Log Tab */
+    .activity-log {
+      font-size: 0.9rem;
+      max-height: 450px;
+      overflow-y: auto;
+    }
+
+    .log-entry {
+      padding: 10px;
+      margin: 5px 0;
+      background: rgba(0, 255, 255, 0.05);
+      border-left: 3px solid var(--neko-primary);
+      border-radius: 5px;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-20px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .log-time {
+      color: var(--neko-accent);
+      font-weight: bold;
+    }
+
+    .log-critical {
+      border-left-color: var(--neko-danger);
+      background: rgba(255, 0, 51, 0.1);
+    }
+
+    /* Honeypot Monitor Tab */
+    .honeypot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .honeypot-trap {
+      background: rgba(255, 215, 0, 0.1);
+      border: 2px solid var(--neko-accent);
+      border-radius: 10px;
+      padding: 15px;
+    }
+
+    .trap-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: var(--neko-accent);
+    }
+
+    .trap-status {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      font-size: 0.85rem;
+    }
+
+    .trap-active {
+      color: var(--neko-success);
+    }
+
+    .trap-triggered {
+      border-color: var(--neko-danger);
+      background: rgba(255, 0, 51, 0.1);
+      animation: trap-alert 2s ease-in-out infinite;
+    }
+
+    @keyframes trap-alert {
+      0%, 100% { box-shadow: 0 0 10px rgba(255, 0, 51, 0.5); }
+      50% { box-shadow: 0 0 25px rgba(255, 0, 51, 0.9); }
+    }
+
+    /* Network Scanner Tab */
+    .network-scanner {
+      text-align: center;
+    }
+
+    .scanner-visual {
+      width: 100%;
+      max-width: 400px;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    .radar-circle {
+      width: 300px;
+      height: 300px;
+      border: 3px solid var(--neko-primary);
+      border-radius: 50%;
+      margin: 0 auto;
+      position: relative;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+    }
+
+    .radar-sweep {
+      width: 50%;
+      height: 3px;
+      background: linear-gradient(to right, transparent, var(--neko-primary));
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: left center;
+      animation: sweep 3s linear infinite;
+    }
+
+    @keyframes sweep {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .network-devices {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .device-badge {
+      padding: 8px 15px;
+      background: rgba(0, 255, 255, 0.1);
+      border: 2px solid var(--neko-primary);
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+
+    /* Footer */
+    .tv-footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 1rem;
+      color: var(--neko-secondary);
+      text-shadow: 0 0 10px rgba(255, 20, 147, 0.6);
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      font-size: 1.3rem;
+      color: var(--neko-primary);
+      animation: loading-pulse 1s ease-in-out infinite;
+      padding: 50px;
+    }
+
+    @keyframes loading-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--neko-primary);
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--neko-secondary);
+    }
+  </style>
+</head>
+<body>
+  <div class="tv-container">
+    <div class="tv-header">
+      <div class="tv-title">🐾📺 NEKO-ARC TV MULTI-CHANNEL 📺🐾</div>
+      <div class="live-indicator">
+        <div class="live-dot"></div>
+        <span>LIVE BROADCAST</span>
+      </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tab-navigation">
+      <button class="tab-button active" onclick="switchTab('ascii')">
+        🎨 ASCII Gallery
+      </button>
+      <button class="tab-button" onclick="switchTab('stats')">
+        📊 Live Stats
+      </button>
+      <button class="tab-button" onclick="switchTab('map')">
+        🗺️ Threat Map
+      </button>
+      <button class="tab-button" onclick="switchTab('log')">
+        📜 Activity Log
+      </button>
+      <button class="tab-button" onclick="switchTab('honeypot')">
+        🍯 Honeypot Monitor
+      </button>
+      <button class="tab-button" onclick="switchTab('scanner')">
+        📡 Network Scanner
+      </button>
+    </div>
+
+    <!-- TV Screen -->
+    <div class="tv-screen">
+      <!-- ASCII Gallery Tab -->
+      <div id="ascii-tab" class="tab-content active">
+        <div id="ascii-content" class="ascii-display">
+          <div class="loading">Loading ASCII Gallery, nyaa~! 🐾</div>
+        </div>
+        <div id="ascii-info" style="text-align: center; margin-top: 20px; font-size: 0.9rem;"></div>
+      </div>
+
+      <!-- Live Stats Tab -->
+      <div id="stats-tab" class="tab-content">
+        <h2 style="text-align: center; color: var(--neko-accent); margin-bottom: 20px;">📊 LIVE DEFENSE STATISTICS</h2>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-icon">🛡️</div>
+            <div class="stat-value" id="total-threats">---</div>
+            <div class="stat-label">Total Threats Detected</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-icon">🍯</div>
+            <div class="stat-value" id="honeypot-catches">---</div>
+            <div class="stat-label">Honeypot Catches</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-icon">🚨</div>
+            <div class="stat-value" id="active-alerts">---</div>
+            <div class="stat-label">Active Alerts</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-icon">💖</div>
+            <div class="stat-value">MAX</div>
+            <div class="stat-label">Kawaii Level</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Threat Map Tab -->
+      <div id="map-tab" class="tab-content">
+        <h2 style="text-align: center; color: var(--neko-accent); margin-bottom: 20px;">🗺️ GLOBAL THREAT MAP</h2>
+        <div class="world-map">
+     ⚡  RUSSIA (APT28)       🕷️ CHINA             🎣 NIGERIA
+              \\                  |                    /
+               \\                 |                   /
+    🇺🇸 USA      \\       🌍 GLOBAL THREATS       /      🇬🇧 UK
+                  \\             / \\              /
+                   \\           /   \\            /
+         ₿ CRYPTO   \\     🛡️ NEKO   \\      💀 RANSOMWARE
+           THIEVES   \\   FORTRESS    \\      GANGS
+                      \\     HQ        \\
+                       \\               \\
+                   🇧🇷 BRAZIL     🇦🇺 AUSTRALIA
+        </div>
+        <div class="threat-legend">
+          <div class="legend-item">
+            <div class="legend-dot" style="background: var(--neko-danger);"></div>
+            <span>Critical Threats (5)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background: var(--neko-accent);"></div>
+            <span>High Priority (12)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background: var(--neko-success);"></div>
+            <span>Monitored (50+)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity Log Tab -->
+      <div id="log-tab" class="tab-content">
+        <h2 style="text-align: center; color: var(--neko-accent); margin-bottom: 20px;">📜 LIVE ACTIVITY LOG</h2>
+        <div class="activity-log" id="activity-log">
+          <!-- Logs will be inserted here -->
+        </div>
+      </div>
+
+      <!-- Honeypot Monitor Tab -->
+      <div id="honeypot-tab" class="tab-content">
+        <h2 style="text-align: center; color: var(--neko-accent); margin-bottom: 20px;">🍯 HONEYPOT TRAP MONITOR</h2>
+        <div class="honeypot-grid">
+          <div class="honeypot-trap">
+            <div class="trap-header">
+              <span>🎣</span>
+              <span>Suspicious Content Trap</span>
+            </div>
+            <div>Status: <span class="trap-active">⚡ ACTIVE</span></div>
+            <div class="trap-status">
+              <span>Catches: 23</span>
+              <span>Last: 2 min ago</span>
+            </div>
+          </div>
+          <div class="honeypot-trap trap-triggered">
+            <div class="trap-header">
+              <span>🚨</span>
+              <span>Predator Detection Zone</span>
+            </div>
+            <div>Status: <span style="color: var(--neko-danger);">⚠️ TRIGGERED!</span></div>
+            <div class="trap-status">
+              <span>Catches: 7</span>
+              <span>Last: LIVE NOW!</span>
+            </div>
+          </div>
+          <div class="honeypot-trap">
+            <div class="trap-header">
+              <span>🔐</span>
+              <span>Admin Secrets Decoy</span>
+            </div>
+            <div>Status: <span class="trap-active">⚡ ACTIVE</span></div>
+            <div class="trap-status">
+              <span>Catches: 45</span>
+              <span>Last: 15 min ago</span>
+            </div>
+          </div>
+          <div class="honeypot-trap">
+            <div class="trap-header">
+              <span>💰</span>
+              <span>Crypto Wallet Bait</span>
+            </div>
+            <div>Status: <span class="trap-active">⚡ ACTIVE</span></div>
+            <div class="trap-status">
+              <span>Catches: 12</span>
+              <span>Last: 1 hour ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Network Scanner Tab -->
+      <div id="scanner-tab" class="tab-content">
+        <h2 style="text-align: center; color: var(--neko-accent); margin-bottom: 20px;">📡 NETWORK SCANNER</h2>
+        <div class="network-scanner">
+          <div class="scanner-visual">
+            <div class="radar-circle">
+              <div class="radar-sweep"></div>
+            </div>
+          </div>
+          <p style="margin: 20px 0; font-size: 1.1rem;">🔍 Scanning for threats, nyaa~!</p>
+          <div class="network-devices">
+            <div class="device-badge">🖥️ 15 Devices</div>
+            <div class="device-badge">🌐 3 Networks</div>
+            <div class="device-badge">🛡️ 0 Threats</div>
+            <div class="device-badge">✅ All Secure</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tv-footer">
+      *purrs in multi-channel excellence* 😻✨ NYA NYA NYA~
+    </div>
+  </div>
+
+  <script>
+    const API_URL = 'http://localhost:5000/api';
+    let asciiArt = [];
+    let currentIndex = 0;
+    let autoRotateInterval;
+
+    // Tab switching
+    function switchTab(tabName) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+
+      // Remove active class from all buttons
+      document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      // Show selected tab
+      document.getElementById(tabName + '-tab').classList.add('active');
+
+      // Add active class to clicked button
+      event.target.classList.add('active');
+
+      // Initialize tab-specific content
+      if (tabName === 'stats') {
+        updateStats();
+      } else if (tabName === 'log') {
+        generateActivityLog();
+      }
+    }
+
+    // Fetch ASCII art
+    async function fetchAsciiArt() {
+      try {
+        const response = await fetch(API_URL + '/ascii-art');
+        const data = await response.json();
+
+        if (data.success && data.data.length > 0) {
+          asciiArt = data.data;
+          displayCurrentArt();
+          startAutoRotation();
+        } else {
+          document.getElementById('ascii-content').innerHTML =
+            '<div class="loading">No ASCII art found, nyaa~! 😿</div>';
+        }
+      } catch (error) {
+        console.error('Failed to fetch ASCII art:', error);
+        document.getElementById('ascii-content').innerHTML =
+          '<div class="loading">Connection failed! Check backend on port 5000! 🚨</div>';
+      }
+    }
+
+    // Display current ASCII art
+    function displayCurrentArt() {
+      if (asciiArt.length === 0) return;
+
+      const art = asciiArt[currentIndex];
+      const asciiContent = document.getElementById('ascii-content');
+      const asciiInfo = document.getElementById('ascii-info');
+
+      asciiContent.textContent = art.ascii_art || art.art || 'No art available';
+
+      const category = (art.category || 'unknown').toUpperCase();
+      const threat = (art.threat_level || 'MEDIUM').toUpperCase();
+      const threatColor = {
+        'CRITICAL': 'var(--neko-danger)',
+        'HIGH': '#ff6600',
+        'MEDIUM': 'var(--neko-accent)',
+        'LOW': 'var(--neko-success)'
+      }[threat] || 'var(--neko-accent)';
+
+      asciiInfo.innerHTML = `
+        <span style="color: var(--neko-primary);">📂 ${category}</span> |
+        <span style="color: ${threatColor};">⚠️ ${threat} THREAT</span> |
+        <span style="color: var(--neko-accent);">Frame ${currentIndex + 1}/${asciiArt.length}</span>
+      `;
+    }
+
+    // Auto-rotation
+    function startAutoRotation() {
+      autoRotateInterval = setInterval(() => {
+        if (asciiArt.length > 0) {
+          currentIndex = (currentIndex + 1) % asciiArt.length;
+          displayCurrentArt();
+        }
+      }, 5000);
+    }
+
+    // Update stats
+    function updateStats() {
+      document.getElementById('total-threats').textContent = asciiArt.length || 8;
+      document.getElementById('honeypot-catches').textContent = Math.floor(Math.random() * 50) + 50;
+      document.getElementById('active-alerts').textContent = Math.floor(Math.random() * 5) + 3;
+    }
+
+    // Generate activity log
+    function generateActivityLog() {
+      const logContainer = document.getElementById('activity-log');
+      const activities = [
+        { time: 'Just now', msg: '🚨 Predator detected in honeypot trap - IP logged!', critical: true },
+        { time: '2 min ago', msg: '🍯 Suspicious content access attempt blocked', critical: false },
+        { time: '5 min ago', msg: '🔐 Failed admin login attempt from Russia', critical: false },
+        { time: '8 min ago', msg: '⚠️ CRITICAL: APT28 signature detected!', critical: true },
+        { time: '10 min ago', msg: '📂 Database backup completed successfully', critical: false },
+        { time: '15 min ago', msg: '🎣 Phishing attempt captured in email trap', critical: false },
+        { time: '18 min ago', msg: '💰 Crypto wallet bait accessed - tracking active', critical: false },
+        { time: '22 min ago', msg: '🚨 Ransomware sample detected and quarantined!', critical: true },
+        { time: '25 min ago', msg: '🛡️ Firewall rules updated - 127 new entries', critical: false },
+        { time: '30 min ago', msg: '📊 Hourly threat analysis completed', critical: false }
+      ];
+
+      logContainer.innerHTML = activities.map(log => `
+        <div class="log-entry ${log.critical ? 'log-critical' : ''}">
+          <span class="log-time">[${log.time}]</span> ${log.msg}
+        </div>
+      `).join('');
+    }
+
+    // Keyboard controls
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'n') {
+        currentIndex = (currentIndex + 1) % asciiArt.length;
+        displayCurrentArt();
+      } else if (e.key === 'ArrowLeft' || e.key === 'p') {
+        currentIndex = (currentIndex - 1 + asciiArt.length) % asciiArt.length;
+        displayCurrentArt();
+      } else if (e.key >= '1' && e.key <= '6') {
+        const tabs = ['ascii', 'stats', 'map', 'log', 'honeypot', 'scanner'];
+        const tabIndex = parseInt(e.key) - 1;
+        if (tabIndex < tabs.length) {
+          const buttons = document.querySelectorAll('.tab-button');
+          buttons[tabIndex].click();
+        }
+      }
+    });
+
+    // Initialize
+    window.addEventListener('load', () => {
+      console.log('🐾 NEKO TV Multi-Channel initializing, nyaa~!');
+      fetchAsciiArt();
+      updateStats();
+      generateActivityLog();
+    });
+  </script>
+</body>
+</html>

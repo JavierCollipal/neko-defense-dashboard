@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐾📺 NEKO-ARC TV STREAMING - LIVE</title>
+  <style>
+    :root {
+      --neko-primary: #00ffff;
+      --neko-secondary: #ff1493;
+      --neko-accent: #ffd700;
+      --neko-danger: #ff0033;
+      --neko-success: #00ff41;
+      --tv-glow: rgba(0, 255, 255, 0.6);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      font-family: 'Courier New', monospace;
+      color: var(--neko-primary);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* CRT Screen Effect */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 255, 255, 0.03) 0px,
+        rgba(0, 255, 255, 0.03) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+      z-index: 1000;
+      animation: scanline 8s linear infinite;
+    }
+
+    @keyframes scanline {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(10px); }
+    }
+
+    /* TV Container */
+    .tv-container {
+      position: relative;
+      width: 95vw;
+      max-width: 1400px;
+      background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0f 100%);
+      border: 20px solid #2a2a3e;
+      border-radius: 30px;
+      padding: 40px;
+      box-shadow:
+        0 0 50px rgba(0, 255, 255, 0.3),
+        inset 0 0 30px rgba(0, 0, 0, 0.8);
+    }
+
+    /* TV Header */
+    .tv-header {
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .tv-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      text-shadow:
+        0 0 10px var(--tv-glow),
+        0 0 20px var(--tv-glow),
+        0 0 30px var(--tv-glow);
+      animation: title-glow 2s ease-in-out infinite;
+      margin-bottom: 10px;
+    }
+
+    @keyframes title-glow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.2rem;
+      color: var(--neko-danger);
+      font-weight: bold;
+    }
+
+    .live-dot {
+      width: 15px;
+      height: 15px;
+      background: var(--neko-danger);
+      border-radius: 50%;
+      animation: pulse-live 1s ease-in-out infinite;
+    }
+
+    @keyframes pulse-live {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.3); }
+    }
+
+    /* TV Screen */
+    .tv-screen {
+      background: #000;
+      border: 5px solid #333;
+      border-radius: 15px;
+      padding: 40px;
+      position: relative;
+      box-shadow:
+        inset 0 0 50px rgba(0, 255, 255, 0.1),
+        0 0 30px rgba(0, 255, 255, 0.2);
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ASCII Art Display */
+    .ascii-display {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      line-height: 1.1;
+      white-space: pre;
+      color: var(--neko-primary);
+      text-shadow: 0 0 5px var(--tv-glow);
+      letter-spacing: 0;
+      text-align: center;
+      max-width: 100%;
+      overflow: auto;
+      animation: flicker 0.15s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.97; }
+    }
+
+    /* Loading State */
+    .loading {
+      font-size: 1.5rem;
+      color: var(--neko-primary);
+      animation: loading-pulse 1s ease-in-out infinite;
+    }
+
+    @keyframes loading-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Info Panel */
+    .tv-info {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: rgba(0, 255, 255, 0.05);
+      border: 2px solid var(--neko-primary);
+      border-radius: 10px;
+    }
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .info-label {
+      font-size: 0.8rem;
+      color: #888;
+      text-transform: uppercase;
+    }
+
+    .info-value {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--neko-primary);
+      text-shadow: 0 0 5px var(--tv-glow);
+    }
+
+    /* Threat Badge */
+    .threat-badge {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      display: inline-block;
+      margin-top: 20px;
+    }
+
+    .threat-critical {
+      background: rgba(255, 0, 51, 0.2);
+      color: var(--neko-danger);
+      border: 2px solid var(--neko-danger);
+      animation: threat-pulse 1.5s ease-in-out infinite;
+    }
+
+    .threat-high {
+      background: rgba(255, 100, 0, 0.2);
+      color: #ff6600;
+      border: 2px solid #ff6600;
+    }
+
+    .threat-medium {
+      background: rgba(255, 215, 0, 0.2);
+      color: var(--neko-accent);
+      border: 2px solid var(--neko-accent);
+    }
+
+    .threat-low {
+      background: rgba(0, 255, 65, 0.2);
+      color: var(--neko-success);
+      border: 2px solid var(--neko-success);
+    }
+
+    @keyframes threat-pulse {
+      0%, 100% { box-shadow: 0 0 10px rgba(255, 0, 51, 0.5); }
+      50% { box-shadow: 0 0 25px rgba(255, 0, 51, 0.9); }
+    }
+
+    /* Channel Info */
+    .channel-info {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      border: 1px solid var(--neko-primary);
+    }
+
+    /* Footer */
+    .tv-footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--neko-secondary);
+      text-shadow: 0 0 10px rgba(255, 20, 147, 0.6);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .tv-title { font-size: 1.8rem; }
+      .ascii-display { font-size: 8px; }
+      .tv-container { padding: 20px; }
+      .tv-screen { padding: 20px; min-height: 400px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="tv-container">
+    <div class="tv-header">
+      <div class="tv-title">🐾📺 NEKO-ARC TV STREAMING 📺🐾</div>
+      <div class="live-indicator">
+        <div class="live-dot"></div>
+        <span>LIVE BROADCAST</span>
+      </div>
+    </div>
+
+    <div class="tv-screen">
+      <div class="channel-info">
+        <div>📡 CHANNEL: NEKO-DEFENSE</div>
+        <div id="art-counter">Frame: 1/8</div>
+      </div>
+
+      <div id="ascii-content" class="ascii-display">
+        <div class="loading">Loading NEKO TV, nyaa~! 🐾</div>
+      </div>
+
+      <div id="threat-badge"></div>
+    </div>
+
+    <div class="tv-info">
+      <div class="info-item">
+        <div class="info-label">Category</div>
+        <div class="info-value" id="category-display">Loading...</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Threat Level</div>
+        <div class="info-value" id="threat-level">---</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Status</div>
+        <div class="info-value">MONITORING</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Auto-Rotation</div>
+        <div class="info-value">5s</div>
+      </div>
+    </div>
+
+    <div class="tv-footer">
+      *purrs in broadcasting excellence* 😻✨ NYA NYA NYA~
+    </div>
+  </div>
+
+  <script>
+    const API_URL = 'http://localhost:5000/api';
+    let asciiArt = [];
+    let currentIndex = 0;
+
+    // Fetch ASCII art from API
+    async function fetchAsciiArt() {
+      try {
+        const response = await fetch(API_URL + '/ascii-art');
+        const data = await response.json();
+
+        if (data.success && data.data.length > 0) {
+          asciiArt = data.data;
+          displayCurrentArt();
+          startAutoRotation();
+        } else {
+          document.getElementById('ascii-content').innerHTML =
+            '<div class="loading">No ASCII art found, nyaa~! 😿</div>';
+        }
+      } catch (error) {
+        console.error('Failed to fetch ASCII art:', error);
+        document.getElementById('ascii-content').innerHTML =
+          '<div class="loading">Connection failed! Check if backend is running on port 5000! 🚨</div>';
+      }
+    }
+
+    // Display current ASCII art
+    function displayCurrentArt() {
+      if (asciiArt.length === 0) return;
+
+      const art = asciiArt[currentIndex];
+      const asciiContent = document.getElementById('ascii-content');
+      const categoryDisplay = document.getElementById('category-display');
+      const threatLevel = document.getElementById('threat-level');
+      const artCounter = document.getElementById('art-counter');
+      const threatBadge = document.getElementById('threat-badge');
+
+      // Display ASCII art
+      asciiContent.textContent = art.ascii_art || art.art || 'No art available';
+
+      // Update category
+      categoryDisplay.textContent = (art.category || 'unknown').toUpperCase();
+
+      // Update threat level
+      const threat = art.threat_level || 'MEDIUM';
+      threatLevel.textContent = threat.toUpperCase();
+
+      // Update counter
+      artCounter.textContent = `Frame: ${currentIndex + 1}/${asciiArt.length}`;
+
+      // Update threat badge
+      const badgeClass = {
+        'CRITICAL': 'threat-critical',
+        'HIGH': 'threat-high',
+        'MEDIUM': 'threat-medium',
+        'LOW': 'threat-low'
+      }[threat.toUpperCase()] || 'threat-medium';
+
+      threatBadge.innerHTML = `<div class="threat-badge ${badgeClass}">⚠️ ${threat.toUpperCase()} THREAT</div>`;
+    }
+
+    // Auto-rotation
+    function startAutoRotation() {
+      setInterval(() => {
+        if (asciiArt.length > 0) {
+          currentIndex = (currentIndex + 1) % asciiArt.length;
+          displayCurrentArt();
+        }
+      }, 5000); // Rotate every 5 seconds
+    }
+
+    // Initialize on load
+    window.addEventListener('load', () => {
+      console.log('🐾 NEKO TV initializing, nyaa~!');
+      fetchAsciiArt();
+    });
+
+    // Keyboard controls
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'n') {
+        // Next
+        currentIndex = (currentIndex + 1) % asciiArt.length;
+        displayCurrentArt();
+      } else if (e.key === 'ArrowLeft' || e.key === 'p') {
+        // Previous
+        currentIndex = (currentIndex - 1 + asciiArt.length) % asciiArt.length;
+        displayCurrentArt();
+      }
+    });
+  </script>
+</body>
+</html>

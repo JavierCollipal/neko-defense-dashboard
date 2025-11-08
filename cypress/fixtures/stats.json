@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "data": {
+    "total_threats_detected": 247,
+    "active_hunts": 8,
+    "threats_neutralized": 142,
+    "honeypot_interactions": 89,
+    "system_uptime": "99.9%",
+    "last_update": "2025-10-11T12:00:00Z",
+    "categories": {
+      "predators": 3,
+      "pedophiles": 5,
+      "dina_network": 2,
+      "ransomware": 1,
+      "state_sponsored": 1,
+      "crypto_crime": 1
+    }
+  }
+}
