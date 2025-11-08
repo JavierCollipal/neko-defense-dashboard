@@ -190,11 +190,90 @@ jobs:
           path: cypress/videos
           retention-days: 7
 
+  # 🎨 Stage 4c: Production Integration Tests (Backend/Frontend Connection)
+  test-production:
+    name: 🎨 Production Integration Tests
+    runs-on: ubuntu-latest
+    needs: [build]
+    services:
+      # MongoDB service for testing
+      mongodb:
+        image: mongo:6
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --eval 'db.adminCommand({ping: 1})'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 💾 Restore dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ env.CACHE_KEY_PREFIX }}-${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+
+      - name: 💾 Restore build artifacts
+        uses: actions/cache@v4
+        with:
+          path: .next
+          key: ${{ env.CACHE_KEY_PREFIX }}-build-${{ github.sha }}
+
+      - name: 🗄️ Setup test MongoDB connection
+        run: |
+          echo "MONGODB_URI=mongodb://localhost:27017" >> $GITHUB_ENV
+          echo "MONGODB_DATABASE=neko-defense-test" >> $GITHUB_ENV
+          echo "JWT_SECRET=test-secret-key-for-ci-pipeline" >> $GITHUB_ENV
+
+      - name: 🚀 Start API server in background
+        run: |
+          npm run server &
+          echo "Waiting for API server to start..."
+          sleep 10
+          curl -f http://localhost:5001/api/health || exit 1
+        env:
+          API_PORT: 5001
+          NODE_ENV: test
+
+      - name: 🔍 Verify Cypress installation
+        run: npx cypress verify
+
+      - name: 🎨 Run production integration tests
+        run: npx cypress run --spec "cypress/e2e/production/**/*.cy.js" --config-file cypress.config.js
+        env:
+          CYPRESS_API_URL: http://localhost:5001
+
+      - name: 📸 Upload test screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-test-screenshots
+          path: cypress/screenshots
+          retention-days: 7
+
+      - name: 🎥 Upload test videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-test-videos
+          path: cypress/videos
+          retention-days: 7
+
   # ✅ Stage 5: Quality Gate (Functional composition of all checks)
   quality-gate:
     name: ✅ Quality Gate
     runs-on: ubuntu-latest
-    needs: [lint, build, test-unit, test-e2e]
+    needs: [lint, build, test-unit, test-e2e, test-production]
     if: always()
     steps:
       - name: 🎯 Check all jobs passed
@@ -202,8 +281,14 @@ jobs:
           if [[ "${{ needs.lint.result }}" == "success" && \
                 "${{ needs.build.result }}" == "success" && \
                 "${{ needs.test-unit.result }}" == "success" && \
-                "${{ needs.test-e2e.result }}" == "success" ]]; then
+                "${{ needs.test-e2e.result }}" == "success" && \
+                "${{ needs.test-production.result }}" == "success" ]]; then
             echo "✅ All quality checks passed! 🐾✨"
+            echo "  ✓ Lint & Format"
+            echo "  ✓ Build"
+            echo "  ✓ Unit Tests"
+            echo "  ✓ E2E Tests"
+            echo "  ✓ Production Integration Tests"
             exit 0
           else
             echo "❌ Quality gate failed!"
@@ -211,6 +296,7 @@ jobs:
             echo "Build: ${{ needs.build.result }}"
             echo "Unit Tests: ${{ needs.test-unit.result }}"
             echo "E2E Tests: ${{ needs.test-e2e.result }}"
+            echo "Production Tests: ${{ needs.test-production.result }}"
             exit 1
           fi
 

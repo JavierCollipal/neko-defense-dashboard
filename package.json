@@ -20,14 +20,16 @@
     "test:unit": "echo 'Unit tests: Add Jest configuration later'",
     "test:e2e": "start-server-and-test dev http://localhost:3000 cypress:run",
     "test:e2e:record": "start-server-and-test dev http://localhost:3000 cypress:run:record",
-    "test:all": "npm run test:unit && npm run test:e2e",
+    "test:production": "start-server-and-test 'npm run server' http://localhost:5001/api/health 'cypress run --spec cypress/e2e/production/**/*.cy.js'",
+    "test:all": "npm run test:unit && npm run test:e2e && npm run test:production",
     "test": "npm run test:all",
     "ci:install": "npm ci",
     "ci:lint": "npm run lint:check && npm run format:check",
     "ci:build": "npm run build",
     "ci:test:unit": "npm run test:unit",
     "ci:test:e2e": "npm run test:e2e:record",
-    "ci:test": "npm run ci:test:unit && npm run ci:test:e2e"
+    "ci:test:production": "cypress run --spec cypress/e2e/production/**/*.cy.js",
+    "ci:test": "npm run ci:test:unit && npm run ci:test:e2e && npm run ci:test:production"
   },
   "dependencies": {
     "@apollo/client": "^3.14.0",
