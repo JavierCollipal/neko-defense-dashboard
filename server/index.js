@@ -4,6 +4,8 @@ const { MongoClient } = require('mongodb');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const http = require('http');
+const { Server } = require('socket.io');
 require('dotenv').config();
 
 // 🌍 Translation Service with MongoDB Caching, nyaa~!
@@ -18,7 +20,28 @@ const {
 } = require('./enhanced-translation-service');
 
 const app = express();
+const server = http.createServer(app);
 const PORT = process.env.API_PORT || 5001;
+
+// Initialize Socket.io with CORS
+const io = new Server(server, {
+  cors: {
+    origin: function (origin, callback) {
+      // Same CORS logic as Express
+      if (!origin) return callback(null, true);
+      if (origin.includes('trycloudflare.com') || origin.includes('vercel.app') || origin.includes('railway.app')) {
+        return callback(null, true);
+      }
+      const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001').split(',');
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true,
+  },
+});
 
 // Trust proxy (required for Cloudflare, Vercel, Railway, etc.)
 app.set('trust proxy', 1);
@@ -1750,15 +1773,17 @@ app.get('/api/confessions/stats', async (req, res) => {
 });
 
 // Start server
-connectDB().then(() => {
+connectDB().then(async () => {
   // ============================================================================
-  // 🎨✨ USER-GENERATED CONTENT (UGC) PLATFORM ROUTES - Phase 1, nyaa~! ✨🎨
+  // 🎨✨ USER-GENERATED CONTENT (UGC) PLATFORM ROUTES - Phases 1 & 2, nyaa~! ✨🎨
   // ============================================================================
 
   // Import UGC route modules
   const authRoutes = require('./routes/auth');
   const contentRoutes = require('./routes/content');
   const commentsRoutes = require('./routes/comments');
+  const discoveryRoutes = require('./routes/discovery');
+  const ideasRoutes = require('./routes/ideas');
 
   // Make database available to routes via app.locals
   app.locals.db = db;
@@ -1767,19 +1792,65 @@ connectDB().then(() => {
   app.use('/api/auth', authRoutes);
   app.use('/api/content', contentRoutes);
   app.use('/api/comments', commentsRoutes);
+  app.use('/api', discoveryRoutes); // Phase 2: Discovery & search routes
+  app.use('/api/ideas', ideasRoutes); // Phase 2: Community ideas board
 
   console.log('🎨✨ UGC Platform routes mounted successfully, nyaa~!');
   console.log('  - /api/auth/* (Registration, Login, JWT)');
   console.log('  - /api/content/* (User Content CRUD)');
   console.log('  - /api/comments/* (Comments & Reactions)');
+  console.log('  - /api/search, /api/content/trending, /api/content/recommended (Discovery)');
+  console.log('  - /api/ideas/* (Community Ideas Board with Voting)');
+
+  // Initialize search indexes for Phase 2 discovery features
+  const { initializeSearchIndexes } = require('./routes/discovery');
+  await initializeSearchIndexes(db);
+
+  // ============================================================================
+  // ⚡🔌 SOCKET.IO REAL-TIME FEATURES - Phase 2 Sprint 2.3, nyaa~! 🔌⚡
+  // ============================================================================
+
+  // Socket.io connection handling
+  io.on('connection', (socket) => {
+    console.log('⚡ User connected via Socket.io:', socket.id);
+
+    // Join content-specific room for real-time comments
+    socket.on('join-content', (contentId) => {
+      socket.join(`content:${contentId}`);
+      console.log(`📝 User ${socket.id} joined content room: ${contentId}`);
+    });
+
+    // Leave content room
+    socket.on('leave-content', (contentId) => {
+      socket.leave(`content:${contentId}`);
+      console.log(`👋 User ${socket.id} left content room: ${contentId}`);
+    });
+
+    // Join user notification room
+    socket.on('join-notifications', (userId) => {
+      socket.join(`user:${userId}`);
+      console.log(`🔔 User ${socket.id} joined notification room: ${userId}`);
+    });
+
+    // Disconnect
+    socket.on('disconnect', () => {
+      console.log('👋 User disconnected:', socket.id);
+    });
+  });
+
+  // Make Socket.io available to routes
+  app.locals.io = io;
+
+  console.log('⚡🔌 Socket.io real-time features initialized, nyaa~!');
 
   // ============================================================================
 
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log(`🐾⚡ NEKO DEFENSE API running on port ${PORT}, nyaa~!`);
     console.log(`📡 API endpoint: http://localhost:${PORT}`);
+    console.log(`⚡ Socket.io: REAL-TIME MODE ACTIVE!`);
     console.log(`💖 Status: LEGENDARY MODE ACTIVATED!`);
-    console.log(`🎨 UGC Platform: READY FOR CONTENT CREATION!`);
+    console.log(`🎨 UGC Platform Phase 1 & 2: DISCOVERY MODE ENABLED!`);
   });
 });
 
