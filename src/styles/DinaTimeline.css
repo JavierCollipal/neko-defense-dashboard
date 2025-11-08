@@ -1,0 +1,244 @@
+/* 🐾⏰ DINA TIMELINE STYLES ⏰🐾 */
+
+.dina-timeline {
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #1a0a2a 0%, #0a1a2a 100%);
+  border-radius: 20px;
+  margin: 20px 0;
+}
+
+.timeline-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.timeline-header h2 {
+  font-size: 36px;
+  color: #ffd700;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  margin-bottom: 15px;
+}
+
+.timeline-subtitle {
+  font-size: 18px;
+  color: #00ffff;
+  margin-bottom: 10px;
+}
+
+.timeline-span {
+  font-size: 16px;
+  color: #ff6600;
+  font-weight: bold;
+}
+
+.timeline-container {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #00ffff, #ffd700, #ff6600);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+.timeline-event {
+  position: relative;
+  margin: 40px 0;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.timeline-event:hover {
+  transform: scale(1.02);
+}
+
+.timeline-event:nth-child(odd) {
+  padding-left: 0;
+  padding-right: 55%;
+  text-align: right;
+}
+
+.timeline-event:nth-child(even) {
+  padding-left: 55%;
+  padding-right: 0;
+  text-align: left;
+}
+
+.timeline-marker {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+  transition: all 0.3s;
+}
+
+.timeline-event:hover .timeline-marker {
+  transform: translateX(-50%) scale(1.2);
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+}
+
+/* Different marker colors based on event type */
+.timeline-event.precedent .timeline-marker {
+  background: linear-gradient(135deg, #00ccff, #0088cc);
+  border: 3px solid #00ffff;
+}
+
+.timeline-event.dina-op .timeline-marker {
+  background: linear-gradient(135deg, #ff4444, #cc0000);
+  border: 3px solid #ff0000;
+}
+
+.timeline-event.prosecution .timeline-marker {
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  border: 3px solid #ffd700;
+}
+
+.event-icon {
+  font-size: 24px;
+  display: block;
+}
+
+.event-year {
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+  margin-top: 2px;
+}
+
+.timeline-content {
+  background: rgba(20, 20, 40, 0.9);
+  padding: 20px;
+  border-radius: 15px;
+  border: 2px solid;
+  transition: all 0.3s;
+}
+
+.timeline-event.precedent .timeline-content {
+  border-color: #00ffff;
+  box-shadow: 0 4px 20px rgba(0, 255, 255, 0.3);
+}
+
+.timeline-event.dina-op .timeline-content {
+  border-color: #ff4444;
+  box-shadow: 0 4px 20px rgba(255, 68, 68, 0.3);
+}
+
+.timeline-event.prosecution .timeline-content {
+  border-color: #ffd700;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+}
+
+.timeline-event:hover .timeline-content {
+  box-shadow: 0 8px 30px rgba(255, 215, 0, 0.5);
+}
+
+.timeline-content h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: #ffd700;
+}
+
+.event-date {
+  font-size: 14px;
+  color: #00ffff;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.event-description {
+  color: #dddddd;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.event-detail {
+  margin: 10px 0;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border-left: 3px solid;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.event-detail.victims {
+  border-left-color: #ff6600;
+  color: #ff9966;
+}
+
+.event-detail.perpetrators {
+  border-left-color: #ff0000;
+  color: #ff6666;
+}
+
+.event-detail.significance {
+  border-left-color: #ffd700;
+  color: #ffd700;
+  font-weight: bold;
+}
+
+.event-detail strong {
+  color: white;
+  margin-right: 5px;
+}
+
+.timeline-footer {
+  text-align: center;
+  margin-top: 60px;
+  padding: 30px;
+  background: rgba(255, 215, 0, 0.1);
+  border-radius: 15px;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.timeline-message {
+  font-size: 20px;
+  color: #ffd700;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.neko-signature {
+  font-size: 16px;
+  color: #ff69b4;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .timeline-line {
+    left: 30px;
+  }
+
+  .timeline-event:nth-child(odd),
+  .timeline-event:nth-child(even) {
+    padding-left: 80px;
+    padding-right: 0;
+    text-align: left;
+  }
+
+  .timeline-marker {
+    left: 30px;
+  }
+
+  .timeline-header h2 {
+    font-size: 28px;
+  }
+
+  .timeline-subtitle {
+    font-size: 16px;
+  }
+}

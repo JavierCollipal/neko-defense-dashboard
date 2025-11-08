@@ -1,0 +1,515 @@
+/* 🐾⚖️🌍 DINA DOCUMENTATION INTERNATIONAL STYLES 🌍⚖️🐾 */
+
+.dina-international-container {
+  padding: 30px;
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2a 50%, #2a0a1a 100%);
+  min-height: 100vh;
+  color: white;
+}
+
+/* Language Selector */
+.language-selector {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.language-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: 2px solid #ffd700;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.language-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+}
+
+.language-menu {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: rgba(20, 20, 40, 0.98);
+  border: 2px solid #ffd700;
+  border-radius: 15px;
+  padding: 10px;
+  min-width: 200px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.language-option {
+  display: block;
+  width: 100%;
+  background: transparent;
+  color: white;
+  border: none;
+  padding: 12px 15px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s;
+  font-size: 14px;
+}
+
+.language-option:hover {
+  background: rgba(102, 126, 234, 0.3);
+}
+
+.language-option.active {
+  background: rgba(255, 215, 0, 0.2);
+  border-left: 4px solid #ffd700;
+}
+
+/* Header */
+.dina-international-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 30px;
+  background: rgba(255, 215, 0, 0.05);
+  border-radius: 20px;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.dina-international-header h1 {
+  font-size: 38px;
+  color: #ffd700;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+  margin-bottom: 15px;
+  animation: glow 3s infinite;
+}
+
+@keyframes glow {
+  0%, 100% { text-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
+  50% { text-shadow: 0 0 50px rgba(255, 215, 0, 0.8); }
+}
+
+.dina-subtitle {
+  font-size: 18px;
+  color: #ff6600;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.dina-methodology {
+  font-size: 16px;
+  color: #00ffff;
+  margin-bottom: 10px;
+}
+
+.dina-legal {
+  font-size: 16px;
+  color: #00ff88;
+  font-weight: bold;
+}
+
+/* Statistics Dashboard */
+.dina-stats-international {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.stat-box-international {
+  background: linear-gradient(135deg, rgba(20, 20, 60, 0.8), rgba(40, 40, 80, 0.8));
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  border: 2px solid #00ffff;
+  box-shadow: 0 4px 20px rgba(0, 255, 255, 0.3);
+  transition: all 0.3s;
+}
+
+.stat-box-international:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 255, 255, 0.5);
+}
+
+.stat-box-international.success {
+  border-color: #00ff88;
+  box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
+}
+
+.stat-box-international.warning {
+  border-color: #ff6600;
+  box-shadow: 0 4px 20px rgba(255, 102, 0, 0.3);
+}
+
+.stat-value {
+  font-size: 48px;
+  font-weight: bold;
+  color: #ffd700;
+  margin-bottom: 10px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #aaaaaa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Navigation */
+.dina-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.nav-button {
+  background: linear-gradient(135deg, rgba(20, 20, 60, 0.8), rgba(40, 40, 80, 0.8));
+  color: white;
+  border: 2px solid #00ffff;
+  padding: 15px 30px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+}
+
+.nav-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(0, 255, 255, 0.4);
+  border-color: #ffd700;
+}
+
+.nav-button.active {
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  color: #000;
+  border-color: #ffd700;
+  box-shadow: 0 6px 25px rgba(255, 215, 0, 0.5);
+}
+
+/* Content Area */
+.dina-content-area {
+  margin: 40px 0;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Overview Section */
+.overview-section {
+  padding: 30px;
+}
+
+.overview-banner {
+  text-align: center;
+  background: linear-gradient(135deg, #ff0000, #cc0000);
+  padding: 30px;
+  border-radius: 20px;
+  margin-bottom: 40px;
+  box-shadow: 0 8px 32px rgba(255, 0, 0, 0.4);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 8px 32px rgba(255, 0, 0, 0.4); }
+  50% { box-shadow: 0 8px 32px rgba(255, 0, 0, 0.7); }
+}
+
+.overview-banner h2 {
+  font-size: 36px;
+  color: white;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  margin: 0;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.overview-card {
+  background: rgba(20, 20, 40, 0.9);
+  padding: 30px;
+  border-radius: 15px;
+  border-left: 5px solid;
+  transition: all 0.3s;
+}
+
+.overview-card.mission {
+  border-left-color: #ffd700;
+}
+
+.overview-card.scope {
+  border-left-color: #00ffff;
+}
+
+.overview-card.jurisdiction {
+  border-left-color: #00ff88;
+}
+
+.overview-card:hover {
+  transform: translateX(10px);
+  box-shadow: 0 8px 32px rgba(255, 215, 0, 0.3);
+}
+
+.overview-card h3 {
+  color: #ffd700;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.overview-card p {
+  color: #dddddd;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.quick-access {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.quick-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 18px 35px;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
+}
+
+.quick-button:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 10px 40px rgba(102, 126, 234, 0.6);
+}
+
+/* Perpetrators List */
+.perpetrators-list-international h3 {
+  text-align: center;
+  font-size: 32px;
+  color: #ffd700;
+  margin-bottom: 30px;
+}
+
+.perp-grid-international {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.perp-card-international {
+  background: rgba(20, 20, 40, 0.9);
+  padding: 25px;
+  border-radius: 15px;
+  border: 2px solid #333;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.perp-card-international:hover {
+  border-color: #ffd700;
+  transform: translateY(-8px);
+  box-shadow: 0 12px 35px rgba(255, 215, 0, 0.4);
+}
+
+.perp-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffd700;
+  margin-bottom: 10px;
+}
+
+.perp-role {
+  font-size: 14px;
+  color: #aaaaaa;
+  margin-bottom: 15px;
+}
+
+.perp-status {
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.perp-status.convicted {
+  background: #00ff88;
+  color: #000;
+}
+
+.perp-status.unprosecuted {
+  background: #ff6600;
+  color: #fff;
+}
+
+.perp-crimes-count {
+  font-size: 13px;
+  color: #ff6666;
+}
+
+/* Details View */
+.perpetrator-details-international {
+  background: rgba(20, 20, 40, 0.95);
+  padding: 40px;
+  border-radius: 20px;
+  border: 2px solid #ffd700;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.back-button {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 30px;
+  transition: all 0.3s;
+}
+
+.back-button:hover {
+  background: #764ba2;
+  transform: translateX(-5px);
+}
+
+.details-content h2 {
+  font-size: 36px;
+  color: #ffd700;
+  margin-bottom: 30px;
+  border-bottom: 3px solid #ffd700;
+  padding-bottom: 15px;
+}
+
+.detail-section {
+  margin: 25px 0;
+  padding: 25px;
+  background: rgba(0, 0, 0, 0.3);
+  border-left: 5px solid #00ffff;
+  border-radius: 10px;
+}
+
+.detail-section h3 {
+  color: #00ffff;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.crimes-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.crimes-list li {
+  padding: 10px 0;
+  padding-left: 25px;
+  position: relative;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 102, 0, 0.2);
+}
+
+.crimes-list li:before {
+  content: '⚠️';
+  position: absolute;
+  left: 0;
+}
+
+/* Footer */
+.dina-footer-international {
+  text-align: center;
+  margin-top: 60px;
+  padding: 40px;
+  background: rgba(255, 215, 0, 0.1);
+  border-radius: 20px;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.dina-footer-international p {
+  margin: 15px 0;
+}
+
+.footer-mission {
+  font-size: 18px;
+  color: #ffd700;
+  font-weight: bold;
+}
+
+.footer-principle {
+  font-size: 16px;
+  color: #00ffff;
+  font-style: italic;
+}
+
+.footer-cooperation {
+  font-size: 14px;
+  color: #aaaaaa;
+  margin-top: 20px;
+}
+
+/* Loading State */
+.dina-loading {
+  text-align: center;
+  font-size: 24px;
+  color: #ffd700;
+  padding: 100px;
+  animation: pulse 2s infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dina-international-container {
+    padding: 15px;
+  }
+
+  .dina-international-header h1 {
+    font-size: 28px;
+  }
+
+  .dina-subtitle {
+    font-size: 16px;
+  }
+
+  .language-selector {
+    position: static;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .stat-value {
+    font-size: 36px;
+  }
+
+  .nav-button {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  .overview-banner h2 {
+    font-size: 24px;
+  }
+
+  .quick-button {
+    padding: 15px 25px;
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,438 @@
+// 🐾⚖️🌍 DINA DOCUMENTATION INTERNATIONAL - Global Hunt Operation Interface 🌍⚖️🐾
+import React, { useState, useEffect } from 'react';
+import GlobalThreatMap from './GlobalThreatMap';
+import DinaTimeline from './DinaTimeline';
+import '../styles/DinaDocumentationInternational.css';
+
+// 🎯 API URL - NestJS backend runs on port 4000, nyaa~!
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000/api';
+
+const DinaDocumentationInternational = () => {
+  const [language, setLanguage] = useState('en'); // en, es, pt, de
+  const [stats, setStats] = useState(null);
+  const [perpetrators, setPerpetrators] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedPerp, setSelectedPerp] = useState(null);
+  const [viewMode, setViewMode] = useState('overview'); // overview, list, details, map, timeline, wanted, centers, international
+  const [showLanguageMenu, setShowLanguageMenu] = useState(false);
+
+  // Multi-language translations
+  const translations = {
+    // Header and navigation
+    title: {
+      en: '🌍⚖️ DINA INTERNATIONAL DOCUMENTATION ARCHIVE ⚖️🌍',
+      es: '🌍⚖️ ARCHIVO INTERNACIONAL DE DOCUMENTACIÓN DINA ⚖️🌍',
+      pt: '🌍⚖️ ARQUIVO INTERNACIONAL DE DOCUMENTAÇÃO DINA ⚖️🌍',
+      de: '🌍⚖️ DINA INTERNATIONALES DOKUMENTATIONSARCHIV ⚖️🌍'
+    },
+    subtitle: {
+      en: 'Chilean Secret Police (1973-1977) - Crimes Against Humanity - International Hunt Operation',
+      es: 'Policía Secreta Chilena (1973-1977) - Crímenes de Lesa Humanidad - Operación de Caza Internacional',
+      pt: 'Polícia Secreta Chilena (1973-1977) - Crimes Contra a Humanidade - Operação de Caça Internacional',
+      de: 'Chilenische Geheimpolizei (1973-1977) - Verbrechen gegen die Menschlichkeit - Internationale Jagdoperation'
+    },
+    methodology: {
+      en: '📚 Methodology: Simon Wiesenthal Nazi-Hunting Precedent',
+      es: '📚 Metodología: Precedente de Caza Nazi de Simon Wiesenthal',
+      pt: '📚 Metodologia: Precedente de Caça Nazista de Simon Wiesenthal',
+      de: '📚 Methodik: Simon Wiesenthal Nazi-Jagd-Präzedenzfall'
+    },
+    legalBasis: {
+      en: '⚖️ Legal Basis: No Statute of Limitations for Crimes Against Humanity',
+      es: '⚖️ Base Legal: Sin Prescripción para Crímenes de Lesa Humanidad',
+      pt: '⚖️ Base Legal: Sem Prescrição para Crimes Contra a Humanidade',
+      de: '⚖️ Rechtsgrundlage: Keine Verjährung für Verbrechen gegen die Menschlichkeit'
+    },
+
+    // Navigation buttons
+    navOverview: {
+      en: '🏠 OVERVIEW',
+      es: '🏠 RESUMEN',
+      pt: '🏠 VISÃO GERAL',
+      de: '🏠 ÜBERSICHT'
+    },
+    navList: {
+      en: '📋 PERPETRATORS',
+      es: '📋 PERPETRADORES',
+      pt: '📋 PERPETRADORES',
+      de: '📋 TÄTER'
+    },
+    navMap: {
+      en: '🌍 GLOBAL MAP',
+      es: '🌍 MAPA GLOBAL',
+      pt: '🌍 MAPA GLOBAL',
+      de: '🌍 WELTKARTE'
+    },
+    navTimeline: {
+      en: '⏰ TIMELINE',
+      es: '⏰ LÍNEA DE TIEMPO',
+      pt: '⏰ LINHA DO TEMPO',
+      de: '⏰ ZEITLINIE'
+    },
+
+    // Stats labels
+    statsTotal: {
+      en: 'Total Documents',
+      es: 'Documentos Totales',
+      pt: 'Documentos Totais',
+      de: 'Gesamtdokumente'
+    },
+    statsDocumented: {
+      en: 'Perpetrators Documented',
+      es: 'Perpetradores Documentados',
+      pt: 'Perpetradores Documentados',
+      de: 'Dokumentierte Täter'
+    },
+    statsConvicted: {
+      en: 'Convicted',
+      es: 'Condenados',
+      pt: 'Condenados',
+      de: 'Verurteilt'
+    },
+    statsUnprosecuted: {
+      en: 'Still Unprosecuted',
+      es: 'Aún Sin Enjuiciar',
+      pt: 'Ainda Não Processados',
+      de: 'Noch Nicht Verfolgt'
+    },
+
+    // Overview section
+    overviewWelcome: {
+      en: 'INTERNATIONAL HUNT OPERATION ACTIVE',
+      es: 'OPERACIÓN DE CAZA INTERNACIONAL ACTIVA',
+      pt: 'OPERAÇÃO DE CAÇA INTERNACIONAL ATIVA',
+      de: 'INTERNATIONALE JAGDOPERATION AKTIV'
+    },
+    overviewMission: {
+      en: 'Mission: Document all DINA perpetrators and ensure accountability through international cooperation.',
+      es: 'Misión: Documentar todos los perpetradores DINA y asegurar responsabilidad mediante cooperación internacional.',
+      pt: 'Missão: Documentar todos os perpetradores DINA e garantir responsabilidade através da cooperação internacional.',
+      de: 'Mission: Alle DINA-Täter dokumentieren und Verantwortlichkeit durch internationale Zusammenarbeit sicherstellen.'
+    },
+    overviewScope: {
+      en: 'Scope: Operation Condor network (Chile, Argentina, Uruguay, Paraguay, Brazil, Bolivia) + International crimes (USA, Europe)',
+      es: 'Alcance: Red Operación Cóndor (Chile, Argentina, Uruguay, Paraguay, Brasil, Bolivia) + Crímenes internacionales (EE.UU., Europa)',
+      pt: 'Alcance: Rede Operação Condor (Chile, Argentina, Uruguai, Paraguai, Brasil, Bolívia) + Crimes internacionais (EUA, Europa)',
+      de: 'Umfang: Operation Condor Netzwerk (Chile, Argentinien, Uruguay, Paraguay, Brasilien, Bolivien) + Internationale Verbrechen (USA, Europa)'
+    },
+    overviewJurisdiction: {
+      en: 'Universal Jurisdiction: Any country can prosecute crimes against humanity. No safe haven for perpetrators.',
+      es: 'Jurisdicción Universal: Cualquier país puede enjuiciar crímenes de lesa humanidad. Ningún refugio seguro para perpetradores.',
+      pt: 'Jurisdição Universal: Qualquer país pode processar crimes contra a humanidade. Nenhum refúgio seguro para perpetradores.',
+      de: 'Universelle Gerichtsbarkeit: Jedes Land kann Verbrechen gegen die Menschlichkeit verfolgen. Kein sicherer Hafen für Täter.'
+    },
+
+    // Perpetrator list
+    listTitle: {
+      en: '📋 Documented DINA Agents & Collaborators',
+      es: '📋 Agentes DINA y Colaboradores Documentados',
+      pt: '📋 Agentes DINA e Colaboradores Documentados',
+      de: '📋 Dokumentierte DINA-Agenten & Kollaborateure'
+    },
+    convicted: {
+      en: '⚖️ CONVICTED',
+      es: '⚖️ CONDENADO',
+      pt: '⚖️ CONDENADO',
+      de: '⚖️ VERURTEILT'
+    },
+    unprosecuted: {
+      en: '⚠️ UNPROSECUTED',
+      es: '⚠️ SIN ENJUICIAR',
+      pt: '⚠️ NÃO PROCESSADO',
+      de: '⚠️ NICHT VERFOLGT'
+    },
+    crimesDocumented: {
+      en: 'crimes documented',
+      es: 'crímenes documentados',
+      pt: 'crimes documentados',
+      de: 'dokumentierte Verbrechen'
+    },
+
+    // Footer
+    footerMission: {
+      en: 'Mission: Document all DINA crimes to ensure accountability and justice for victims',
+      es: 'Misión: Documentar todos los crímenes DINA para asegurar responsabilidad y justicia para las víctimas',
+      pt: 'Missão: Documentar todos os crimes DINA para garantir responsabilidade e justiça para as vítimas',
+      de: 'Mission: Alle DINA-Verbrechen dokumentieren, um Verantwortlichkeit und Gerechtigkeit für Opfer sicherzustellen'
+    },
+    footerPrinciple: {
+      en: 'Principle: "Justice, not vengeance" - Simon Wiesenthal',
+      es: 'Principio: "Justicia, no venganza" - Simon Wiesenthal',
+      pt: 'Princípio: "Justiça, não vingança" - Simon Wiesenthal',
+      de: 'Prinzip: "Gerechtigkeit, nicht Rache" - Simon Wiesenthal'
+    },
+    footerInternational: {
+      en: 'International cooperation with: FBI, CIA, Interpol, ICC, Chilean Judicial System, Human Rights Organizations',
+      es: 'Cooperación internacional con: FBI, CIA, Interpol, CPI, Sistema Judicial Chileno, Organizaciones de Derechos Humanos',
+      pt: 'Cooperação internacional com: FBI, CIA, Interpol, TPI, Sistema Judicial Chileno, Organizações de Direitos Humanos',
+      de: 'Internationale Zusammenarbeit mit: FBI, CIA, Interpol, IStGH, Chilenisches Justizsystem, Menschenrechtsorganisationen'
+    }
+  };
+
+  useEffect(() => {
+    fetchDinaData();
+  }, []);
+
+  const fetchDinaData = async () => {
+    try {
+      setLoading(true);
+
+      // Fetch DINA statistics
+      const statsResponse = await fetch(`${API_URL}/dina/stats`);
+      const statsData = await statsResponse.json();
+      if (statsData.success) setStats(statsData.data);
+
+      // Fetch DINA perpetrators
+      const perpsResponse = await fetch(`${API_URL}/dina/perpetrators`);
+      const perpsData = await perpsResponse.json();
+      if (perpsData.success) setPerpetrators(perpsData.data);
+
+      setLoading(false);
+    } catch (error) {
+      console.error('Failed to fetch DINA data:', error);
+      setLoading(false);
+    }
+  };
+
+  const showDetails = (perp) => {
+    setSelectedPerp(perp);
+    setViewMode('details');
+  };
+
+  const changeView = (mode) => {
+    setViewMode(mode);
+    setSelectedPerp(null);
+  };
+
+  const languages = [
+    { code: 'en', flag: '🇬🇧', name: 'English' },
+    { code: 'es', flag: '🇨🇱', name: 'Español' },
+    { code: 'pt', flag: '🇧🇷', name: 'Português' },
+    { code: 'de', flag: '🇩🇪', name: 'Deutsch' }
+  ];
+
+  if (loading) {
+    return (
+      <div className="dina-international-container">
+        <div className="dina-loading">
+          ⚖️ {language === 'es' ? 'Cargando documentación DINA...' :
+               language === 'pt' ? 'Carregando documentação DINA...' :
+               language === 'de' ? 'Lade DINA-Dokumentation...' :
+               'Loading DINA documentation...'}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="dina-international-container">
+      {/* Language Selector */}
+      <div className="language-selector">
+        <button
+          className="language-button"
+          onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+        >
+          🌐 {languages.find(l => l.code === language)?.flag} {languages.find(l => l.code === language)?.name}
+        </button>
+        {showLanguageMenu && (
+          <div className="language-menu">
+            {languages.map(lang => (
+              <button
+                key={lang.code}
+                className={`language-option ${language === lang.code ? 'active' : ''}`}
+                onClick={() => {
+                  setLanguage(lang.code);
+                  setShowLanguageMenu(false);
+                }}
+              >
+                {lang.flag} {lang.name}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Header */}
+      <div className="dina-international-header">
+        <h1>{translations.title[language]}</h1>
+        <p className="dina-subtitle">{translations.subtitle[language]}</p>
+        <p className="dina-methodology">{translations.methodology[language]}</p>
+        <p className="dina-legal">{translations.legalBasis[language]}</p>
+      </div>
+
+      {/* Statistics Dashboard */}
+      {stats && (
+        <div className="dina-stats-international">
+          <div className="stat-box-international">
+            <div className="stat-value">{stats.total_documents}</div>
+            <div className="stat-label">{translations.statsTotal[language]}</div>
+          </div>
+          <div className="stat-box-international">
+            <div className="stat-value">{stats.perpetrators?.total || 0}</div>
+            <div className="stat-label">{translations.statsDocumented[language]}</div>
+          </div>
+          <div className="stat-box-international success">
+            <div className="stat-value">{stats.perpetrators?.convicted || 0}</div>
+            <div className="stat-label">{translations.statsConvicted[language]}</div>
+          </div>
+          <div className="stat-box-international warning">
+            <div className="stat-value">{stats.perpetrators?.unprosecuted || 0}</div>
+            <div className="stat-label">{translations.statsUnprosecuted[language]}</div>
+          </div>
+        </div>
+      )}
+
+      {/* Navigation */}
+      <div className="dina-navigation">
+        <button
+          className={`nav-button ${viewMode === 'overview' ? 'active' : ''}`}
+          onClick={() => changeView('overview')}
+        >
+          {translations.navOverview[language]}
+        </button>
+        <button
+          className={`nav-button ${viewMode === 'list' ? 'active' : ''}`}
+          onClick={() => changeView('list')}
+        >
+          {translations.navList[language]}
+        </button>
+        <button
+          className={`nav-button ${viewMode === 'map' ? 'active' : ''}`}
+          onClick={() => changeView('map')}
+        >
+          {translations.navMap[language]}
+        </button>
+        <button
+          className={`nav-button ${viewMode === 'timeline' ? 'active' : ''}`}
+          onClick={() => changeView('timeline')}
+        >
+          {translations.navTimeline[language]}
+        </button>
+      </div>
+
+      {/* Main Content Area */}
+      <div className="dina-content-area">
+        {viewMode === 'overview' && (
+          <div className="overview-section">
+            <div className="overview-banner">
+              <h2>{translations.overviewWelcome[language]}</h2>
+            </div>
+
+            <div className="overview-grid">
+              <div className="overview-card mission">
+                <h3>🎯 {language === 'es' ? 'MISIÓN' : language === 'pt' ? 'MISSÃO' : language === 'de' ? 'MISSION' : 'MISSION'}</h3>
+                <p>{translations.overviewMission[language]}</p>
+              </div>
+
+              <div className="overview-card scope">
+                <h3>🌍 {language === 'es' ? 'ALCANCE' : language === 'pt' ? 'ALCANCE' : language === 'de' ? 'UMFANG' : 'SCOPE'}</h3>
+                <p>{translations.overviewScope[language]}</p>
+              </div>
+
+              <div className="overview-card jurisdiction">
+                <h3>⚖️ {language === 'es' ? 'JURISDICCIÓN' : language === 'pt' ? 'JURISDIÇÃO' : language === 'de' ? 'GERICHTSBARKEIT' : 'JURISDICTION'}</h3>
+                <p>{translations.overviewJurisdiction[language]}</p>
+              </div>
+            </div>
+
+            <div className="quick-access">
+              <button className="quick-button" onClick={() => changeView('map')}>
+                🌍 {language === 'es' ? 'Ver Mapa Global' : language === 'pt' ? 'Ver Mapa Global' : language === 'de' ? 'Weltkarte Anzeigen' : 'View Global Map'}
+              </button>
+              <button className="quick-button" onClick={() => changeView('timeline')}>
+                ⏰ {language === 'es' ? 'Ver Línea de Tiempo' : language === 'pt' ? 'Ver Linha do Tempo' : language === 'de' ? 'Zeitlinie Anzeigen' : 'View Timeline'}
+              </button>
+              <button className="quick-button" onClick={() => changeView('list')}>
+                📋 {language === 'es' ? 'Ver Perpetradores' : language === 'pt' ? 'Ver Perpetradores' : language === 'de' ? 'Täter Anzeigen' : 'View Perpetrators'}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {viewMode === 'list' && (
+          <div className="perpetrators-list-international">
+            <h3>{translations.listTitle[language]}</h3>
+            {perpetrators.length === 0 ? (
+              <div className="no-data">
+                {language === 'es' ? 'Ningún perpetrador documentado todavía, desu!' :
+                 language === 'pt' ? 'Nenhum perpetrador documentado ainda, desu!' :
+                 language === 'de' ? 'Noch keine Täter dokumentiert, desu!' :
+                 'No perpetrators documented yet, desu!'}
+              </div>
+            ) : (
+              <div className="perp-grid-international">
+                {perpetrators.map((perp, index) => (
+                  <div key={index} className="perp-card-international" onClick={() => showDetails(perp)}>
+                    <div className="perp-name">{perp.fullName}</div>
+                    <div className="perp-role">{perp.role}</div>
+                    <div className={`perp-status ${perp.legalStatus?.convicted ? 'convicted' : 'unprosecuted'}`}>
+                      {perp.legalStatus?.convicted ? translations.convicted[language] : translations.unprosecuted[language]}
+                    </div>
+                    <div className="perp-crimes-count">
+                      {perp.crimesAccused?.length || 0} {translations.crimesDocumented[language]}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {viewMode === 'map' && (
+          <GlobalThreatMap language={language} />
+        )}
+
+        {viewMode === 'timeline' && (
+          <DinaTimeline language={language} />
+        )}
+
+        {viewMode === 'details' && selectedPerp && (
+          <div className="perpetrator-details-international">
+            <button className="back-button" onClick={() => changeView('list')}>
+              ← {language === 'es' ? 'Volver a Lista' : language === 'pt' ? 'Voltar à Lista' : language === 'de' ? 'Zurück zur Liste' : 'Back to List'}
+            </button>
+            {/* Same details view as before - keeping it simple */}
+            <div className="details-content">
+              <h2>{selectedPerp.fullName}</h2>
+              <div className="detail-section">
+                <h3>{language === 'es' ? 'Rol y Organización' : language === 'pt' ? 'Função e Organização' : language === 'de' ? 'Rolle und Organisation' : 'Role & Organization'}</h3>
+                <p><strong>{language === 'es' ? 'Rol:' : language === 'pt' ? 'Função:' : language === 'de' ? 'Rolle:' : 'Role:'}</strong> {selectedPerp.role}</p>
+                {selectedPerp.organization && selectedPerp.organization.length > 0 && (
+                  <p><strong>{language === 'es' ? 'Organizaciones:' : language === 'pt' ? 'Organizações:' : language === 'de' ? 'Organisationen:' : 'Organizations:'}</strong> {selectedPerp.organization.join(', ')}</p>
+                )}
+              </div>
+
+              <div className="detail-section">
+                <h3>{language === 'es' ? 'Estado Legal' : language === 'pt' ? 'Status Legal' : language === 'de' ? 'Rechtsstatus' : 'Legal Status'}</h3>
+                <p className={selectedPerp.legalStatus?.convicted ? 'status-convicted' : 'status-unprosecuted'}>
+                  <strong>{language === 'es' ? 'Condenado:' : language === 'pt' ? 'Condenado:' : language === 'de' ? 'Verurteilt:' : 'Convicted:'}</strong> {selectedPerp.legalStatus?.convicted ? (language === 'es' ? 'SÍ ⚖️' : language === 'pt' ? 'SIM ⚖️' : language === 'de' ? 'JA ⚖️' : 'YES ⚖️') : (language === 'es' ? 'NO ⚠️' : language === 'pt' ? 'NÃO ⚠️' : language === 'de' ? 'NEIN ⚠️' : 'NO ⚠️')}
+                </p>
+              </div>
+
+              {selectedPerp.crimesAccused && selectedPerp.crimesAccused.length > 0 && (
+                <div className="detail-section">
+                  <h3>{language === 'es' ? 'Crímenes Acusados' : language === 'pt' ? 'Crimes Acusados' : language === 'de' ? 'Angeklagte Verbrechen' : 'Crimes Accused'}</h3>
+                  <ul className="crimes-list">
+                    {selectedPerp.crimesAccused.map((crime, i) => (
+                      <li key={i}>{crime}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div className="dina-footer-international">
+        <p>🐾 *purrs in international justice* 😻⚖️🌍</p>
+        <p className="footer-mission">{translations.footerMission[language]}</p>
+        <p className="footer-principle">{translations.footerPrinciple[language]}</p>
+        <p className="footer-cooperation">{translations.footerInternational[language]}</p>
+      </div>
+    </div>
+  );
+};
+
+export default DinaDocumentationInternational;
