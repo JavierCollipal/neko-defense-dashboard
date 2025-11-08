@@ -23,7 +23,8 @@ root.render(
 
 // Register service worker for PWA support
 serviceWorkerRegistration.register({
-  onSuccess: () => console.log('🐾 [PWA] Service worker registered successfully, nyaa~!'),
+  onSuccess: () =>
+    console.log('🐾 [PWA] Service worker registered successfully, nyaa~!'),
   onUpdate: (registration) => {
     console.log('🐾 [PWA] New version available, desu~!');
     // Auto-update after confirmation
@@ -31,7 +32,7 @@ serviceWorkerRegistration.register({
       registration.waiting.postMessage({ type: 'SKIP_WAITING' });
       window.location.reload();
     }
-  }
+  },
 });
 
 console.log('✅ NEKO DEFENSE DASHBOARD initialized, desu~!');

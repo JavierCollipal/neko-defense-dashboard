@@ -37,11 +37,11 @@ export async function GET(request) {
           status: 'approved',
           views: 100,
           upvotes: 10,
-          evidence_links: []
-        }
+          evidence_links: [],
+        },
       ],
       count: 1,
-      message: 'Demo mode - MongoDB not configured'
+      message: 'Demo mode - MongoDB not configured',
     });
   }
 
@@ -65,25 +65,28 @@ export async function GET(request) {
       .sort({ submitted_at: -1 })
       .toArray();
 
-    console.log(`✅ [Confessions API] Retrieved ${confessions.length} confessions (category: ${category})`);
+    console.log(
+      `✅ [Confessions API] Retrieved ${confessions.length} confessions (category: ${category})`
+    );
 
     return NextResponse.json({
       success: true,
       data: confessions,
-      count: confessions.length
+      count: confessions.length,
     });
-
   } catch (error) {
-    console.error('❌ [Confessions API] Failed to fetch confessions:', error.message);
+    console.error(
+      '❌ [Confessions API] Failed to fetch confessions:',
+      error.message
+    );
     return NextResponse.json(
       {
         success: false,
         error: error.message,
-        message: 'Failed to fetch confessions'
+        message: 'Failed to fetch confessions',
       },
       { status: 500 }
     );
-
   } finally {
     await client.close();
   }

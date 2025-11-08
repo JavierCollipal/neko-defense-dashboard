@@ -11,15 +11,15 @@
    * Keep existing aesthetic while mobile-optimizing
    * ======================================== */
 
-  --neko-primary: #ff1493;        /* Hot pink */
-  --neko-secondary: #00ffff;      /* Cyan */
-  --neko-dark: #0a0e27;           /* Dark blue-black */
-  --neko-darker: #050812;         /* Darker background */
-  --neko-accent: #ffd700;         /* Gold */
-  --neko-success: #00ff41;        /* Bright green */
-  --neko-danger: #ff0033;         /* Red */
-  --neko-warning: #ffaa00;        /* Orange */
-  --neko-info: #00aaff;           /* Blue */
+  --neko-primary: #ff1493; /* Hot pink */
+  --neko-secondary: #00ffff; /* Cyan */
+  --neko-dark: #0a0e27; /* Dark blue-black */
+  --neko-darker: #050812; /* Darker background */
+  --neko-accent: #ffd700; /* Gold */
+  --neko-success: #00ff41; /* Bright green */
+  --neko-danger: #ff0033; /* Red */
+  --neko-warning: #ffaa00; /* Orange */
+  --neko-info: #00aaff; /* Blue */
 
   /* Transparent variants for overlays */
   --neko-primary-alpha: rgba(255, 20, 147, 0.1);
@@ -62,9 +62,9 @@
    * Based on iOS & Android guidelines
    * ======================================== */
 
-  --tap-target-min: 44px;          /* iOS minimum */
-  --tap-target-comfortable: 48px;   /* Android minimum */
-  --tap-target-optimal: 56px;       /* Optimal for most users */
+  --tap-target-min: 44px; /* iOS minimum */
+  --tap-target-comfortable: 48px; /* Android minimum */
+  --tap-target-optimal: 56px; /* Optimal for most users */
 
   /* ========================================
    * LAYOUT WIDTHS
@@ -108,7 +108,9 @@
   --shadow-sm: 0 0 5px var(--neko-secondary);
   --shadow-md: 0 0 10px var(--neko-secondary), 0 0 20px var(--neko-secondary);
   --shadow-lg: 0 0 15px var(--neko-primary), 0 0 30px var(--neko-primary);
-  --shadow-xl: 0 0 20px var(--neko-primary), 0 0 40px var(--neko-primary), 0 0 60px var(--neko-primary);
+  --shadow-xl:
+    0 0 20px var(--neko-primary), 0 0 40px var(--neko-primary),
+    0 0 60px var(--neko-primary);
 
   /* Standard shadows for cards */
   --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -184,12 +186,12 @@
  * For right-to-left languages
  * ======================================== */
 
-[dir="rtl"] {
+[dir='rtl'] {
   --text-align: right;
   --flex-direction: row-reverse;
 }
 
-[dir="ltr"] {
+[dir='ltr'] {
   --text-align: left;
   --flex-direction: row;
 }

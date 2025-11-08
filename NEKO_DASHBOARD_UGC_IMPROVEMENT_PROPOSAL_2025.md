@@ -372,15 +372,15 @@ const NEKO_REACTIONS = [
 
 ```javascript
 // Real-time comment updates
-socket.on('comment:new', data => {
+socket.on('comment:new', (data) => {
   // { content_id, comment, author }
 });
 
-socket.on('comment:reaction', data => {
+socket.on('comment:reaction', (data) => {
   // { comment_id, emoji, user }
 });
 
-socket.on('comment:deleted', data => {
+socket.on('comment:deleted', (data) => {
   // { comment_id }
 });
 ```
@@ -431,7 +431,7 @@ db.user_generated_content.createIndex({ author_id: 1, created_at: -1 });
 
 ```javascript
 // Hybrid recommendation system
-const recommendContent = async userId => {
+const recommendContent = async (userId) => {
   const user = await db.users.findOne({ _id: userId });
 
   // 1. Collaborative filtering (what similar users liked)
@@ -445,7 +445,8 @@ const recommendContent = async userId => {
   const trendingBoost = calculateTrendingBoost();
 
   // 4. Combine scores with weights
-  const finalScore = collaborativeScore * 0.4 + contentBasedScore * 0.4 + trendingBoost * 0.2;
+  const finalScore =
+    collaborativeScore * 0.4 + contentBasedScore * 0.4 + trendingBoost * 0.2;
 
   return await db.user_generated_content
     .find({ status: 'published', visibility: 'public' })
@@ -515,7 +516,7 @@ const recommendContent = async userId => {
 **Priority Scoring Formula**:
 
 ```javascript
-const calculatePriorityScore = idea => {
+const calculatePriorityScore = (idea) => {
   const daysOld = (Date.now() - idea.created_at) / (1000 * 60 * 60 * 24);
   const voteScore = idea.votes.score;
   const engagementScore = idea.comments_count * 2 + idea.views;
@@ -595,7 +596,8 @@ const calculatePriorityScore = idea => {
 const EXAMPLE_CHALLENGES = [
   {
     title: 'Threat Actor ASCII Art Challenge',
-    description: 'Create the most creative ASCII art representation of a threat actor',
+    description:
+      'Create the most creative ASCII art representation of a threat actor',
     category: 'art',
     duration_days: 7,
     prizes: [
@@ -609,7 +611,9 @@ const EXAMPLE_CHALLENGES = [
     description: 'Share your most interesting cybersecurity research findings',
     category: 'research',
     duration_days: 14,
-    prizes: [{ rank: 1, reward: { type: 'featured', value: 'research_highlight' } }],
+    prizes: [
+      { rank: 1, reward: { type: 'featured', value: 'research_highlight' } },
+    ],
   },
 ];
 ```
@@ -736,7 +740,7 @@ AI: "To submit an idea, go to the Idea Board and click 'New Idea'.
 **AI Moderation (Example with OpenAI Moderation API)**:
 
 ```javascript
-const moderateContent = async content => {
+const moderateContent = async (content) => {
   // 1. AI toxicity check
   const aiResult = await openai.moderations.create({
     input: content.text,
@@ -814,8 +818,16 @@ const DAILY_QUESTS = [
 
 const SECRET_ACHIEVEMENTS = [
   { id: 'night_owl', trigger: 'post_at_3am', reward: 'Night Owl badge' },
-  { id: 'speed_demon', trigger: '100_posts_in_month', reward: 'Speed Demon badge' },
-  { id: 'helpful_neko', trigger: '100_liked_comments', reward: 'Helpful Neko badge' },
+  {
+    id: 'speed_demon',
+    trigger: '100_posts_in_month',
+    reward: 'Speed Demon badge',
+  },
+  {
+    id: 'helpful_neko',
+    trigger: '100_liked_comments',
+    reward: 'Helpful Neko badge',
+  },
 ];
 ```
 
@@ -1437,16 +1449,16 @@ socket.emit('reaction:add', { comment_id, emoji });
 socket.emit('user:typing', { content_id });
 
 // Server → Client
-socket.on('comment:new', data => {
+socket.on('comment:new', (data) => {
   /* New comment posted */
 });
-socket.on('notification', data => {
+socket.on('notification', (data) => {
   /* New notification */
 });
-socket.on('user:online', data => {
+socket.on('user:online', (data) => {
   /* User came online */
 });
-socket.on('challenge:starting', data => {
+socket.on('challenge:starting', (data) => {
   /* Challenge starts in 5 min */
 });
 ```

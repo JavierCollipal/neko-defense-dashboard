@@ -33,11 +33,11 @@
  * ======================================== */
 
 :root {
-  --breakpoint-xs: 320px;   /* Small phones (iPhone SE) */
-  --breakpoint-sm: 576px;   /* Large phones */
-  --breakpoint-md: 768px;   /* Tablets */
-  --breakpoint-lg: 992px;   /* Tablet landscape / Small desktop */
-  --breakpoint-xl: 1200px;  /* Desktop */
+  --breakpoint-xs: 320px; /* Small phones (iPhone SE) */
+  --breakpoint-sm: 576px; /* Large phones */
+  --breakpoint-md: 768px; /* Tablets */
+  --breakpoint-lg: 992px; /* Tablet landscape / Small desktop */
+  --breakpoint-xl: 1200px; /* Desktop */
   --breakpoint-2xl: 1400px; /* Large desktop */
 }
 

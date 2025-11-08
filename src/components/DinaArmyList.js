@@ -6,7 +6,7 @@ import {
   GET_DINA_AGENTS,
   GET_DINA_AGENT,
   SEARCH_DINA_AGENTS,
-  GET_DINA_STATISTICS
+  GET_DINA_STATISTICS,
 } from '../graphql/dinaArmyListQueries';
 import '../styles/DinaArmyList.css';
 
@@ -31,9 +31,11 @@ const DinaArmyList = () => {
     fetchPolicy: 'network-only',
   });
 
-  const { data: statsData, loading: statsLoading } = useQuery(GET_DINA_STATISTICS);
+  const { data: statsData, loading: statsLoading } =
+    useQuery(GET_DINA_STATISTICS);
 
-  const [searchAgents, { data: searchData, loading: searchLoading }] = useLazyQuery(SEARCH_DINA_AGENTS);
+  const [searchAgents, { data: searchData, loading: searchLoading }] =
+    useLazyQuery(SEARCH_DINA_AGENTS);
 
   const [getAgent, { data: agentData }] = useLazyQuery(GET_DINA_AGENT);
 
@@ -72,7 +74,8 @@ const DinaArmyList = () => {
   }, [agentData]);
 
   // Pagination data
-  const agents = searchData?.searchDINAAgents || data?.getDINAAgents?.agents || [];
+  const agents =
+    searchData?.searchDINAAgents || data?.getDINAAgents?.agents || [];
   const pagination = data?.getDINAAgents?.pagination;
   const stats = statsData?.getDINAStatistics;
 
@@ -107,7 +110,8 @@ const DinaArmyList = () => {
           Official Chilean Army submission to Judge Alejandro Solís (2008)
         </p>
         <p className="header-sources">
-          Sources: 2008 Army List, León Gómez Araneda compilation, CIPER Chile investigation
+          Sources: 2008 Army List, León Gómez Araneda compilation, CIPER Chile
+          investigation
         </p>
       </div>
 
@@ -233,7 +237,9 @@ const DinaArmyList = () => {
             <label>Legal Status:</label>
             <select
               value={filters.legal_status || ''}
-              onChange={(e) => handleFilterChange('legal_status', e.target.value)}
+              onChange={(e) =>
+                handleFilterChange('legal_status', e.target.value)
+              }
             >
               <option value="">All Statuses</option>
               <option value="convicted">Convicted</option>
@@ -285,7 +291,13 @@ const DinaArmyList = () => {
         ) : agents.length === 0 ? (
           <div className="no-results">
             <p>No agents found matching your criteria.</p>
-            <button onClick={() => { setFilters({}); setSearchQuery(''); refetch(); }}>
+            <button
+              onClick={() => {
+                setFilters({});
+                setSearchQuery('');
+                refetch();
+              }}
+            >
               Clear Filters
             </button>
           </div>
@@ -306,7 +318,10 @@ const DinaArmyList = () => {
             </thead>
             <tbody>
               {agents.map((agent, index) => (
-                <tr key={agent.agent_id} className={`row-${agent.legal_status || 'unknown'}`}>
+                <tr
+                  key={agent.agent_id}
+                  className={`row-${agent.legal_status || 'unknown'}`}
+                >
                   <td>{(page - 1) * limit + index + 1}</td>
                   <td className="name-cell">
                     <strong>{agent.full_name}</strong>
@@ -314,19 +329,25 @@ const DinaArmyList = () => {
                   </td>
                   <td>{agent.rank}</td>
                   <td>
-                    <span className={`category-badge ${agent.category?.toLowerCase().replace('_', '-')}`}>
+                    <span
+                      className={`category-badge ${agent.category?.toLowerCase().replace('_', '-')}`}
+                    >
                       {agent.category?.replace(/_/g, ' ')}
                     </span>
                   </td>
                   <td>{agent.brigade || '-'}</td>
                   <td>{agent.region || '-'}</td>
                   <td>
-                    <span className={`status-badge status-${agent.legal_status || 'unknown'}`}>
+                    <span
+                      className={`status-badge status-${agent.legal_status || 'unknown'}`}
+                    >
                       {agent.legal_status || 'Unknown'}
                     </span>
                   </td>
                   <td>
-                    <span className={`verification-badge ${agent.verification_status}`}>
+                    <span
+                      className={`verification-badge ${agent.verification_status}`}
+                    >
                       {agent.verification_status}
                     </span>
                   </td>
@@ -349,7 +370,9 @@ const DinaArmyList = () => {
       {pagination && !searchData && (
         <div className="pagination-controls">
           <div className="pagination-info">
-            Showing {((page - 1) * limit) + 1} to {Math.min(page * limit, pagination.total)} of {pagination.total} agents
+            Showing {(page - 1) * limit + 1} to{' '}
+            {Math.min(page * limit, pagination.total)} of {pagination.total}{' '}
+            agents
           </div>
           <div className="pagination-buttons">
             <button
@@ -389,29 +412,74 @@ const DinaArmyList = () => {
 
       {/* Agent Detail Modal */}
       {selectedAgent && (
-        <div className="agent-detail-modal" onClick={() => setSelectedAgent(null)}>
+        <div
+          className="agent-detail-modal"
+          onClick={() => setSelectedAgent(null)}
+        >
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setSelectedAgent(null)}>
+            <button
+              className="modal-close"
+              onClick={() => setSelectedAgent(null)}
+            >
               ✕
             </button>
             <h3>{selectedAgent.full_name}</h3>
-            {selectedAgent.rut && <p><strong>RUT:</strong> {selectedAgent.rut}</p>}
+            {selectedAgent.rut && (
+              <p>
+                <strong>RUT:</strong> {selectedAgent.rut}
+              </p>
+            )}
 
             <div className="detail-section">
               <h4>Military Information</h4>
-              <p><strong>Rank:</strong> {selectedAgent.rank}</p>
-              {selectedAgent.branch && <p><strong>Branch:</strong> {selectedAgent.branch}</p>}
-              {selectedAgent.service_number && <p><strong>Service Number:</strong> {selectedAgent.service_number}</p>}
+              <p>
+                <strong>Rank:</strong> {selectedAgent.rank}
+              </p>
+              {selectedAgent.branch && (
+                <p>
+                  <strong>Branch:</strong> {selectedAgent.branch}
+                </p>
+              )}
+              {selectedAgent.service_number && (
+                <p>
+                  <strong>Service Number:</strong>{' '}
+                  {selectedAgent.service_number}
+                </p>
+              )}
             </div>
 
             <div className="detail-section">
               <h4>DINA Organization</h4>
-              <p><strong>Category:</strong> {selectedAgent.category?.replace(/_/g, ' ')}</p>
-              {selectedAgent.region && <p><strong>Region:</strong> {selectedAgent.region}</p>}
-              {selectedAgent.brigade && <p><strong>Brigade:</strong> {selectedAgent.brigade}</p>}
-              {selectedAgent.department && <p><strong>Department:</strong> {selectedAgent.department}</p>}
-              {selectedAgent.position && <p><strong>Position:</strong> {selectedAgent.position}</p>}
-              {selectedAgent.service_period_text && <p><strong>Service Period:</strong> {selectedAgent.service_period_text}</p>}
+              <p>
+                <strong>Category:</strong>{' '}
+                {selectedAgent.category?.replace(/_/g, ' ')}
+              </p>
+              {selectedAgent.region && (
+                <p>
+                  <strong>Region:</strong> {selectedAgent.region}
+                </p>
+              )}
+              {selectedAgent.brigade && (
+                <p>
+                  <strong>Brigade:</strong> {selectedAgent.brigade}
+                </p>
+              )}
+              {selectedAgent.department && (
+                <p>
+                  <strong>Department:</strong> {selectedAgent.department}
+                </p>
+              )}
+              {selectedAgent.position && (
+                <p>
+                  <strong>Position:</strong> {selectedAgent.position}
+                </p>
+              )}
+              {selectedAgent.service_period_text && (
+                <p>
+                  <strong>Service Period:</strong>{' '}
+                  {selectedAgent.service_period_text}
+                </p>
+              )}
             </div>
 
             {selectedAgent.legal_status && (
@@ -423,76 +491,102 @@ const DinaArmyList = () => {
               </div>
             )}
 
-            {selectedAgent.convictions && selectedAgent.convictions.length > 0 && (
-              <div className="detail-section">
-                <h4>Convictions</h4>
-                {selectedAgent.convictions.map((conv, i) => (
-                  <div key={i} className="conviction-item">
-                    <p><strong>Case:</strong> {conv.case_name}</p>
-                    <p><strong>Verdict:</strong> {conv.verdict}</p>
-                    {conv.sentence && <p><strong>Sentence:</strong> {conv.sentence}</p>}
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {selectedAgent.investigations && selectedAgent.investigations.length > 0 && (
-              <div className="detail-section">
-                <h4>Investigations</h4>
-                {selectedAgent.investigations.map((inv, i) => (
-                  <div key={i} className="investigation-item">
-                    <p><strong>Case:</strong> {inv.case_name}</p>
-                    <p><strong>Status:</strong> {inv.status}</p>
-                    {inv.judge && <p><strong>Judge:</strong> {inv.judge}</p>}
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {selectedAgent.alleged_crimes && selectedAgent.alleged_crimes.length > 0 && (
-              <div className="detail-section">
-                <h4>Alleged Crimes</h4>
-                <ul>
-                  {selectedAgent.alleged_crimes.map((crime, i) => (
-                    <li key={i}>{crime}</li>
+            {selectedAgent.convictions &&
+              selectedAgent.convictions.length > 0 && (
+                <div className="detail-section">
+                  <h4>Convictions</h4>
+                  {selectedAgent.convictions.map((conv, i) => (
+                    <div key={i} className="conviction-item">
+                      <p>
+                        <strong>Case:</strong> {conv.case_name}
+                      </p>
+                      <p>
+                        <strong>Verdict:</strong> {conv.verdict}
+                      </p>
+                      {conv.sentence && (
+                        <p>
+                          <strong>Sentence:</strong> {conv.sentence}
+                        </p>
+                      )}
+                    </div>
                   ))}
-                </ul>
-              </div>
-            )}
+                </div>
+              )}
 
-            {selectedAgent.known_operations && selectedAgent.known_operations.length > 0 && (
-              <div className="detail-section">
-                <h4>Known Operations</h4>
-                <ul>
-                  {selectedAgent.known_operations.map((op, i) => (
-                    <li key={i}>{op}</li>
+            {selectedAgent.investigations &&
+              selectedAgent.investigations.length > 0 && (
+                <div className="detail-section">
+                  <h4>Investigations</h4>
+                  {selectedAgent.investigations.map((inv, i) => (
+                    <div key={i} className="investigation-item">
+                      <p>
+                        <strong>Case:</strong> {inv.case_name}
+                      </p>
+                      <p>
+                        <strong>Status:</strong> {inv.status}
+                      </p>
+                      {inv.judge && (
+                        <p>
+                          <strong>Judge:</strong> {inv.judge}
+                        </p>
+                      )}
+                    </div>
                   ))}
-                </ul>
-              </div>
-            )}
+                </div>
+              )}
 
-            {selectedAgent.victims_linked && selectedAgent.victims_linked.length > 0 && (
-              <div className="detail-section">
-                <h4>Victims Linked</h4>
-                <ul>
-                  {selectedAgent.victims_linked.map((victim, i) => (
-                    <li key={i}>{victim}</li>
+            {selectedAgent.alleged_crimes &&
+              selectedAgent.alleged_crimes.length > 0 && (
+                <div className="detail-section">
+                  <h4>Alleged Crimes</h4>
+                  <ul>
+                    {selectedAgent.alleged_crimes.map((crime, i) => (
+                      <li key={i}>{crime}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+            {selectedAgent.known_operations &&
+              selectedAgent.known_operations.length > 0 && (
+                <div className="detail-section">
+                  <h4>Known Operations</h4>
+                  <ul>
+                    {selectedAgent.known_operations.map((op, i) => (
+                      <li key={i}>{op}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+            {selectedAgent.victims_linked &&
+              selectedAgent.victims_linked.length > 0 && (
+                <div className="detail-section">
+                  <h4>Victims Linked</h4>
+                  <ul>
+                    {selectedAgent.victims_linked.map((victim, i) => (
+                      <li key={i}>{victim}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+            {selectedAgent.post_dina_positions &&
+              selectedAgent.post_dina_positions.length > 0 && (
+                <div className="detail-section">
+                  <h4>Post-DINA Career</h4>
+                  {selectedAgent.post_dina_positions.map((pos, i) => (
+                    <div key={i} className="position-item">
+                      <p>
+                        <strong>Institution:</strong> {pos.institution}
+                      </p>
+                      <p>
+                        <strong>Position:</strong> {pos.position} ({pos.rank})
+                      </p>
+                    </div>
                   ))}
-                </ul>
-              </div>
-            )}
-
-            {selectedAgent.post_dina_positions && selectedAgent.post_dina_positions.length > 0 && (
-              <div className="detail-section">
-                <h4>Post-DINA Career</h4>
-                {selectedAgent.post_dina_positions.map((pos, i) => (
-                  <div key={i} className="position-item">
-                    <p><strong>Institution:</strong> {pos.institution}</p>
-                    <p><strong>Position:</strong> {pos.position} ({pos.rank})</p>
-                  </div>
-                ))}
-              </div>
-            )}
+                </div>
+              )}
 
             {selectedAgent.aliases && selectedAgent.aliases.length > 0 && (
               <div className="detail-section">
@@ -508,21 +602,34 @@ const DinaArmyList = () => {
               </div>
             )}
 
-            {selectedAgent.data_sources && selectedAgent.data_sources.length > 0 && (
-              <div className="detail-section">
-                <h4>Data Sources</h4>
-                {selectedAgent.data_sources.map((source, i) => (
-                  <div key={i} className="source-item">
-                    <p><strong>{source.source_name}</strong> ({source.confidence})</p>
-                  </div>
-                ))}
-              </div>
-            )}
+            {selectedAgent.data_sources &&
+              selectedAgent.data_sources.length > 0 && (
+                <div className="detail-section">
+                  <h4>Data Sources</h4>
+                  {selectedAgent.data_sources.map((source, i) => (
+                    <div key={i} className="source-item">
+                      <p>
+                        <strong>{source.source_name}</strong> (
+                        {source.confidence})
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
 
             <div className="detail-section verification-footer">
-              <p><strong>Verification Status:</strong> {selectedAgent.verification_status}</p>
-              <p><strong>Record Created:</strong> {new Date(selectedAgent.created_at).toLocaleDateString()}</p>
-              <p><strong>Last Updated:</strong> {new Date(selectedAgent.updated_at).toLocaleDateString()}</p>
+              <p>
+                <strong>Verification Status:</strong>{' '}
+                {selectedAgent.verification_status}
+              </p>
+              <p>
+                <strong>Record Created:</strong>{' '}
+                {new Date(selectedAgent.created_at).toLocaleDateString()}
+              </p>
+              <p>
+                <strong>Last Updated:</strong>{' '}
+                {new Date(selectedAgent.updated_at).toLocaleDateString()}
+              </p>
             </div>
           </div>
         </div>

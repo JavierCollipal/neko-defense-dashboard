@@ -20,15 +20,11 @@ describe('🌍⚡ LANGUAGE SWITCHING & I18N ⚡🌍', () => {
     });
 
     it('should display current language flag', () => {
-      cy.getByDataCy('current-flag')
-        .should('be.visible')
-        .and('contain', '🇬🇧'); // UK flag for English
+      cy.getByDataCy('current-flag').should('be.visible').and('contain', '🇬🇧'); // UK flag for English
     });
 
     it('should display dropdown arrow', () => {
-      cy.getByDataCy('dropdown-arrow')
-        .should('be.visible')
-        .and('contain', '▼'); // Closed state
+      cy.getByDataCy('dropdown-arrow').should('be.visible').and('contain', '▼'); // Closed state
     });
 
     it('should open dropdown when button is clicked', () => {
@@ -90,8 +86,7 @@ describe('🌍⚡ LANGUAGE SWITCHING & I18N ⚡🌍', () => {
     });
 
     it('should highlight currently active language', () => {
-      cy.getByDataCy('language-option-en')
-        .should('have.class', 'active');
+      cy.getByDataCy('language-option-en').should('have.class', 'active');
     });
 
     it('should show checkmark on active language', () => {
@@ -158,13 +153,16 @@ describe('🌍⚡ LANGUAGE SWITCHING & I18N ⚡🌍', () => {
         { code: 'zh', flag: '🇨🇳' },
         { code: 'hi', flag: '🇮🇳' },
         { code: 'ar', flag: '🇸🇦' },
-        { code: 'en', flag: '🇬🇧' }
+        { code: 'en', flag: '🇬🇧' },
       ];
 
       languages.forEach((lang) => {
         cy.getByDataCy('language-button').click();
         cy.getByDataCy(`language-option-${lang.code}`).click();
-        cy.getByDataCy('current-lang-code').should('have.text', lang.code.toUpperCase());
+        cy.getByDataCy('current-lang-code').should(
+          'have.text',
+          lang.code.toUpperCase()
+        );
         cy.getByDataCy('current-flag').should('contain', lang.flag);
       });
     });
@@ -239,8 +237,11 @@ describe('🌍⚡ LANGUAGE SWITCHING & I18N ⚡🌍', () => {
 
   describe('♿ Accessibility', () => {
     it('should have proper ARIA label', () => {
-      cy.getByDataCy('language-button')
-        .should('have.attr', 'aria-label', 'Select language');
+      cy.getByDataCy('language-button').should(
+        'have.attr',
+        'aria-label',
+        'Select language'
+      );
     });
 
     it('should be keyboard accessible - open with Enter', () => {
@@ -292,10 +293,7 @@ describe('🌍⚡ LANGUAGE SWITCHING & I18N ⚡🌍', () => {
 
   describe('⚡ Performance & Edge Cases', () => {
     it('should handle rapid clicking on language button', () => {
-      cy.getByDataCy('language-button')
-        .click()
-        .click()
-        .click();
+      cy.getByDataCy('language-button').click().click().click();
 
       // Should be closed after odd number of clicks
       cy.getByDataCy('language-dropdown').should('not.exist');

@@ -22,17 +22,13 @@ export async function GET() {
     const db = client.db('neko-defense-system');
 
     // Get all DINA perpetrators
-    const perpetrators = await db
-      .collection('dina-agents')
-      .find({})
-      .toArray();
+    const perpetrators = await db.collection('dina-agents').find({}).toArray();
 
     return NextResponse.json({
       success: true,
       count: perpetrators.length,
-      data: perpetrators
+      data: perpetrators,
     });
-
   } catch (error) {
     console.error('❌ [API] DINA perpetrators error:', error);
     return NextResponse.json(

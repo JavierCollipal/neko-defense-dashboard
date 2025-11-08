@@ -19,7 +19,7 @@ export async function GET(request) {
     return NextResponse.json({
       success: true,
       data: [],
-      message: 'Demo mode - MongoDB not configured'
+      message: 'Demo mode - MongoDB not configured',
     });
   }
 
@@ -30,25 +30,27 @@ export async function GET(request) {
     const db = client.db('neko-defense-system');
     const collection = db.collection('evidence-packages');
 
-    const evidence = await collection.find({}).sort({ collected_at: -1 }).limit(100).toArray();
+    const evidence = await collection
+      .find({})
+      .sort({ collected_at: -1 })
+      .limit(100)
+      .toArray();
 
     return NextResponse.json({
       success: true,
       data: evidence,
-      count: evidence.length
+      count: evidence.length,
     });
-
   } catch (error) {
     console.error('❌ API Error:', error.message);
     return NextResponse.json(
       {
         success: false,
         error: error.message,
-        message: 'Failed to fetch evidence packages'
+        message: 'Failed to fetch evidence packages',
       },
       { status: 500 }
     );
-
   } finally {
     await client.close();
   }

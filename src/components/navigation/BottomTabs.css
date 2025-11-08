@@ -12,7 +12,9 @@
 
   background: var(--neko-darker);
   border-top: 2px solid var(--neko-primary);
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5), 0 -4px 20px rgba(255, 20, 147, 0.3);
+  box-shadow:
+    0 -2px 10px rgba(0, 0, 0, 0.5),
+    0 -4px 20px rgba(255, 20, 147, 0.3);
 
   /* Safe area for iOS notch */
   padding-bottom: env(safe-area-inset-bottom);

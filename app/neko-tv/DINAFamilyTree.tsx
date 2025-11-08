@@ -54,7 +54,7 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
     const edges: Edge[] = [];
 
     // Root node: Manuel Contreras (DINA Chief)
-    const contrerasAgent = agents.find(a => a.agentId === 'contreras-manuel');
+    const contrerasAgent = agents.find((a) => a.agentId === 'contreras-manuel');
 
     nodes.push({
       id: 'contreras',
@@ -62,9 +62,13 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
       data: {
         label: (
           <div className="px-6 py-4 bg-gradient-to-br from-red-600 to-red-800 rounded-lg border-2 border-red-400 shadow-2xl">
-            <div className="text-white font-bold text-lg">👑 Manuel Contreras</div>
+            <div className="text-white font-bold text-lg">
+              👑 Manuel Contreras
+            </div>
             <div className="text-red-200 text-sm">"El Mamo"</div>
-            <div className="text-red-300 text-xs mt-1">DINA Commander & Chief</div>
+            <div className="text-red-300 text-xs mt-1">
+              DINA Commander & Chief
+            </div>
             <div className="text-red-400 text-xs">DECEASED - CONVICTED</div>
           </div>
         ),
@@ -74,7 +78,7 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
     });
 
     // Brigade nodes (Level 2)
-    const brigadesFiltered = brigades.filter(b => b._type !== 'metadata');
+    const brigadesFiltered = brigades.filter((b) => b._type !== 'metadata');
 
     const brigadeSpacing = 300;
     const startX = 150;
@@ -84,9 +88,15 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
 
       // Determine color based on brigade type
       let colorClass = 'from-purple-600 to-purple-800 border-purple-400';
-      if (brigade.specialty?.includes('elimination') || brigade.specialty?.includes('Chemical')) {
+      if (
+        brigade.specialty?.includes('elimination') ||
+        brigade.specialty?.includes('Chemical')
+      ) {
         colorClass = 'from-orange-600 to-orange-800 border-orange-400';
-      } else if (brigade.specialty?.includes('international') || brigade.specialty?.includes('Foreign')) {
+      } else if (
+        brigade.specialty?.includes('international') ||
+        brigade.specialty?.includes('Foreign')
+      ) {
         colorClass = 'from-blue-600 to-blue-800 border-blue-400';
       } else if (brigade.specialty?.includes('Psychological')) {
         colorClass = 'from-pink-600 to-pink-800 border-pink-400';
@@ -96,10 +106,16 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
         id: brigadeId,
         data: {
           label: (
-            <div className={`px-4 py-3 bg-gradient-to-br ${colorClass} rounded-lg border-2 shadow-xl hover:shadow-2xl transition-shadow`}>
-              <div className="text-white font-semibold text-sm">{brigade.name}</div>
+            <div
+              className={`px-4 py-3 bg-gradient-to-br ${colorClass} rounded-lg border-2 shadow-xl hover:shadow-2xl transition-shadow`}
+            >
+              <div className="text-white font-semibold text-sm">
+                {brigade.name}
+              </div>
               {brigade.specialty && (
-                <div className="text-gray-200 text-xs mt-1">{brigade.specialty}</div>
+                <div className="text-gray-200 text-xs mt-1">
+                  {brigade.specialty}
+                </div>
               )}
               {brigade.commanders && brigade.commanders.length > 0 && (
                 <div className="text-gray-300 text-xs mt-1">
@@ -109,7 +125,7 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
             </div>
           ),
         },
-        position: { x: startX + (index * brigadeSpacing), y: 250 },
+        position: { x: startX + index * brigadeSpacing, y: 250 },
         sourcePosition: Position.Bottom,
         targetPosition: Position.Top,
       });
@@ -130,21 +146,20 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
     });
 
     // Agent nodes (Level 3) - excluding Contreras
-    const otherAgents = agents.filter(a => a.agentId !== 'contreras-manuel');
+    const otherAgents = agents.filter((a) => a.agentId !== 'contreras-manuel');
 
     // Group agents by category for better layout
-    const seniorAgents = otherAgents.filter(a =>
-      a.role.includes('Second-in-Command') ||
-      a.role.includes('Operations Chief') ||
-      a.role.includes('Operations Officer')
+    const seniorAgents = otherAgents.filter(
+      (a) =>
+        a.role.includes('Second-in-Command') ||
+        a.role.includes('Operations Chief') ||
+        a.role.includes('Operations Officer')
     );
-    const villaGrimaldiAgents = otherAgents.filter(a =>
-      a.role.includes('Villa Grimaldi') &&
-      !seniorAgents.includes(a)
+    const villaGrimaldiAgents = otherAgents.filter(
+      (a) => a.role.includes('Villa Grimaldi') && !seniorAgents.includes(a)
     );
-    const otherDINAAgents = otherAgents.filter(a =>
-      !seniorAgents.includes(a) &&
-      !villaGrimaldiAgents.includes(a)
+    const otherDINAAgents = otherAgents.filter(
+      (a) => !seniorAgents.includes(a) && !villaGrimaldiAgents.includes(a)
     );
 
     // Layout senior agents (row 1)
@@ -164,10 +179,16 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
         type: 'output',
         data: {
           label: (
-            <div className={`px-4 py-3 bg-gradient-to-br ${statusColor} rounded-lg border-2 shadow-xl hover:shadow-2xl transition-all hover:scale-105`}>
-              <div className="text-white font-semibold text-xs">{agent.fullName}</div>
+            <div
+              className={`px-4 py-3 bg-gradient-to-br ${statusColor} rounded-lg border-2 shadow-xl hover:shadow-2xl transition-all hover:scale-105`}
+            >
+              <div className="text-white font-semibold text-xs">
+                {agent.fullName}
+              </div>
               {agent.codename && (
-                <div className="text-gray-200 text-xs italic">"{agent.codename}"</div>
+                <div className="text-gray-200 text-xs italic">
+                  "{agent.codename}"
+                </div>
               )}
               <div className="text-gray-300 text-xs mt-1">{agent.role}</div>
               <div className="text-xs mt-1 font-semibold">
@@ -179,7 +200,7 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
             </div>
           ),
         },
-        position: { x: 200 + (index * 350), y: 500 },
+        position: { x: 200 + index * 350, y: 500 },
         targetPosition: Position.Top,
       });
 
@@ -213,12 +234,20 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
         type: 'output',
         data: {
           label: (
-            <div className={`px-3 py-2 bg-gradient-to-br ${statusColor} rounded-lg border-2 shadow-xl hover:shadow-2xl transition-all hover:scale-105`}>
-              <div className="text-white font-semibold text-xs">{agent.fullName}</div>
+            <div
+              className={`px-3 py-2 bg-gradient-to-br ${statusColor} rounded-lg border-2 shadow-xl hover:shadow-2xl transition-all hover:scale-105`}
+            >
+              <div className="text-white font-semibold text-xs">
+                {agent.fullName}
+              </div>
               {agent.codename && (
-                <div className="text-gray-200 text-xs italic">"{agent.codename}"</div>
+                <div className="text-gray-200 text-xs italic">
+                  "{agent.codename}"
+                </div>
               )}
-              <div className="text-gray-300 text-xs mt-1">🏛️ Villa Grimaldi</div>
+              <div className="text-gray-300 text-xs mt-1">
+                🏛️ Villa Grimaldi
+              </div>
               <div className="text-xs mt-1 font-semibold">
                 {agent.status.includes('CONVICTED') && '⚖️ CONVICTED'}
                 {agent.status.includes('NEVER PROSECUTED') && '🔓 UNPROSECUTED'}
@@ -227,7 +256,7 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
             </div>
           ),
         },
-        position: { x: 100 + (index * 250), y: 700 },
+        position: { x: 100 + index * 250, y: 700 },
         targetPosition: Position.Top,
       });
 
@@ -263,10 +292,16 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
         type: 'output',
         data: {
           label: (
-            <div className={`px-3 py-2 bg-gradient-to-br ${statusColor} rounded-lg border-2 shadow-xl hover:shadow-2xl transition-all hover:scale-105`}>
-              <div className="text-white font-semibold text-xs">{agent.fullName}</div>
+            <div
+              className={`px-3 py-2 bg-gradient-to-br ${statusColor} rounded-lg border-2 shadow-xl hover:shadow-2xl transition-all hover:scale-105`}
+            >
+              <div className="text-white font-semibold text-xs">
+                {agent.fullName}
+              </div>
               {agent.codename && (
-                <div className="text-gray-200 text-xs italic">"{agent.codename}"</div>
+                <div className="text-gray-200 text-xs italic">
+                  "{agent.codename}"
+                </div>
               )}
               <div className="text-gray-300 text-xs mt-1">{agent.role}</div>
               <div className="text-xs mt-1 font-semibold">
@@ -278,16 +313,18 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
             </div>
           ),
         },
-        position: { x: 150 + (index * 280), y: 900 },
+        position: { x: 150 + index * 280, y: 900 },
         targetPosition: Position.Top,
       });
 
       // Try to connect to matching brigade
       let connected = false;
       if (agent.organization && agent.organization.length > 0) {
-        const matchingBrigade = brigadesFiltered.find(b =>
-          (b.name.includes('Lautaro') && agent.fullName.includes('Rivas')) ||
-          (b.name.includes('Caupolicán') && agent.fullName.includes('Krassnoff'))
+        const matchingBrigade = brigadesFiltered.find(
+          (b) =>
+            (b.name.includes('Lautaro') && agent.fullName.includes('Rivas')) ||
+            (b.name.includes('Caupolicán') &&
+              agent.fullName.includes('Krassnoff'))
         );
 
         if (matchingBrigade) {
@@ -346,19 +383,16 @@ export default function DINAFamilyTree({ agents, brigades }: Props) {
         attributionPosition="bottom-left"
         className="rounded-xl"
       >
-        <Background
-          color="#a855f7"
-          gap={20}
-          size={1}
-          className="opacity-20"
-        />
-        <Controls
-          className="bg-black/60 backdrop-blur-md border border-purple-500/30 rounded-lg"
-        />
+        <Background color="#a855f7" gap={20} size={1} className="opacity-20" />
+        <Controls className="bg-black/60 backdrop-blur-md border border-purple-500/30 rounded-lg" />
         <MiniMap
           nodeColor={(node) => {
-            if (node.type === 'input') {return '#dc2626';}
-            if (node.type === 'output') {return '#a855f7';}
+            if (node.type === 'input') {
+              return '#dc2626';
+            }
+            if (node.type === 'output') {
+              return '#a855f7';
+            }
             return '#6366f1';
           }}
           className="bg-black/60 backdrop-blur-md border border-purple-500/30 rounded-lg"

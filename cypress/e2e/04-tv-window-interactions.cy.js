@@ -11,7 +11,8 @@ describe('📺 TV Window Pop-up Interactions', () => {
       cy.contains('📺 NEKO TV').click();
 
       cy.get('@windowOpen').should('be.calledOnce');
-      cy.get('@windowOpen').should('be.calledWith',
+      cy.get('@windowOpen').should(
+        'be.calledWith',
         '/tv-window.html',
         'NekoTvStreaming',
         Cypress.sinon.match.string
@@ -21,7 +22,8 @@ describe('📺 TV Window Pop-up Interactions', () => {
     it('should pass correct window parameters for NEKO TV', () => {
       cy.contains('📺 NEKO TV').click();
 
-      cy.get('@windowOpen').should('be.calledWith',
+      cy.get('@windowOpen').should(
+        'be.calledWith',
         '/tv-window.html',
         'NekoTvStreaming',
         Cypress.sinon.match(/width=1200/)
@@ -31,7 +33,8 @@ describe('📺 TV Window Pop-up Interactions', () => {
     it('should set correct window features for NEKO TV', () => {
       cy.contains('📺 NEKO TV').click();
 
-      cy.get('@windowOpen').should('be.calledWith',
+      cy.get('@windowOpen').should(
+        'be.calledWith',
         Cypress.sinon.match.any,
         Cypress.sinon.match.any,
         Cypress.sinon.match(/menubar=no/)
@@ -44,7 +47,8 @@ describe('📺 TV Window Pop-up Interactions', () => {
       cy.contains('📡 MULTI-CHANNEL TV').click();
 
       cy.get('@windowOpen').should('be.calledOnce');
-      cy.get('@windowOpen').should('be.calledWith',
+      cy.get('@windowOpen').should(
+        'be.calledWith',
         '/tv-window-tabs.html',
         'NekoMultiChannelTv',
         Cypress.sinon.match.string
@@ -54,7 +58,8 @@ describe('📺 TV Window Pop-up Interactions', () => {
     it('should pass correct window parameters for Multi-Channel TV', () => {
       cy.contains('📡 MULTI-CHANNEL TV').click();
 
-      cy.get('@windowOpen').should('be.calledWith',
+      cy.get('@windowOpen').should(
+        'be.calledWith',
         '/tv-window-tabs.html',
         'NekoMultiChannelTv',
         Cypress.sinon.match(/width=1400/)
@@ -64,7 +69,8 @@ describe('📺 TV Window Pop-up Interactions', () => {
     it('should set larger dimensions for Multi-Channel TV', () => {
       cy.contains('📡 MULTI-CHANNEL TV').click();
 
-      cy.get('@windowOpen').should('be.calledWith',
+      cy.get('@windowOpen').should(
+        'be.calledWith',
         Cypress.sinon.match.any,
         Cypress.sinon.match.any,
         Cypress.sinon.match(/height=900/)
@@ -77,7 +83,8 @@ describe('📺 TV Window Pop-up Interactions', () => {
       cy.contains('📺 DINA JUSTICE TV').click();
 
       cy.get('@windowOpen').should('be.calledOnce');
-      cy.get('@windowOpen').should('be.calledWith',
+      cy.get('@windowOpen').should(
+        'be.calledWith',
         '/dina-tv-window.html',
         'DinaTvWindow',
         Cypress.sinon.match.string
@@ -87,7 +94,8 @@ describe('📺 TV Window Pop-up Interactions', () => {
     it('should pass correct window parameters for DINA Justice TV', () => {
       cy.contains('📺 DINA JUSTICE TV').click();
 
-      cy.get('@windowOpen').should('be.calledWith',
+      cy.get('@windowOpen').should(
+        'be.calledWith',
         '/dina-tv-window.html',
         'DinaTvWindow',
         Cypress.sinon.match(/width=1400/)
@@ -148,8 +156,7 @@ describe('📺 TV Window Pop-up Interactions', () => {
 
   describe('🎯 Button Styling and Accessibility', () => {
     it('should have correct CSS classes for TV buttons', () => {
-      cy.contains('📺 NEKO TV')
-        .should('have.class', 'tv-window-button');
+      cy.contains('📺 NEKO TV').should('have.class', 'tv-window-button');
 
       cy.contains('📡 MULTI-CHANNEL TV')
         .should('have.class', 'tv-window-button')
@@ -169,9 +176,7 @@ describe('📺 TV Window Pop-up Interactions', () => {
     });
 
     it('should be keyboard accessible', () => {
-      cy.contains('📺 NEKO TV')
-        .focus()
-        .type('{enter}');
+      cy.contains('📺 NEKO TV').focus().type('{enter}');
 
       cy.get('@windowOpen').should('be.called');
     });
@@ -188,7 +193,7 @@ describe('📺 TV Window Pop-up Interactions', () => {
     it('should attempt to focus the TV window after opening', () => {
       // Create a mock window object with focus method
       const mockWindow = {
-        focus: cy.stub().as('windowFocus')
+        focus: cy.stub().as('windowFocus'),
       };
 
       cy.window().then((win) => {

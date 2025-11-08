@@ -17,17 +17,17 @@ describe('⚡ Performance & Stress Testing', () => {
         classification: 'Test Classification',
         location: 'Unknown',
         hunt_priority: `P${(i % 3) + 1}`,
-        bounty: 50000 + (i * 1000),
+        bounty: 50000 + i * 1000,
         known_for: 'Performance testing actor',
-        law_enforcement_status: 'Under Investigation'
+        law_enforcement_status: 'Under Investigation',
       }));
 
       cy.intercept('GET', '**/api/threat-actors?category=all', {
         body: {
           success: true,
           count: 100,
-          data: largeThreatActors
-        }
+          data: largeThreatActors,
+        },
       }).as('largeThreatActors');
 
       cy.get('.tv-window-button.threat-actors').click();
@@ -47,15 +47,17 @@ describe('⚡ Performance & Stress Testing', () => {
     it('should handle rapid data updates without memory leaks', () => {
       // Simulate 50 rapid data updates
       for (let i = 0; i < 50; i++) {
-        const updatedData = [{
-          _id: 'threat001',
-          name: `Updated Actor ${i}`,
-          threat_level: 'HIGH',
-          bounty: 50000 + (i * 1000)
-        }];
+        const updatedData = [
+          {
+            _id: 'threat001',
+            name: `Updated Actor ${i}`,
+            threat_level: 'HIGH',
+            bounty: 50000 + i * 1000,
+          },
+        ];
 
         cy.intercept('GET', '**/api/threat-actors?category=ransomware', {
-          body: { success: true, count: 1, data: updatedData }
+          body: { success: true, count: 1, data: updatedData },
         }).as(`update${i}`);
 
         cy.get('.category-switcher')
@@ -76,14 +78,14 @@ describe('⚡ Performance & Stress Testing', () => {
         art: '█'.repeat(1000) + `\nArt ${i}`, // Large art string
         threat_level: 'HIGH',
         category: 'predators',
-        description: 'Performance test ASCII art'
+        description: 'Performance test ASCII art',
       }));
 
       cy.intercept('GET', '**/api/ascii-art', {
         body: {
           success: true,
-          data: largeAsciiArt
-        }
+          data: largeAsciiArt,
+        },
       }).as('largeAsciiArt');
 
       cy.reload();
@@ -102,11 +104,11 @@ describe('⚡ Performance & Stress Testing', () => {
         dina_network: 50,
         ransomware: 80,
         state_sponsored: 60,
-        crypto_crime: 60
+        crypto_crime: 60,
       };
 
       cy.intercept('GET', '**/api/threat-counts', {
-        body: { success: true, data: largeCounts }
+        body: { success: true, data: largeCounts },
       }).as('largeCounts');
 
       cy.reload();
@@ -130,7 +132,7 @@ describe('⚡ Performance & Stress Testing', () => {
         'DINA Network',
         'Ransomware',
         'State Sponsored',
-        'Crypto Crime'
+        'Crypto Crime',
       ];
 
       // Stress test with 100 switches
@@ -240,7 +242,7 @@ describe('⚡ Performance & Stress Testing', () => {
 
         observer.observe(win.document.body, {
           childList: true,
-          subtree: true
+          subtree: true,
         });
       });
 
@@ -270,9 +272,9 @@ describe('⚡ Performance & Stress Testing', () => {
           body: {
             success: true,
             count: 2,
-            data: []
-          }
-        })
+            data: [],
+          },
+        });
       }).as('slowApi');
 
       const startTime = Date.now();
@@ -296,7 +298,7 @@ describe('⚡ Performance & Stress Testing', () => {
       // Intercept with failures
       cy.intercept('GET', '**/api/threat-actors*', {
         statusCode: 500,
-        body: { success: false, error: 'Server error' }
+        body: { success: false, error: 'Server error' },
       }).as('failedApi');
 
       // Try navigation multiple times
@@ -318,11 +320,11 @@ describe('⚡ Performance & Stress Testing', () => {
         const data = Array.from({ length: size }, (_, i) => ({
           _id: `threat${i}`,
           name: `Actor ${i}`,
-          threat_level: 'HIGH'
+          threat_level: 'HIGH',
         }));
 
         cy.intercept('GET', '**/api/threat-actors?category=predators', {
-          body: { success: true, count: size, data }
+          body: { success: true, count: size, data },
         }).as(`size${size}`);
 
         cy.get('.category-switcher')
@@ -344,7 +346,7 @@ describe('⚡ Performance & Stress Testing', () => {
         apiCallCount++;
         req.reply({
           delay: 100,
-          body: { success: true, count: 0, data: [] }
+          body: { success: true, count: 0, data: [] },
         });
       }).as('throttledApi');
 
@@ -379,15 +381,16 @@ describe('⚡ Performance & Stress Testing', () => {
         hunt_priority: 'P1',
         bounty: 999999999,
         known_for: 'Known for many things: ' + 'Crime, '.repeat(50),
-        law_enforcement_status: 'Wanted by multiple agencies: ' + 'FBI, '.repeat(20),
+        law_enforcement_status:
+          'Wanted by multiple agencies: ' + 'FBI, '.repeat(20),
         evidence_count: 500,
         last_seen: '2025-10-12',
         nation_state: 'Multiple Nations',
-        active_operations: 25
+        active_operations: 25,
       }));
 
       cy.intercept('GET', '**/api/threat-actors?category=all', {
-        body: { success: true, count: 50, data: complexActors }
+        body: { success: true, count: 50, data: complexActors },
       }).as('complexActors');
 
       const startTime = Date.now();
@@ -396,8 +399,7 @@ describe('⚡ Performance & Stress Testing', () => {
       cy.wait('@complexActors');
 
       // Should render within reasonable time
-      cy.get('.threat-actor-card', { timeout: 5000 })
-        .should('have.length', 50);
+      cy.get('.threat-actor-card', { timeout: 5000 }).should('have.length', 50);
 
       const endTime = Date.now();
       const renderTime = endTime - startTime;
@@ -420,9 +422,9 @@ describe('⚡ Performance & Stress Testing', () => {
               dina_network: 10 + i,
               ransomware: 12 + i,
               state_sponsored: 8 + i,
-              crypto_crime: 10 + i
-            }
-          }
+              crypto_crime: 10 + i,
+            },
+          },
         }).as(`counts${i}`);
 
         cy.reload();
@@ -529,11 +531,11 @@ describe('🔥 Extreme Stress Testing', () => {
         _id: `extreme${i}`,
         name: `Extreme Actor ${i}`,
         threat_level: 'HIGH',
-        type: 'predator'
+        type: 'predator',
       }));
 
       cy.intercept('GET', '**/api/threat-actors?category=all', {
-        body: { success: true, count: 1000, data: extremeDataset }
+        body: { success: true, count: 1000, data: extremeDataset },
       }).as('extremeData');
 
       cy.get('.tv-window-button.threat-actors').click();
@@ -566,16 +568,18 @@ describe('🔥 Extreme Stress Testing', () => {
     });
 
     it('should handle massive ASCII art strings', () => {
-      const massiveArt = [{
-        title: 'Massive Art',
-        art: '█'.repeat(100000), // 100KB art string
-        threat_level: 'CRITICAL',
-        category: 'predators',
-        description: 'Extreme performance test'
-      }];
+      const massiveArt = [
+        {
+          title: 'Massive Art',
+          art: '█'.repeat(100000), // 100KB art string
+          threat_level: 'CRITICAL',
+          category: 'predators',
+          description: 'Extreme performance test',
+        },
+      ];
 
       cy.intercept('GET', '**/api/ascii-art', {
-        body: { success: true, data: massiveArt }
+        body: { success: true, data: massiveArt },
       }).as('massiveArt');
 
       cy.reload();

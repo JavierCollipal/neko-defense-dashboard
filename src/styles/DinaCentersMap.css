@@ -154,13 +154,25 @@
   height: 100%;
 }
 
-.grid-line.horizontal:nth-child(1) { top: 25%; }
-.grid-line.horizontal:nth-child(2) { top: 50%; }
-.grid-line.horizontal:nth-child(3) { top: 75%; }
+.grid-line.horizontal:nth-child(1) {
+  top: 25%;
+}
+.grid-line.horizontal:nth-child(2) {
+  top: 50%;
+}
+.grid-line.horizontal:nth-child(3) {
+  top: 75%;
+}
 
-.grid-line.vertical:nth-child(4) { left: 25%; }
-.grid-line.vertical:nth-child(5) { left: 50%; }
-.grid-line.vertical:nth-child(6) { left: 75%; }
+.grid-line.vertical:nth-child(4) {
+  left: 25%;
+}
+.grid-line.vertical:nth-child(5) {
+  left: 50%;
+}
+.grid-line.vertical:nth-child(6) {
+  left: 75%;
+}
 
 /* Map Markers */
 .map-markers {
@@ -195,7 +207,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
   }
   50% {

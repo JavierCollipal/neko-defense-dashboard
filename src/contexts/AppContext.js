@@ -17,16 +17,12 @@ export const AppProvider = ({ children }) => {
     setActiveTheme,
 
     // Helper functions
-    toggleMobileMenu: () => setMobileMenuOpen(prev => !prev),
+    toggleMobileMenu: () => setMobileMenuOpen((prev) => !prev),
     closeMobileMenu: () => setMobileMenuOpen(false),
-    openMobileMenu: () => setMobileMenuOpen(true)
+    openMobileMenu: () => setMobileMenuOpen(true),
   };
 
-  return (
-    <AppContext.Provider value={value}>
-      {children}
-    </AppContext.Provider>
-  );
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
 // Custom hook for easy access

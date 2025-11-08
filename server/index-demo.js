@@ -8,7 +8,10 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Load ASCII art from file
-const asciiArtPath = path.join(require('os').homedir(), 'neko-ascii-art-gallery.json');
+const asciiArtPath = path.join(
+  require('os').homedir(),
+  'neko-ascii-art-gallery.json'
+);
 let asciiData = [];
 
 try {
@@ -18,14 +21,16 @@ try {
   console.log(`✅ Loaded ${asciiData.length} ASCII art pieces, nyaa~!`);
 } catch (error) {
   console.log('⚠️  Using fallback demo data, desu!');
-  asciiData = [{
-    id: 'demo',
-    name: 'DEMO MODE',
-    category: 'interface',
-    threat_level: 'INFO',
-    description: 'Running in demo mode with sample data',
-    art: ['NEKO DEFENSE SYSTEM', 'Demo Mode Active!']
-  }];
+  asciiData = [
+    {
+      id: 'demo',
+      name: 'DEMO MODE',
+      category: 'interface',
+      threat_level: 'INFO',
+      description: 'Running in demo mode with sample data',
+      art: ['NEKO DEFENSE SYSTEM', 'Demo Mode Active!'],
+    },
+  ];
 }
 
 // Middleware
@@ -34,7 +39,11 @@ app.use(express.json());
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'LEGENDARY', message: 'Neko Defense API is purring perfectly! 🐾✨', mode: 'DEMO' });
+  res.json({
+    status: 'LEGENDARY',
+    message: 'Neko Defense API is purring perfectly! 🐾✨',
+    mode: 'DEMO',
+  });
 });
 
 // Get all ASCII art
@@ -44,7 +53,9 @@ app.get('/api/ascii-art', (req, res) => {
 
 // Get ASCII art by category
 app.get('/api/ascii-art/:category', (req, res) => {
-  const filtered = asciiData.filter(art => art.category === req.params.category);
+  const filtered = asciiData.filter(
+    (art) => art.category === req.params.category
+  );
   res.json({ success: true, count: filtered.length, data: filtered });
 });
 
@@ -61,11 +72,11 @@ app.get('/api/stats', (req, res) => {
       'predator_detection_zone',
       'conversation_archive',
       'archive',
-      'lvim_config'
+      'lvim_config',
     ],
     timestamp: new Date(),
     status: 'FORTRESS MODE ACTIVE (DEMO)',
-    kawaii_level: 'MAXIMUM'
+    kawaii_level: 'MAXIMUM',
   };
   res.json({ success: true, data: stats });
 });
@@ -79,17 +90,17 @@ app.get('/api/threats/summary', (req, res) => {
       'illegal_materials_monitor',
       'restricted_access_bait',
       'admin_secrets_decoy',
-      'predator_detection_zone'
+      'predator_detection_zone',
     ],
     threat_actors_tracked: [
       'APT28/Frost Spider',
       'Ransomware Gangs',
       'Black Hat Hackers',
       'Phishing Scammers',
-      'Crypto Thieves'
+      'Crypto Thieves',
     ],
     status: 'MAXIMUM PROTECTION ACTIVE',
-    last_updated: new Date()
+    last_updated: new Date(),
   };
   res.json({ success: true, data: summary });
 });

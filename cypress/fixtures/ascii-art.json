@@ -3,7 +3,13 @@
   "data": [
     {
       "name": "🐾 NEKO GUARDIAN",
-      "art": ["    /\\_/\\", "   ( o.o )", "    > ^ <", "  FORTRESS", "   ACTIVE"],
+      "art": [
+        "    /\\_/\\",
+        "   ( o.o )",
+        "    > ^ <",
+        "  FORTRESS",
+        "   ACTIVE"
+      ],
       "category": "neko",
       "threat_level": "PROTECTED",
       "description": "NEKO Guardian system active and monitoring, nyaa~!",

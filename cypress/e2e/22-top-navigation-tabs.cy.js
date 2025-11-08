@@ -25,7 +25,16 @@ describe('Top Navigation Tabs (Desktop)', () => {
     });
 
     it('should display correct button labels', () => {
-      const expectedLabels = ['Home', 'Threats', 'DINA', 'Analytics', 'Abilities', 'Blog', 'Videos', 'RAG'];
+      const expectedLabels = [
+        'Home',
+        'Threats',
+        'DINA',
+        'Analytics',
+        'Abilities',
+        'Blog',
+        'Videos',
+        'RAG',
+      ];
 
       expectedLabels.forEach((label) => {
         cy.contains('.top-tab-button', label).should('be.visible');
@@ -36,9 +45,16 @@ describe('Top Navigation Tabs (Desktop)', () => {
       cy.get('.top-tab-icon').should('have.length', 8);
 
       // Check specific icons
-      cy.get('.top-tab-button').first().find('.top-tab-icon').should('contain', '🏠');
-      cy.contains('.top-tab-button', 'Threats').find('.top-tab-icon').should('contain', '🎯');
-      cy.contains('.top-tab-button', 'DINA').find('.top-tab-icon').should('contain', '📚');
+      cy.get('.top-tab-button')
+        .first()
+        .find('.top-tab-icon')
+        .should('contain', '🏠');
+      cy.contains('.top-tab-button', 'Threats')
+        .find('.top-tab-icon')
+        .should('contain', '🎯');
+      cy.contains('.top-tab-button', 'DINA')
+        .find('.top-tab-icon')
+        .should('contain', '📚');
     });
   });
 
@@ -92,20 +108,17 @@ describe('Top Navigation Tabs (Desktop)', () => {
   describe('Active State Highlighting', () => {
     it('should highlight Home button as active on homepage', () => {
       cy.visit('/');
-      cy.contains('.top-tab-button', 'Home')
-        .should('have.class', 'active');
+      cy.contains('.top-tab-button', 'Home').should('have.class', 'active');
     });
 
     it('should highlight Threats button as active on threats page', () => {
       cy.visit('/threats');
-      cy.contains('.top-tab-button', 'Threats')
-        .should('have.class', 'active');
+      cy.contains('.top-tab-button', 'Threats').should('have.class', 'active');
     });
 
     it('should highlight DINA button as active on DINA page', () => {
       cy.visit('/dina');
-      cy.contains('.top-tab-button', 'DINA')
-        .should('have.class', 'active');
+      cy.contains('.top-tab-button', 'DINA').should('have.class', 'active');
     });
 
     it('should only have one active button at a time', () => {
@@ -125,7 +138,10 @@ describe('Top Navigation Tabs (Desktop)', () => {
 
       // Navigate to DINA
       cy.contains('.top-tab-button', 'DINA').click();
-      cy.contains('.top-tab-button', 'Threats').should('not.have.class', 'active');
+      cy.contains('.top-tab-button', 'Threats').should(
+        'not.have.class',
+        'active'
+      );
       cy.contains('.top-tab-button', 'DINA').should('have.class', 'active');
     });
   });
@@ -136,15 +152,18 @@ describe('Top Navigation Tabs (Desktop)', () => {
     });
 
     it('should have retro CRT border styling', () => {
-      cy.get('.top-tabs').should('have.css', 'border-bottom-color')
+      cy.get('.top-tabs')
+        .should('have.css', 'border-bottom-color')
         .and('match', /rgb\(0, 255, (65|41)\)/); // Green glow
     });
 
     it('should display scanline effect on buttons', () => {
-      cy.get('.top-tab-button').first().then(($button) => {
-        const pseudoElement = window.getComputedStyle($button[0], '::before');
-        expect(pseudoElement).to.exist;
-      });
+      cy.get('.top-tab-button')
+        .first()
+        .then(($button) => {
+          const pseudoElement = window.getComputedStyle($button[0], '::before');
+          expect(pseudoElement).to.exist;
+        });
     });
 
     it('should have glow effect on active button', () => {
@@ -156,7 +175,8 @@ describe('Top Navigation Tabs (Desktop)', () => {
 
     it('should change appearance on hover', () => {
       cy.get('.top-tab-button').first().trigger('mouseover');
-      cy.get('.top-tab-button').first()
+      cy.get('.top-tab-button')
+        .first()
         .should('have.css', 'transform')
         .and('not.equal', 'none');
     });
@@ -170,8 +190,11 @@ describe('Top Navigation Tabs (Desktop)', () => {
 
     it('should have aria-current on active button', () => {
       cy.visit('/');
-      cy.contains('.top-tab-button', 'Home')
-        .should('have.attr', 'aria-current', 'page');
+      cy.contains('.top-tab-button', 'Home').should(
+        'have.attr',
+        'aria-current',
+        'page'
+      );
     });
 
     it('should be keyboard navigable', () => {
@@ -185,9 +208,7 @@ describe('Top Navigation Tabs (Desktop)', () => {
 
     it('should have visible focus indicators', () => {
       cy.get('.top-tab-button').first().focus();
-      cy.focused()
-        .should('have.css', 'outline')
-        .and('not.equal', 'none');
+      cy.focused().should('have.css', 'outline').and('not.equal', 'none');
     });
   });
 
@@ -215,7 +236,9 @@ describe('Top Navigation Tabs (Desktop)', () => {
     it('should show horizontal scroll on narrow screens', () => {
       cy.viewport(900, 600);
       cy.get('.top-tabs-container').then(($container) => {
-        expect($container[0].scrollWidth).to.be.greaterThan($container[0].clientWidth);
+        expect($container[0].scrollWidth).to.be.greaterThan(
+          $container[0].clientWidth
+        );
       });
     });
   });
@@ -295,7 +318,8 @@ describe('Top Navigation Tabs (Desktop)', () => {
 
     it('should work without JavaScript (progressive enhancement)', () => {
       cy.visit('/');
-      cy.get('.top-tab-button').first()
+      cy.get('.top-tab-button')
+        .first()
         .should('have.attr', 'href')
         .and('not.be.empty');
     });

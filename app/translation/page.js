@@ -20,7 +20,10 @@ export default function TranslationDashboard() {
 
   const testTranslation = async () => {
     if (!translationTest.trim()) {
-      setTestResult({ success: false, error: 'Please enter text to translate' });
+      setTestResult({
+        success: false,
+        error: 'Please enter text to translate',
+      });
       return;
     }
 
@@ -37,8 +40,8 @@ export default function TranslationDashboard() {
         body: JSON.stringify({
           text: translationTest,
           targetLanguage: 'es',
-          sourceLanguage: 'en'
-        })
+          sourceLanguage: 'en',
+        }),
       });
 
       const result = await response.json();
@@ -62,9 +65,16 @@ export default function TranslationDashboard() {
         {/* Animated Header with Neko TV Style */}
         <div className="text-center mb-8 animate-fadeIn">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent mb-2">
-            🌍✨ {t('translation.dashboard.title', 'Translation Management Dashboard')} ✨🐾
+            🌍✨{' '}
+            {t(
+              'translation.dashboard.title',
+              'Translation Management Dashboard'
+            )}{' '}
+            ✨🐾
           </h1>
-          <p className="text-gray-400">Powered by AI • MongoDB Atlas • Neko Arc Technology</p>
+          <p className="text-gray-400">
+            Powered by AI • MongoDB Atlas • Neko Arc Technology
+          </p>
         </div>
 
         <div className="grid gap-6">
@@ -76,7 +86,9 @@ export default function TranslationDashboard() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-center">
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
                 <p className="text-gray-400 text-sm mb-1">Current Language</p>
-                <p className="text-blue-400 font-bold text-xl">{currentLanguage.toUpperCase()}</p>
+                <p className="text-blue-400 font-bold text-xl">
+                  {currentLanguage.toUpperCase()}
+                </p>
               </div>
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                 <p className="text-gray-400 text-sm mb-1">i18next Status</p>
@@ -98,7 +110,9 @@ export default function TranslationDashboard() {
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2 flex items-center justify-between">
                   <span>Test Text (English)</span>
-                  <span className="text-xs text-gray-500">{translationTest.length} characters</span>
+                  <span className="text-xs text-gray-500">
+                    {translationTest.length} characters
+                  </span>
                 </label>
                 <textarea
                   value={translationTest}
@@ -121,9 +135,24 @@ export default function TranslationDashboard() {
               >
                 {isLoading ? (
                   <span className="flex items-center justify-center">
-                    <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <svg
+                      className="animate-spin h-5 w-5 mr-3"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        fill="none"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
                     </svg>
                     Translating... ⚡
                   </span>
@@ -134,20 +163,28 @@ export default function TranslationDashboard() {
 
               {/* Enhanced Results Display */}
               {testResult && (
-                <div className={`mt-4 p-6 rounded-lg border-2 animate-slideIn ${
-                  testResult.success
-                    ? 'bg-green-500/10 border-green-500/50'
-                    : 'bg-red-500/10 border-red-500/50'
-                }`}>
+                <div
+                  className={`mt-4 p-6 rounded-lg border-2 animate-slideIn ${
+                    testResult.success
+                      ? 'bg-green-500/10 border-green-500/50'
+                      : 'bg-red-500/10 border-red-500/50'
+                  }`}
+                >
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className={`font-semibold flex items-center ${
-                      testResult.success ? 'text-green-400' : 'text-red-400'
-                    }`}>
-                      {testResult.success ? '✅ Translation Success!' : '❌ Translation Failed'}
+                    <h3
+                      className={`font-semibold flex items-center ${
+                        testResult.success ? 'text-green-400' : 'text-red-400'
+                      }`}
+                    >
+                      {testResult.success
+                        ? '✅ Translation Success!'
+                        : '❌ Translation Failed'}
                     </h3>
                     {testResult.success && testResult.translatedText && (
                       <button
-                        onClick={() => copyToClipboard(testResult.translatedText)}
+                        onClick={() =>
+                          copyToClipboard(testResult.translatedText)
+                        }
                         className="px-3 py-1 bg-cyan-600 hover:bg-cyan-500 text-white text-sm rounded-lg transition-all duration-300 flex items-center"
                       >
                         {copied ? '✅ Copied!' : '📋 Copy'}
@@ -158,15 +195,23 @@ export default function TranslationDashboard() {
                   {testResult.success ? (
                     <div className="space-y-3">
                       <div className="bg-gray-800/50 p-4 rounded-lg">
-                        <p className="text-xs text-gray-400 mb-1">Spanish Translation:</p>
-                        <p className="text-white text-lg">{testResult.translatedText}</p>
+                        <p className="text-xs text-gray-400 mb-1">
+                          Spanish Translation:
+                        </p>
+                        <p className="text-white text-lg">
+                          {testResult.translatedText}
+                        </p>
                       </div>
 
                       {testResult.detectedLanguage && (
                         <div className="flex items-center text-sm text-gray-400">
-                          <span>🔍 Detected: {testResult.detectedLanguage}</span>
+                          <span>
+                            🔍 Detected: {testResult.detectedLanguage}
+                          </span>
                           <span className="mx-2">•</span>
-                          <span>⚡ Cached: {testResult.cached ? 'Yes' : 'No'}</span>
+                          <span>
+                            ⚡ Cached: {testResult.cached ? 'Yes' : 'No'}
+                          </span>
                           {testResult.translationTime && (
                             <>
                               <span className="mx-2">•</span>
@@ -178,7 +223,9 @@ export default function TranslationDashboard() {
                     </div>
                   ) : (
                     <div className="bg-gray-800/50 p-4 rounded-lg">
-                      <p className="text-red-300">{testResult.error || 'Translation failed'}</p>
+                      <p className="text-red-300">
+                        {testResult.error || 'Translation failed'}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -197,7 +244,9 @@ export default function TranslationDashboard() {
                 <p className="text-gray-400 text-sm">Supported Languages</p>
               </div>
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 text-center">
-                <p className="text-2xl font-bold text-green-400 mb-2">MongoDB Atlas</p>
+                <p className="text-2xl font-bold text-green-400 mb-2">
+                  MongoDB Atlas
+                </p>
                 <p className="text-gray-400 text-sm">Translation Cache</p>
               </div>
               <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 text-center">
@@ -211,19 +260,34 @@ export default function TranslationDashboard() {
 
         {/* Footer with Neko Branding */}
         <div className="mt-8 text-center text-gray-500 text-sm">
-          <p>🐾 Powered by Neko-Arc AI Translation System • Made with 💖 in Chile 🇨🇱</p>
+          <p>
+            🐾 Powered by Neko-Arc AI Translation System • Made with 💖 in Chile
+            🇨🇱
+          </p>
         </div>
       </div>
 
       <style jsx>{`
         @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(-20px); }
-          to { opacity: 1; transform: translateY(0); }
+          from {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
         @keyframes slideIn {
-          from { opacity: 0; transform: translateX(-20px); }
-          to { opacity: 1; transform: translateX(0); }
+          from {
+            opacity: 0;
+            transform: translateX(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
         }
 
         .animate-fadeIn {

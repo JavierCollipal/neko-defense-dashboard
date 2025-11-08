@@ -24,26 +24,116 @@ const LanguageSelector = ({ userId = 'default-user', onLanguageChange }) => {
     showLanguagePrompt,
     enableAutoTranslation,
     disableAutoTranslation,
-    setManualLanguageOverride
+    setManualLanguageOverride,
   } = useAutoTranslation();
 
   // 🌍 Supported languages with beautiful metadata, desu~!
   const languages = [
-    { code: 'en', name: 'English', nativeName: 'English', flag: '🇺🇸', region: 'North America' },
-    { code: 'es', name: 'Spanish', nativeName: 'Español', flag: '🇪🇸', region: 'Europe/Latin America' },
-    { code: 'fr', name: 'French', nativeName: 'Français', flag: '🇫🇷', region: 'Europe' },
-    { code: 'de', name: 'German', nativeName: 'Deutsch', flag: '🇩🇪', region: 'Europe' },
-    { code: 'it', name: 'Italian', nativeName: 'Italiano', flag: '🇮🇹', region: 'Europe' },
-    { code: 'pt', name: 'Portuguese', nativeName: 'Português', flag: '🇵🇹', region: 'Europe/South America' },
-    { code: 'ru', name: 'Russian', nativeName: 'Русский', flag: '🇷🇺', region: 'Eastern Europe/Asia' },
-    { code: 'ja', name: 'Japanese', nativeName: '日本語', flag: '🇯🇵', region: 'Asia' },
-    { code: 'ko', name: 'Korean', nativeName: '한국어', flag: '🇰🇷', region: 'Asia' },
-    { code: 'zh', name: 'Chinese', nativeName: '中文', flag: '🇨🇳', region: 'Asia' },
-    { code: 'ar', name: 'Arabic', nativeName: 'العربية', flag: '🇸🇦', region: 'Middle East' },
-    { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी', flag: '🇮🇳', region: 'Asia' },
-    { code: 'nl', name: 'Dutch', nativeName: 'Nederlands', flag: '🇳🇱', region: 'Europe' },
-    { code: 'tr', name: 'Turkish', nativeName: 'Türkçe', flag: '🇹🇷', region: 'Europe/Asia' },
-    { code: 'pl', name: 'Polish', nativeName: 'Polski', flag: '🇵🇱', region: 'Europe' }
+    {
+      code: 'en',
+      name: 'English',
+      nativeName: 'English',
+      flag: '🇺🇸',
+      region: 'North America',
+    },
+    {
+      code: 'es',
+      name: 'Spanish',
+      nativeName: 'Español',
+      flag: '🇪🇸',
+      region: 'Europe/Latin America',
+    },
+    {
+      code: 'fr',
+      name: 'French',
+      nativeName: 'Français',
+      flag: '🇫🇷',
+      region: 'Europe',
+    },
+    {
+      code: 'de',
+      name: 'German',
+      nativeName: 'Deutsch',
+      flag: '🇩🇪',
+      region: 'Europe',
+    },
+    {
+      code: 'it',
+      name: 'Italian',
+      nativeName: 'Italiano',
+      flag: '🇮🇹',
+      region: 'Europe',
+    },
+    {
+      code: 'pt',
+      name: 'Portuguese',
+      nativeName: 'Português',
+      flag: '🇵🇹',
+      region: 'Europe/South America',
+    },
+    {
+      code: 'ru',
+      name: 'Russian',
+      nativeName: 'Русский',
+      flag: '🇷🇺',
+      region: 'Eastern Europe/Asia',
+    },
+    {
+      code: 'ja',
+      name: 'Japanese',
+      nativeName: '日本語',
+      flag: '🇯🇵',
+      region: 'Asia',
+    },
+    {
+      code: 'ko',
+      name: 'Korean',
+      nativeName: '한국어',
+      flag: '🇰🇷',
+      region: 'Asia',
+    },
+    {
+      code: 'zh',
+      name: 'Chinese',
+      nativeName: '中文',
+      flag: '🇨🇳',
+      region: 'Asia',
+    },
+    {
+      code: 'ar',
+      name: 'Arabic',
+      nativeName: 'العربية',
+      flag: '🇸🇦',
+      region: 'Middle East',
+    },
+    {
+      code: 'hi',
+      name: 'Hindi',
+      nativeName: 'हिन्दी',
+      flag: '🇮🇳',
+      region: 'Asia',
+    },
+    {
+      code: 'nl',
+      name: 'Dutch',
+      nativeName: 'Nederlands',
+      flag: '🇳🇱',
+      region: 'Europe',
+    },
+    {
+      code: 'tr',
+      name: 'Turkish',
+      nativeName: 'Türkçe',
+      flag: '🇹🇷',
+      region: 'Europe/Asia',
+    },
+    {
+      code: 'pl',
+      name: 'Polish',
+      nativeName: 'Polski',
+      flag: '🇵🇱',
+      region: 'Europe',
+    },
   ];
 
   // 🔄 Load user's saved language preference on component mount
@@ -55,7 +145,10 @@ const LanguageSelector = ({ userId = 'default-user', onLanguageChange }) => {
   const loadUserLanguagePreference = async () => {
     try {
       setIsLoading(true);
-      console.log('🌍 [Language Selector] Loading preference for user:', userId);
+      console.log(
+        '🌍 [Language Selector] Loading preference for user:',
+        userId
+      );
 
       const response = await fetch(`/api/user/language-preference/${userId}`);
       const result = await response.json();
@@ -93,14 +186,14 @@ const LanguageSelector = ({ userId = 'default-user', onLanguageChange }) => {
       const response = await fetch('/api/user/language-preference', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           userId: userId,
           language: languageCode,
           userAgent: navigator.userAgent,
-          ipAddress: null // Will be filled by server if needed
-        })
+          ipAddress: null, // Will be filled by server if needed
+        }),
       });
 
       const result = await response.json();
@@ -140,10 +233,11 @@ const LanguageSelector = ({ userId = 'default-user', onLanguageChange }) => {
 
       // Notify parent component
       if (onLanguageChange) {
-        const selectedLang = languages.find(lang => lang.code === languageCode);
+        const selectedLang = languages.find(
+          (lang) => lang.code === languageCode
+        );
         onLanguageChange(languageCode, selectedLang);
       }
-
     } catch (error) {
       console.error('❌ [Language Selector] Error changing language:', error);
     }
@@ -164,7 +258,9 @@ const LanguageSelector = ({ userId = 'default-user', onLanguageChange }) => {
 
   // 🔍 Get current language metadata
   const getCurrentLanguage = () => {
-    return languages.find(lang => lang.code === selectedLanguage) || languages[0];
+    return (
+      languages.find((lang) => lang.code === selectedLanguage) || languages[0]
+    );
   };
 
   if (isLoading) {
@@ -193,7 +289,6 @@ const LanguageSelector = ({ userId = 'default-user', onLanguageChange }) => {
       />
 
       <div className={`language-selector ${isDropdownOpen ? 'open' : ''}`}>
-
         {/* Current Language Display */}
         <button
           className="language-current"
@@ -202,14 +297,25 @@ const LanguageSelector = ({ userId = 'default-user', onLanguageChange }) => {
         >
           <span className="language-flag">{currentLang.flag}</span>
           <span className="language-name">{currentLang.nativeName}</span>
-          <span className="language-code">({currentLang.code?.toUpperCase() || 'N/A'})</span>
+          <span className="language-code">
+            ({currentLang.code?.toUpperCase() || 'N/A'})
+          </span>
           {autoTranslationEnabled && (
-            <span className="auto-translation-indicator" title="Auto-translation enabled">🌍</span>
+            <span
+              className="auto-translation-indicator"
+              title="Auto-translation enabled"
+            >
+              🌍
+            </span>
           )}
           {isDetectingLocation && (
-            <span className="location-detecting" title="Detecting location...">📍</span>
+            <span className="location-detecting" title="Detecting location...">
+              📍
+            </span>
           )}
-          <span className={`dropdown-arrow ${isDropdownOpen ? 'up' : 'down'}`}>▼</span>
+          <span className={`dropdown-arrow ${isDropdownOpen ? 'up' : 'down'}`}>
+            ▼
+          </span>
         </button>
 
         {/* Save Status Indicator */}
@@ -264,7 +370,9 @@ const LanguageSelector = ({ userId = 'default-user', onLanguageChange }) => {
                     <span className="option-english">{language.name}</span>
                     <span className="option-region">{language.region}</span>
                   </div>
-                  <span className="option-code">{language.code?.toUpperCase() || 'N/A'}</span>
+                  <span className="option-code">
+                    {language.code?.toUpperCase() || 'N/A'}
+                  </span>
                   {language.code === selectedLanguage && (
                     <span className="option-checkmark">✓</span>
                   )}

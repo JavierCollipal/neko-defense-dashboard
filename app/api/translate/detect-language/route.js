@@ -12,27 +12,29 @@ export async function POST(request) {
     const body = await request.json();
 
     // Proxy to Express backend
-    const response = await fetch(`${BACKEND_URL}/api/translate/detect-language`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body)
-    });
+    const response = await fetch(
+      `${BACKEND_URL}/api/translate/detect-language`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      }
+    );
 
     const data = await response.json();
 
     return NextResponse.json(data, {
-      status: response.status
+      status: response.status,
     });
-
   } catch (error) {
     console.error('❌ Language Detection API Error:', error.message);
     return NextResponse.json(
       {
         success: false,
         error: error.message,
-        message: 'Failed to detect language'
+        message: 'Failed to detect language',
       },
       { status: 500 }
     );

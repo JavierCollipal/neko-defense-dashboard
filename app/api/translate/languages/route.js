@@ -13,22 +13,21 @@ export async function GET(request) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
     });
 
     const data = await response.json();
 
     return NextResponse.json(data, {
-      status: response.status
+      status: response.status,
     });
-
   } catch (error) {
     console.error('❌ Supported Languages API Error:', error.message);
     return NextResponse.json(
       {
         success: false,
         error: error.message,
-        message: 'Failed to get supported languages'
+        message: 'Failed to get supported languages',
       },
       { status: 500 }
     );

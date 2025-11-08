@@ -19,15 +19,15 @@ import { ObjectId } from 'mongodb';
 export interface ValechVictim {
   // Unique identifier
   _id?: ObjectId;
-  victimId: string;  // Human-readable ID (e.g., "VICTIM-00001")
+  victimId: string; // Human-readable ID (e.g., "VICTIM-00001")
 
   // Personal identity
   fullName: string;
-  alternativeNames?: string[];  // Aliases, maiden names
+  alternativeNames?: string[]; // Aliases, maiden names
   dateOfBirth?: Date;
   placeOfBirth?: string;
   gender: 'MALE' | 'FEMALE' | 'OTHER' | 'UNKNOWN';
-  nationality: string;  // Usually "Chilean"
+  nationality: string; // Usually "Chilean"
 
   // Pre-arrest life
   profession?: string;
@@ -71,12 +71,20 @@ export interface ValechVictim {
   };
 
   // Documentation quality
-  documentationStatus: 'COMPLETE' | 'PARTIAL' | 'MINIMAL' | 'NEEDS_VERIFICATION';
+  documentationStatus:
+    | 'COMPLETE'
+    | 'PARTIAL'
+    | 'MINIMAL'
+    | 'NEEDS_VERIFICATION';
   confidenceLevel: 'CONFIRMED' | 'PROBABLE' | 'ALLEGED' | 'DISPUTED';
   sources: DocumentSource[];
 
   // Privacy controls
-  publicVisibility: 'PUBLIC' | 'RESEARCHERS_ONLY' | 'FAMILY_ONLY' | 'ADMIN_ONLY';
+  publicVisibility:
+    | 'PUBLIC'
+    | 'RESEARCHERS_ONLY'
+    | 'FAMILY_ONLY'
+    | 'ADMIN_ONLY';
   sensitiveContent: boolean;
 
   // Metadata
@@ -90,7 +98,7 @@ export interface ValechVictim {
 
 export interface DetentionRecord {
   // Location
-  detentionCenterId: string;  // Reference to detention center
+  detentionCenterId: string; // Reference to detention center
   detentionCenterName: string;
   centerLocation: string;
 
@@ -101,7 +109,7 @@ export interface DetentionRecord {
   stillDetained?: boolean;
 
   // Conditions
-  cellType?: string;  // Solitary, shared, etc.
+  cellType?: string; // Solitary, shared, etc.
   conditionsDescription: string;
 
   // Torture & abuse
@@ -111,7 +119,7 @@ export interface DetentionRecord {
   psychologicalTorment: string[];
 
   // Perpetrators present
-  perpetratorIds: string[];  // References to DINA agents
+  perpetratorIds: string[]; // References to DINA agents
   perpetratorNames: string[];
   interrogatorsPresent: string[];
 
@@ -122,9 +130,9 @@ export interface DetentionRecord {
 
 export interface FamilyMember {
   name: string;
-  relationship: string;  // Spouse, child, parent, sibling
+  relationship: string; // Spouse, child, parent, sibling
   alsoVictimized: boolean;
-  victimId?: string;  // If also a victim
+  victimId?: string; // If also a victim
   dateOfBirth?: Date;
   currentStatus: 'ALIVE' | 'DECEASED' | 'UNKNOWN';
   impactDescription?: string;
@@ -134,13 +142,13 @@ export interface Testimony {
   testimonialId: string;
   date: Date;
   location: string;
-  recordedBy: string;  // Organization or person
+  recordedBy: string; // Organization or person
   language: 'es' | 'en' | 'pt' | 'de' | 'fr';
 
   // Content
-  content: string;  // Full text
+  content: string; // Full text
   summary?: string;
-  themes: string[];  // TORTURE, EXECUTION, FAMILY_SEPARATION, etc.
+  themes: string[]; // TORTURE, EXECUTION, FAMILY_SEPARATION, etc.
 
   // Media
   videoLink?: string;
@@ -159,7 +167,14 @@ export interface Testimony {
 }
 
 export interface DocumentSource {
-  sourceType: 'VALECH_REPORT' | 'INDH_DATABASE' | 'COURT_RECORD' | 'TESTIMONY' | 'MEMORIAL_ARCHIVE' | 'MEDIA' | 'OTHER';
+  sourceType:
+    | 'VALECH_REPORT'
+    | 'INDH_DATABASE'
+    | 'COURT_RECORD'
+    | 'TESTIMONY'
+    | 'MEMORIAL_ARCHIVE'
+    | 'MEDIA'
+    | 'OTHER';
   sourceName: string;
   sourceUrl?: string;
   sourceDate?: Date;
@@ -174,12 +189,17 @@ export interface DocumentSource {
 
 export interface DetentionCenter {
   _id?: ObjectId;
-  centerId: string;  // e.g., "CENTER-VILLA-GRIMALDI"
+  centerId: string; // e.g., "CENTER-VILLA-GRIMALDI"
 
   // Identity
   officialName: string;
-  aliases: string[];  // "Cuartel Terranova", etc.
-  centerType: 'SECRET_DETENTION' | 'CONCENTRATION_CAMP' | 'PRISON' | 'MILITARY_BASE' | 'OTHER';
+  aliases: string[]; // "Cuartel Terranova", etc.
+  centerType:
+    | 'SECRET_DETENTION'
+    | 'CONCENTRATION_CAMP'
+    | 'PRISON'
+    | 'MILITARY_BASE'
+    | 'OTHER';
 
   // Location
   location: {
@@ -201,8 +221,8 @@ export interface DetentionCenter {
   };
 
   // Administration
-  commandingOfficers: string[];  // DINA agent IDs
-  operatingUnit: string;  // DINA brigade/unit
+  commandingOfficers: string[]; // DINA agent IDs
+  operatingUnit: string; // DINA brigade/unit
   militaryBranch?: string;
 
   // Infrastructure
@@ -235,7 +255,12 @@ export interface DetentionCenter {
   };
 
   // Current status
-  currentStatus: 'DEMOLISHED' | 'PRESERVED' | 'MEMORIAL' | 'REPURPOSED' | 'UNKNOWN';
+  currentStatus:
+    | 'DEMOLISHED'
+    | 'PRESERVED'
+    | 'MEMORIAL'
+    | 'REPURPOSED'
+    | 'UNKNOWN';
   memorialSiteName?: string;
   memorialUrl?: string;
   touristAccess?: boolean;
@@ -260,8 +285,8 @@ export interface VictimPerpetratorCrossReference {
   crossRefId: string;
 
   // Relationship
-  victimId: string;  // Reference to victim
-  perpetratorId: string;  // Reference to DINA agent
+  victimId: string; // Reference to victim
+  perpetratorId: string; // Reference to DINA agent
 
   relationshipType:
     | 'TORTURED_BY'
@@ -288,7 +313,7 @@ export interface VictimPerpetratorCrossReference {
 
   // Confidence
   confidenceLevel: 'CONFIRMED' | 'PROBABLE' | 'ALLEGED' | 'DISPUTED';
-  confidenceScore?: number;  // 0-100
+  confidenceScore?: number; // 0-100
 
   // Verification
   verifiedBy?: string;
@@ -348,7 +373,7 @@ export interface ValechStatistics {
     killed: number;
     disappeared: number;
     unknown: number;
-    survivalRate: number;  // Percentage
+    survivalRate: number; // Percentage
   };
 
   // Justice metrics
@@ -357,7 +382,7 @@ export interface ValechStatistics {
     perpetratorsAtLarge: number;
     perpetratorsDeceased: number;
     perpetratorsUnprosecuted: number;
-    convictionRate: number;  // Percentage
+    convictionRate: number; // Percentage
     averageSentenceYears?: number;
     ongoingProsecutions: number;
   };
@@ -368,7 +393,7 @@ export interface ValechStatistics {
     partial: number;
     minimal: number;
     needsVerification: number;
-    completenessRate: number;  // Percentage
+    completenessRate: number; // Percentage
   };
 
   // Timeline distribution
@@ -404,7 +429,7 @@ export interface ValechStatistics {
 
   // Age distribution (at time of arrest)
   byAgeGroup: Array<{
-    ageGroup: string;  // "18-25", "26-35", etc.
+    ageGroup: string; // "18-25", "26-35", etc.
     count: number;
   }>;
 
@@ -442,7 +467,11 @@ export interface VictimSearchParams {
   perpetratorName?: string;
 
   // Documentation status
-  documentationStatus?: 'COMPLETE' | 'PARTIAL' | 'MINIMAL' | 'NEEDS_VERIFICATION';
+  documentationStatus?:
+    | 'COMPLETE'
+    | 'PARTIAL'
+    | 'MINIMAL'
+    | 'NEEDS_VERIFICATION';
   confidenceLevel?: 'CONFIRMED' | 'PROBABLE' | 'ALLEGED' | 'DISPUTED';
 
   // Pagination
@@ -461,7 +490,7 @@ export interface VictimSearchResult {
     total: number;
     pages: number;
   };
-  executionTime?: number;  // milliseconds
+  executionTime?: number; // milliseconds
 }
 
 // ============================================================
@@ -470,7 +499,7 @@ export interface VictimSearchResult {
 
 export interface DataQualityMetrics {
   victimId: string;
-  completenessScore: number;  // 0-100
+  completenessScore: number; // 0-100
   missingFields: string[];
   requiredFieldsPresent: boolean;
 
@@ -491,7 +520,7 @@ export interface DuplicateDetectionResult {
   victimId: string;
   potentialDuplicates: Array<{
     duplicateVictimId: string;
-    matchScore: number;  // 0-100
+    matchScore: number; // 0-100
     matchReasons: string[];
   }>;
   requiresReview: boolean;
@@ -504,10 +533,15 @@ export interface DuplicateDetectionResult {
 export interface IngestionJob {
   _id?: ObjectId;
   jobId: string;
-  jobType: 'PDF_PARSE' | 'INDH_FETCH' | 'NLP_EXTRACT' | 'CROSS_REFERENCE' | 'MANUAL_ENTRY';
+  jobType:
+    | 'PDF_PARSE'
+    | 'INDH_FETCH'
+    | 'NLP_EXTRACT'
+    | 'CROSS_REFERENCE'
+    | 'MANUAL_ENTRY';
 
   status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'FAILED' | 'PAUSED';
-  progress: number;  // 0-100
+  progress: number; // 0-100
 
   source: {
     sourceType: string;
@@ -558,7 +592,7 @@ export interface ValechUser {
     canManageUsers: boolean;
   };
 
-  affiliation?: string;  // University, organization
+  affiliation?: string; // University, organization
   researchPurpose?: string;
 
   createdAt: Date;
@@ -578,6 +612,6 @@ export interface ExportRequest {
   includeTestimonies?: boolean;
   includeCrossReferences?: boolean;
   anonymize?: boolean;
-  purpose: string;  // Research, legal, educational
+  purpose: string; // Research, legal, educational
   requestedBy: string;
 }

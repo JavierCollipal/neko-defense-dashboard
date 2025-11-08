@@ -109,7 +109,7 @@
   position: relative;
 }
 
-.file-input-container input[type="file"] {
+.file-input-container input[type='file'] {
   display: none;
 }
 
@@ -172,7 +172,7 @@
   box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
 }
 
-.position-option input[type="radio"] {
+.position-option input[type='radio'] {
   width: 20px;
   height: 20px;
   cursor: pointer;
@@ -349,11 +349,14 @@
 }
 
 @keyframes nekoGlow {
-  0%, 100% {
+  0%,
+  100% {
     text-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
   }
   50% {
-    text-shadow: 0 0 30px rgba(255, 0, 255, 1), 0 0 40px rgba(0, 255, 255, 0.8);
+    text-shadow:
+      0 0 30px rgba(255, 0, 255, 1),
+      0 0 40px rgba(0, 255, 255, 0.8);
   }
 }
 

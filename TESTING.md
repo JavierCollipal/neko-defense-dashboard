@@ -180,7 +180,7 @@ Test utilities are **composable functions**:
 // cypress/support/commands.js
 
 // ✅ Pure, composable helper
-Cypress.Commands.add('loginAs', userType => {
+Cypress.Commands.add('loginAs', (userType) => {
   const credentials = getCredentials(userType); // Pure function
   cy.visit('/login');
   cy.get('#username').type(credentials.username);
@@ -205,7 +205,7 @@ describe('Dashboard with Data', () => {
   });
 
   it('displays threats', function () {
-    this.threats.forEach(threat => {
+    this.threats.forEach((threat) => {
       cy.contains(threat.name);
     });
   });

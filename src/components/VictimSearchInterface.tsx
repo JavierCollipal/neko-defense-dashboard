@@ -34,19 +34,39 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  SelectChangeEvent
+  SelectChangeEvent,
 } from '@mui/material';
 
 // Temporary Box-based layout until Grid API compatibility is fixed
-const Grid = ({ container, spacing, xs, sm, md, sx, children, ...props }: any) => (
+const Grid = ({
+  container,
+  spacing,
+  xs,
+  sm,
+  md,
+  sx,
+  children,
+  ...props
+}: any) => (
   <Box
     sx={{
       display: container ? 'flex' : 'block',
       flexWrap: container ? 'wrap' : undefined,
       gap: container ? spacing : undefined,
       flex: xs || sm || md ? '1 1 auto' : undefined,
-      minWidth: xs === 12 ? '100%' : xs === 6 ? '48%' : xs === 3 ? '23%' : md === 2.4 ? '18%' : md === 6 ? '48%' : 'auto',
-      ...sx
+      minWidth:
+        xs === 12
+          ? '100%'
+          : xs === 6
+            ? '48%'
+            : xs === 3
+              ? '23%'
+              : md === 2.4
+                ? '18%'
+                : md === 6
+                  ? '48%'
+                  : 'auto',
+      ...sx,
     }}
     {...props}
   >
@@ -106,7 +126,7 @@ const VictimSearchInterface: React.FC = () => {
     page: 1,
     limit: 50,
     sortBy: 'fullName',
-    sortOrder: 'asc'
+    sortOrder: 'asc',
   });
 
   const [results, setResults] = useState<SearchResults | null>(null);
@@ -116,8 +136,17 @@ const VictimSearchInterface: React.FC = () => {
 
   // Active filter count
   const activeFilterCount = Object.entries(filters).filter(([key, value]) => {
-    if (key === 'page' || key === 'limit' || key === 'sortBy' || key === 'sortOrder') {return false;}
-    if (key === 'nameExact') {return false;}
+    if (
+      key === 'page' ||
+      key === 'limit' ||
+      key === 'sortBy' ||
+      key === 'sortOrder'
+    ) {
+      return false;
+    }
+    if (key === 'nameExact') {
+      return false;
+    }
     return value !== '' && value !== false;
   }).length;
 
@@ -137,7 +166,7 @@ const VictimSearchInterface: React.FC = () => {
       });
 
       const response = await fetch(`/api/valech/victims?${params.toString()}`);
-      const data = await response.json() as any;
+      const data = (await response.json()) as any;
 
       if (data.success) {
         setResults(data);
@@ -160,16 +189,19 @@ const VictimSearchInterface: React.FC = () => {
 
   // Handle filter changes
   const handleFilterChange = (field: keyof SearchFilters, value: any) => {
-    setFilters(prev => ({
+    setFilters((prev) => ({
       ...prev,
       [field]: value,
       // Reset to page 1 when filters change
-      page: field !== 'page' ? 1 : value
+      page: field !== 'page' ? 1 : value,
     }));
   };
 
   // Handle pagination
-  const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    page: number
+  ) => {
     handleFilterChange('page', page);
     executeSearch();
   };
@@ -191,7 +223,7 @@ const VictimSearchInterface: React.FC = () => {
       page: 1,
       limit: 50,
       sortBy: 'fullName',
-      sortOrder: 'asc'
+      sortOrder: 'asc',
     });
     setResults(null);
   };
@@ -209,7 +241,8 @@ const VictimSearchInterface: React.FC = () => {
           🕯️ Valech 2.0 - Victim Search
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          Search and explore documentation of 27,255 victims of the Chilean dictatorship (1973-1990)
+          Search and explore documentation of 27,255 victims of the Chilean
+          dictatorship (1973-1990)
         </Typography>
       </Box>
 
@@ -224,10 +257,14 @@ const VictimSearchInterface: React.FC = () => {
                 label="Victim Name"
                 placeholder="Search by name..."
                 value={filters.name}
-                onChange={(e) => handleFilterChange('name', (e.target as any).value)}
+                onChange={(e) =>
+                  handleFilterChange('name', (e.target as any).value)
+                }
                 onKeyPress={handleKeyPress}
                 InputProps={{
-                  startAdornment: <SearchIcon sx={{ mr: 1, color: 'text.secondary' }} />
+                  startAdornment: (
+                    <SearchIcon sx={{ mr: 1, color: 'text.secondary' }} />
+                  ),
                 }}
               />
             </Grid>
@@ -238,7 +275,9 @@ const VictimSearchInterface: React.FC = () => {
                 label="Detention Center"
                 placeholder="Villa Grimaldi, Estadio Nacional..."
                 value={filters.detentionCenter}
-                onChange={(e) => handleFilterChange('detentionCenter', (e.target as any).value)}
+                onChange={(e) =>
+                  handleFilterChange('detentionCenter', (e.target as any).value)
+                }
                 onKeyPress={handleKeyPress}
               />
             </Grid>
@@ -258,13 +297,21 @@ const VictimSearchInterface: React.FC = () => {
           </Grid>
 
           {/* Advanced Filters */}
-          <Accordion expanded={advancedOpen} onChange={() => setAdvancedOpen(!advancedOpen)} sx={{ mt: 2 }}>
+          <Accordion
+            expanded={advancedOpen}
+            onChange={() => setAdvancedOpen(!advancedOpen)}
+            sx={{ mt: 2 }}
+          >
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <FilterListIcon />
                 <Typography>Advanced Filters</Typography>
                 {activeFilterCount > 0 && (
-                  <Chip label={`${activeFilterCount} active`} size="small" color="primary" />
+                  <Chip
+                    label={`${activeFilterCount} active`}
+                    size="small"
+                    color="primary"
+                  />
                 )}
               </Box>
             </AccordionSummary>
@@ -277,7 +324,12 @@ const VictimSearchInterface: React.FC = () => {
                     type="date"
                     label="Arrested From"
                     value={filters.dateArrestedFrom}
-                    onChange={(e) => handleFilterChange('dateArrestedFrom', (e.target as any).value)}
+                    onChange={(e) =>
+                      handleFilterChange(
+                        'dateArrestedFrom',
+                        (e.target as any).value
+                      )
+                    }
                     InputLabelProps={{ shrink: true }}
                   />
                 </Grid>
@@ -287,7 +339,12 @@ const VictimSearchInterface: React.FC = () => {
                     type="date"
                     label="Arrested To"
                     value={filters.dateArrestedTo}
-                    onChange={(e) => handleFilterChange('dateArrestedTo', (e.target as any).value)}
+                    onChange={(e) =>
+                      handleFilterChange(
+                        'dateArrestedTo',
+                        (e.target as any).value
+                      )
+                    }
                     InputLabelProps={{ shrink: true }}
                   />
                 </Grid>
@@ -299,7 +356,9 @@ const VictimSearchInterface: React.FC = () => {
                     <Select
                       value={filters.outcome}
                       label="Outcome"
-                      onChange={(e: SelectChangeEvent) => handleFilterChange('outcome', (e.target as any).value)}
+                      onChange={(e: SelectChangeEvent) =>
+                        handleFilterChange('outcome', (e.target as any).value)
+                      }
                     >
                       <MenuItem value="">All</MenuItem>
                       <MenuItem value="SURVIVED">Survived</MenuItem>
@@ -317,7 +376,9 @@ const VictimSearchInterface: React.FC = () => {
                     <Select
                       value={filters.gender}
                       label="Gender"
-                      onChange={(e: SelectChangeEvent) => handleFilterChange('gender', (e.target as any).value)}
+                      onChange={(e: SelectChangeEvent) =>
+                        handleFilterChange('gender', (e.target as any).value)
+                      }
                     >
                       <MenuItem value="">All</MenuItem>
                       <MenuItem value="MALE">Male</MenuItem>
@@ -335,13 +396,20 @@ const VictimSearchInterface: React.FC = () => {
                     <Select
                       value={filters.documentationStatus}
                       label="Documentation"
-                      onChange={(e: SelectChangeEvent) => handleFilterChange('documentationStatus', (e.target as any).value)}
+                      onChange={(e: SelectChangeEvent) =>
+                        handleFilterChange(
+                          'documentationStatus',
+                          (e.target as any).value
+                        )
+                      }
                     >
                       <MenuItem value="">All</MenuItem>
                       <MenuItem value="COMPLETE">Complete</MenuItem>
                       <MenuItem value="PARTIAL">Partial</MenuItem>
                       <MenuItem value="MINIMAL">Minimal</MenuItem>
-                      <MenuItem value="NEEDS_VERIFICATION">Needs Verification</MenuItem>
+                      <MenuItem value="NEEDS_VERIFICATION">
+                        Needs Verification
+                      </MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -353,7 +421,12 @@ const VictimSearchInterface: React.FC = () => {
                     <Select
                       value={filters.confidenceLevel}
                       label="Confidence"
-                      onChange={(e: SelectChangeEvent) => handleFilterChange('confidenceLevel', (e.target as any).value)}
+                      onChange={(e: SelectChangeEvent) =>
+                        handleFilterChange(
+                          'confidenceLevel',
+                          (e.target as any).value
+                        )
+                      }
                     >
                       <MenuItem value="">All</MenuItem>
                       <MenuItem value="CONFIRMED">Confirmed</MenuItem>
@@ -371,7 +444,9 @@ const VictimSearchInterface: React.FC = () => {
                     label="Profession"
                     placeholder="Teacher, Worker, Student..."
                     value={filters.profession}
-                    onChange={(e) => handleFilterChange('profession', (e.target as any).value)}
+                    onChange={(e) =>
+                      handleFilterChange('profession', (e.target as any).value)
+                    }
                     onKeyPress={handleKeyPress}
                   />
                 </Grid>
@@ -383,7 +458,12 @@ const VictimSearchInterface: React.FC = () => {
                     label="Political Affiliation"
                     placeholder="Socialist, Communist, Christian Democrat..."
                     value={filters.politicalAffiliation}
-                    onChange={(e) => handleFilterChange('politicalAffiliation', (e.target as any).value)}
+                    onChange={(e) =>
+                      handleFilterChange(
+                        'politicalAffiliation',
+                        (e.target as any).value
+                      )
+                    }
                     onKeyPress={handleKeyPress}
                   />
                 </Grid>
@@ -415,9 +495,17 @@ const VictimSearchInterface: React.FC = () => {
       {results && (
         <>
           {/* Results Summary */}
-          <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Box
+            sx={{
+              mb: 2,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
             <Typography variant="body1">
-              Found <strong>{results.pagination.total.toLocaleString()}</strong> victims
+              Found <strong>{results.pagination.total.toLocaleString()}</strong>{' '}
+              victims
               {results.executionTime && ` (${results.executionTime})`}
             </Typography>
 
@@ -427,7 +515,9 @@ const VictimSearchInterface: React.FC = () => {
               <Select
                 value={filters.limit}
                 label="Per Page"
-                onChange={(e: SelectChangeEvent<number>) => handleFilterChange('limit', Number((e.target as any).value))}
+                onChange={(e: SelectChangeEvent<number>) =>
+                  handleFilterChange('limit', Number((e.target as any).value))
+                }
               >
                 <MenuItem value={10}>10</MenuItem>
                 <MenuItem value={25}>25</MenuItem>
@@ -460,7 +550,8 @@ const VictimSearchInterface: React.FC = () => {
       {/* No Results */}
       {results && results.data.length === 0 && (
         <Alert severity="info">
-          No victims found matching your search criteria. Try adjusting your filters.
+          No victims found matching your search criteria. Try adjusting your
+          filters.
         </Alert>
       )}
     </Box>

@@ -14,7 +14,7 @@ const DinaCentersMap = () => {
       codeName: 'Cuartel Terranova',
       location: 'Av. José Arrieta 8401, Peñalolén',
       city: 'Santiago',
-      coordinates: { lat: -33.4894, lng: -70.5820 },
+      coordinates: { lat: -33.4894, lng: -70.582 },
       period: 'Mid-1974 to Mid-1978',
       detainees: '~4,500',
       killed: '240+',
@@ -25,11 +25,12 @@ const DinaCentersMap = () => {
         'Electric shock to sensitive areas',
         'Waterboarding',
         'Psychological torture',
-        'Mock executions'
+        'Mock executions',
       ],
       currentStatus: 'Parque por la Paz (Peace Park Memorial)',
       visitInfo: 'Open to public',
-      description: 'The most important DINA interrogation and torture complex. About 4,500 detainees passed through this facility, with at least 240 disappeared or killed.'
+      description:
+        'The most important DINA interrogation and torture complex. About 4,500 detainees passed through this facility, with at least 240 disappeared or killed.',
     },
     {
       id: 'londres-38',
@@ -47,11 +48,12 @@ const DinaCentersMap = () => {
         'Interrogation under torture',
         'Electric shock',
         'Physical abuse',
-        'Psychological torture'
+        'Psychological torture',
       ],
       currentStatus: 'Memorial & Human Rights Center',
       visitInfo: 'Open to public',
-      description: 'First link in DINA\'s chain of detention facilities. Approximately 1,100 people passed through, with 94 executed including 2 pregnant women.'
+      description:
+        "First link in DINA's chain of detention facilities. Approximately 1,100 people passed through, with 94 executed including 2 pregnant women.",
     },
     {
       id: 'jose-domingo-canas',
@@ -65,14 +67,11 @@ const DinaCentersMap = () => {
       killed: 'Multiple documented',
       significance: 'Major interrogation center',
       level: 'high',
-      tortureMethods: [
-        'Systematic torture',
-        'Interrogation',
-        'Physical abuse'
-      ],
+      tortureMethods: ['Systematic torture', 'Interrogation', 'Physical abuse'],
       currentStatus: 'Memorial site',
       visitInfo: 'Preserved as historical site',
-      description: 'Major DINA interrogation center operating during peak terror period.'
+      description:
+        'Major DINA interrogation center operating during peak terror period.',
     },
     {
       id: 'cuatro-alamos',
@@ -86,14 +85,11 @@ const DinaCentersMap = () => {
       killed: 'Multiple documented',
       significance: 'Transit detention center',
       level: 'medium',
-      tortureMethods: [
-        'Interrogation',
-        'Torture',
-        'Temporary detention'
-      ],
+      tortureMethods: ['Interrogation', 'Torture', 'Temporary detention'],
       currentStatus: 'Documented site',
       visitInfo: 'Historical record preserved',
-      description: 'Transit center where prisoners were held before transfer or release.'
+      description:
+        'Transit center where prisoners were held before transfer or release.',
     },
     {
       id: 'venecia',
@@ -107,14 +103,11 @@ const DinaCentersMap = () => {
       killed: 'Documented victims',
       significance: 'Secret detention facility',
       level: 'medium',
-      tortureMethods: [
-        'Secret detention',
-        'Torture',
-        'Interrogation'
-      ],
+      tortureMethods: ['Secret detention', 'Torture', 'Interrogation'],
       currentStatus: 'Historical documentation',
       visitInfo: 'Location preserved in records',
-      description: 'Secret DINA facility used for clandestine detention and torture.'
+      description:
+        'Secret DINA facility used for clandestine detention and torture.',
     },
     {
       id: 'malloco',
@@ -128,15 +121,11 @@ const DinaCentersMap = () => {
       killed: 'Documented victims',
       significance: 'Secret detention facility',
       level: 'medium',
-      tortureMethods: [
-        'Secret detention',
-        'Torture',
-        'Interrogation'
-      ],
+      tortureMethods: ['Secret detention', 'Torture', 'Interrogation'],
       currentStatus: 'Historical documentation',
       visitInfo: 'Location preserved in records',
-      description: 'Secret DINA facility operating during dictatorship.'
-    }
+      description: 'Secret DINA facility operating during dictatorship.',
+    },
   ];
 
   const handleCenterClick = (center) => {
@@ -148,11 +137,15 @@ const DinaCentersMap = () => {
   };
 
   const getLevelColor = (level) => {
-    switch(level) {
-      case 'critical': return '#dc2626'; // Red
-      case 'high': return '#ea580c'; // Orange
-      case 'medium': return '#ca8a04'; // Yellow
-      default: return '#65a30d'; // Green
+    switch (level) {
+      case 'critical':
+        return '#dc2626'; // Red
+      case 'high':
+        return '#ea580c'; // Orange
+      case 'medium':
+        return '#ca8a04'; // Yellow
+      default:
+        return '#65a30d'; // Green
     }
   };
 
@@ -160,7 +153,9 @@ const DinaCentersMap = () => {
     <div className="dina-centers-map-container">
       <div className="map-header">
         <h2>🗺️ DINA Torture Centers - Santiago Metropolitan Region</h2>
-        <p className="map-subtitle">Interactive map of secret detention and torture facilities</p>
+        <p className="map-subtitle">
+          Interactive map of secret detention and torture facilities
+        </p>
       </div>
 
       <div className="map-controls">
@@ -200,7 +195,9 @@ const DinaCentersMap = () => {
       <div className="interactive-map-area">
         <div className="map-canvas">
           <h3 className="map-title">Santiago Metropolitan Region</h3>
-          <p className="map-note">DINA operated a systematic network across Santiago</p>
+          <p className="map-note">
+            DINA operated a systematic network across Santiago
+          </p>
 
           {/* Map markers */}
           <div className="map-markers">
@@ -211,7 +208,7 @@ const DinaCentersMap = () => {
                 style={{
                   backgroundColor: getLevelColor(center.level),
                   left: `${((center.coordinates.lng + 70.8234) / 0.2414) * 100}%`,
-                  top: `${((center.coordinates.lat + 33.5456) / 0.1033) * 100}%`
+                  top: `${((center.coordinates.lat + 33.5456) / 0.1033) * 100}%`,
                 }}
                 onClick={() => handleCenterClick(center)}
                 title={center.name}
@@ -238,7 +235,9 @@ const DinaCentersMap = () => {
           <div className="center-details-panel">
             <div className="panel-header">
               <h3>{selectedCenter.name}</h3>
-              <button className="close-btn" onClick={closeDetails}>✕</button>
+              <button className="close-btn" onClick={closeDetails}>
+                ✕
+              </button>
             </div>
             <div className="panel-content">
               <div className="detail-row">
@@ -258,7 +257,9 @@ const DinaCentersMap = () => {
               </div>
               <div className="detail-row">
                 <strong>Significance:</strong>
-                <span className="significance-badge">{selectedCenter.significance}</span>
+                <span className="significance-badge">
+                  {selectedCenter.significance}
+                </span>
               </div>
 
               <div className="torture-methods-section">
@@ -296,7 +297,10 @@ const DinaCentersMap = () => {
             >
               <div className="compact-card-header">
                 <h4>{center.name}</h4>
-                <span className="level-badge" style={{ backgroundColor: getLevelColor(center.level) }}>
+                <span
+                  className="level-badge"
+                  style={{ backgroundColor: getLevelColor(center.level) }}
+                >
                   {center.level}
                 </span>
               </div>
@@ -312,10 +316,12 @@ const DinaCentersMap = () => {
 
       <div className="map-footer">
         <p className="memorial-note">
-          🕊️ Many of these sites are now memorials that can be visited to honor victims and preserve historical memory, nyaa~!
+          🕊️ Many of these sites are now memorials that can be visited to honor
+          victims and preserve historical memory, nyaa~!
         </p>
         <p className="network-note">
-          🗺️ DINA operated a systematic network of clandestine detention centers across Chile for secret arrests, torture, and forced disappearances.
+          🗺️ DINA operated a systematic network of clandestine detention centers
+          across Chile for secret arrests, torture, and forced disappearances.
         </p>
       </div>
     </div>

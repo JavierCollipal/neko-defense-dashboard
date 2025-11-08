@@ -17,7 +17,7 @@ function DefenseStats({ stats }) {
   return (
     <div className="defense-stats">
       <h2>📊 {t('stats.header')}</h2>
-      
+
       <div className="stats-grid">
         <div className="stat-card">
           <div className="stat-icon">🗂️</div>

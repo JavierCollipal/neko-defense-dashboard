@@ -83,7 +83,11 @@
 }
 
 .top-tab-button.active {
-  background: linear-gradient(135deg, rgba(0, 255, 65, 0.3), rgba(0, 255, 255, 0.3));
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 65, 0.3),
+    rgba(0, 255, 255, 0.3)
+  );
   border-color: #00ffff;
   color: #00ffff;
   box-shadow:
@@ -93,7 +97,8 @@
 }
 
 @keyframes glow-pulse {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow:
       0 0 15px rgba(0, 255, 255, 0.5),
       inset 0 0 10px rgba(0, 255, 65, 0.2);
@@ -112,7 +117,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -125,7 +131,8 @@
 }
 
 @keyframes spin-float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) rotate(0deg);
   }
   50% {

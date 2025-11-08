@@ -17,22 +17,22 @@ export async function POST(request) {
       data: {
         language: body.language || 'en',
         isDefault: false, // User explicitly set this
-        lastUpdated: now.toISOString()
+        lastUpdated: now.toISOString(),
       },
       userId: body.userId || 'current-user',
       timestamp: now.toISOString(),
-      message: 'Language preference saved (in-memory only, no backend configured)'
+      message:
+        'Language preference saved (in-memory only, no backend configured)',
     };
 
     return NextResponse.json(response, { status: 200 });
-
   } catch (error) {
     console.error('❌ Language Preference API Error:', error.message);
     return NextResponse.json(
       {
         success: false,
         error: error.message,
-        message: 'Failed to save language preference'
+        message: 'Failed to save language preference',
       },
       { status: 500 }
     );

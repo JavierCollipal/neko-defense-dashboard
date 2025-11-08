@@ -31,7 +31,7 @@ export async function GET() {
 
     // Get cross-references (approximate from DINA agents with victim links)
     const crossReferences = await perpetratorsCollection.countDocuments({
-      'victims': { $exists: true, $ne: [] }
+      victims: { $exists: true, $ne: [] },
     });
 
     // Valech V2.0 stats
@@ -39,24 +39,24 @@ export async function GET() {
       version: '2.0.0',
       implementationDate: 'October 12, 2025',
       v1: {
-        victims: totalVictims || 10,  // Current count or default
+        victims: totalVictims || 10, // Current count or default
         perpetrators: 8,
         crossReferences: 11,
         ingestion: 'Manual',
-        automation: 0
+        automation: 0,
       },
       v2: {
-        victimsTarget: 27255,  // Valech Report total
-        perpetratorsTarget: 1097,  // 2008 Chilean Army List
+        victimsTarget: 27255, // Valech Report total
+        perpetratorsTarget: 1097, // 2008 Chilean Army List
         crossReferencesTarget: 10000,
         ingestion: 'Automated 8-Step Pipeline',
-        automation: 100
+        automation: 100,
       },
       components: {
         total: 6,
         linesOfCode: 2300,
         functions: 67,
-        filesCreated: 8
+        filesCreated: 8,
       },
       capabilities: [
         'INDH DSpace API Integration',
@@ -64,20 +64,19 @@ export async function GET() {
         'Spanish NLP Entity Extraction',
         'ML Cross-Reference Engine',
         'Real-Time Court Monitoring',
-        'Complete 8-Step Pipeline'
+        'Complete 8-Step Pipeline',
       ],
       current: {
         victims: totalVictims,
         perpetrators: totalPerpetrators,
-        crossReferences: crossReferences
-      }
+        crossReferences: crossReferences,
+      },
     };
 
     return NextResponse.json({
       success: true,
-      data: stats
+      data: stats,
     });
-
   } catch (error) {
     console.error('❌ [API] Valech stats error:', error);
     return NextResponse.json(

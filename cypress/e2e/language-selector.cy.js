@@ -15,12 +15,12 @@ describe('Language Selector Component', () => {
       cy.viewport(1200, 800);
 
       // Should find language selector in header actions
-      cy.get('.header-actions .language-selector-container')
-        .should('be.visible');
+      cy.get('.header-actions .language-selector-container').should(
+        'be.visible'
+      );
 
       // Mobile language selector should not be visible
-      cy.get('.mobile-language-selector')
-        .should('not.be.visible');
+      cy.get('.mobile-language-selector').should('not.be.visible');
     });
 
     it('should show language selector in mobile section on mobile', () => {
@@ -30,8 +30,9 @@ describe('Language Selector Component', () => {
       cy.viewport(375, 667);
 
       // Should find language selector in mobile section
-      cy.get('.mobile-language-selector .language-selector-container')
-        .should('be.visible');
+      cy.get('.mobile-language-selector .language-selector-container').should(
+        'be.visible'
+      );
     });
 
     it('should handle viewport changes correctly', () => {
@@ -39,18 +40,21 @@ describe('Language Selector Component', () => {
 
       // Start with desktop
       cy.viewport(1200, 800);
-      cy.get('.header-actions .language-selector-container')
-        .should('be.visible');
+      cy.get('.header-actions .language-selector-container').should(
+        'be.visible'
+      );
 
       // Switch to mobile
       cy.viewport(375, 667);
-      cy.get('.mobile-language-selector .language-selector-container')
-        .should('be.visible');
+      cy.get('.mobile-language-selector .language-selector-container').should(
+        'be.visible'
+      );
 
       // Switch back to desktop
       cy.viewport(1200, 800);
-      cy.get('.header-actions .language-selector-container')
-        .should('be.visible');
+      cy.get('.header-actions .language-selector-container').should(
+        'be.visible'
+      );
     });
   });
 
@@ -59,8 +63,7 @@ describe('Language Selector Component', () => {
       cy.log('🌍 Testing all supported languages, desu~!');
 
       // Open language selector
-      cy.get('.language-selector-container .current-selection')
-        .click();
+      cy.get('.language-selector-container .current-selection').click();
 
       // Verify all 15 languages are present
       const supportedLanguages = [
@@ -78,10 +81,10 @@ describe('Language Selector Component', () => {
         { code: 'hi', name: 'हिन्दी' },
         { code: 'nl', name: 'Nederlands' },
         { code: 'tr', name: 'Türkçe' },
-        { code: 'pl', name: 'Polski' }
+        { code: 'pl', name: 'Polski' },
       ];
 
-      supportedLanguages.forEach(lang => {
+      supportedLanguages.forEach((lang) => {
         cy.get(`[data-language-code="${lang.code}"]`)
           .should('exist')
           .and('contain', lang.name);
@@ -92,19 +95,22 @@ describe('Language Selector Component', () => {
       cy.log('🔄 Testing language selection and display update, nyaa~!');
 
       // Open language selector
-      cy.get('.language-selector-container .current-selection')
-        .click();
+      cy.get('.language-selector-container .current-selection').click();
 
       // Select Japanese
       cy.get('[data-language-code="ja"]').click();
 
       // Verify current selection updated
-      cy.get('.language-selector-container .current-selection')
-        .should('contain', '日本語');
+      cy.get('.language-selector-container .current-selection').should(
+        'contain',
+        '日本語'
+      );
 
       // Verify flag icon updated
-      cy.get('.language-selector-container .flag-icon')
-        .should('have.class', 'flag-jp');
+      cy.get('.language-selector-container .flag-icon').should(
+        'have.class',
+        'flag-jp'
+      );
     });
 
     it('should handle rapid language changes', () => {
@@ -114,8 +120,7 @@ describe('Language Selector Component', () => {
 
       languages.forEach((langCode, index) => {
         // Open selector
-        cy.get('.language-selector-container .current-selection')
-          .click();
+        cy.get('.language-selector-container .current-selection').click();
 
         // Select language
         cy.get(`[data-language-code="${langCode}"]`).click();
@@ -125,8 +130,10 @@ describe('Language Selector Component', () => {
       });
 
       // Verify final selection
-      cy.get('.language-selector-container .current-selection')
-        .should('contain', 'English');
+      cy.get('.language-selector-container .current-selection').should(
+        'contain',
+        'English'
+      );
     });
   });
 
@@ -135,22 +142,25 @@ describe('Language Selector Component', () => {
       cy.log('💾 Testing language persistence, nyaa~!');
 
       // Select a non-default language
-      cy.get('.language-selector-container .current-selection')
-        .click();
+      cy.get('.language-selector-container .current-selection').click();
 
       cy.get('[data-language-code="ko"]').click();
 
       // Verify Korean selected
-      cy.get('.language-selector-container .current-selection')
-        .should('contain', '한국어');
+      cy.get('.language-selector-container .current-selection').should(
+        'contain',
+        '한국어'
+      );
 
       // Reload page
       cy.reload();
       cy.wait(1000);
 
       // Verify language persisted
-      cy.get('.language-selector-container .current-selection')
-        .should('contain', '한국어');
+      cy.get('.language-selector-container .current-selection').should(
+        'contain',
+        '한국어'
+      );
     });
 
     it('should save language preference to backend', () => {
@@ -159,18 +169,20 @@ describe('Language Selector Component', () => {
       // Intercept the API call
       cy.intercept('POST', '/api/user/language-preference', {
         statusCode: 200,
-        body: { success: true, message: 'Language preference saved' }
+        body: { success: true, message: 'Language preference saved' },
       }).as('saveLanguagePreference');
 
       // Select a language
-      cy.get('.language-selector-container .current-selection')
-        .click();
+      cy.get('.language-selector-container .current-selection').click();
 
       cy.get('[data-language-code="fr"]').click();
 
       // Verify API was called
       cy.wait('@saveLanguagePreference').then((interception) => {
-        expect(interception.request.body).to.have.property('languageCode', 'fr');
+        expect(interception.request.body).to.have.property(
+          'languageCode',
+          'fr'
+        );
         expect(interception.request.body).to.have.property('userId');
       });
     });
@@ -181,23 +193,18 @@ describe('Language Selector Component', () => {
       cy.log('⌨️ Testing keyboard accessibility, nyaa~!');
 
       // Focus on language selector
-      cy.get('.language-selector-container')
-        .focus();
+      cy.get('.language-selector-container').focus();
 
       // Press Enter to open
-      cy.get('.language-selector-container')
-        .type('{enter}');
+      cy.get('.language-selector-container').type('{enter}');
 
       // Use arrow keys to navigate
-      cy.get('.language-options')
-        .should('be.visible');
+      cy.get('.language-options').should('be.visible');
 
       // Press Escape to close
-      cy.get('.language-selector-container')
-        .type('{esc}');
+      cy.get('.language-selector-container').type('{esc}');
 
-      cy.get('.language-options')
-        .should('not.be.visible');
+      cy.get('.language-options').should('not.be.visible');
     });
 
     it('should have proper ARIA attributes', () => {
@@ -209,14 +216,11 @@ describe('Language Selector Component', () => {
         .and('have.attr', 'aria-label');
 
       // Check dropdown has proper ARIA
-      cy.get('.language-selector-container .current-selection')
-        .click();
+      cy.get('.language-selector-container .current-selection').click();
 
-      cy.get('.language-options')
-        .should('have.attr', 'role', 'listbox');
+      cy.get('.language-options').should('have.attr', 'role', 'listbox');
 
-      cy.get('.language-option')
-        .should('have.attr', 'role', 'option');
+      cy.get('.language-option').should('have.attr', 'role', 'option');
     });
   });
 
@@ -227,12 +231,11 @@ describe('Language Selector Component', () => {
       // Intercept API call with failure
       cy.intercept('POST', '/api/user/language-preference', {
         statusCode: 500,
-        body: { success: false, error: 'Server error' }
+        body: { success: false, error: 'Server error' },
       }).as('saveLanguagePreferenceError');
 
       // Select a language
-      cy.get('.language-selector-container .current-selection')
-        .click();
+      cy.get('.language-selector-container .current-selection').click();
 
       cy.get('[data-language-code="de"]').click();
 
@@ -240,8 +243,10 @@ describe('Language Selector Component', () => {
       cy.wait('@saveLanguagePreferenceError');
 
       // Component should still update locally
-      cy.get('.language-selector-container .current-selection')
-        .should('contain', 'Deutsch');
+      cy.get('.language-selector-container .current-selection').should(
+        'contain',
+        'Deutsch'
+      );
 
       // Error handling might show a notification (if implemented)
       // This depends on the specific error handling in the component
@@ -254,9 +259,7 @@ describe('Language Selector Component', () => {
       // missing or corrupted language data
 
       // For now, just verify component doesn't crash
-      cy.get('.language-selector-container')
-        .should('exist')
-        .and('be.visible');
+      cy.get('.language-selector-container').should('exist').and('be.visible');
     });
   });
 
@@ -265,8 +268,7 @@ describe('Language Selector Component', () => {
       cy.log('🎬 Testing dropdown animations, nyaa~!');
 
       // Open dropdown
-      cy.get('.language-selector-container .current-selection')
-        .click();
+      cy.get('.language-selector-container .current-selection').click();
 
       // Verify dropdown appears
       cy.get('.language-options')
@@ -277,25 +279,25 @@ describe('Language Selector Component', () => {
       cy.get('body').click(0, 0);
 
       // Verify dropdown disappears
-      cy.get('.language-options')
-        .should('not.be.visible');
+      cy.get('.language-options').should('not.be.visible');
     });
 
     it('should provide visual feedback on hover', () => {
       cy.log('👆 Testing hover effects, desu~!');
 
       // Open dropdown
-      cy.get('.language-selector-container .current-selection')
-        .click();
+      cy.get('.language-selector-container .current-selection').click();
 
       // Hover over language option
-      cy.get('[data-language-code="es"]')
-        .trigger('mouseover');
+      cy.get('[data-language-code="es"]').trigger('mouseover');
 
       // Visual feedback might include background color change
       // This depends on the specific CSS implementation
-      cy.get('[data-language-code="es"]')
-        .should('have.css', 'cursor', 'pointer');
+      cy.get('[data-language-code="es"]').should(
+        'have.css',
+        'cursor',
+        'pointer'
+      );
     });
   });
 });

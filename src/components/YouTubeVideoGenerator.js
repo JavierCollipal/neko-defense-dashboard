@@ -52,10 +52,11 @@ function YouTubeVideoGenerator() {
     formData.append('outputName', outputName);
 
     try {
-      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
+      const API_URL =
+        process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
       const response = await fetch(`${API_URL}/youtube-generator`, {
         method: 'POST',
-        body: formData
+        body: formData,
       });
 
       const data = await response.json();
@@ -87,7 +88,9 @@ function YouTubeVideoGenerator() {
     <div className="youtube-generator-container">
       <div className="youtube-generator-header">
         <h2>🎬 YOUTUBE VIDEO GENERATOR 🎬</h2>
-        <p className="subtitle">Convert Image + Audio into YouTube-ready MP4 video! ✨</p>
+        <p className="subtitle">
+          Convert Image + Audio into YouTube-ready MP4 video! ✨
+        </p>
         <div className="specs-banner">
           <span>📺 1080p HD</span>
           <span>🎵 AAC Audio</span>
@@ -100,11 +103,22 @@ function YouTubeVideoGenerator() {
         <div className="success-banner">
           <h3>✅ SUCCESS! YouTube Video Created! ✅</h3>
           <div className="result-info">
-            <p>📁 <strong>File:</strong> {result.outputFile}</p>
-            <p>📦 <strong>Size:</strong> {result.fileSize}</p>
-            <p>⏱️ <strong>Duration:</strong> {result.duration}</p>
-            <p>📺 <strong>Resolution:</strong> {result.resolution || '1920x1080 (1080p)'}</p>
-            <p>🎬 <strong>Ready for YouTube upload!</strong></p>
+            <p>
+              📁 <strong>File:</strong> {result.outputFile}
+            </p>
+            <p>
+              📦 <strong>Size:</strong> {result.fileSize}
+            </p>
+            <p>
+              ⏱️ <strong>Duration:</strong> {result.duration}
+            </p>
+            <p>
+              📺 <strong>Resolution:</strong>{' '}
+              {result.resolution || '1920x1080 (1080p)'}
+            </p>
+            <p>
+              🎬 <strong>Ready for YouTube upload!</strong>
+            </p>
           </div>
           <button className="reset-button" onClick={resetForm}>
             🔄 Make Another Video
@@ -121,7 +135,9 @@ function YouTubeVideoGenerator() {
       <form onSubmit={handleSubmit} className="youtube-generator-form">
         <div className="form-section">
           <h3>🖼️ Step 1: Select Your Image File</h3>
-          <p className="section-hint">This will be the static background/thumbnail for your video</p>
+          <p className="section-hint">
+            This will be the static background/thumbnail for your video
+          </p>
           <div className="file-input-container">
             <input
               type="file"
@@ -135,7 +151,9 @@ function YouTubeVideoGenerator() {
             </label>
             {imageFile && (
               <div className="file-info">
-                <span>Size: {(imageFile.size / 1024 / 1024).toFixed(2)} MB</span>
+                <span>
+                  Size: {(imageFile.size / 1024 / 1024).toFixed(2)} MB
+                </span>
               </div>
             )}
           </div>
@@ -160,7 +178,9 @@ function YouTubeVideoGenerator() {
             </label>
             {audioFile && (
               <div className="file-info">
-                <span>Size: {(audioFile.size / 1024 / 1024).toFixed(2)} MB</span>
+                <span>
+                  Size: {(audioFile.size / 1024 / 1024).toFixed(2)} MB
+                </span>
               </div>
             )}
           </div>
@@ -179,16 +199,22 @@ function YouTubeVideoGenerator() {
             onChange={(e) => setOutputName(e.target.value)}
             disabled={processing}
           />
-          <p className="hint">💡 Extension will be added automatically (.mp4)</p>
+          <p className="hint">
+            💡 Extension will be added automatically (.mp4)
+          </p>
         </div>
 
         <div className="form-actions">
           <button
             type="submit"
             className="create-button"
-            disabled={processing || !imageFile || !audioFile || !outputName.trim()}
+            disabled={
+              processing || !imageFile || !audioFile || !outputName.trim()
+            }
           >
-            {processing ? '⏳ Creating YouTube Video...' : '✨ Create YouTube Video! ✨'}
+            {processing
+              ? '⏳ Creating YouTube Video...'
+              : '✨ Create YouTube Video! ✨'}
           </button>
           {!processing && (imageFile || audioFile || outputName) && (
             <button type="button" className="reset-button" onClick={resetForm}>
@@ -250,7 +276,9 @@ function YouTubeVideoGenerator() {
             <div className="neko-spinner">🐾</div>
             <h3>⏳ Creating Your YouTube Video...</h3>
             <p>Converting your image + audio into YouTube format!</p>
-            <p className="neko-message">*purrs while processing* NYA NYA NYA~! ✨</p>
+            <p className="neko-message">
+              *purrs while processing* NYA NYA NYA~! ✨
+            </p>
             <div className="progress-steps">
               <div className="step">📸 Loading image...</div>
               <div className="step">🎵 Processing audio...</div>

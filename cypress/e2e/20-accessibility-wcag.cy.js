@@ -14,8 +14,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y(null, {
         runOnly: {
           type: 'tag',
-          values: ['wcag2a', 'wcag2aa', 'wcag21aa']
-        }
+          values: ['wcag2a', 'wcag2aa', 'wcag21aa'],
+        },
       });
     });
 
@@ -23,7 +23,7 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.injectAxe();
 
       cy.checkA11y(null, {
-        includedImpacts: ['critical', 'serious']
+        includedImpacts: ['critical', 'serious'],
       });
     });
 
@@ -33,8 +33,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y(null, {
         runOnly: {
           type: 'rule',
-          values: ['color-contrast']
-        }
+          values: ['color-contrast'],
+        },
       });
     });
 
@@ -44,8 +44,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y(null, {
         runOnly: {
           type: 'rule',
-          values: ['heading-order']
-        }
+          values: ['heading-order'],
+        },
       });
     });
 
@@ -55,8 +55,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y(null, {
         runOnly: {
           type: 'rule',
-          values: ['region', 'landmark-one-main']
-        }
+          values: ['region', 'landmark-one-main'],
+        },
       });
     });
 
@@ -66,8 +66,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y(null, {
         runOnly: {
           type: 'rule',
-          values: ['button-name', 'link-name']
-        }
+          values: ['button-name', 'link-name'],
+        },
       });
     });
 
@@ -77,8 +77,12 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y(null, {
         runOnly: {
           type: 'rule',
-          values: ['aria-valid-attr', 'aria-valid-attr-value', 'aria-allowed-attr']
-        }
+          values: [
+            'aria-valid-attr',
+            'aria-valid-attr-value',
+            'aria-allowed-attr',
+          ],
+        },
       });
     });
 
@@ -88,8 +92,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y(null, {
         runOnly: {
           type: 'rule',
-          values: ['label', 'label-content-name-mismatch']
-        }
+          values: ['label', 'label-content-name-mismatch'],
+        },
       });
     });
   });
@@ -122,8 +126,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y('.App-header', {
         runOnly: {
           type: 'rule',
-          values: ['color-contrast']
-        }
+          values: ['color-contrast'],
+        },
       });
     });
   });
@@ -136,8 +140,7 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
     });
 
     it('should have proper ARIA label on button', () => {
-      cy.getByDataCy('language-button')
-        .should('have.attr', 'aria-label');
+      cy.getByDataCy('language-button').should('have.attr', 'aria-label');
     });
 
     it('should be keyboard accessible', () => {
@@ -187,9 +190,7 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
     it('should have proper focus states', () => {
       cy.get('.category-item').first().focus();
 
-      cy.focused()
-        .should('have.css', 'outline-style')
-        .and('not.equal', 'none');
+      cy.focused().should('have.css', 'outline-style').and('not.equal', 'none');
     });
 
     it('should be keyboard navigable', () => {
@@ -216,8 +217,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y('.stats-section', {
         runOnly: {
           type: 'rule',
-          values: ['color-contrast']
-        }
+          values: ['color-contrast'],
+        },
       });
     });
   });
@@ -251,8 +252,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y(null, {
         runOnly: {
           type: 'tag',
-          values: ['wcag2a', 'wcag2aa']
-        }
+          values: ['wcag2a', 'wcag2aa'],
+        },
       });
     });
 
@@ -267,17 +268,23 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
     it('should have accessible filter buttons', () => {
       cy.injectAxe();
 
-      cy.get('button').contains('All Types').parents().first().then(($container) => {
-        cy.checkA11y($container[0]);
-      });
+      cy.get('button')
+        .contains('All Types')
+        .parents()
+        .first()
+        .then(($container) => {
+          cy.checkA11y($container[0]);
+        });
     });
 
     it('should have accessible threat actor cards', () => {
       cy.injectAxe();
 
-      cy.get('.threat-actor-card').first().then(($card) => {
-        cy.checkA11y($card[0]);
-      });
+      cy.get('.threat-actor-card')
+        .first()
+        .then(($card) => {
+          cy.checkA11y($card[0]);
+        });
     });
 
     it('should have proper heading hierarchy in cards', () => {
@@ -286,8 +293,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y('.threat-actors-grid', {
         runOnly: {
           type: 'rule',
-          values: ['heading-order']
-        }
+          values: ['heading-order'],
+        },
       });
     });
 
@@ -322,7 +329,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
     it('should have accessible close button', () => {
       cy.get('.modal-close')
         .should('be.visible')
-        .and('have.attr', 'aria-label').or('have.text');
+        .and('have.attr', 'aria-label')
+        .or('have.text');
     });
 
     it('should trap focus inside modal', () => {
@@ -350,9 +358,7 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
     it('should have visible focus indicators', () => {
       cy.get('body').tab();
 
-      cy.focused()
-        .should('have.css', 'outline-style')
-        .and('not.equal', 'none');
+      cy.focused().should('have.css', 'outline-style').and('not.equal', 'none');
     });
 
     it('should maintain logical tab order', () => {
@@ -401,8 +407,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y(null, {
         runOnly: {
           type: 'tag',
-          values: ['wcag2a', 'wcag2aa']
-        }
+          values: ['wcag2a', 'wcag2aa'],
+        },
       });
     });
 
@@ -422,7 +428,9 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.document().then((doc) => {
         const viewport = doc.querySelector('meta[name="viewport"]');
         expect(viewport).to.exist;
-        expect(viewport?.getAttribute('content')).to.include('width=device-width');
+        expect(viewport?.getAttribute('content')).to.include(
+          'width=device-width'
+        );
       });
     });
 
@@ -437,15 +445,22 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
     it('should pass WCAG AAA contrast for text', () => {
       cy.injectAxe();
 
-      cy.checkA11y(null, {
-        runOnly: {
-          type: 'rule',
-          values: ['color-contrast-enhanced']
+      cy.checkA11y(
+        null,
+        {
+          runOnly: {
+            type: 'rule',
+            values: ['color-contrast-enhanced'],
+          },
+        },
+        (violations) => {
+          // Allow AAA failures, but AA must pass
+          console.log(
+            '💡 AAA contrast violations (informational):',
+            violations.length
+          );
         }
-      }, (violations) => {
-        // Allow AAA failures, but AA must pass
-        console.log('💡 AAA contrast violations (informational):', violations.length);
-      });
+      );
     });
 
     it('should not use color alone for information', () => {
@@ -455,8 +470,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y(null, {
         runOnly: {
           type: 'rule',
-          values: ['link-in-text-block']
-        }
+          values: ['link-in-text-block'],
+        },
       });
     });
   });
@@ -483,8 +498,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y('img', {
         runOnly: {
           type: 'rule',
-          values: ['image-alt']
-        }
+          values: ['image-alt'],
+        },
       });
     });
   });
@@ -508,8 +523,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y('input, select, textarea', {
         runOnly: {
           type: 'rule',
-          values: ['label', 'label-content-name-mismatch']
-        }
+          values: ['label', 'label-content-name-mismatch'],
+        },
       });
     });
   });
@@ -532,14 +547,19 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
         if ($skipLinks.length > 0) {
           cy.wrap($skipLinks).first().should('exist');
         } else {
-          console.log('💡 RECOMMENDATION: Add skip navigation links for screen readers');
+          console.log(
+            '💡 RECOMMENDATION: Add skip navigation links for screen readers'
+          );
         }
       });
     });
 
     it('should have proper semantic HTML', () => {
       // Check for semantic elements
-      cy.get('header, nav, main, article, section, aside, footer').should('have.length.greaterThan', 0);
+      cy.get('header, nav, main, article, section, aside, footer').should(
+        'have.length.greaterThan',
+        0
+      );
     });
 
     it('should have ARIA landmarks', () => {
@@ -548,8 +568,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y(null, {
         runOnly: {
           type: 'rule',
-          values: ['region']
-        }
+          values: ['region'],
+        },
       });
     });
   });
@@ -559,7 +579,7 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       // Trigger error state if possible
       cy.intercept('GET', '**/api/threat-actors', {
         statusCode: 500,
-        body: { error: 'Server error' }
+        body: { error: 'Server error' },
       }).as('getError');
 
       cy.visit('/');
@@ -577,8 +597,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y(null, {
         runOnly: {
           type: 'tag',
-          values: ['wcag2a', 'wcag21a']
-        }
+          values: ['wcag2a', 'wcag21a'],
+        },
       });
     });
 
@@ -588,26 +608,30 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
       cy.checkA11y(null, {
         runOnly: {
           type: 'tag',
-          values: ['wcag2aa', 'wcag21aa']
-        }
+          values: ['wcag2aa', 'wcag21aa'],
+        },
       });
     });
 
     it('should have minimal AAA violations (aspirational)', () => {
       cy.injectAxe();
 
-      cy.checkA11y(null, {
-        runOnly: {
-          type: 'tag',
-          values: ['wcag2aaa', 'wcag21aaa']
+      cy.checkA11y(
+        null,
+        {
+          runOnly: {
+            type: 'tag',
+            values: ['wcag2aaa', 'wcag21aaa'],
+          },
+        },
+        (violations) => {
+          // Log AAA violations but don't fail test
+          console.log(`💡 AAA violations (aspirational): ${violations.length}`);
+          violations.forEach((v) => {
+            console.log(`  - ${v.id}: ${v.help}`);
+          });
         }
-      }, (violations) => {
-        // Log AAA violations but don't fail test
-        console.log(`💡 AAA violations (aspirational): ${violations.length}`);
-        violations.forEach((v) => {
-          console.log(`  - ${v.id}: ${v.help}`);
-        });
-      });
+      );
     });
   });
 
@@ -642,8 +666,8 @@ describe('♿⚡ WCAG 2.1 ACCESSIBILITY COMPLIANCE ⚡♿', () => {
         cy.checkA11y(null, {
           runOnly: {
             type: 'tag',
-            values: ['wcag2a', 'wcag2aa']
-          }
+            values: ['wcag2a', 'wcag2aa'],
+          },
         });
       });
     });

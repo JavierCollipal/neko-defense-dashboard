@@ -5,14 +5,15 @@ const urlsToCache = [
   '/static/css/main.css',
   '/static/js/main.js',
   '/static/js/bundle.js',
-  '/manifest.json'
+  '/manifest.json',
 ];
 
 // Install event - cache resources
 self.addEventListener('install', (event) => {
   console.log('🐾 [ServiceWorker] Installing, nyaa~!');
   event.waitUntil(
-    caches.open(CACHE_NAME)
+    caches
+      .open(CACHE_NAME)
       .then((cache) => {
         console.log('🐾 [ServiceWorker] Caching app shell');
         return cache.addAll(urlsToCache);
@@ -48,36 +49,40 @@ self.addEventListener('activate', (event) => {
 // Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
+    caches.match(event.request).then((response) => {
+      // Cache hit - return response
+      if (response) {
+        return response;
+      }
 
-        // Clone the request
-        const fetchRequest = event.request.clone();
+      // Clone the request
+      const fetchRequest = event.request.clone();
 
-        return fetch(fetchRequest).then((response) => {
+      return fetch(fetchRequest)
+        .then((response) => {
           // Check if valid response
-          if (!response || response.status !== 200 || response.type !== 'basic') {
+          if (
+            !response ||
+            response.status !== 200 ||
+            response.type !== 'basic'
+          ) {
             return response;
           }
 
           // Clone the response
           const responseToCache = response.clone();
 
-          caches.open(CACHE_NAME)
-            .then((cache) => {
-              cache.put(event.request, responseToCache);
-            });
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
 
           return response;
-        }).catch(() => {
+        })
+        .catch(() => {
           // Network failed, return offline page if available
           return caches.match('/offline.html');
         });
-      })
+    })
   );
 });
 
@@ -118,11 +123,11 @@ self.addEventListener('push', (event) => {
     requireInteraction: true,
     actions: [
       { action: 'view', title: 'View Threat', icon: '/neko-icon-192.png' },
-      { action: 'dismiss', title: 'Dismiss' }
+      { action: 'dismiss', title: 'Dismiss' },
     ],
     data: {
-      url: '/threats'
-    }
+      url: '/threats',
+    },
   };
 
   event.waitUntil(
@@ -137,8 +142,6 @@ self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
   if (event.action === 'view') {
-    event.waitUntil(
-      clients.openWindow('/threats')
-    );
+    event.waitUntil(clients.openWindow('/threats'));
   }
 });

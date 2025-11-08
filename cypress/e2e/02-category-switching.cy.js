@@ -11,15 +11,20 @@ describe('🎯 Category Switching & Threat Filtering', () => {
     { id: 'pedophiles', name: 'Pedophiles', icon: '🚨', priority: true },
     { id: 'dina_network', name: 'DINA Network', icon: '🕸️', priority: true },
     { id: 'ransomware', name: 'Ransomware', icon: '💀', priority: false },
-    { id: 'state_sponsored', name: 'State Sponsored', icon: '🕷️', priority: false },
-    { id: 'crypto_crime', name: 'Crypto Crime', icon: '₿', priority: false }
+    {
+      id: 'state_sponsored',
+      name: 'State Sponsored',
+      icon: '🕷️',
+      priority: false,
+    },
+    { id: 'crypto_crime', name: 'Crypto Crime', icon: '₿', priority: false },
   ];
 
   it('should display all threat categories in the sidebar', () => {
     cy.get('.category-switcher')
       .should('be.visible')
       .within(() => {
-        categories.forEach(cat => {
+        categories.forEach((cat) => {
           cy.contains(cat.name).should('be.visible');
         });
       });
@@ -32,32 +37,35 @@ describe('🎯 Category Switching & Threat Filtering', () => {
   });
 
   it('should display threat counts for each category', () => {
-    cy.get('.category-switcher')
-      .within(() => {
-        cy.get('.category-count')
-          .should('have.length.at.least', 7)
-          .each(($count) => {
-            cy.wrap($count).should('contain', 'detected');
-          });
-      });
+    cy.get('.category-switcher').within(() => {
+      cy.get('.category-count')
+        .should('have.length.at.least', 7)
+        .each(($count) => {
+          cy.wrap($count).should('contain', 'detected');
+        });
+    });
   });
 
   it('should highlight priority categories (Predators, Pedophiles, DINA)', () => {
-    cy.get('.category-item.priority')
-      .should('have.length', 3);
+    cy.get('.category-item.priority').should('have.length', 3);
 
     // Verify each priority category
-    cy.contains('Predators').parent('.category-item').should('have.class', 'priority');
-    cy.contains('Pedophiles').parent('.category-item').should('have.class', 'priority');
-    cy.contains('DINA Network').parent('.category-item').should('have.class', 'priority');
+    cy.contains('Predators')
+      .parent('.category-item')
+      .should('have.class', 'priority');
+    cy.contains('Pedophiles')
+      .parent('.category-item')
+      .should('have.class', 'priority');
+    cy.contains('DINA Network')
+      .parent('.category-item')
+      .should('have.class', 'priority');
   });
 
   it('should display alert pulse animation for priority categories', () => {
-    cy.get('.category-item.priority .alert-pulse')
-      .should('have.length', 3);
+    cy.get('.category-item.priority .alert-pulse').should('have.length', 3);
   });
 
-  categories.forEach(category => {
+  categories.forEach((category) => {
     it(`should switch to "${category.name}" category when clicked`, () => {
       cy.get('.category-switcher')
         .contains(category.name)
@@ -65,8 +73,7 @@ describe('🎯 Category Switching & Threat Filtering', () => {
         .click({ force: true });
 
       // Verify active state
-      cy.get('.category-item.active')
-        .should('contain', category.name);
+      cy.get('.category-item.active').should('contain', category.name);
     });
   });
 
@@ -103,9 +110,7 @@ describe('🎯 Category Switching & Threat Filtering', () => {
   });
 
   it('should show status dot for active monitoring', () => {
-    cy.get('.status-dot')
-      .should('be.visible')
-      .and('have.css', 'display');
+    cy.get('.status-dot').should('be.visible').and('have.css', 'display');
   });
 
   it('should maintain category selection when navigating views', () => {
@@ -126,7 +131,7 @@ describe('🎯 Category Switching & Threat Filtering', () => {
   });
 
   it('should display category icons correctly', () => {
-    categories.forEach(cat => {
+    categories.forEach((cat) => {
       cy.get('.category-switcher')
         .contains(cat.name)
         .parent('.category-item')
@@ -136,16 +141,11 @@ describe('🎯 Category Switching & Threat Filtering', () => {
   });
 
   it('should apply border color styling to categories', () => {
-    cy.get('.category-item')
-      .first()
-      .should('have.css', 'border-left-color');
+    cy.get('.category-item').first().should('have.css', 'border-left-color');
   });
 
   it('should be keyboard accessible for category switching', () => {
-    cy.get('.category-item')
-      .first()
-      .focus()
-      .type('{enter}');
+    cy.get('.category-item').first().focus().type('{enter}');
 
     cy.get('.category-item.active').should('exist');
   });

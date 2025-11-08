@@ -16,7 +16,7 @@ export const Dashboard = () => {
     dina_network: 0,
     ransomware: 0,
     state_sponsored: 0,
-    crypto_crime: 0
+    crypto_crime: 0,
   });
   const isMobile = useIsMobile();
 
@@ -30,7 +30,10 @@ export const Dashboard = () => {
     try {
       console.log('🎨 [Dashboard] Fetching ASCII art from /api/ascii-art...');
       const response = await fetch('/api/ascii-art');
-      console.log('🎨 [Dashboard] ASCII art response received:', response.status);
+      console.log(
+        '🎨 [Dashboard] ASCII art response received:',
+        response.status
+      );
       const data = await response.json();
       console.log('🎨 [Dashboard] ASCII art data:', data);
       setAsciiArt(data);
@@ -41,9 +44,14 @@ export const Dashboard = () => {
 
   const fetchThreatCounts = async () => {
     try {
-      console.log('📊 [Dashboard] Fetching threat counts from /api/threat-counts...');
+      console.log(
+        '📊 [Dashboard] Fetching threat counts from /api/threat-counts...'
+      );
       const response = await fetch('/api/threat-counts');
-      console.log('📊 [Dashboard] Threat counts response received:', response.status);
+      console.log(
+        '📊 [Dashboard] Threat counts response received:',
+        response.status
+      );
       const result = await response.json();
       console.log('📊 [Dashboard] Threat counts data:', result);
       if (result.success && result.data) {

@@ -144,7 +144,10 @@ describe('🍯 Honeypots Security Monitoring', () => {
     // Check for timestamps or dates
     cy.get('body').then(($body) => {
       const pageText = $body.text();
-      const hasDate = /\d{4}|\d{1,2}\/\d{1,2}|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec/i.test(pageText);
+      const hasDate =
+        /\d{4}|\d{1,2}\/\d{1,2}|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec/i.test(
+          pageText
+        );
 
       if (hasDate) {
         cy.log('✅ Timestamps/dates found on page');
@@ -180,11 +183,11 @@ describe('🍯 Honeypots Security Monitoring', () => {
         'material',
         'access',
         'trap',
-        'decoy'
+        'decoy',
       ];
 
       let foundTypes = 0;
-      honeypotTypes.forEach(type => {
+      honeypotTypes.forEach((type) => {
         if (pageText.includes(type)) {
           cy.log(`✅ Found honeypot type: ${type}`);
           foundTypes++;
@@ -195,7 +198,9 @@ describe('🍯 Honeypots Security Monitoring', () => {
         cy.log(`✅ Found ${foundTypes} honeypot type indicators`);
         console.log(`✅ ${foundTypes} honeypot categories detected, desu~!`);
       } else {
-        cy.log('⚠️ No specific honeypot types detected (may use different naming)');
+        cy.log(
+          '⚠️ No specific honeypot types detected (may use different naming)'
+        );
       }
     });
 
@@ -222,11 +227,11 @@ describe('🍯 Honeypots Security Monitoring', () => {
         'no data',
         'empty',
         'sin datos',
-        'sin actividad'
+        'sin actividad',
       ];
 
       let hasEmptyState = false;
-      emptyStateIndicators.forEach(indicator => {
+      emptyStateIndicators.forEach((indicator) => {
         if (pageText.includes(indicator)) {
           cy.log(`✅ Found empty state indicator: ${indicator}`);
           hasEmptyState = true;
@@ -234,7 +239,8 @@ describe('🍯 Honeypots Security Monitoring', () => {
       });
 
       // Either has data OR has empty state message
-      const hasData = $body.find('table tbody tr, ul li, .honeypot-item, .card').length > 0;
+      const hasData =
+        $body.find('table tbody tr, ul li, .honeypot-item, .card').length > 0;
 
       if (hasData) {
         cy.log('✅ Honeypot data is present');
@@ -269,11 +275,11 @@ describe('🍯 Honeypots Security Monitoring', () => {
         'newest',
         'last',
         'reciente',
-        'último'
+        'último',
       ];
 
       let hasRecentIndicator = false;
-      recentIndicators.forEach(indicator => {
+      recentIndicators.forEach((indicator) => {
         if (pageText.includes(indicator)) {
           cy.log(`✅ Found recent activity indicator: ${indicator}`);
           hasRecentIndicator = true;
@@ -283,7 +289,9 @@ describe('🍯 Honeypots Security Monitoring', () => {
       if (hasRecentIndicator) {
         console.log('✅ Recent activity tracking visible, desu~!');
       } else {
-        cy.log('⚠️ No specific "recent" indicators (data may be sorted by default)');
+        cy.log(
+          '⚠️ No specific "recent" indicators (data may be sorted by default)'
+        );
       }
     });
 
@@ -300,22 +308,24 @@ describe('🍯 Honeypots Security Monitoring', () => {
 
     cy.visit('/honeypots', { timeout: 10000 });
 
-    cy.get('body', { timeout: 8000 }).should('be.visible').then(() => {
-      const loadTime = Date.now() - startTime;
+    cy.get('body', { timeout: 8000 })
+      .should('be.visible')
+      .then(() => {
+        const loadTime = Date.now() - startTime;
 
-      cy.log(`📊 Page load time: ${loadTime}ms`);
+        cy.log(`📊 Page load time: ${loadTime}ms`);
 
-      // Should load within 5 seconds
-      expect(loadTime).to.be.lessThan(5000);
+        // Should load within 5 seconds
+        expect(loadTime).to.be.lessThan(5000);
 
-      if (loadTime < 2000) {
-        console.log('✅ EXCELLENT performance: < 2 seconds, nyaa~! ⚡');
-      } else if (loadTime < 3000) {
-        console.log('✅ GOOD performance: < 3 seconds, desu~!');
-      } else if (loadTime < 5000) {
-        console.log('✅ ACCEPTABLE performance: < 5 seconds');
-      }
-    });
+        if (loadTime < 2000) {
+          console.log('✅ EXCELLENT performance: < 2 seconds, nyaa~! ⚡');
+        } else if (loadTime < 3000) {
+          console.log('✅ GOOD performance: < 3 seconds, desu~!');
+        } else if (loadTime < 5000) {
+          console.log('✅ ACCEPTABLE performance: < 5 seconds');
+        }
+      });
 
     console.log('✅ Honeypots page performance verified!');
   });

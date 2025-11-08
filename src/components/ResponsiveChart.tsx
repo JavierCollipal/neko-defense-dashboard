@@ -18,7 +18,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { prefersReducedMotion, ACCESSIBLE_COLORS } from '../utils/accessibility';
+import {
+  prefersReducedMotion,
+  ACCESSIBLE_COLORS,
+} from '../utils/accessibility';
 
 // ========================================
 // RESPONSIVE LINE CHART (with gestures)
@@ -40,14 +43,18 @@ export function ResponsiveLineChart({
   color = ACCESSIBLE_COLORS.link.default,
   enableGestures = true,
 }: ResponsiveLineChartProps) {
-  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(
+    null
+  );
   const [isPinching, setIsPinching] = useState(false);
   const [zoom, setZoom] = useState(1);
   const reducedMotion = prefersReducedMotion();
 
   // Gesture handlers
   const handleTouchStart = (e: React.TouchEvent) => {
-    if (!enableGestures) {return;}
+    if (!enableGestures) {
+      return;
+    }
 
     if (e.touches.length === 1) {
       setTouchStart({ x: e.touches[0].clientX, y: e.touches[0].clientY });
@@ -57,7 +64,9 @@ export function ResponsiveLineChart({
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!enableGestures) {return;}
+    if (!enableGestures) {
+      return;
+    }
 
     if (isPinching && e.touches.length === 2) {
       const distance = Math.hypot(
@@ -69,7 +78,9 @@ export function ResponsiveLineChart({
   };
 
   const handleTouchEnd = () => {
-    if (!enableGestures) {return;}
+    if (!enableGestures) {
+      return;
+    }
     setTouchStart(null);
     setIsPinching(false);
   };
@@ -125,10 +136,7 @@ export function ResponsiveLineChart({
             }}
             cursor={{ stroke: color, strokeWidth: 2 }}
           />
-          <Legend
-            wrapperStyle={{ fontSize: '14px' }}
-            iconType="line"
-          />
+          <Legend wrapperStyle={{ fontSize: '14px' }} iconType="line" />
           <Line
             type="monotone"
             dataKey={yKey}
@@ -224,9 +232,7 @@ export function ResponsiveBarChart({
               color: '#fff',
             }}
           />
-          <Legend
-            wrapperStyle={{ fontSize: '14px' }}
-          />
+          <Legend wrapperStyle={{ fontSize: '14px' }} />
           <Bar
             dataKey={yKey}
             fill={color}
@@ -286,7 +292,13 @@ export function ResponsiveAreaChart({
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
         >
           <defs>
-            <linearGradient id={`colorGradient-${yKey}`} x1="0" y1="0" x2="0" y2="1">
+            <linearGradient
+              id={`colorGradient-${yKey}`}
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="1"
+            >
               <stop offset="5%" stopColor={color} stopOpacity={0.8} />
               <stop offset="95%" stopColor={color} stopOpacity={0.1} />
             </linearGradient>
@@ -309,9 +321,7 @@ export function ResponsiveAreaChart({
               color: '#fff',
             }}
           />
-          <Legend
-            wrapperStyle={{ fontSize: '14px' }}
-          />
+          <Legend wrapperStyle={{ fontSize: '14px' }} />
           <Area
             type="monotone"
             dataKey={yKey}
@@ -381,13 +391,21 @@ interface MultiLineChartProps {
   title?: string;
 }
 
-export function MultiLineChart({ data, xKey, lines, title }: MultiLineChartProps) {
+export function MultiLineChart({
+  data,
+  xKey,
+  lines,
+  title,
+}: MultiLineChartProps) {
   const reducedMotion = prefersReducedMotion();
 
   return (
     <div
       role="img"
-      aria-label={title || `Multi-line chart comparing ${lines.map(l => l.name).join(', ')}`}
+      aria-label={
+        title ||
+        `Multi-line chart comparing ${lines.map((l) => l.name).join(', ')}`
+      }
       style={{ width: '100%', height: '400px' }}
     >
       {title && (
@@ -427,9 +445,7 @@ export function MultiLineChart({ data, xKey, lines, title }: MultiLineChartProps
               color: '#fff',
             }}
           />
-          <Legend
-            wrapperStyle={{ fontSize: '14px' }}
-          />
+          <Legend wrapperStyle={{ fontSize: '14px' }} />
           {lines.map((line) => (
             <Line
               key={line.key}

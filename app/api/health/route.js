@@ -9,6 +9,6 @@ export async function GET(request) {
     success: true,
     status: 'healthy',
     timestamp: new Date().toISOString(),
-    message: 'Neko Defense Dashboard API is running, nyaa~! 🐾⚡'
+    message: 'Neko Defense Dashboard API is running, nyaa~! 🐾⚡',
   });
 }

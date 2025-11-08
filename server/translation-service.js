@@ -34,7 +34,9 @@ async function translateText(text, targetLang, sourceLang = 'en') {
 
     // Validate language support
     if (!SUPPORTED_LANGUAGES.includes(targetLang)) {
-      console.warn(`⚠️ [Translation] Unsupported language: ${targetLang}, falling back to English`);
+      console.warn(
+        `⚠️ [Translation] Unsupported language: ${targetLang}, falling back to English`
+      );
       return text;
     }
 
@@ -46,9 +48,10 @@ async function translateText(text, targetLang, sourceLang = 'en') {
     // Perform translation
     const result = await translate(text, { from: sourceLang, to: targetLang });
     return result.text;
-
   } catch (error) {
-    console.error(`❌ [Translation] Failed to translate text: ${error.message}`);
+    console.error(
+      `❌ [Translation] Failed to translate text: ${error.message}`
+    );
     return text; // Return original text on error
   }
 }
@@ -67,7 +70,7 @@ async function translateArray(textArray, targetLang, sourceLang = 'en') {
   }
 
   const translations = await Promise.all(
-    textArray.map(text => translateText(text, targetLang, sourceLang))
+    textArray.map((text) => translateText(text, targetLang, sourceLang))
   );
 
   return translations;
@@ -94,11 +97,15 @@ async function translateDocument(document, targetLang, db, collectionName) {
 
     // Check if translations already exist for this language
     if (document.translations && document.translations[targetLang]) {
-      console.log(`✅ [Translation] Using cached translation for ${targetLang}`);
+      console.log(
+        `✅ [Translation] Using cached translation for ${targetLang}`
+      );
       return applyTranslations(document, document.translations[targetLang]);
     }
 
-    console.log(`🌐 [Translation] Translating document to ${targetLang}, nyaa~!`);
+    console.log(
+      `🌐 [Translation] Translating document to ${targetLang}, nyaa~!`
+    );
 
     // Define fields to translate based on collection type
     const translatableFields = getTranslatableFields(collectionName);
@@ -110,7 +117,9 @@ async function translateDocument(document, targetLang, db, collectionName) {
     for (const field of translatableFields) {
       const value = document[field];
 
-      if (!value) {continue;}
+      if (!value) {
+        continue;
+      }
 
       if (Array.isArray(value)) {
         // Translate arrays
@@ -125,13 +134,20 @@ async function translateDocument(document, targetLang, db, collectionName) {
     }
 
     // Save translations to MongoDB
-    await saveTranslations(db, collectionName, document._id, targetLang, translations);
+    await saveTranslations(
+      db,
+      collectionName,
+      document._id,
+      targetLang,
+      translations
+    );
 
     // Apply translations to document
     return applyTranslations(document, translations);
-
   } catch (error) {
-    console.error(`❌ [Translation] Failed to translate document: ${error.message}`);
+    console.error(
+      `❌ [Translation] Failed to translate document: ${error.message}`
+    );
     return document; // Return original document on error
   }
 }
@@ -144,7 +160,7 @@ async function translateDocument(document, targetLang, db, collectionName) {
  */
 function getTranslatableFields(collectionName) {
   const fieldMappings = {
-    'threat_actors': [
+    threat_actors: [
       'name',
       'categories',
       'targets',
@@ -152,28 +168,18 @@ function getTranslatableFields(collectionName) {
       'major_crimes',
       'origin', // Will translate nested fields
       'position',
-      'classification'
+      'classification',
     ],
-    'dina_perpetrators': [
+    dina_perpetrators: [
       'fullName',
       'position',
       'major_crimes',
       'significance',
       'rank',
-      'organization'
+      'organization',
     ],
-    'dina_torture_centers': [
-      'name',
-      'location',
-      'description',
-      'known_for'
-    ],
-    'dina_international_crimes': [
-      'crime',
-      'description',
-      'location',
-      'victims'
-    ]
+    dina_torture_centers: ['name', 'location', 'description', 'known_for'],
+    dina_international_crimes: ['crime', 'description', 'location', 'victims'],
   };
 
   return fieldMappings[collectionName] || [];
@@ -217,20 +223,30 @@ async function translateObject(obj, targetLang) {
  * @param {string} targetLang - Target language code
  * @param {Object} translations - Translations object
  */
-async function saveTranslations(db, collectionName, documentId, targetLang, translations) {
+async function saveTranslations(
+  db,
+  collectionName,
+  documentId,
+  targetLang,
+  translations
+) {
   try {
     await db.collection(collectionName).updateOne(
       { _id: documentId },
       {
         $set: {
           [`translations.${targetLang}`]: translations,
-          [`translations.${targetLang}_updated_at`]: new Date()
-        }
+          [`translations.${targetLang}_updated_at`]: new Date(),
+        },
       }
     );
-    console.log(`✅ [Translation] Saved ${targetLang} translations to MongoDB, desu~!`);
+    console.log(
+      `✅ [Translation] Saved ${targetLang} translations to MongoDB, desu~!`
+    );
   } catch (error) {
-    console.error(`❌ [Translation] Failed to save translations: ${error.message}`);
+    console.error(
+      `❌ [Translation] Failed to save translations: ${error.message}`
+    );
   }
 }
 
@@ -247,7 +263,9 @@ function applyTranslations(document, translations) {
   const translated = { ...document };
 
   for (const [field, value] of Object.entries(translations)) {
-    if (field.endsWith('_updated_at')) {continue;} // Skip metadata fields
+    if (field.endsWith('_updated_at')) {
+      continue;
+    } // Skip metadata fields
     translated[field] = value;
   }
 
@@ -270,7 +288,9 @@ async function translateDocuments(documents, targetLang, db, collectionName) {
 
   // Translate documents in parallel for better performance
   const translatedDocs = await Promise.all(
-    documents.map(doc => translateDocument(doc, targetLang, db, collectionName))
+    documents.map((doc) =>
+      translateDocument(doc, targetLang, db, collectionName)
+    )
   );
 
   return translatedDocs;
@@ -290,7 +310,8 @@ function getUserLanguage(req) {
   }
 
   // Check custom header
-  const headerLang = req.headers['x-user-language'] || req.headers['accept-language'];
+  const headerLang =
+    req.headers['x-user-language'] || req.headers['accept-language'];
   if (headerLang) {
     const lang = headerLang.split(',')[0].split('-')[0].toLowerCase();
     if (SUPPORTED_LANGUAGES.includes(lang)) {
@@ -309,5 +330,5 @@ module.exports = {
   translateDocuments,
   getUserLanguage,
   SUPPORTED_LANGUAGES,
-  DEFAULT_LANGUAGE
+  DEFAULT_LANGUAGE,
 };

@@ -21,14 +21,22 @@ export default function ValechPage() {
   return (
     <Box sx={{ width: '100%', minHeight: '100vh', bgcolor: '#f5f5f5', p: 3 }}>
       {/* Page Header */}
-      <Paper elevation={2} sx={{ p: 3, mb: 3, bgcolor: '#1a237e', color: 'white' }}>
+      <Paper
+        elevation={2}
+        sx={{ p: 3, mb: 3, bgcolor: '#1a237e', color: 'white' }}
+      >
         <Typography variant="h3" component="h1" gutterBottom>
           🕯️ VALECH 2.0 - Historical Justice Documentation 🕯️
         </Typography>
         <Typography variant="subtitle1">
-          Comprehensive documentation system for 27,255 victims of the Chilean dictatorship (1973-1990)
+          Comprehensive documentation system for 27,255 victims of the Chilean
+          dictatorship (1973-1990)
         </Typography>
-        <Typography variant="caption" display="block" sx={{ mt: 1, opacity: 0.8 }}>
+        <Typography
+          variant="caption"
+          display="block"
+          sx={{ mt: 1, opacity: 0.8 }}
+        >
           "Nunca más" (Never again) - Memory and Justice
         </Typography>
       </Paper>
@@ -37,15 +45,30 @@ export default function ValechPage() {
       <VictimSearchInterface />
 
       {/* Footer */}
-      <Paper elevation={0} sx={{ mt: 4, p: 2, bgcolor: 'transparent', textAlign: 'center' }}>
+      <Paper
+        elevation={0}
+        sx={{ mt: 4, p: 2, bgcolor: 'transparent', textAlign: 'center' }}
+      >
         <Typography variant="body2" color="text.secondary">
           🐾 Built with profound respect for 27,255 victims 🐾
         </Typography>
-        <Typography variant="caption" display="block" color="text.secondary" sx={{ mt: 1 }}>
-          Created by The Supreme Six: Neko-Arc, Mario Gallo Bestino, Noel, Glam Americano, Dr. Hannibal Lecter, Tetora
+        <Typography
+          variant="caption"
+          display="block"
+          color="text.secondary"
+          sx={{ mt: 1 }}
+        >
+          Created by The Supreme Six: Neko-Arc, Mario Gallo Bestino, Noel, Glam
+          Americano, Dr. Hannibal Lecter, Tetora
         </Typography>
-        <Typography variant="caption" display="block" color="text.secondary" sx={{ mt: 0.5 }}>
-          Note: Statistics Dashboard temporarily disabled while fixing Grid API compatibility
+        <Typography
+          variant="caption"
+          display="block"
+          color="text.secondary"
+          sx={{ mt: 0.5 }}
+        >
+          Note: Statistics Dashboard temporarily disabled while fixing Grid API
+          compatibility
         </Typography>
       </Paper>
     </Box>

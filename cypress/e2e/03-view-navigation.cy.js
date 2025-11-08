@@ -16,7 +16,9 @@ describe('🔄 View Navigation - Multiple Views', () => {
       cy.get('.App-header')
         .should('be.visible')
         .within(() => {
-          cy.contains('🐾🎯⚡ THREAT ACTORS REGISTRY ⚡🎯🐾').should('be.visible');
+          cy.contains('🐾🎯⚡ THREAT ACTORS REGISTRY ⚡🎯🐾').should(
+            'be.visible'
+          );
         });
     });
 
@@ -65,7 +67,9 @@ describe('🔄 View Navigation - Multiple Views', () => {
       cy.get('.App-header')
         .should('be.visible')
         .within(() => {
-          cy.contains('🐾⚖️🌍 DINA INTERNATIONAL HUNT OPERATION 🌍⚖️🐾').should('be.visible');
+          cy.contains('🐾⚖️🌍 DINA INTERNATIONAL HUNT OPERATION 🌍⚖️🐾').should(
+            'be.visible'
+          );
         });
     });
 

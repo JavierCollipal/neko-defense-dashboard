@@ -88,8 +88,12 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* 🌐 Dropdown Menu (Opens UPWARD - No cutoff!) */
@@ -135,7 +139,11 @@
 /* Dropdown Header */
 .dropdown-header {
   padding: 16px 20px;
-  background: linear-gradient(135deg, rgba(22, 33, 62, 0.8) 0%, rgba(26, 26, 46, 0.8) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(22, 33, 62, 0.8) 0%,
+    rgba(26, 26, 46, 0.8) 100%
+  );
   border-bottom: 1px solid rgba(0, 255, 255, 0.3);
   color: #00ffff;
   font-family: 'Courier New', monospace;
@@ -186,7 +194,11 @@
 
 .language-option.active {
   /* Active Language - Special Styling */
-  background: linear-gradient(90deg, rgba(255, 20, 147, 0.25) 0%, rgba(0, 255, 255, 0.25) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 20, 147, 0.25) 0%,
+    rgba(0, 255, 255, 0.25) 100%
+  );
   border: 2px solid #ff1493;
   border-left: 5px solid #ff1493;
   transform: translateX(-4px);
@@ -234,7 +246,8 @@
 }
 
 @keyframes checkPulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }
@@ -248,31 +261,31 @@
 /* RTL SUPPORT (Right-to-Left for Arabic)
 /* ═══════════════════════════════════════════════════════════ */
 
-[dir="rtl"] .language-switcher {
+[dir='rtl'] .language-switcher {
   right: auto;
   left: 24px;
 }
 
-[dir="rtl"] .language-dropdown {
+[dir='rtl'] .language-dropdown {
   right: auto;
   left: 24px;
   transform-origin: bottom left;
 }
 
-[dir="rtl"] .language-option {
+[dir='rtl'] .language-option {
   flex-direction: row-reverse;
 }
 
-[dir="rtl"] .lang-info {
+[dir='rtl'] .lang-info {
   text-align: right;
 }
 
-[dir="rtl"] .language-option.active {
+[dir='rtl'] .language-option.active {
   border-left: 2px solid #ff1493;
   border-right: 5px solid #ff1493;
 }
 
-[dir="rtl"] .language-option:hover {
+[dir='rtl'] .language-option:hover {
   transform: translateX(4px);
 }
 
@@ -377,7 +390,7 @@
     left: 16px;
   }
 
-  [dir="rtl"] .language-dropdown {
+  [dir='rtl'] .language-dropdown {
     right: 16px;
     left: 16px;
   }
@@ -442,7 +455,8 @@
 }
 
 @keyframes floatButton {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -457,5 +471,9 @@
 /* Success Feedback on Language Change */
 .language-option:active {
   transform: scale(0.95);
-  background: linear-gradient(90deg, rgba(0, 255, 65, 0.3) 0%, rgba(0, 255, 255, 0.3) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 255, 65, 0.3) 0%,
+    rgba(0, 255, 255, 0.3) 100%
+  );
 }

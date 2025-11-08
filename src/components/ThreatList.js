@@ -19,12 +19,19 @@ function ThreatList({ activeCategory }) {
       setLoading(true);
       setError(null);
 
-      console.log('🎯 [ThreatList] Fetching threat actors for category:', activeCategory);
-      const response = await fetch(`${API_URL}/threat-actors?category=${activeCategory}`);
+      console.log(
+        '🎯 [ThreatList] Fetching threat actors for category:',
+        activeCategory
+      );
+      const response = await fetch(
+        `${API_URL}/threat-actors?category=${activeCategory}`
+      );
       const data = await response.json();
 
       if (data.success) {
-        console.log(`✅ [ThreatList] Loaded ${data.count} threat actors, nyaa~!`);
+        console.log(
+          `✅ [ThreatList] Loaded ${data.count} threat actors, nyaa~!`
+        );
         setThreatActors(data.data);
       } else {
         setError(t('threats.failed_to_load'));
@@ -45,17 +52,17 @@ function ThreatList({ activeCategory }) {
       dina_network: `🕸️ ${t('threats.dina_network_actors')}`,
       ransomware: `💀 ${t('threats.ransomware_groups')}`,
       state_sponsored: `🕷️ ${t('threats.state_sponsored_apts')}`,
-      crypto_crime: `₿ ${t('threats.crypto_crime_actors')}`
+      crypto_crime: `₿ ${t('threats.crypto_crime_actors')}`,
     };
     return titles[activeCategory] || `🎯 ${t('threats.threat_actors')}`;
   };
 
   const getThreatLevelColor = (level) => {
     const colors = {
-      'CRITICAL': '#ff0033',
-      'HIGH': '#ff6600',
-      'MEDIUM': '#ffd700',
-      'LOW': '#00ff41'
+      CRITICAL: '#ff0033',
+      HIGH: '#ff6600',
+      MEDIUM: '#ffd700',
+      LOW: '#00ff41',
     };
     return colors[level] || '#00ffff';
   };
@@ -101,7 +108,12 @@ function ThreatList({ activeCategory }) {
       <div className="threat-list-header">
         <h2>{getCategoryTitle()}</h2>
         <div className="hunt-stats">
-          <span className="targets-count">{threatActors.length} {threatActors.length !== 1 ? t('threats.targets') : t('threats.target')}</span>
+          <span className="targets-count">
+            {threatActors.length}{' '}
+            {threatActors.length !== 1
+              ? t('threats.targets')
+              : t('threats.target')}
+          </span>
           <span className="hunt-status">🎯 {t('threats.hunt_active')}</span>
         </div>
       </div>
@@ -113,17 +125,24 @@ function ThreatList({ activeCategory }) {
               <div className="actor-rank">#{idx + 1}</div>
               <div
                 className="threat-level-badge"
-                style={{ backgroundColor: getThreatLevelColor(actor.threat_level) }}
+                style={{
+                  backgroundColor: getThreatLevelColor(actor.threat_level),
+                }}
               >
                 {actor.threat_level || t('threats.unknown')}
               </div>
             </div>
 
             <div className="actor-name">
-              <h3>{actor.name || actor.actor_name || t('threats.unknown_actor')}</h3>
+              <h3>
+                {actor.name || actor.actor_name || t('threats.unknown_actor')}
+              </h3>
               {actor.aliases && actor.aliases.length > 0 && (
                 <div className="actor-aliases">
-                  {t('threats.aka')} {Array.isArray(actor.aliases) ? actor.aliases.join(', ') : actor.aliases}
+                  {t('threats.aka')}{' '}
+                  {Array.isArray(actor.aliases)
+                    ? actor.aliases.join(', ')
+                    : actor.aliases}
                 </div>
               )}
             </div>
@@ -138,8 +157,12 @@ function ThreatList({ activeCategory }) {
 
               {actor.actor_classification && (
                 <div className="detail-item">
-                  <span className="detail-label">{t('threats.classification')}</span>
-                  <span className="detail-value">{actor.actor_classification}</span>
+                  <span className="detail-label">
+                    {t('threats.classification')}
+                  </span>
+                  <span className="detail-value">
+                    {actor.actor_classification}
+                  </span>
                 </div>
               )}
 
@@ -159,7 +182,9 @@ function ThreatList({ activeCategory }) {
 
               {actor.hunt_priority && (
                 <div className="detail-item priority">
-                  <span className="detail-label">{t('threats.hunt_priority')}</span>
+                  <span className="detail-label">
+                    {t('threats.hunt_priority')}
+                  </span>
                   <span className="detail-value">P{actor.hunt_priority}</span>
                 </div>
               )}
@@ -167,7 +192,9 @@ function ThreatList({ activeCategory }) {
               {actor.bounty_usd && (
                 <div className="detail-item bounty">
                   <span className="detail-label">{t('threats.bounty')}</span>
-                  <span className="detail-value">${actor.bounty_usd.toLocaleString()}</span>
+                  <span className="detail-value">
+                    ${actor.bounty_usd.toLocaleString()}
+                  </span>
                 </div>
               )}
             </div>

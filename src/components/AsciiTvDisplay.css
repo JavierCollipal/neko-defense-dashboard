@@ -53,8 +53,12 @@
 }
 
 @keyframes scan {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(100%); }
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100%);
+  }
 }
 
 .tv-screen {
@@ -82,7 +86,8 @@
   flex-wrap: wrap;
 }
 
-.threat-badge, .category-badge {
+.threat-badge,
+.category-badge {
   padding: var(--space-xs) var(--space-md);
   border-radius: var(--radius-sm);
   font-weight: bold;
@@ -96,13 +101,18 @@
   color: var(--neko-danger);
 }
 
-.threat-badge[data-level="CRITICAL"] {
+.threat-badge[data-level='CRITICAL'] {
   animation: pulse-red 1s infinite;
 }
 
 @keyframes pulse-red {
-  0%, 100% { box-shadow: 0 0 10px var(--neko-danger); }
-  50% { box-shadow: 0 0 20px var(--neko-danger); }
+  0%,
+  100% {
+    box-shadow: 0 0 10px var(--neko-danger);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--neko-danger);
+  }
 }
 
 .category-badge {
@@ -142,7 +152,7 @@
     animation: none;
   }
 
-  .threat-badge[data-level="CRITICAL"] {
+  .threat-badge[data-level='CRITICAL'] {
     animation: none;
   }
 }

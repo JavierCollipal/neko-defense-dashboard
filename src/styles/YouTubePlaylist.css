@@ -9,8 +9,14 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* 🎬 Header Section */
@@ -18,14 +24,19 @@
   text-align: center;
   margin-bottom: 3rem;
   padding: 2rem;
-  background: linear-gradient(135deg, rgba(255, 0, 0, 0.1), rgba(255, 68, 68, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 0, 0, 0.1),
+    rgba(255, 68, 68, 0.1)
+  );
   border: 2px solid #ff0000;
   border-radius: 15px;
   animation: headerGlow 3s ease-in-out infinite;
 }
 
 @keyframes headerGlow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
   }
   50% {
@@ -46,8 +57,12 @@
 }
 
 @keyframes gradientShift {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 
 .youtube-subtitle {
@@ -74,7 +89,8 @@
 }
 
 @keyframes subscribeButtonPulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
   }
@@ -92,7 +108,11 @@
 
 /* 🎯 DINA PLAYLIST FEATURED SECTION */
 .dina-playlist-featured {
-  background: linear-gradient(135deg, rgba(139, 0, 0, 0.2), rgba(220, 20, 60, 0.2));
+  background: linear-gradient(
+    135deg,
+    rgba(139, 0, 0, 0.2),
+    rgba(220, 20, 60, 0.2)
+  );
   border: 3px solid rgba(220, 20, 60, 0.6);
   border-radius: 20px;
   padding: 2.5rem;
@@ -101,11 +121,16 @@
 }
 
 @keyframes dinaGlow {
-  0%, 100% {
-    box-shadow: 0 0 25px rgba(220, 20, 60, 0.4), inset 0 0 25px rgba(220, 20, 60, 0.1);
+  0%,
+  100% {
+    box-shadow:
+      0 0 25px rgba(220, 20, 60, 0.4),
+      inset 0 0 25px rgba(220, 20, 60, 0.1);
   }
   50% {
-    box-shadow: 0 0 50px rgba(220, 20, 60, 0.7), inset 0 0 50px rgba(220, 20, 60, 0.2);
+    box-shadow:
+      0 0 50px rgba(220, 20, 60, 0.7),
+      inset 0 0 50px rgba(220, 20, 60, 0.2);
   }
 }
 
@@ -211,7 +236,8 @@
 }
 
 @keyframes dinaButtonPulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     box-shadow: 0 5px 30px rgba(220, 20, 60, 0.5);
   }
@@ -244,7 +270,11 @@
 }
 
 .stat-card {
-  background: linear-gradient(135deg, rgba(255, 0, 0, 0.1), rgba(255, 68, 68, 0.05));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 0, 0, 0.1),
+    rgba(255, 68, 68, 0.05)
+  );
   border: 2px solid rgba(255, 0, 0, 0.3);
   border-radius: 10px;
   padding: 1.5rem;
@@ -282,7 +312,11 @@
 
 /* 🎥 Video Player Section */
 .video-player-section {
-  background: linear-gradient(135deg, rgba(26, 10, 26, 0.8), rgba(10, 10, 10, 0.8));
+  background: linear-gradient(
+    135deg,
+    rgba(26, 10, 26, 0.8),
+    rgba(10, 10, 10, 0.8)
+  );
   border: 2px solid rgba(255, 0, 0, 0.3);
   border-radius: 15px;
   padding: 2rem;
@@ -469,7 +503,11 @@
 
 /* 🐾 Add More Card */
 .add-more-card {
-  background: linear-gradient(135deg, rgba(255, 0, 0, 0.05), rgba(255, 68, 68, 0.05));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 0, 0, 0.05),
+    rgba(255, 68, 68, 0.05)
+  );
   border-style: dashed;
   display: flex;
   align-items: center;
@@ -478,7 +516,11 @@
 }
 
 .add-more-card:hover {
-  background: linear-gradient(135deg, rgba(255, 0, 0, 0.1), rgba(255, 68, 68, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 0, 0, 0.1),
+    rgba(255, 68, 68, 0.1)
+  );
 }
 
 .add-more-content {

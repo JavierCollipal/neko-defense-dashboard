@@ -6,9 +6,7 @@ import { Layout as NekoLayout } from '../src/components/layout/Layout';
 export default function ClientRootLayout({ children }) {
   return (
     <AppProvider>
-      <NekoLayout>
-        {children}
-      </NekoLayout>
+      <NekoLayout>{children}</NekoLayout>
     </AppProvider>
   );
 }

@@ -39,9 +39,7 @@ describe('⌨️⚡ KEYBOARD NAVIGATION & ACCESSIBILITY ⚡⌨️', () => {
     it('should have visible focus indicators', () => {
       cy.get('body').tab();
 
-      cy.focused()
-        .should('have.css', 'outline-style')
-        .and('not.equal', 'none');
+      cy.focused().should('have.css', 'outline-style').and('not.equal', 'none');
     });
   });
 
@@ -88,8 +86,7 @@ describe('⌨️⚡ KEYBOARD NAVIGATION & ACCESSIBILITY ⚡⌨️', () => {
         .focus()
         .type('{enter}');
 
-      cy.get('.category-item.active')
-        .should('contain.text', /predators/i);
+      cy.get('.category-item.active').should('contain.text', /predators/i);
     });
 
     it('should activate category with Space', () => {
@@ -99,8 +96,7 @@ describe('⌨️⚡ KEYBOARD NAVIGATION & ACCESSIBILITY ⚡⌨️', () => {
         .focus()
         .type(' ');
 
-      cy.get('.category-item.active')
-        .should('contain.text', /pedophiles/i);
+      cy.get('.category-item.active').should('contain.text', /pedophiles/i);
     });
 
     it('should navigate between categories using Tab', () => {
@@ -148,7 +144,9 @@ describe('⌨️⚡ KEYBOARD NAVIGATION & ACCESSIBILITY ⚡⌨️', () => {
       cy.getByDataCy('language-option-en').focus();
       cy.get('body').tab();
 
-      cy.focused().should('have.attr', 'data-cy').and('match', /language-option-/);
+      cy.focused()
+        .should('have.attr', 'data-cy')
+        .and('match', /language-option-/);
     });
   });
 
@@ -208,9 +206,7 @@ describe('⌨️⚡ KEYBOARD NAVIGATION & ACCESSIBILITY ⚡⌨️', () => {
     it('should type in search field', () => {
       cy.navigateToThreatActors();
 
-      cy.get('input[placeholder*="Search"]')
-        .focus()
-        .type('Mikhail');
+      cy.get('input[placeholder*="Search"]').focus().type('Mikhail');
 
       cy.get('input[placeholder*="Search"]').should('have.value', 'Mikhail');
     });
@@ -221,7 +217,9 @@ describe('⌨️⚡ KEYBOARD NAVIGATION & ACCESSIBILITY ⚡⌨️', () => {
       cy.get('input[placeholder*="Search"]')
         .focus()
         .type('Mikhail')
-        .type('{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}');
+        .type(
+          '{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}'
+        );
 
       cy.get('input[placeholder*="Search"]').should('have.value', '');
     });
@@ -253,13 +251,19 @@ describe('⌨️⚡ KEYBOARD NAVIGATION & ACCESSIBILITY ⚡⌨️', () => {
 
   describe('♿ ARIA & Screen Reader Support', () => {
     it('should have proper ARIA labels on navigation buttons', () => {
-      cy.getByDataCy('language-button')
-        .should('have.attr', 'aria-label', 'Select language');
+      cy.getByDataCy('language-button').should(
+        'have.attr',
+        'aria-label',
+        'Select language'
+      );
     });
 
     it('should have semantic button elements', () => {
       cy.get('button').should('have.length.greaterThan', 0);
-      cy.get('button').first().should('have.attr', 'type').or('not.have.attr', 'type');
+      cy.get('button')
+        .first()
+        .should('have.attr', 'type')
+        .or('not.have.attr', 'type');
     });
 
     it('should have proper heading hierarchy', () => {
@@ -288,9 +292,7 @@ describe('⌨️⚡ KEYBOARD NAVIGATION & ACCESSIBILITY ⚡⌨️', () => {
     it('should have visible focus on buttons', () => {
       cy.contains('🎯 THREAT ACTORS').focus();
 
-      cy.focused()
-        .should('have.css', 'outline-width')
-        .and('not.equal', '0px');
+      cy.focused().should('have.css', 'outline-width').and('not.equal', '0px');
     });
 
     it('should have custom focus styles', () => {
@@ -321,12 +323,7 @@ describe('⌨️⚡ KEYBOARD NAVIGATION & ACCESSIBILITY ⚡⌨️', () => {
     });
 
     it('should not break with rapid keystrokes', () => {
-      cy.get('body')
-        .tab()
-        .tab()
-        .tab()
-        .type('{enter}')
-        .type('{esc}');
+      cy.get('body').tab().tab().tab().type('{enter}').type('{esc}');
 
       cy.get('.App').should('exist');
     });
@@ -408,7 +405,9 @@ describe('⌨️⚡ KEYBOARD NAVIGATION & ACCESSIBILITY ⚡⌨️', () => {
           cy.wrap($skipLinks).first().should('exist');
         } else {
           // Log recommendation
-          console.log('💡 RECOMMENDATION: Add skip navigation links for accessibility');
+          console.log(
+            '💡 RECOMMENDATION: Add skip navigation links for accessibility'
+          );
         }
       });
     });

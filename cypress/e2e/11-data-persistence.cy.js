@@ -190,7 +190,7 @@ describe('💾 Data Persistence & Browser Storage', () => {
     it('should recover from failed state initialization', () => {
       // Simulate API failure on load
       cy.intercept('GET', '**/api/stats', {
-        statusCode: 500
+        statusCode: 500,
       }).as('statsError');
 
       cy.reload();
@@ -203,11 +203,11 @@ describe('💾 Data Persistence & Browser Storage', () => {
     it('should handle missing API data gracefully', () => {
       // Intercept with minimal data
       cy.intercept('GET', '**/api/ascii-art', {
-        body: { success: true, data: [] }
+        body: { success: true, data: [] },
       }).as('emptyArt');
 
       cy.intercept('GET', '**/api/stats', {
-        body: { success: false, data: null }
+        body: { success: false, data: null },
       }).as('nullStats');
 
       cy.reload();
@@ -221,7 +221,7 @@ describe('💾 Data Persistence & Browser Storage', () => {
     it('should handle offline mode gracefully', () => {
       // Simulate offline
       cy.intercept('GET', '**/api/**', {
-        forceNetworkError: true
+        forceNetworkError: true,
       }).as('offline');
 
       cy.reload();
@@ -233,7 +233,7 @@ describe('💾 Data Persistence & Browser Storage', () => {
     it('should recover when connection restored', () => {
       // Start offline
       cy.intercept('GET', '**/api/stats', {
-        forceNetworkError: true
+        forceNetworkError: true,
       }).as('offlineStats');
 
       cy.reload();
@@ -245,9 +245,9 @@ describe('💾 Data Persistence & Browser Storage', () => {
           data: {
             threats_monitored: 150,
             active_hunts: 8,
-            systems_protected: 42
-          }
-        }
+            systems_protected: 42,
+          },
+        },
       }).as('onlineStats');
 
       // Try to fetch again
@@ -265,8 +265,8 @@ describe('💾 Data Persistence & Browser Storage', () => {
       cy.intercept('GET', '**/api/threat-actors*', (req) => {
         req.reply({
           delay: 3000, // 3 second delay
-          body: { success: true, data: [] }
-        })
+          body: { success: true, data: [] },
+        });
       }).as('slowNetwork');
 
       cy.get('.tv-window-button.threat-actors').click();
@@ -288,8 +288,10 @@ describe('💾 Data Persistence & Browser Storage', () => {
             body: {
               success: true,
               count: 2,
-              data: cy.fixture('threat-actors-predators.json').then(data => data.data)
-            }
+              data: cy
+                .fixture('threat-actors-predators.json')
+                .then((data) => data.data),
+            },
           });
         }
       }).as('intermittent');
@@ -342,12 +344,14 @@ describe('💾 Data Persistence & Browser Storage', () => {
       cy.intercept('GET', '**/api/ascii-art', {
         body: {
           success: true,
-          data: [{
-            title: 'New Art',
-            art: '===NEW===',
-            threat_level: 'HIGH'
-          }]
-        }
+          data: [
+            {
+              title: 'New Art',
+              art: '===NEW===',
+              threat_level: 'HIGH',
+            },
+          ],
+        },
       }).as('newArtData');
 
       // Trigger refresh by navigating away and back

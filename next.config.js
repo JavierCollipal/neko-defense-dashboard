@@ -8,7 +8,11 @@ const nextConfig = {
   // Experimental features for Next.js 14
   experimental: {
     // Optimize package imports (reduces bundle size)
-    optimizePackageImports: ['@mui/material', '@mui/icons-material', 'recharts'],
+    optimizePackageImports: [
+      '@mui/material',
+      '@mui/icons-material',
+      'recharts',
+    ],
 
     // Enable Web Vitals attribution for better debugging
     webVitalsAttribution: ['CLS', 'LCP', 'FID', 'TTFB', 'INP'],
@@ -17,12 +21,20 @@ const nextConfig = {
   // Environment variables (NEXT_PUBLIC_ prefix for browser access)
   env: {
     // Legacy support for REACT_APP_ prefix (backwards compatibility)
-    REACT_APP_API_URL: process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_API_URL || 'http://localhost:5001/api',
-    REACT_APP_GRAPHQL_URL: process.env.NEXT_PUBLIC_GRAPHQL_URL || process.env.REACT_APP_GRAPHQL_URL || 'http://localhost:5000/graphql',
+    REACT_APP_API_URL:
+      process.env.NEXT_PUBLIC_API_URL ||
+      process.env.REACT_APP_API_URL ||
+      'http://localhost:5001/api',
+    REACT_APP_GRAPHQL_URL:
+      process.env.NEXT_PUBLIC_GRAPHQL_URL ||
+      process.env.REACT_APP_GRAPHQL_URL ||
+      'http://localhost:5000/graphql',
 
     // Next.js standard (use these in new code!)
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api',
-    NEXT_PUBLIC_GRAPHQL_URL: process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://localhost:5000/graphql',
+    NEXT_PUBLIC_API_URL:
+      process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api',
+    NEXT_PUBLIC_GRAPHQL_URL:
+      process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://localhost:5000/graphql',
   },
 
   // Production build optimizations
@@ -52,8 +64,14 @@ const nextConfig = {
         headers: [
           // CORS
           { key: 'Access-Control-Allow-Origin', value: '*' },
-          { key: 'Access-Control-Allow-Methods', value: 'GET,POST,PUT,DELETE,OPTIONS' },
-          { key: 'Access-Control-Allow-Headers', value: 'Content-Type, Authorization' },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET,POST,PUT,DELETE,OPTIONS',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'Content-Type, Authorization',
+          },
 
           // Security (2025 best practices)
           { key: 'X-DNS-Prefetch-Control', value: 'on' },
@@ -64,7 +82,7 @@ const nextConfig = {
           // Permissions Policy (restrict features)
           {
             key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=()'
+            value: 'camera=(), microphone=(), geolocation=()',
           },
         ],
       },

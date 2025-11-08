@@ -20,7 +20,7 @@ import {
   Chip,
   Paper,
   Alert,
-  CircularProgress
+  CircularProgress,
 } from '@mui/material';
 import { styled, keyframes } from '@mui/material/styles';
 
@@ -47,7 +47,7 @@ const TheaterStage = styled(Box)(({ theme }) => ({
   padding: theme.spacing(4),
   borderRadius: theme.spacing(2),
   marginBottom: theme.spacing(4),
-  animation: `${fadeIn} 0.8s ease-out`
+  animation: `${fadeIn} 0.8s ease-out`,
 }));
 
 const PersonalityAvatar = styled(Avatar)(({ theme }) => ({
@@ -58,8 +58,8 @@ const PersonalityAvatar = styled(Avatar)(({ theme }) => ({
   cursor: 'pointer',
   transition: 'transform 0.3s ease',
   '&:hover': {
-    transform: 'scale(1.2) rotate(5deg)'
-  }
+    transform: 'scale(1.2) rotate(5deg)',
+  },
 }));
 
 const PhaseCard = styled(Card)(({ theme }) => ({
@@ -67,8 +67,8 @@ const PhaseCard = styled(Card)(({ theme }) => ({
   transition: 'all 0.3s ease',
   '&:hover': {
     transform: 'translateY(-8px)',
-    boxShadow: theme.shadows[10]
-  }
+    boxShadow: theme.shadows[10],
+  },
 }));
 
 // 🐾 Main Component
@@ -81,12 +81,48 @@ export default function PersonalityAdditionTheater() {
 
   // 🎭 Personalities Configuration
   const personalities = [
-    { id: 'neko', name: 'Neko-Arc', emoji: '🐾', color: '#FF69B4', role: 'Technical Execution' },
-    { id: 'mario', name: 'Mario Gallo Bestino', emoji: '🎭', color: '#9C27B0', role: 'Theatrical Documentation' },
-    { id: 'noel', name: 'Noel', emoji: '🗡️', color: '#2196F3', role: 'Precision & QA' },
-    { id: 'glam', name: 'Glam Americano', emoji: '🎸', color: '#FF5722', role: 'Street Philosophy' },
-    { id: 'hannibal', name: 'Dr. Hannibal Lecter', emoji: '🧠', color: '#795548', role: 'Forensic Analysis' },
-    { id: 'tetora', name: 'Tetora', emoji: '🎭', color: '#00BCD4', role: 'MPD & Identity Analysis' }
+    {
+      id: 'neko',
+      name: 'Neko-Arc',
+      emoji: '🐾',
+      color: '#FF69B4',
+      role: 'Technical Execution',
+    },
+    {
+      id: 'mario',
+      name: 'Mario Gallo Bestino',
+      emoji: '🎭',
+      color: '#9C27B0',
+      role: 'Theatrical Documentation',
+    },
+    {
+      id: 'noel',
+      name: 'Noel',
+      emoji: '🗡️',
+      color: '#2196F3',
+      role: 'Precision & QA',
+    },
+    {
+      id: 'glam',
+      name: 'Glam Americano',
+      emoji: '🎸',
+      color: '#FF5722',
+      role: 'Street Philosophy',
+    },
+    {
+      id: 'hannibal',
+      name: 'Dr. Hannibal Lecter',
+      emoji: '🧠',
+      color: '#795548',
+      role: 'Forensic Analysis',
+    },
+    {
+      id: 'tetora',
+      name: 'Tetora',
+      emoji: '🎭',
+      color: '#00BCD4',
+      role: 'MPD & Identity Analysis',
+    },
   ];
 
   // 📊 Workflow Phases
@@ -99,8 +135,8 @@ export default function PersonalityAdditionTheater() {
         'Character Source Research',
         'Expertise Domain Definition',
         'Speech Pattern Documentation',
-        'Antagonist Target Selection'
-      ]
+        'Antagonist Target Selection',
+      ],
     },
     {
       number: 2,
@@ -109,8 +145,8 @@ export default function PersonalityAdditionTheater() {
       steps: [
         'Database Naming Convention',
         'Collection Design',
-        'MongoDB Atlas Configuration'
-      ]
+        'MongoDB Atlas Configuration',
+      ],
     },
     {
       number: 3,
@@ -123,8 +159,8 @@ export default function PersonalityAdditionTheater() {
         'Database Structure Documentation',
         'Interaction Protocol',
         'Enforcement Protocol',
-        'Why This Rule Is Immutable'
-      ]
+        'Why This Rule Is Immutable',
+      ],
     },
     {
       number: 4,
@@ -134,8 +170,8 @@ export default function PersonalityAdditionTheater() {
         'Script Creation',
         'Research Data Structure',
         'Syntax Validation (npx tsc --noEmit)',
-        'Script Execution'
-      ]
+        'Script Execution',
+      ],
     },
     {
       number: 5,
@@ -144,8 +180,8 @@ export default function PersonalityAdditionTheater() {
       steps: [
         'Stage Changes',
         'Commit with Descriptive Message',
-        'Push to GitHub (PRIVATE repo)'
-      ]
+        'Push to GitHub (PRIVATE repo)',
+      ],
     },
     {
       number: 6,
@@ -155,9 +191,9 @@ export default function PersonalityAdditionTheater() {
         'Solo Personality Test',
         'Multi-Personality Interaction Test',
         'Database Access Test',
-        'Speech Pattern Consistency Test'
-      ]
-    }
+        'Speech Pattern Consistency Test',
+      ],
+    },
   ];
 
   // 🔄 Fetch workflow data from API
@@ -205,7 +241,11 @@ export default function PersonalityAdditionTheater() {
     <Container maxWidth="xl" sx={{ py: 4 }}>
       {/* 🎭 Theater Stage - Personality Showcase */}
       <TheaterStage>
-        <Typography variant="h3" align="center" sx={{ color: 'white', mb: 2, fontWeight: 'bold' }}>
+        <Typography
+          variant="h3"
+          align="center"
+          sx={{ color: 'white', mb: 2, fontWeight: 'bold' }}
+        >
           🎭 The Personality Addition Theater 🎭
         </Typography>
         <Typography variant="h6" align="center" sx={{ color: 'white', mb: 4 }}>
@@ -217,13 +257,21 @@ export default function PersonalityAdditionTheater() {
           {personalities.map((personality) => (
             <Grid item key={personality.id}>
               <Box sx={{ textAlign: 'center' }}>
-                <PersonalityAvatar sx={{ bgcolor: personality.color, mx: 'auto' }}>
+                <PersonalityAvatar
+                  sx={{ bgcolor: personality.color, mx: 'auto' }}
+                >
                   {personality.emoji}
                 </PersonalityAvatar>
-                <Typography variant="body2" sx={{ color: 'white', mt: 1, fontWeight: 'bold' }}>
+                <Typography
+                  variant="body2"
+                  sx={{ color: 'white', mt: 1, fontWeight: 'bold' }}
+                >
                   {personality.name}
                 </Typography>
-                <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.8)' }}>
+                <Typography
+                  variant="caption"
+                  sx={{ color: 'rgba(255,255,255,0.8)' }}
+                >
                   {personality.role}
                 </Typography>
               </Box>
@@ -236,7 +284,11 @@ export default function PersonalityAdditionTheater() {
       <Paper sx={{ p: 3, mb: 4 }}>
         <Stepper activeStep={activePhase} alternativeLabel>
           {phases.map((phase, index) => (
-            <Step key={index} onClick={() => setActivePhase(index)} sx={{ cursor: 'pointer' }}>
+            <Step
+              key={index}
+              onClick={() => setActivePhase(index)}
+              sx={{ cursor: 'pointer' }}
+            >
               <StepLabel>
                 <Typography variant="body2" fontWeight="bold">
                   Phase {phase.number}
@@ -273,7 +325,7 @@ export default function PersonalityAdditionTheater() {
                   sx={{
                     p: 2,
                     bgcolor: 'grey.50',
-                    '&:hover': { bgcolor: 'grey.100' }
+                    '&:hover': { bgcolor: 'grey.100' },
                   }}
                 >
                   <Typography variant="body1">
@@ -294,12 +346,25 @@ export default function PersonalityAdditionTheater() {
                 {/* Neko-Arc Insight */}
                 {workflowData.neko?.phase_insights && (
                   <Grid item xs={12} md={6}>
-                    <Paper sx={{ p: 2, bgcolor: '#FFF0F5', border: '2px solid #FF69B4' }}>
-                      <Typography variant="subtitle1" fontWeight="bold" color="#FF69B4">
+                    <Paper
+                      sx={{
+                        p: 2,
+                        bgcolor: '#FFF0F5',
+                        border: '2px solid #FF69B4',
+                      }}
+                    >
+                      <Typography
+                        variant="subtitle1"
+                        fontWeight="bold"
+                        color="#FF69B4"
+                      >
                         🐾 Neko-Arc
                       </Typography>
                       <Typography variant="body2" sx={{ mt: 1 }}>
-                        {workflowData.neko.phase_insights[activePhase]?.neko_perspective}
+                        {
+                          workflowData.neko.phase_insights[activePhase]
+                            ?.neko_perspective
+                        }
                       </Typography>
                     </Paper>
                   </Grid>
@@ -308,12 +373,25 @@ export default function PersonalityAdditionTheater() {
                 {/* Mario Insight */}
                 {workflowData.mario?.phase_insights && (
                   <Grid item xs={12} md={6}>
-                    <Paper sx={{ p: 2, bgcolor: '#F3E5F5', border: '2px solid #9C27B0' }}>
-                      <Typography variant="subtitle1" fontWeight="bold" color="#9C27B0">
+                    <Paper
+                      sx={{
+                        p: 2,
+                        bgcolor: '#F3E5F5',
+                        border: '2px solid #9C27B0',
+                      }}
+                    >
+                      <Typography
+                        variant="subtitle1"
+                        fontWeight="bold"
+                        color="#9C27B0"
+                      >
                         🎭 Mario
                       </Typography>
                       <Typography variant="body2" sx={{ mt: 1 }}>
-                        {workflowData.mario.phase_insights[activePhase]?.mario_perspective}
+                        {
+                          workflowData.mario.phase_insights[activePhase]
+                            ?.mario_perspective
+                        }
                       </Typography>
                     </Paper>
                   </Grid>
@@ -322,12 +400,25 @@ export default function PersonalityAdditionTheater() {
                 {/* Noel Insight */}
                 {workflowData.noel?.phase_insights && (
                   <Grid item xs={12} md={6}>
-                    <Paper sx={{ p: 2, bgcolor: '#E3F2FD', border: '2px solid #2196F3' }}>
-                      <Typography variant="subtitle1" fontWeight="bold" color="#2196F3">
+                    <Paper
+                      sx={{
+                        p: 2,
+                        bgcolor: '#E3F2FD',
+                        border: '2px solid #2196F3',
+                      }}
+                    >
+                      <Typography
+                        variant="subtitle1"
+                        fontWeight="bold"
+                        color="#2196F3"
+                      >
                         🗡️ Noel
                       </Typography>
                       <Typography variant="body2" sx={{ mt: 1 }}>
-                        {workflowData.noel.phase_insights[activePhase]?.noel_perspective}
+                        {
+                          workflowData.noel.phase_insights[activePhase]
+                            ?.noel_perspective
+                        }
                       </Typography>
                     </Paper>
                   </Grid>
@@ -336,12 +427,25 @@ export default function PersonalityAdditionTheater() {
                 {/* Glam Insight */}
                 {workflowData.glam?.phase_insights && (
                   <Grid item xs={12} md={6}>
-                    <Paper sx={{ p: 2, bgcolor: '#FBE9E7', border: '2px solid #FF5722' }}>
-                      <Typography variant="subtitle1" fontWeight="bold" color="#FF5722">
+                    <Paper
+                      sx={{
+                        p: 2,
+                        bgcolor: '#FBE9E7',
+                        border: '2px solid #FF5722',
+                      }}
+                    >
+                      <Typography
+                        variant="subtitle1"
+                        fontWeight="bold"
+                        color="#FF5722"
+                      >
                         🎸 Glam
                       </Typography>
                       <Typography variant="body2" sx={{ mt: 1 }}>
-                        {workflowData.glam.phase_insights[activePhase]?.glam_perspective_spanish}
+                        {
+                          workflowData.glam.phase_insights[activePhase]
+                            ?.glam_perspective_spanish
+                        }
                       </Typography>
                     </Paper>
                   </Grid>
@@ -350,12 +454,25 @@ export default function PersonalityAdditionTheater() {
                 {/* Hannibal Insight */}
                 {workflowData.hannibal?.phase_insights && (
                   <Grid item xs={12} md={6}>
-                    <Paper sx={{ p: 2, bgcolor: '#EFEBE9', border: '2px solid #795548' }}>
-                      <Typography variant="subtitle1" fontWeight="bold" color="#795548">
+                    <Paper
+                      sx={{
+                        p: 2,
+                        bgcolor: '#EFEBE9',
+                        border: '2px solid #795548',
+                      }}
+                    >
+                      <Typography
+                        variant="subtitle1"
+                        fontWeight="bold"
+                        color="#795548"
+                      >
                         🧠 Hannibal
                       </Typography>
                       <Typography variant="body2" sx={{ mt: 1 }}>
-                        {workflowData.hannibal.phase_insights[activePhase]?.hannibal_perspective}
+                        {
+                          workflowData.hannibal.phase_insights[activePhase]
+                            ?.hannibal_perspective
+                        }
                       </Typography>
                     </Paper>
                   </Grid>
@@ -364,12 +481,25 @@ export default function PersonalityAdditionTheater() {
                 {/* Tetora Insight */}
                 {workflowData.tetora?.phase_insights && (
                   <Grid item xs={12} md={6}>
-                    <Paper sx={{ p: 2, bgcolor: '#E0F7FA', border: '2px solid #00BCD4' }}>
-                      <Typography variant="subtitle1" fontWeight="bold" color="#00BCD4">
+                    <Paper
+                      sx={{
+                        p: 2,
+                        bgcolor: '#E0F7FA',
+                        border: '2px solid #00BCD4',
+                      }}
+                    >
+                      <Typography
+                        variant="subtitle1"
+                        fontWeight="bold"
+                        color="#00BCD4"
+                      >
                         🎭 Tetora
                       </Typography>
                       <Typography variant="body2" sx={{ mt: 1 }}>
-                        {workflowData.tetora.phase_insights[activePhase]?.tetora_fragmented_perspective}
+                        {
+                          workflowData.tetora.phase_insights[activePhase]
+                            ?.tetora_fragmented_perspective
+                        }
                       </Typography>
                     </Paper>
                   </Grid>
@@ -405,42 +535,58 @@ export default function PersonalityAdditionTheater() {
               {activeTab === 0 && workflowData.neko && (
                 <Alert severity="success" icon="🐾">
                   <Typography variant="body1">
-                    <strong>Neko-Arc's Take:</strong> {workflowData.neko.neko_comment || 'Nyaa~! This workflow is super organized, desu~!'}
+                    <strong>Neko-Arc's Take:</strong>{' '}
+                    {workflowData.neko.neko_comment ||
+                      'Nyaa~! This workflow is super organized, desu~!'}
                   </Typography>
                 </Alert>
               )}
               {activeTab === 1 && workflowData.mario && (
                 <Alert severity="info" icon="🎭">
                   <Typography variant="body1">
-                    <strong>Mario's Review:</strong> {workflowData.mario.mario_review || 'A MAGNIFICENT theatrical production!'}
+                    <strong>Mario's Review:</strong>{' '}
+                    {workflowData.mario.mario_review ||
+                      'A MAGNIFICENT theatrical production!'}
                   </Typography>
                 </Alert>
               )}
               {activeTab === 2 && workflowData.noel && (
                 <Alert severity="info" icon="🗡️">
                   <Typography variant="body1">
-                    <strong>Noel's Assessment:</strong> {workflowData.noel.noel_assessment || 'Systematic approach. Acceptable execution.'}
+                    <strong>Noel's Assessment:</strong>{' '}
+                    {workflowData.noel.noel_assessment ||
+                      'Systematic approach. Acceptable execution.'}
                   </Typography>
                 </Alert>
               )}
               {activeTab === 3 && workflowData.glam && (
                 <Alert severity="warning" icon="🎸">
                   <Typography variant="body1">
-                    <strong>Glam's Opinion:</strong> {workflowData.glam.quote_spanish || '¡Pura organización bacán, weon!'}
+                    <strong>Glam's Opinion:</strong>{' '}
+                    {workflowData.glam.quote_spanish ||
+                      '¡Pura organización bacán, weon!'}
                   </Typography>
                 </Alert>
               )}
               {activeTab === 4 && workflowData.hannibal && (
                 <Alert severity="error" icon="🧠">
                   <Typography variant="body1">
-                    <strong>Hannibal's Analysis:</strong> {workflowData.hannibal.analysis || 'The methodology exhibits clinical precision. Quite... methodical.'}
+                    <strong>Hannibal's Analysis:</strong>{' '}
+                    {workflowData.hannibal.analysis ||
+                      'The methodology exhibits clinical precision. Quite... methodical.'}
                   </Typography>
                 </Alert>
               )}
               {activeTab === 5 && workflowData.tetora && (
-                <Alert severity="info" icon="🎭" sx={{ bgcolor: '#00BCD4', color: 'white' }}>
+                <Alert
+                  severity="info"
+                  icon="🎭"
+                  sx={{ bgcolor: '#00BCD4', color: 'white' }}
+                >
                   <Typography variant="body1">
-                    <strong>Tetora's Fragmented Perspective:</strong> {workflowData.tetora.fragmented_analysis || '[Fragment A]: The workflow exhibits multiple identity states... [Fragment B]: Fascinating organizational chaos... [Fragment C]: Must protect the process integrity...'}
+                    <strong>Tetora's Fragmented Perspective:</strong>{' '}
+                    {workflowData.tetora.fragmented_analysis ||
+                      '[Fragment A]: The workflow exhibits multiple identity states... [Fragment B]: Fascinating organizational chaos... [Fragment C]: Must protect the process integrity...'}
                   </Typography>
                 </Alert>
               )}
@@ -457,7 +603,9 @@ export default function PersonalityAdditionTheater() {
           </Typography>
           <Grid container spacing={2} sx={{ mt: 2 }}>
             <Grid item xs={12} sm={6} md={3}>
-              <Paper sx={{ p: 2, textAlign: 'center', bgcolor: 'success.light' }}>
+              <Paper
+                sx={{ p: 2, textAlign: 'center', bgcolor: 'success.light' }}
+              >
                 <Typography variant="h4">3.5h</Typography>
                 <Typography variant="body2">Completion Time</Typography>
               </Paper>
@@ -469,7 +617,9 @@ export default function PersonalityAdditionTheater() {
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
-              <Paper sx={{ p: 2, textAlign: 'center', bgcolor: 'warning.light' }}>
+              <Paper
+                sx={{ p: 2, textAlign: 'center', bgcolor: 'warning.light' }}
+              >
                 <Typography variant="h4">1200</Typography>
                 <Typography variant="body2">CLAUDE.md Lines</Typography>
               </Paper>

@@ -34,7 +34,6 @@ const IngestionEnrichmentDashboard = () => {
       setPerformanceMetrics(data.metrics || []);
       setRecentAlerts(data.alerts || []);
       setError(null);
-
     } catch (err) {
       console.error('Failed to fetch dashboard data:', err);
       setError(err.message);
@@ -46,7 +45,7 @@ const IngestionEnrichmentDashboard = () => {
           chunksCreated: 3891,
           avgLatency: 450,
           queueDepth: 12,
-          status: 'active'
+          status: 'active',
         },
         enrichment: {
           documentsEnriched: 1185,
@@ -55,30 +54,54 @@ const IngestionEnrichmentDashboard = () => {
           avgLatency: 1200,
           avgConfidence: 88,
           queueDepth: 45,
-          status: 'active'
+          status: 'active',
         },
         rag: {
           totalQueries: 3456,
           avgLatency: 800,
           precision: 85,
-          status: 'active'
+          status: 'active',
         },
         system: {
           cpuUsage: 45,
           memoryUsage: 62,
           poolUtilization: 78,
           uptime: 99.9,
-          status: 'healthy'
-        }
+          status: 'healthy',
+        },
       });
 
       setPerformanceMetrics([
-        { timestamp: new Date(Date.now() - 300000), ingestionLatency: 420, enrichmentLatency: 1150 },
-        { timestamp: new Date(Date.now() - 240000), ingestionLatency: 445, enrichmentLatency: 1180 },
-        { timestamp: new Date(Date.now() - 180000), ingestionLatency: 460, enrichmentLatency: 1220 },
-        { timestamp: new Date(Date.now() - 120000), ingestionLatency: 430, enrichmentLatency: 1190 },
-        { timestamp: new Date(Date.now() - 60000), ingestionLatency: 450, enrichmentLatency: 1200 },
-        { timestamp: new Date(), ingestionLatency: 455, enrichmentLatency: 1210 }
+        {
+          timestamp: new Date(Date.now() - 300000),
+          ingestionLatency: 420,
+          enrichmentLatency: 1150,
+        },
+        {
+          timestamp: new Date(Date.now() - 240000),
+          ingestionLatency: 445,
+          enrichmentLatency: 1180,
+        },
+        {
+          timestamp: new Date(Date.now() - 180000),
+          ingestionLatency: 460,
+          enrichmentLatency: 1220,
+        },
+        {
+          timestamp: new Date(Date.now() - 120000),
+          ingestionLatency: 430,
+          enrichmentLatency: 1190,
+        },
+        {
+          timestamp: new Date(Date.now() - 60000),
+          ingestionLatency: 450,
+          enrichmentLatency: 1200,
+        },
+        {
+          timestamp: new Date(),
+          ingestionLatency: 455,
+          enrichmentLatency: 1210,
+        },
       ]);
 
       setRecentAlerts([
@@ -86,10 +109,9 @@ const IngestionEnrichmentDashboard = () => {
           timestamp: new Date(Date.now() - 900000),
           severity: 'warning',
           metric: 'enrichmentLatency',
-          message: 'Enrichment latency above target: 1250ms (target: 1200ms)'
-        }
+          message: 'Enrichment latency above target: 1250ms (target: 1200ms)',
+        },
       ]);
-
     } finally {
       setLoading(false);
     }
@@ -110,7 +132,9 @@ const IngestionEnrichmentDashboard = () => {
     <div className="ingestion-enrichment-dashboard">
       <header className="dashboard-header">
         <h1>🐾⚡ Ingestion & Enrichment System ⚡🐾</h1>
-        <p className="subtitle">Ultimate RAG-Powered Pipeline - Real-time Monitoring</p>
+        <p className="subtitle">
+          Ultimate RAG-Powered Pipeline - Real-time Monitoring
+        </p>
         <div className="last-updated">
           Last updated: {new Date().toLocaleTimeString()}
         </div>
@@ -131,10 +155,23 @@ const IngestionEnrichmentDashboard = () => {
             status={systemStats?.ingestion?.status}
             icon="📥"
             metrics={[
-              { label: 'Documents Ingested', value: systemStats?.ingestion?.documentsIngested || 0 },
-              { label: 'Chunks Created', value: systemStats?.ingestion?.chunksCreated || 0 },
-              { label: 'Avg Latency', value: `${systemStats?.ingestion?.avgLatency || 0}ms`, target: '< 500ms' },
-              { label: 'Queue Depth', value: systemStats?.ingestion?.queueDepth || 0 }
+              {
+                label: 'Documents Ingested',
+                value: systemStats?.ingestion?.documentsIngested || 0,
+              },
+              {
+                label: 'Chunks Created',
+                value: systemStats?.ingestion?.chunksCreated || 0,
+              },
+              {
+                label: 'Avg Latency',
+                value: `${systemStats?.ingestion?.avgLatency || 0}ms`,
+                target: '< 500ms',
+              },
+              {
+                label: 'Queue Depth',
+                value: systemStats?.ingestion?.queueDepth || 0,
+              },
             ]}
           />
 
@@ -143,10 +180,23 @@ const IngestionEnrichmentDashboard = () => {
             status={systemStats?.enrichment?.status}
             icon="🧠"
             metrics={[
-              { label: 'Documents Enriched', value: systemStats?.enrichment?.documentsEnriched || 0 },
-              { label: 'Entities Extracted', value: systemStats?.enrichment?.entitiesExtracted || 0 },
-              { label: 'Cross-refs Created', value: systemStats?.enrichment?.crossRefsCreated || 0 },
-              { label: 'Avg Confidence', value: `${systemStats?.enrichment?.avgConfidence || 0}%`, target: '> 85%' }
+              {
+                label: 'Documents Enriched',
+                value: systemStats?.enrichment?.documentsEnriched || 0,
+              },
+              {
+                label: 'Entities Extracted',
+                value: systemStats?.enrichment?.entitiesExtracted || 0,
+              },
+              {
+                label: 'Cross-refs Created',
+                value: systemStats?.enrichment?.crossRefsCreated || 0,
+              },
+              {
+                label: 'Avg Confidence',
+                value: `${systemStats?.enrichment?.avgConfidence || 0}%`,
+                target: '> 85%',
+              },
             ]}
           />
 
@@ -155,9 +205,20 @@ const IngestionEnrichmentDashboard = () => {
             status={systemStats?.rag?.status}
             icon="🔍"
             metrics={[
-              { label: 'Total Queries', value: systemStats?.rag?.totalQueries || 0 },
-              { label: 'Avg Latency', value: `${systemStats?.rag?.avgLatency || 0}ms`, target: '< 1500ms' },
-              { label: 'Search Precision', value: `${systemStats?.rag?.precision || 0}%`, target: '> 80%' }
+              {
+                label: 'Total Queries',
+                value: systemStats?.rag?.totalQueries || 0,
+              },
+              {
+                label: 'Avg Latency',
+                value: `${systemStats?.rag?.avgLatency || 0}ms`,
+                target: '< 1500ms',
+              },
+              {
+                label: 'Search Precision',
+                value: `${systemStats?.rag?.precision || 0}%`,
+                target: '> 80%',
+              },
             ]}
           />
 
@@ -166,10 +227,24 @@ const IngestionEnrichmentDashboard = () => {
             status={systemStats?.system?.status}
             icon="💚"
             metrics={[
-              { label: 'CPU Usage', value: `${systemStats?.system?.cpuUsage || 0}%` },
-              { label: 'Memory Usage', value: `${systemStats?.system?.memoryUsage || 0}%` },
-              { label: 'Pool Utilization', value: `${systemStats?.system?.poolUtilization || 0}%`, target: '< 95%' },
-              { label: 'Uptime', value: `${systemStats?.system?.uptime || 0}%`, target: '> 99%' }
+              {
+                label: 'CPU Usage',
+                value: `${systemStats?.system?.cpuUsage || 0}%`,
+              },
+              {
+                label: 'Memory Usage',
+                value: `${systemStats?.system?.memoryUsage || 0}%`,
+              },
+              {
+                label: 'Pool Utilization',
+                value: `${systemStats?.system?.poolUtilization || 0}%`,
+                target: '< 95%',
+              },
+              {
+                label: 'Uptime',
+                value: `${systemStats?.system?.uptime || 0}%`,
+                target: '> 99%',
+              },
             ]}
           />
         </div>
@@ -188,8 +263,20 @@ const IngestionEnrichmentDashboard = () => {
               colors={['#00ff9d', '#ff6b9d']}
             />
             <div className="graph-legend">
-              <span><span className="legend-color" style={{background: '#00ff9d'}}></span> Ingestion (target: &lt; 500ms)</span>
-              <span><span className="legend-color" style={{background: '#ff6b9d'}}></span> Enrichment (target: &lt; 2000ms)</span>
+              <span>
+                <span
+                  className="legend-color"
+                  style={{ background: '#00ff9d' }}
+                ></span>{' '}
+                Ingestion (target: &lt; 500ms)
+              </span>
+              <span>
+                <span
+                  className="legend-color"
+                  style={{ background: '#ff6b9d' }}
+                ></span>{' '}
+                Enrichment (target: &lt; 2000ms)
+              </span>
             </div>
           </div>
         </div>
@@ -218,7 +305,7 @@ const IngestionEnrichmentDashboard = () => {
               'Parallel batch processing (100 docs)',
               'Semantic chunking (650 tokens)',
               'Embedding generation ready',
-              'Event-driven triggers'
+              'Event-driven triggers',
             ]}
             performance="< 500ms latency"
           />
@@ -230,7 +317,7 @@ const IngestionEnrichmentDashboard = () => {
               'Spanish NLP extraction',
               'ML cross-referencing',
               'Confidence scoring',
-              'Relationship discovery'
+              'Relationship discovery',
             ]}
             performance="88% avg confidence"
           />
@@ -242,7 +329,7 @@ const IngestionEnrichmentDashboard = () => {
               'Real-time metrics (60s)',
               'Automatic alerting',
               'Dashboard data export',
-              'Resource tracking'
+              'Resource tracking',
             ]}
             performance="99.9% uptime"
           />
@@ -254,7 +341,10 @@ const IngestionEnrichmentDashboard = () => {
 
 // Status Card Component
 const StatusCard = ({ title, status, icon, metrics }) => {
-  const statusClass = status === 'active' || status === 'healthy' ? 'status-active' : 'status-inactive';
+  const statusClass =
+    status === 'active' || status === 'healthy'
+      ? 'status-active'
+      : 'status-inactive';
 
   return (
     <div className={`status-card ${statusClass}`}>
@@ -268,7 +358,9 @@ const StatusCard = ({ title, status, icon, metrics }) => {
           <div key={idx} className="metric-row">
             <span className="metric-label">{metric.label}:</span>
             <span className="metric-value">{metric.value}</span>
-            {metric.target && <span className="metric-target">({metric.target})</span>}
+            {metric.target && (
+              <span className="metric-target">({metric.target})</span>
+            )}
           </div>
         ))}
       </div>
@@ -282,18 +374,26 @@ const SimpleLineGraph = ({ data, dataKeys, labels, colors }) => {
     return <div className="graph-placeholder">No data available</div>;
   }
 
-  const maxValue = Math.max(...data.flatMap(d => dataKeys.map(k => d[k] || 0)));
+  const maxValue = Math.max(
+    ...data.flatMap((d) => dataKeys.map((k) => d[k] || 0))
+  );
   const height = 200;
   const width = 600;
 
   return (
-    <svg className="simple-line-graph" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none">
+    <svg
+      className="simple-line-graph"
+      viewBox={`0 0 ${width} ${height}`}
+      preserveAspectRatio="none"
+    >
       {dataKeys.map((key, keyIdx) => {
-        const points = data.map((d, i) => {
-          const x = (i / (data.length - 1)) * width;
-          const y = height - ((d[key] || 0) / maxValue) * height;
-          return `${x},${y}`;
-        }).join(' ');
+        const points = data
+          .map((d, i) => {
+            const x = (i / (data.length - 1)) * width;
+            const y = height - ((d[key] || 0) / maxValue) * height;
+            return `${x},${y}`;
+          })
+          .join(' ');
 
         return (
           <polyline
@@ -312,14 +412,19 @@ const SimpleLineGraph = ({ data, dataKeys, labels, colors }) => {
 
 // Alert Card Component
 const AlertCard = ({ alert }) => {
-  const severityClass = alert.severity === 'critical' ? 'alert-critical' : 'alert-warning';
+  const severityClass =
+    alert.severity === 'critical' ? 'alert-critical' : 'alert-warning';
 
   return (
     <div className={`alert-card ${severityClass}`}>
       <div className="alert-header">
-        <span className="alert-icon">{alert.severity === 'critical' ? '🔴' : '🟡'}</span>
+        <span className="alert-icon">
+          {alert.severity === 'critical' ? '🔴' : '🟡'}
+        </span>
         <span className="alert-severity">{alert.severity.toUpperCase()}</span>
-        <span className="alert-time">{new Date(alert.timestamp).toLocaleString()}</span>
+        <span className="alert-time">
+          {new Date(alert.timestamp).toLocaleString()}
+        </span>
       </div>
       <div className="alert-message">{alert.message}</div>
     </div>

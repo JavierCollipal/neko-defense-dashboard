@@ -14,6 +14,7 @@
 **Issue**: User requests to start a VM, but multiple VMs exist. Starting the wrong VM wastes time and resources.
 
 **Impact**:
+
 - Wrong VM launched (unnecessary installation/boot)
 - Time wasted stopping and deleting wrong VM
 - User frustration
@@ -24,17 +25,20 @@
 ## 🎯 Solution: VM Selection Protocol
 
 ### Phase 1: List Available VMs
+
 ```bash
 VBoxManage list vms
 ```
 
 **Output Example**:
+
 ```
 "Windows10-Enterprise" {9a48d189-5bb3-4e31-94e4-ec60951694b2}
 "win10" {c8b02181-965d-491d-9a9e-1ffcd05e986c}
 ```
 
 ### Phase 2: Ask User to Confirm
+
 **BEFORE** starting ANY VM, ask user:
 
 ```
@@ -46,6 +50,7 @@ Which one should I start, bro? 🐾
 ```
 
 ### Phase 3: Start Confirmed VM
+
 ```bash
 VBoxManage startvm "<vm-name>"
 ```
@@ -56,13 +61,14 @@ VBoxManage startvm "<vm-name>"
 
 **NEVER auto-start a VM without user confirmation when multiple VMs exist!**
 
-*purrs in safety* Always ask first, desu! 😻
+_purrs in safety_ Always ask first, desu! 😻
 
 ---
 
 ## 📊 Detection Keywords
 
 Trigger this pattern when user says:
+
 - "start the vm"
 - "launch virtualbox"
 - "raise the virtual box"
@@ -125,7 +131,7 @@ async function selectAndStartVM(userRequest) {
 3. **Clear communication** - Show ALL options to user
 4. **Resource awareness** - VMs are heavy, don't waste resources
 
-*swishes tail with wisdom* Prevention > Correction, nyaa~! 🐾✨
+_swishes tail with wisdom_ Prevention > Correction, nyaa~! 🐾✨
 
 ---
 
@@ -141,6 +147,6 @@ async function selectAndStartVM(userRequest) {
 **STATUS**: ✅ ACTIVE - READY TO USE
 **NEKO RATING**: ⭐⭐⭐⭐⭐ ESSENTIAL!
 
-*purrs in pattern completion* 😻🎉
+_purrs in pattern completion_ 😻🎉
 
 **NYA NYA NYA~ CASE PATTERN CREATED, DESU!** 🐾📚✨

@@ -21,7 +21,7 @@ const topTabs = [
   { path: '/personality-workflow', icon: '🎭🧠', label: 'Personalities' },
   { path: '/confessions', icon: '📝', label: 'Blog' },
   { path: '/youtube', icon: '📺', label: 'Videos' },
-  { path: '/rag', icon: '🗄️', label: 'RAG' }
+  { path: '/rag', icon: '🗄️', label: 'RAG' },
 ];
 
 export const TopTabs = () => {
@@ -30,7 +30,7 @@ export const TopTabs = () => {
   return (
     <nav className="top-tabs" role="navigation" aria-label="Top navigation">
       <div className="top-tabs-container">
-        {topTabs.map(tab => {
+        {topTabs.map((tab) => {
           const isActive = pathname === tab.path;
           return (
             <Link
@@ -39,7 +39,9 @@ export const TopTabs = () => {
               className={`top-tab-button ${isActive ? 'active' : ''}`}
               aria-current={isActive ? 'page' : undefined}
             >
-              <span className="top-tab-icon" aria-hidden="true">{tab.icon}</span>
+              <span className="top-tab-icon" aria-hidden="true">
+                {tab.icon}
+              </span>
               <span className="top-tab-label">{tab.label}</span>
             </Link>
           );

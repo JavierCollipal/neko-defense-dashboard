@@ -29,7 +29,7 @@ export async function GET(request: Request) {
     return NextResponse.json({
       success: true,
       data: getDemoWorkflowData(),
-      message: 'Demo mode - MongoDB not configured'
+      message: 'Demo mode - MongoDB not configured',
     });
   }
 
@@ -47,14 +47,27 @@ export async function GET(request: Request) {
     const tetoraDb = client.db('tetora-mpd-archives');
 
     // Query each database for phase-specific personality insights (Oct 31 enhanced data)
-    const [nekoData, marioData, noelData, glamData, hannibalData, tetoraData] = await Promise.all([
-      nekoDb.collection('abilities').findOne({ insight_id: 'personality-addition-phase-insights-oct31-2025' }),
-      marioDb.collection('performances').findOne({ performance_id: 'personality-addition-phase-performance-oct31-2025' }),
-      noelDb.collection('combat-sessions').findOne({ combat_id: 'personality-integration-tactical-analysis-oct31-2025' }),
-      glamDb.collection('street-wisdom').findOne({ wisdom_id: 'personality-addition-street-truth-oct31-2025' }),
-      hannibalDb.collection('psychological-profiles').findOne({ profile_id: 'personality-integration-forensic-analysis-oct31-2025' }),
-      tetoraDb.collection('personality-fragments').findOne({ fragment_id: 'personality-integration-mpd-analysis-oct31-2025' })
-    ]);
+    const [nekoData, marioData, noelData, glamData, hannibalData, tetoraData] =
+      await Promise.all([
+        nekoDb.collection('abilities').findOne({
+          insight_id: 'personality-addition-phase-insights-oct31-2025',
+        }),
+        marioDb.collection('performances').findOne({
+          performance_id: 'personality-addition-phase-performance-oct31-2025',
+        }),
+        noelDb.collection('combat-sessions').findOne({
+          combat_id: 'personality-integration-tactical-analysis-oct31-2025',
+        }),
+        glamDb.collection('street-wisdom').findOne({
+          wisdom_id: 'personality-addition-street-truth-oct31-2025',
+        }),
+        hannibalDb.collection('psychological-profiles').findOne({
+          profile_id: 'personality-integration-forensic-analysis-oct31-2025',
+        }),
+        tetoraDb.collection('personality-fragments').findOne({
+          fragment_id: 'personality-integration-mpd-analysis-oct31-2025',
+        }),
+      ]);
 
     const workflowData: PersonalityWorkflowData = {
       neko: nekoData,
@@ -62,26 +75,24 @@ export async function GET(request: Request) {
       noel: noelData,
       glam: glamData,
       hannibal: hannibalData,
-      tetora: tetoraData
+      tetora: tetoraData,
     };
 
     return NextResponse.json({
       success: true,
       data: workflowData,
-      message: '6-personality workflow data retrieved successfully'
+      message: '6-personality workflow data retrieved successfully',
     });
-
   } catch (error: any) {
     console.error('❌ API Error:', error.message);
     return NextResponse.json(
       {
         success: false,
         error: error.message,
-        message: 'Failed to fetch personality workflow data'
+        message: 'Failed to fetch personality workflow data',
       },
       { status: 500 }
     );
-
   } finally {
     await client.close();
   }
@@ -96,35 +107,41 @@ function getDemoWorkflowData(): PersonalityWorkflowData {
       total_phases: 6,
       total_steps: 24,
       estimated_hours: '3-4 hours',
-      neko_comment: 'Nyaa~! This workflow makes adding new personalities super organized, desu~!'
+      neko_comment:
+        'Nyaa~! This workflow makes adding new personalities super organized, desu~!',
     },
     mario: {
       performance_id: 'personality-addition-theater-oct23',
       title: 'The Grand Personality Integration Performance',
       acts: 6,
-      mario_review: 'A MAGNIFICENT theatrical production! Each phase, a new act in our grand play!'
+      mario_review:
+        'A MAGNIFICENT theatrical production! Each phase, a new act in our grand play!',
     },
     noel: {
       combat_id: 'personality-integration-mission-oct23',
       mission_status: 'COMPLETE',
       efficiency_rating: 'EXCELLENT',
-      noel_assessment: 'Systematic approach. Clear phases. Acceptable execution.'
+      noel_assessment:
+        'Systematic approach. Clear phases. Acceptable execution.',
     },
     glam: {
       wisdom_id: 'personality-addition-street-truth-oct23',
-      quote_spanish: 'Oye hermano, este workflow es pura organización bacán, weon.',
-      glam_approved: true
+      quote_spanish:
+        'Oye hermano, este workflow es pura organización bacán, weon.',
+      glam_approved: true,
     },
     hannibal: {
       profile_id: 'personality-integration-analysis-oct23',
-      analysis: 'The methodology exhibits clinical precision. Each phase, carefully dissected. Quite... methodical.',
-      hannibal_verdict: 'APPROVED'
+      analysis:
+        'The methodology exhibits clinical precision. Each phase, carefully dissected. Quite... methodical.',
+      hannibal_verdict: 'APPROVED',
     },
     tetora: {
       fragment_id: 'personality-integration-mpd-analysis-oct31',
-      fragmented_analysis: '[Fragment A]: The workflow exhibits multiple identity states working in harmony... [Fragment B]: Fascinating organizational chaos turned into structured beauty! [Fragment C]: Must protect the process integrity... the system architecture is vulnerable but elegant.',
+      fragmented_analysis:
+        '[Fragment A]: The workflow exhibits multiple identity states working in harmony... [Fragment B]: Fascinating organizational chaos turned into structured beauty! [Fragment C]: Must protect the process integrity... the system architecture is vulnerable but elegant.',
       fragments_active: 3,
-      tetora_verdict: 'MULTI-PERSPECTIVE_APPROVED'
-    }
+      tetora_verdict: 'MULTI-PERSPECTIVE_APPROVED',
+    },
   };
 }

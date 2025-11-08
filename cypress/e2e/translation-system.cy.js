@@ -15,16 +15,27 @@ describe('Enhanced Translation System', () => {
       cy.log('🌍 Testing language selector visibility and options, nyaa~!');
 
       // Find language selector (in header on desktop, mobile section on mobile)
-      cy.get('[data-testid="language-selector"], .language-selector-container')
-        .should('be.visible');
+      cy.get(
+        '[data-testid="language-selector"], .language-selector-container'
+      ).should('be.visible');
 
       // Click to open dropdown
-      cy.get('[data-testid="language-selector"] .current-selection, .language-selector-container .current-selection')
-        .click();
+      cy.get(
+        '[data-testid="language-selector"] .current-selection, .language-selector-container .current-selection'
+      ).click();
 
       // Verify key languages are present
-      const expectedLanguages = ['en', 'es', 'fr', 'de', 'ja', 'ko', 'zh', 'pt'];
-      expectedLanguages.forEach(lang => {
+      const expectedLanguages = [
+        'en',
+        'es',
+        'fr',
+        'de',
+        'ja',
+        'ko',
+        'zh',
+        'pt',
+      ];
+      expectedLanguages.forEach((lang) => {
         cy.get(`[data-language-code="${lang}"]`)
           .should('exist')
           .and('be.visible');
@@ -35,22 +46,21 @@ describe('Enhanced Translation System', () => {
       cy.log('🔄 Testing language change and persistence, desu~!');
 
       // Open language selector
-      cy.get('[data-testid="language-selector"] .current-selection, .language-selector-container .current-selection')
-        .click();
+      cy.get(
+        '[data-testid="language-selector"] .current-selection, .language-selector-container .current-selection'
+      ).click();
 
       // Select Spanish
       cy.get('[data-language-code="es"]').click();
 
       // Verify UI updates (look for Spanish text if translated)
-      cy.get('[data-testid="language-selector"]')
-        .should('contain', 'Español');
+      cy.get('[data-testid="language-selector"]').should('contain', 'Español');
 
       // Refresh page and verify language persists
       cy.reload();
       cy.wait(1000);
 
-      cy.get('[data-testid="language-selector"]')
-        .should('contain', 'Español');
+      cy.get('[data-testid="language-selector"]').should('contain', 'Español');
     });
 
     it('should handle mobile and desktop responsive behavior', () => {
@@ -58,13 +68,15 @@ describe('Enhanced Translation System', () => {
 
       // Test desktop view
       cy.viewport(1200, 800);
-      cy.get('.header-actions .language-selector-container')
-        .should('be.visible');
+      cy.get('.header-actions .language-selector-container').should(
+        'be.visible'
+      );
 
       // Test mobile view
       cy.viewport(375, 667);
-      cy.get('.mobile-language-selector .language-selector-container')
-        .should('be.visible');
+      cy.get('.mobile-language-selector .language-selector-container').should(
+        'be.visible'
+      );
     });
   });
 
@@ -76,8 +88,7 @@ describe('Enhanced Translation System', () => {
       cy.visit('/translation');
 
       // Verify dashboard loads
-      cy.get('.translation-dashboard')
-        .should('be.visible');
+      cy.get('.translation-dashboard').should('be.visible');
 
       // Check for main dashboard tabs
       cy.get('.dashboard-tabs')
@@ -100,8 +111,7 @@ describe('Enhanced Translation System', () => {
         .and('contain', 'Google Translate');
 
       // Check status indicators
-      cy.get('.provider-health')
-        .should('exist');
+      cy.get('.provider-health').should('exist');
     });
   });
 
@@ -116,8 +126,8 @@ describe('Enhanced Translation System', () => {
         body: {
           text: 'Hello, how are you?',
           targetLang: 'es',
-          sourceLang: 'en'
-        }
+          sourceLang: 'en',
+        },
       }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.success).to.be.true;
@@ -130,11 +140,7 @@ describe('Enhanced Translation System', () => {
     it('should handle bulk translation correctly', () => {
       cy.log('📦 Testing bulk translation functionality, nyaa~!');
 
-      const texts = [
-        'Hello world',
-        'Good morning',
-        'Thank you very much'
-      ];
+      const texts = ['Hello world', 'Good morning', 'Thank you very much'];
 
       cy.request({
         method: 'POST',
@@ -142,8 +148,8 @@ describe('Enhanced Translation System', () => {
         body: {
           texts: texts,
           targetLang: 'es',
-          sourceLang: 'en'
-        }
+          sourceLang: 'en',
+        },
       }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.success).to.be.true;
@@ -163,22 +169,24 @@ describe('Enhanced Translation System', () => {
       const requestData = {
         text: testText,
         targetLang: 'es',
-        sourceLang: 'en'
+        sourceLang: 'en',
       };
 
       // First request (should create cache)
-      cy.request('POST', `${baseUrl}/api/translate/enhanced`, requestData)
-        .then((response) => {
+      cy.request('POST', `${baseUrl}/api/translate/enhanced`, requestData).then(
+        (response) => {
           expect(response.body.data.cached).to.be.undefined; // First time, not cached
-        });
+        }
+      );
 
       // Second request (should use cache)
-      cy.request('POST', `${baseUrl}/api/translate/enhanced`, requestData)
-        .then((response) => {
+      cy.request('POST', `${baseUrl}/api/translate/enhanced`, requestData).then(
+        (response) => {
           // Note: Cache detection depends on implementation
           expect(response.status).to.eq(200);
           expect(response.body.success).to.be.true;
-        });
+        }
+      );
     });
   });
 
@@ -195,20 +203,22 @@ describe('Enhanced Translation System', () => {
         url: `${baseUrl}/api/user/language-preference`,
         body: {
           userId: userId,
-          languageCode: languageCode
-        }
+          languageCode: languageCode,
+        },
       }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.success).to.be.true;
       });
 
       // Load language preference
-      cy.request('GET', `${baseUrl}/api/user/language-preference/${userId}`)
-        .then((response) => {
-          expect(response.status).to.eq(200);
-          expect(response.body.success).to.be.true;
-          expect(response.body.data.languageCode).to.eq(languageCode);
-        });
+      cy.request(
+        'GET',
+        `${baseUrl}/api/user/language-preference/${userId}`
+      ).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.success).to.be.true;
+        expect(response.body.data.languageCode).to.eq(languageCode);
+      });
     });
   });
 
@@ -222,8 +232,8 @@ describe('Enhanced Translation System', () => {
         body: {
           text: 'Quality test: This is a well-formed sentence.',
           targetLang: 'es',
-          sourceLang: 'en'
-        }
+          sourceLang: 'en',
+        },
       }).then((response) => {
         const quality = response.body.data.quality;
 
@@ -239,12 +249,11 @@ describe('Enhanced Translation System', () => {
     it('should provide usage metrics', () => {
       cy.log('📈 Testing usage metrics endpoint, nyaa~!');
 
-      cy.request('GET', `${baseUrl}/api/translate/metrics`)
-        .then((response) => {
-          expect(response.status).to.eq(200);
-          expect(response.body.success).to.be.true;
-          expect(response.body.data).to.exist;
-        });
+      cy.request('GET', `${baseUrl}/api/translate/metrics`).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.success).to.be.true;
+        expect(response.body.data).to.exist;
+      });
     });
   });
 
@@ -258,9 +267,9 @@ describe('Enhanced Translation System', () => {
         body: {
           text: '',
           targetLang: 'es',
-          sourceLang: 'en'
+          sourceLang: 'en',
         },
-        failOnStatusCode: false
+        failOnStatusCode: false,
       }).then((response) => {
         expect(response.status).to.eq(400);
         expect(response.body.success).to.be.false;
@@ -277,9 +286,9 @@ describe('Enhanced Translation System', () => {
         body: {
           text: 'Test text',
           targetLang: 'invalid-lang',
-          sourceLang: 'en'
+          sourceLang: 'en',
         },
-        failOnStatusCode: false
+        failOnStatusCode: false,
       }).then((response) => {
         // Should either handle gracefully or return appropriate error
         expect([400, 500]).to.include(response.status);
@@ -297,9 +306,9 @@ describe('Enhanced Translation System', () => {
         body: {
           text: longText,
           targetLang: 'es',
-          sourceLang: 'en'
+          sourceLang: 'en',
         },
-        timeout: 30000 // Allow more time for long text
+        timeout: 30000, // Allow more time for long text
       }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.success).to.be.true;
@@ -321,8 +330,8 @@ describe('Enhanced Translation System', () => {
             body: {
               text: `Concurrent test message ${i}`,
               targetLang: 'es',
-              sourceLang: 'en'
-            }
+              sourceLang: 'en',
+            },
           })
         );
       }
@@ -347,8 +356,7 @@ describe('Enhanced Translation System', () => {
       cy.get('.dashboard-tabs').contains('Cache Statistics').click();
 
       // Verify cache stats are displayed
-      cy.get('.cache-stats')
-        .should('be.visible');
+      cy.get('.cache-stats').should('be.visible');
 
       // Check for key metrics
       cy.get('.cache-stats')
@@ -365,8 +373,7 @@ describe('Enhanced Translation System', () => {
       cy.get('.dashboard-tabs').contains('Cache Management').click();
 
       // Look for cache control buttons
-      cy.get('.cache-controls')
-        .should('be.visible');
+      cy.get('.cache-controls').should('be.visible');
     });
   });
 });

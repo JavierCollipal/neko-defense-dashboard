@@ -6,10 +6,15 @@ describe('🗺️ DINA Torture Centers Interactive Map', () => {
 
     // Navigate to DINA Documentation view
     cy.get('.tv-window-button.dina-doc').click();
-    cy.get('.App-header h1').should('contain', 'DINA INTERNATIONAL HUNT OPERATION');
+    cy.get('.App-header h1').should(
+      'contain',
+      'DINA INTERNATIONAL HUNT OPERATION'
+    );
 
     // Wait for map to be visible
-    cy.get('.dina-centers-map-container', { timeout: 5000 }).should('be.visible');
+    cy.get('.dina-centers-map-container', { timeout: 5000 }).should(
+      'be.visible'
+    );
   });
 
   describe('🎨 Map Component Structure', () => {
@@ -24,7 +29,8 @@ describe('🗺️ DINA Torture Centers Interactive Map', () => {
     });
 
     it('should display Santiago Focus button as active by default', () => {
-      cy.get('.map-view-btn').contains('Santiago Focus')
+      cy.get('.map-view-btn')
+        .contains('Santiago Focus')
         .should('have.class', 'active');
     });
 
@@ -70,7 +76,9 @@ describe('🗺️ DINA Torture Centers Interactive Map', () => {
 
     it('should display Jose Domingo Cañas marker (high)', () => {
       cy.get('.map-marker.high').should('exist');
-      cy.get('.marker-label').contains('Jose Domingo Cañas').should('be.visible');
+      cy.get('.marker-label')
+        .contains('Jose Domingo Cañas')
+        .should('be.visible');
     });
 
     it('should display Cuatro Alamos marker (medium)', () => {
@@ -117,7 +125,8 @@ describe('🗺️ DINA Torture Centers Interactive Map', () => {
     it('should display selected marker with active styling', () => {
       cy.get('.marker-label').contains('Londres 38').click();
 
-      cy.get('.map-marker').contains('Londres 38')
+      cy.get('.map-marker')
+        .contains('Londres 38')
         .parent('.map-marker')
         .should('have.class', 'selected');
     });
@@ -133,7 +142,14 @@ describe('🗺️ DINA Torture Centers Interactive Map', () => {
     });
 
     it('should show all center markers are clickable', () => {
-      const centers = ['Villa Grimaldi', 'Londres 38', 'Jose Domingo Cañas', 'Cuatro Alamos', 'Venecia', 'Malloco'];
+      const centers = [
+        'Villa Grimaldi',
+        'Londres 38',
+        'Jose Domingo Cañas',
+        'Cuatro Alamos',
+        'Venecia',
+        'Malloco',
+      ];
 
       centers.forEach((centerName) => {
         cy.get('.marker-label').contains(centerName).click();
@@ -155,7 +171,9 @@ describe('🗺️ DINA Torture Centers Interactive Map', () => {
     });
 
     it('should display close button in panel header', () => {
-      cy.get('.panel-header .close-btn').should('be.visible').and('contain', '✕');
+      cy.get('.panel-header .close-btn')
+        .should('be.visible')
+        .and('contain', '✕');
     });
 
     it('should display code name', () => {
@@ -174,23 +192,36 @@ describe('🗺️ DINA Torture Centers Interactive Map', () => {
     });
 
     it('should display detainee count with critical styling', () => {
-      cy.get('.detail-row.critical-stat').contains('Detainees:').should('be.visible');
+      cy.get('.detail-row.critical-stat')
+        .contains('Detainees:')
+        .should('be.visible');
       cy.get('.panel-content').should('contain', '~4,500');
     });
 
     it('should display killed/disappeared count with critical styling', () => {
-      cy.get('.detail-row.critical-stat').contains('Killed/Disappeared:').should('be.visible');
+      cy.get('.detail-row.critical-stat')
+        .contains('Killed/Disappeared:')
+        .should('be.visible');
       cy.get('.panel-content').should('contain', '240+');
     });
 
     it('should display significance badge', () => {
       cy.get('.detail-row').contains('Significance:').should('be.visible');
-      cy.get('.significance-badge').should('contain', 'MOST IMPORTANT DINA COMPLEX');
+      cy.get('.significance-badge').should(
+        'contain',
+        'MOST IMPORTANT DINA COMPLEX'
+      );
     });
 
     it('should display documented torture methods section', () => {
-      cy.get('.torture-methods-section h4').should('contain', 'Documented Torture Methods');
-      cy.get('.torture-methods-section ul li').should('have.length.at.least', 1);
+      cy.get('.torture-methods-section h4').should(
+        'contain',
+        'Documented Torture Methods'
+      );
+      cy.get('.torture-methods-section ul li').should(
+        'have.length.at.least',
+        1
+      );
     });
 
     it('should list specific torture methods', () => {
@@ -249,7 +280,10 @@ describe('🗺️ DINA Torture Centers Interactive Map', () => {
     });
 
     it('should show total count of centers', () => {
-      cy.get('.centers-list-compact h3').should('contain', 'All DINA Torture Centers (6)');
+      cy.get('.centers-list-compact h3').should(
+        'contain',
+        'All DINA Torture Centers (6)'
+      );
     });
 
     it('should display all 6 centers in compact card grid', () => {
@@ -273,13 +307,11 @@ describe('🗺️ DINA Torture Centers Interactive Map', () => {
     });
 
     it('should show location in compact cards', () => {
-      cy.get('.compact-card-info').first()
-        .should('contain', '📍');
+      cy.get('.compact-card-info').first().should('contain', '📍');
     });
 
     it('should show period in compact cards', () => {
-      cy.get('.compact-card-info').first()
-        .should('contain', '📅');
+      cy.get('.compact-card-info').first().should('contain', '📅');
     });
 
     it('should show victim count in compact cards', () => {
@@ -293,7 +325,8 @@ describe('🗺️ DINA Torture Centers Interactive Map', () => {
     });
 
     it('should show correct details for clicked compact card', () => {
-      cy.get('.center-compact-card h4').contains('Londres 38')
+      cy.get('.center-compact-card h4')
+        .contains('Londres 38')
         .parents('.center-compact-card')
         .click();
 
@@ -311,7 +344,8 @@ describe('🗺️ DINA Torture Centers Interactive Map', () => {
     it('should remove active class from Santiago when switching to Chile', () => {
       cy.get('.map-view-btn').contains('Chile Overview').click();
 
-      cy.get('.map-view-btn').contains('Santiago Focus')
+      cy.get('.map-view-btn')
+        .contains('Santiago Focus')
         .should('not.have.class', 'active');
     });
 
@@ -362,7 +396,14 @@ describe('🗺️ DINA Torture Centers Interactive Map', () => {
     });
 
     it('should display data for all 6 centers', () => {
-      const centers = ['Villa Grimaldi', 'Londres 38', 'Jose Domingo Cañas', 'Cuatro Alamos', 'Venecia', 'Malloco'];
+      const centers = [
+        'Villa Grimaldi',
+        'Londres 38',
+        'Jose Domingo Cañas',
+        'Cuatro Alamos',
+        'Venecia',
+        'Malloco',
+      ];
 
       centers.forEach((centerName) => {
         cy.get('.marker-label').contains(centerName).click();
@@ -383,17 +424,20 @@ describe('🗺️ DINA Torture Centers Interactive Map', () => {
 
   describe('🎨 Visual Styling & Colors', () => {
     it('should apply correct background color for critical markers', () => {
-      cy.get('.map-marker.critical').first()
+      cy.get('.map-marker.critical')
+        .first()
         .should('have.css', 'background-color', 'rgb(220, 38, 38)'); // Red
     });
 
     it('should apply correct background color for high markers', () => {
-      cy.get('.map-marker.high').first()
+      cy.get('.map-marker.high')
+        .first()
         .should('have.css', 'background-color', 'rgb(234, 88, 12)'); // Orange
     });
 
     it('should apply correct background color for medium markers', () => {
-      cy.get('.map-marker.medium').first()
+      cy.get('.map-marker.medium')
+        .first()
         .should('have.css', 'background-color', 'rgb(202, 138, 4)'); // Yellow
     });
 
@@ -410,14 +454,16 @@ describe('🗺️ DINA Torture Centers Interactive Map', () => {
     });
 
     it('should show memorial note about visiting sites', () => {
-      cy.get('.memorial-note').should('be.visible')
+      cy.get('.memorial-note')
+        .should('be.visible')
         .and('contain', '🕊️')
         .and('contain', 'memorials')
         .and('contain', 'visited');
     });
 
     it('should show network note about DINA operations', () => {
-      cy.get('.network-note').should('be.visible')
+      cy.get('.network-note')
+        .should('be.visible')
         .and('contain', '🗺️')
         .and('contain', 'DINA operated')
         .and('contain', 'systematic network');
@@ -431,7 +477,9 @@ describe('🗺️ DINA Torture Centers Interactive Map', () => {
   describe('🎯 Edge Cases & Error Handling', () => {
     it('should handle rapid marker clicking', () => {
       for (let i = 0; i < 10; i++) {
-        cy.get('.map-marker').eq(i % 6).click();
+        cy.get('.map-marker')
+          .eq(i % 6)
+          .click();
         cy.wait(100);
       }
 
