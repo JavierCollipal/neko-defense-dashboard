@@ -1,0 +1,14 @@
+{
+  "extends": ["react-app", "react-app/jest"],
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "testing-library/no-wait-for-side-effects": "warn",
+    "testing-library/no-wait-for-multiple-assertions": "warn",
+    "testing-library/no-node-access": "warn",
+    "testing-library/no-container": "warn",
+    "jest/no-conditional-expect": "warn",
+    "testing-library/prefer-presence-queries": "warn",
+    "testing-library/render-result-naming-convention": "warn"
+  }
+}

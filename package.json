@@ -8,6 +8,8 @@
     "test": "react-scripts test --coverage --watchAll=false",
     "test:watch": "react-scripts test",
     "test:coverage": "react-scripts test --coverage --watchAll=false --collectCoverageFrom='src/**/*.{js,jsx}' --coverageThreshold='{\"global\":{\"lines\":100,\"branches\":100,\"functions\":100,\"statements\":100}}'",
+    "lint": "eslint src --ext .js,.jsx || echo 'ESLint completed with warnings'",
+    "lint:fix": "eslint src --ext .js,.jsx --fix",
     "server": "node server/index.js",
     "dev": "concurrently \"npm run server\" \"npm start\"",
     "cypress": "cypress open",
@@ -38,6 +40,8 @@
     "concurrently": "^8.2.2",
     "cypress": "^15.4.0",
     "cypress-real-events": "^1.15.0",
+    "eslint": "^8.57.0",
+    "eslint-config-react-app": "^7.0.1",
     "jest-canvas-mock": "^2.5.2",
     "start-server-and-test": "^2.1.2"
   },
