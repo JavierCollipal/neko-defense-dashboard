@@ -1784,6 +1784,8 @@ connectDB().then(async () => {
   const commentsRoutes = require('./routes/comments');
   const discoveryRoutes = require('./routes/discovery');
   const ideasRoutes = require('./routes/ideas');
+  const gamificationRoutes = require('./routes/gamification'); // Phase 3: Gamification
+  const challengesRoutes = require('./routes/challenges'); // Phase 3: Challenges
 
   // Make database available to routes via app.locals
   app.locals.db = db;
@@ -1794,6 +1796,8 @@ connectDB().then(async () => {
   app.use('/api/comments', commentsRoutes);
   app.use('/api', discoveryRoutes); // Phase 2: Discovery & search routes
   app.use('/api/ideas', ideasRoutes); // Phase 2: Community ideas board
+  app.use('/api/gamification', gamificationRoutes); // Phase 3: Gamification & achievements
+  app.use('/api/challenges', challengesRoutes); // Phase 3: Challenges & contests
 
   console.log('🎨✨ UGC Platform routes mounted successfully, nyaa~!');
   console.log('  - /api/auth/* (Registration, Login, JWT)');
@@ -1801,6 +1805,8 @@ connectDB().then(async () => {
   console.log('  - /api/comments/* (Comments & Reactions)');
   console.log('  - /api/search, /api/content/trending, /api/content/recommended (Discovery)');
   console.log('  - /api/ideas/* (Community Ideas Board with Voting)');
+  console.log('  - /api/gamification/* (Achievements, Daily Quests, Leaderboard) 🏆');
+  console.log('  - /api/challenges/* (Challenges & Contests with Judging) 🏅');
 
   // Initialize search indexes for Phase 2 discovery features
   const { initializeSearchIndexes } = require('./routes/discovery');
