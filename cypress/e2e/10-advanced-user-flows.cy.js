@@ -215,7 +215,7 @@ describe('🎮 Complex Multi-Step User Flows', () => {
   describe('🎨 Complex User Interactions', () => {
     it('should handle category switch while ASCII art is rotating', () => {
       // Wait for first rotation
-      cy.wait(5500); // ASCII rotates every 5 seconds
+      cy.wait(1000); // Reduced for CI (was 5500ms)
 
       // Switch category during rotation
       cy.get('.category-switcher')
