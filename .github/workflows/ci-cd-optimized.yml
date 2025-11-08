@@ -150,7 +150,7 @@ jobs:
     name: 🧪 Cypress E2E (${{ matrix.containers }}/8)
     runs-on: ubuntu-latest
     needs: build
-    timeout-minutes: 15  # Increased to handle Cypress Cloud test redistribution - most complete in ~2min, allows one slow container
+    timeout-minutes: 20  # Increased to handle Cypress Cloud test redistribution - most complete in ~2min, allows one very slow container
 
     # ⚡ OPTIMIZATION 5: PARALLEL EXECUTION - THE GAME CHANGER!
     strategy:
