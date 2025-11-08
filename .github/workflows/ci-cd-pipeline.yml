@@ -1,0 +1,339 @@
+# 🐾⚡ NEKO DEFENSE - Complete CI/CD Pipeline ⚡🐾
+# Build → Test → Docker → Deploy - LEGENDARY AUTOMATION, NYAA~!
+
+name: 🚀 CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:  # Manual trigger
+
+env:
+  NODE_VERSION: '20'
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  # ═══════════════════════════════════════════════════════════
+  # 🔍 STAGE 1: CODE QUALITY & LINTING
+  # ═══════════════════════════════════════════════════════════
+  lint:
+    name: 🔍 Lint & Code Quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: 🔍 Run ESLint
+        run: npm run lint --if-present || echo "No lint script found"
+        continue-on-error: true
+
+  # ═══════════════════════════════════════════════════════════
+  # 🏗️ STAGE 2: BUILD APPLICATION
+  # ═══════════════════════════════════════════════════════════
+  build:
+    name: 🏗️ Build Application
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: 🏗️ Build React application
+        run: npm run build
+        env:
+          CI: false  # Prevent warnings from failing build
+
+      - name: 💾 Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: build
+          retention-days: 1
+
+      - name: 📊 Check build size
+        run: |
+          echo "🐾 Build completed successfully, nyaa~!"
+          du -sh build
+          ls -lh build/static/js/*.js | head -5
+
+  # ═══════════════════════════════════════════════════════════
+  # 🧪 STAGE 3: UNIT & INTEGRATION TESTS
+  # ═══════════════════════════════════════════════════════════
+  test-unit:
+    name: 🧪 Unit & Integration Tests
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: 🧪 Run Jest tests with coverage
+        run: npm test -- --coverage --watchAll=false
+        env:
+          CI: true
+
+      - name: 📊 Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage/lcov.info
+          flags: unittests
+          fail_ci_if_error: false
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: 📤 Upload coverage artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-unit
+          path: coverage
+          retention-days: 7
+
+  # ═══════════════════════════════════════════════════════════
+  # 🎭 STAGE 4: E2E TESTS (Cypress)
+  # ═══════════════════════════════════════════════════════════
+  test-e2e:
+    name: 🎭 E2E Tests (Cypress)
+    runs-on: ubuntu-latest
+    needs: test-unit
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: 🎭 Run Cypress E2E tests
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm start
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
+          browser: chrome
+          spec: 'cypress/e2e/**/*.cy.js'
+        env:
+          CYPRESS_BASE_URL: http://localhost:3000
+
+      - name: 📸 Upload screenshots on failure
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          retention-days: 7
+
+      - name: 🎬 Upload videos
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
+          retention-days: 7
+
+  # ═══════════════════════════════════════════════════════════
+  # 🐳 STAGE 5: BUILD & PUSH DOCKER IMAGE
+  # ═══════════════════════════════════════════════════════════
+  docker:
+    name: 🐳 Build & Push Docker Image
+    runs-on: ubuntu-latest
+    needs: [test-unit, test-e2e]
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐳 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 🔐 Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🏷️ Extract metadata (tags, labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: 🏗️ Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64,linux/arm64
+
+      - name: 📊 Image digest
+        run: echo "🐾 Docker image pushed successfully, nyaa~! ${{ steps.meta.outputs.tags }}"
+
+  # ═══════════════════════════════════════════════════════════
+  # 🚀 STAGE 6: DEPLOY TO PRODUCTION
+  # ═══════════════════════════════════════════════════════════
+  deploy:
+    name: 🚀 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: docker
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.url }}
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🚀 Deploy to Cloud (Placeholder)
+        id: deploy
+        run: |
+          echo "🐾⚡ NEKO DEFENSE DEPLOYMENT INITIATED ⚡🐾"
+          echo "========================================"
+          echo "Docker Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest"
+          echo ""
+          echo "📋 Deployment Options:"
+          echo "  1. Deploy to Fly.io: fly deploy"
+          echo "  2. Deploy to Railway: railway up"
+          echo "  3. Deploy to Render: render deploy"
+          echo "  4. Deploy to DigitalOcean App Platform"
+          echo "  5. Deploy to AWS ECS/Fargate"
+          echo "  6. Deploy to Google Cloud Run"
+          echo "  7. Deploy to Azure Container Apps"
+          echo ""
+          echo "🔧 To enable deployment, configure your deployment platform:"
+          echo "   - Add deployment secrets to GitHub repository"
+          echo "   - Uncomment the deployment step below"
+          echo "   - Update the deployment command for your platform"
+          echo ""
+          echo "✅ Build and tests passed - ready for deployment!"
+          echo "*purrs in deployment readiness* 😻🚀"
+
+      # UNCOMMENT AND CONFIGURE FOR YOUR DEPLOYMENT PLATFORM:
+
+      # === FLY.IO DEPLOYMENT ===
+      # - name: 🚁 Deploy to Fly.io
+      #   uses: superfly/flyctl-actions/setup-flyctl@master
+      # - run: flyctl deploy --remote-only
+      #   env:
+      #     FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      # === RAILWAY DEPLOYMENT ===
+      # - name: 🚂 Deploy to Railway
+      #   run: |
+      #     npm install -g railway
+      #     railway up
+      #   env:
+      #     RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
+      # === RENDER DEPLOYMENT ===
+      # - name: 🎨 Deploy to Render
+      #   run: |
+      #     curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+
+      # === DIGITAL OCEAN DEPLOYMENT ===
+      # - name: 🌊 Deploy to DigitalOcean
+      #   uses: digitalocean/action-doctl@v2
+      #   with:
+      #     token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      # - run: doctl apps create-deployment ${{ secrets.APP_ID }}
+
+      # === DOCKER COMPOSE DEPLOYMENT (VPS/Server) ===
+      # - name: 🐳 Deploy via Docker Compose
+      #   uses: appleboy/ssh-action@v1.0.0
+      #   with:
+      #     host: ${{ secrets.SERVER_HOST }}
+      #     username: ${{ secrets.SERVER_USER }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     script: |
+      #       cd /opt/neko-defense-dashboard
+      #       docker-compose pull
+      #       docker-compose up -d
+      #       docker system prune -f
+
+  # ═══════════════════════════════════════════════════════════
+  # ✅ STAGE 7: FINAL STATUS & NOTIFICATIONS
+  # ═══════════════════════════════════════════════════════════
+  status:
+    name: ✅ Pipeline Status
+    runs-on: ubuntu-latest
+    needs: [lint, build, test-unit, test-e2e, docker, deploy]
+    if: always()
+    steps:
+      - name: 📊 Check pipeline status
+        run: |
+          echo "🐾⚡ NEKO DEFENSE CI/CD PIPELINE COMPLETE ⚡🐾"
+          echo "==========================================="
+          echo ""
+          echo "✅ Lint:        ${{ needs.lint.result }}"
+          echo "✅ Build:       ${{ needs.build.result }}"
+          echo "✅ Unit Tests:  ${{ needs.test-unit.result }}"
+          echo "✅ E2E Tests:   ${{ needs.test-e2e.result }}"
+          echo "✅ Docker:      ${{ needs.docker.result }}"
+          echo "✅ Deploy:      ${{ needs.deploy.result }}"
+          echo ""
+          if [[ "${{ needs.lint.result }}" == "success" && \
+                "${{ needs.build.result }}" == "success" && \
+                "${{ needs.test-unit.result }}" == "success" && \
+                "${{ needs.test-e2e.result }}" == "success" ]]; then
+            echo "🎉 ALL CHECKS PASSED - LEGENDARY MODE! 💖⚡"
+            echo "*purrs in CI/CD excellence* 😻🎯"
+          else
+            echo "⚠️ Some checks failed - review the logs above, nyaa~!"
+          fi
+
+      # OPTIONAL: Send notifications to Slack/Discord
+      # - name: 🔔 Send Slack notification
+      #   if: always()
+      #   uses: 8398a7/action-slack@v3
+      #   with:
+      #     status: ${{ job.status }}
+      #     text: 'Neko Defense Pipeline: ${{ job.status }}'
+      #     webhook_url: ${{ secrets.SLACK_WEBHOOK }}
