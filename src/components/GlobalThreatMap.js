@@ -117,6 +117,85 @@ const GlobalThreatMap = ({ language = 'en' }) => {
     }
   };
 
+  const drawLocationMarker = (ctx, location) => {
+    const { x, y } = location.coords;
+
+    // Color based on type
+    const colors = {
+      headquarters: '#ff0000',
+      condor_partner: '#ff6600',
+      condor_coordinator: '#ff9900',
+      international_crime: '#cc0000',
+      precedent: '#00ccff'
+    };
+
+    const color = colors[location.type] || '#ffffff';
+
+    // Draw pulsing circle
+    ctx.shadowColor = color;
+    ctx.shadowBlur = 15;
+
+    // Outer glow
+    ctx.fillStyle = color + '40';
+    ctx.beginPath();
+    ctx.arc(x, y, 12, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Inner circle
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(x, y, 6, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.shadowBlur = 0;
+
+    // Label
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 11px "Courier New"';
+    ctx.fillText(location.name[language] || location.name.en, x + 10, y - 10);
+  };
+
+  const drawLegend = (ctx, width, height) => {
+    const legendX = 10;
+    const legendY = height - 150;
+
+    ctx.fillStyle = 'rgba(10, 10, 30, 0.9)';
+    ctx.fillRect(legendX, legendY, 280, 140);
+    ctx.strokeStyle = '#00ffff';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(legendX, legendY, 280, 140);
+
+    ctx.fillStyle = '#00ffff';
+    ctx.font = 'bold 14px "Courier New"';
+    const title = {
+      en: '🌍 OPERATION CONDOR NETWORK',
+      es: '🌍 RED OPERACIÓN CÓNDOR',
+      pt: '🌍 REDE OPERAÇÃO CONDOR',
+      de: '🌍 OPERATION CONDOR NETZWERK'
+    };
+    ctx.fillText(title[language] || title.en, legendX + 10, legendY + 20);
+
+    const legendItems = [
+      { color: '#ff0000', label: { en: 'DINA HQ', es: 'Cuartel DINA', pt: 'QG DINA', de: 'DINA-HQ' } },
+      { color: '#ff6600', label: { en: 'Condor Partner', es: 'Socio Cóndor', pt: 'Parceiro Condor', de: 'Condor Partner' } },
+      { color: '#cc0000', label: { en: 'International Crime', es: 'Crimen Internacional', pt: 'Crime Internacional', de: 'Internationales Verbrechen' } },
+      { color: '#00ccff', label: { en: 'Legal Precedent', es: 'Precedente Legal', pt: 'Precedente Legal', de: 'Rechtspräzedenz' } }
+    ];
+
+    legendItems.forEach((item, i) => {
+      const y = legendY + 45 + (i * 22);
+
+      ctx.fillStyle = item.color;
+      ctx.beginPath();
+      ctx.arc(legendX + 20, y, 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '12px "Courier New"';
+      ctx.fillText(item.label[language] || item.label.en, legendX + 35, y + 4);
+    });
+  };
+
   const drawMap = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -197,90 +276,12 @@ const GlobalThreatMap = ({ language = 'en' }) => {
 
     // Draw legend
     drawLegend(ctx, width, height);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [language]);
 
   useEffect(() => {
     drawMap();
   }, [drawMap]);
-
-  const drawLocationMarker = (ctx, location) => {
-    const { x, y } = location.coords;
-
-    // Color based on type
-    const colors = {
-      headquarters: '#ff0000',
-      condor_partner: '#ff6600',
-      condor_coordinator: '#ff9900',
-      international_crime: '#cc0000',
-      precedent: '#00ccff'
-    };
-
-    const color = colors[location.type] || '#ffffff';
-
-    // Draw pulsing circle
-    ctx.shadowColor = color;
-    ctx.shadowBlur = 15;
-
-    // Outer glow
-    ctx.fillStyle = color + '40';
-    ctx.beginPath();
-    ctx.arc(x, y, 12, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Inner circle
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.arc(x, y, 6, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.shadowBlur = 0;
-
-    // Label
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 11px "Courier New"';
-    ctx.fillText(location.name[language] || location.name.en, x + 10, y - 10);
-  };
-
-  const drawLegend = (ctx, width, height) => {
-    const legendX = 10;
-    const legendY = height - 150;
-
-    ctx.fillStyle = 'rgba(10, 10, 30, 0.9)';
-    ctx.fillRect(legendX, legendY, 280, 140);
-    ctx.strokeStyle = '#00ffff';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(legendX, legendY, 280, 140);
-
-    ctx.fillStyle = '#00ffff';
-    ctx.font = 'bold 14px "Courier New"';
-    const title = {
-      en: '🌍 OPERATION CONDOR NETWORK',
-      es: '🌍 RED OPERACIÓN CÓNDOR',
-      pt: '🌍 REDE OPERAÇÃO CONDOR',
-      de: '🌍 OPERATION CONDOR NETZWERK'
-    };
-    ctx.fillText(title[language] || title.en, legendX + 10, legendY + 20);
-
-    const legendItems = [
-      { color: '#ff0000', label: { en: 'DINA HQ', es: 'Cuartel DINA', pt: 'QG DINA', de: 'DINA-HQ' } },
-      { color: '#ff6600', label: { en: 'Condor Partner', es: 'Socio Cóndor', pt: 'Parceiro Condor', de: 'Condor Partner' } },
-      { color: '#cc0000', label: { en: 'International Crime', es: 'Crimen Internacional', pt: 'Crime Internacional', de: 'Internationales Verbrechen' } },
-      { color: '#00ccff', label: { en: 'Legal Precedent', es: 'Precedente Legal', pt: 'Precedente Legal', de: 'Rechtspräzedenz' } }
-    ];
-
-    legendItems.forEach((item, i) => {
-      const y = legendY + 45 + (i * 22);
-
-      ctx.fillStyle = item.color;
-      ctx.beginPath();
-      ctx.arc(legendX + 20, y, 6, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '12px "Courier New"';
-      ctx.fillText(item.label[language] || item.label.en, legendX + 35, y + 4);
-    });
-  };
 
   const handleCanvasClick = (e) => {
     const canvas = canvasRef.current;

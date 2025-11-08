@@ -1,9 +1,8 @@
 // 🐾⏰ DINA OPERATIONS TIMELINE - Historical Justice Visualization ⏰🐾
-import React, { useState } from 'react';
+import React from 'react';
 import '../styles/DinaTimeline.css';
 
 const DinaTimeline = ({ language = 'en' }) => {
-  const [selectedEvent, setSelectedEvent] = useState(null);
 
   const timelineEvents = [
     {
@@ -232,7 +231,6 @@ const DinaTimeline = ({ language = 'en' }) => {
           <div
             key={index}
             className={getEventClass(event.type)}
-            onClick={() => setSelectedEvent(event)}
           >
             <div className="timeline-marker">
               <span className="event-icon">{event.icon}</span>
