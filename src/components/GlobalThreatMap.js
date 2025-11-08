@@ -1,5 +1,5 @@
 // 🐾🌍 GLOBAL THREAT MAP - Operation Condor International Visualization 🌍🐾
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import '../styles/GlobalThreatMap.css';
 
 const GlobalThreatMap = ({ language = 'en' }) => {
@@ -117,11 +117,7 @@ const GlobalThreatMap = ({ language = 'en' }) => {
     }
   };
 
-  useEffect(() => {
-    drawMap();
-  }, [language]);
-
-  const drawMap = () => {
+  const drawMap = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -201,7 +197,11 @@ const GlobalThreatMap = ({ language = 'en' }) => {
 
     // Draw legend
     drawLegend(ctx, width, height);
-  };
+  }, [language]);
+
+  useEffect(() => {
+    drawMap();
+  }, [drawMap]);
 
   const drawLocationMarker = (ctx, location) => {
     const { x, y } = location.coords;

@@ -1,5 +1,5 @@
 // 🐾 Threat List Component - HUNT OPERATION READY 🎯⚡
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 const API_URL = 'http://localhost:5001/api';
 
@@ -8,11 +8,7 @@ function ThreatList({ activeCategory }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetchThreatActors();
-  }, [activeCategory]);
-
-  const fetchThreatActors = async () => {
+  const fetchThreatActors = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -33,7 +29,11 @@ function ThreatList({ activeCategory }) {
       setError('Network error - unable to connect to defense system');
       setLoading(false);
     }
-  };
+  }, [activeCategory]);
+
+  useEffect(() => {
+    fetchThreatActors();
+  }, [fetchThreatActors]);
 
   const getCategoryTitle = () => {
     const titles = {

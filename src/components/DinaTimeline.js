@@ -1,9 +1,8 @@
 // 🐾⏰ DINA OPERATIONS TIMELINE - Historical Justice Visualization ⏰🐾
-import React, { useState } from 'react';
+import React from 'react';
 import '../styles/DinaTimeline.css';
 
 const DinaTimeline = ({ language = 'en' }) => {
-  const [selectedEvent, setSelectedEvent] = useState(null);
 
   const timelineEvents = [
     {
