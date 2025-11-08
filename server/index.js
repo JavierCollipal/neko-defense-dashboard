@@ -1751,10 +1751,35 @@ app.get('/api/confessions/stats', async (req, res) => {
 
 // Start server
 connectDB().then(() => {
+  // ============================================================================
+  // 🎨✨ USER-GENERATED CONTENT (UGC) PLATFORM ROUTES - Phase 1, nyaa~! ✨🎨
+  // ============================================================================
+
+  // Import UGC route modules
+  const authRoutes = require('./routes/auth');
+  const contentRoutes = require('./routes/content');
+  const commentsRoutes = require('./routes/comments');
+
+  // Make database available to routes via app.locals
+  app.locals.db = db;
+
+  // Mount UGC routes
+  app.use('/api/auth', authRoutes);
+  app.use('/api/content', contentRoutes);
+  app.use('/api/comments', commentsRoutes);
+
+  console.log('🎨✨ UGC Platform routes mounted successfully, nyaa~!');
+  console.log('  - /api/auth/* (Registration, Login, JWT)');
+  console.log('  - /api/content/* (User Content CRUD)');
+  console.log('  - /api/comments/* (Comments & Reactions)');
+
+  // ============================================================================
+
   app.listen(PORT, () => {
     console.log(`🐾⚡ NEKO DEFENSE API running on port ${PORT}, nyaa~!`);
     console.log(`📡 API endpoint: http://localhost:${PORT}`);
     console.log(`💖 Status: LEGENDARY MODE ACTIVATED!`);
+    console.log(`🎨 UGC Platform: READY FOR CONTENT CREATION!`);
   });
 });
 

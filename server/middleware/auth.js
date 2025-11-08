@@ -8,7 +8,8 @@
 const jwt = require('jsonwebtoken');
 
 // JWT secret from environment variable
-const JWT_SECRET = process.env.JWT_SECRET || 'neko-arc-supreme-secret-change-in-production';
+const JWT_SECRET =
+  process.env.JWT_SECRET || 'neko-arc-supreme-secret-change-in-production';
 const JWT_EXPIRES_IN = '24h'; // Token expiration time
 const JWT_REFRESH_EXPIRES_IN = '7d'; // Refresh token expiration
 
