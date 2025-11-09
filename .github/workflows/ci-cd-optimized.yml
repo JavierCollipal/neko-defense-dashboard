@@ -195,14 +195,14 @@ jobs:
           wait-on-timeout: 120
           browser: chrome
           headed: false
-          # ☁️ CYPRESS CLOUD PARALLEL RECORDING
-          record: true
-          parallel: true
-          group: 'E2E Tests - Chrome (8 containers)'
-          tag: ${{ github.event_name }}
-          ci-build-id: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+          # ☁️ CYPRESS CLOUD DISABLED (invalid record key - run tests locally)
+          record: false
+          # parallel: true
+          # group: 'E2E Tests - Chrome (8 containers)'
+          # tag: ${{ github.event_name }}
+          # ci-build-id: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
         env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          # CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_BASE_URL: http://localhost:3000
 
