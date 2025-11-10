@@ -7,21 +7,15 @@ describe('🎯 Threat Actor Display & Card Details', () => {
 
   describe('🎯 Threat Actor Cards Structure', () => {
     it('should display threat actor cards in grid layout', () => {
-      cy.get('.threat-actors-grid')
-        .should('be.visible');
+      cy.get('.threat-actors-grid').should('be.visible');
 
-      cy.get('.threat-actor-card')
-        .should('have.length', 8);
+      cy.get('.threat-actor-card').should('have.length', 8);
     });
 
     it('should display actor rank numbers', () => {
-      cy.get('.actor-rank')
-        .first()
-        .should('contain', '#1');
+      cy.get('.actor-rank').first().should('contain', '#1');
 
-      cy.get('.actor-rank')
-        .eq(1)
-        .should('contain', '#2');
+      cy.get('.actor-rank').eq(1).should('contain', '#2');
     });
 
     it('should display threat level badges with colors', () => {
@@ -77,9 +71,7 @@ describe('🎯 Threat Actor Display & Card Details', () => {
     });
 
     it('should display actor location', () => {
-      cy.get('.detail-item')
-        .contains('Location:')
-        .should('exist');
+      cy.get('.detail-item').contains('Location:').should('exist');
     });
 
     it('should display hunt priority', () => {
@@ -96,9 +88,7 @@ describe('🎯 Threat Actor Display & Card Details', () => {
     });
 
     it('should display bounty amounts', () => {
-      cy.get('.detail-item.bounty')
-        .should('exist')
-        .and('contain', 'Bounty:');
+      cy.get('.detail-item.bounty').should('exist').and('contain', 'Bounty:');
     });
 
     it('should format bounty with dollar sign and commas', () => {
@@ -134,8 +124,10 @@ describe('🎯 Threat Actor Display & Card Details', () => {
 
   describe('🔍 Category-Specific Displays', () => {
     it('should show correct title for all threats category', () => {
-      cy.get('.threat-list-header h2')
-        .should('contain', '🎯 ALL THREAT ACTORS');
+      cy.get('.threat-list-header h2').should(
+        'contain',
+        '🎯 ALL THREAT ACTORS'
+      );
     });
 
     it('should show correct title for predators category', () => {
@@ -146,8 +138,10 @@ describe('🎯 Threat Actor Display & Card Details', () => {
 
       cy.wait('@getThreatActorsPredators');
 
-      cy.get('.threat-list-header h2')
-        .should('contain', '⚠️ PREDATOR THREAT ACTORS');
+      cy.get('.threat-list-header h2').should(
+        'contain',
+        '⚠️ PREDATOR THREAT ACTORS'
+      );
     });
 
     it('should show correct title for pedophiles category', () => {
@@ -156,8 +150,10 @@ describe('🎯 Threat Actor Display & Card Details', () => {
         .parent('.category-item')
         .click({ force: true });
 
-      cy.get('.threat-list-header h2')
-        .should('contain', '🚨 PEDOPHILE THREAT ACTORS');
+      cy.get('.threat-list-header h2').should(
+        'contain',
+        '🚨 PEDOPHILE THREAT ACTORS'
+      );
     });
 
     it('should show correct title for DINA network category', () => {
@@ -166,8 +162,10 @@ describe('🎯 Threat Actor Display & Card Details', () => {
         .parent('.category-item')
         .click({ force: true });
 
-      cy.get('.threat-list-header h2')
-        .should('contain', '🕸️ DINA NETWORK ACTORS');
+      cy.get('.threat-list-header h2').should(
+        'contain',
+        '🕸️ DINA NETWORK ACTORS'
+      );
     });
 
     it('should show correct title for ransomware category', () => {
@@ -176,8 +174,10 @@ describe('🎯 Threat Actor Display & Card Details', () => {
         .parent('.category-item')
         .click({ force: true });
 
-      cy.get('.threat-list-header h2')
-        .should('contain', '💀 RANSOMWARE GROUPS');
+      cy.get('.threat-list-header h2').should(
+        'contain',
+        '💀 RANSOMWARE GROUPS'
+      );
     });
 
     it('should show correct title for state sponsored category', () => {
@@ -186,8 +186,10 @@ describe('🎯 Threat Actor Display & Card Details', () => {
         .parent('.category-item')
         .click({ force: true });
 
-      cy.get('.threat-list-header h2')
-        .should('contain', '🕷️ STATE-SPONSORED APTs');
+      cy.get('.threat-list-header h2').should(
+        'contain',
+        '🕷️ STATE-SPONSORED APTs'
+      );
     });
 
     it('should show correct title for crypto crime category', () => {
@@ -196,16 +198,16 @@ describe('🎯 Threat Actor Display & Card Details', () => {
         .parent('.category-item')
         .click({ force: true });
 
-      cy.get('.threat-list-header h2')
-        .should('contain', '₿ CRYPTO CRIME ACTORS');
+      cy.get('.threat-list-header h2').should(
+        'contain',
+        '₿ CRYPTO CRIME ACTORS'
+      );
     });
   });
 
   describe('🎯 Hunt Statistics Display', () => {
     it('should display target count', () => {
-      cy.get('.targets-count')
-        .should('be.visible')
-        .and('contain', '8 TARGETS');
+      cy.get('.targets-count').should('be.visible').and('contain', '8 TARGETS');
     });
 
     it('should use singular form for single target', () => {
@@ -213,13 +215,15 @@ describe('🎯 Threat Actor Display & Card Details', () => {
         body: {
           success: true,
           count: 1,
-          data: [{
-            _id: 'threat004',
-            name: 'RansomLock Crew',
-            threat_level: 'HIGH',
-            type: 'ransomware'
-          }]
-        }
+          data: [
+            {
+              _id: 'threat004',
+              name: 'RansomLock Crew',
+              threat_level: 'HIGH',
+              type: 'ransomware',
+            },
+          ],
+        },
       }).as('getSingleThreatActor');
 
       cy.get('.category-switcher')
@@ -253,11 +257,9 @@ describe('🎯 Threat Actor Display & Card Details', () => {
 
   describe('🎨 Visual Presentation', () => {
     it('should display cards in grid layout', () => {
-      cy.get('.threat-actors-grid')
-        .should('have.css', 'display');
+      cy.get('.threat-actors-grid').should('have.css', 'display');
 
-      cy.get('.threat-actor-card')
-        .should('be.visible');
+      cy.get('.threat-actor-card').should('be.visible');
     });
 
     it('should show actor header with rank and threat level', () => {
@@ -285,9 +287,7 @@ describe('🎯 Threat Actor Display & Card Details', () => {
     });
 
     it('should highlight bounty information', () => {
-      cy.get('.detail-item.bounty')
-        .should('exist')
-        .and('have.class', 'bounty');
+      cy.get('.detail-item.bounty').should('exist').and('have.class', 'bounty');
     });
 
     it('should display footer with update time and neko status', () => {
@@ -391,10 +391,10 @@ describe('🎯 Threat Actor Display & Card Details', () => {
         'APT-Dragon',
         'Underground Merchant',
         'Silent Stalker',
-        'Poison Spider Group'
+        'Poison Spider Group',
       ];
 
-      expectedActors.forEach(actorName => {
+      expectedActors.forEach((actorName) => {
         cy.contains(actorName).should('exist');
       });
     });
@@ -433,7 +433,8 @@ describe('🎯 Threat Actor Display & Card Details', () => {
         .parents('.threat-actor-card')
         .within(() => {
           cy.get('.threat-level-badge').should('contain', 'CRITICAL');
-          cy.get('.detail-item').contains('Classification:')
+          cy.get('.detail-item')
+            .contains('Classification:')
             .parent()
             .should('contain', 'Child Predator');
         });
@@ -444,7 +445,8 @@ describe('🎯 Threat Actor Display & Card Details', () => {
         .contains('Crypto Phantom')
         .parents('.threat-actor-card')
         .within(() => {
-          cy.get('.detail-item').contains('Classification:')
+          cy.get('.detail-item')
+            .contains('Classification:')
             .parent()
             .should('contain', 'Cryptocurrency');
         });
@@ -465,7 +467,8 @@ describe('🎯 Threat Actor Display & Card Details', () => {
         .contains('RansomLock Crew')
         .parents('.threat-actor-card')
         .within(() => {
-          cy.get('.detail-item').contains('Classification:')
+          cy.get('.detail-item')
+            .contains('Classification:')
             .parent()
             .should('contain', 'Ransomware');
         });

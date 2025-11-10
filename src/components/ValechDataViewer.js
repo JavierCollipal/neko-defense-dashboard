@@ -28,22 +28,31 @@ function ValechDataViewer() {
       setLoading(true);
 
       // Fetch all data in parallel
-      const [victimsRes, statsRes, centersRes, perpetratorsRes] = await Promise.all([
-        fetch(`${API_URL}/valech?limit=100`),
-        fetch(`${API_URL}/valech/stats/all`),
-        fetch(`${API_URL}/valech/lists/detention-centers`),
-        fetch(`${API_URL}/valech/lists/perpetrators`),
-      ]);
+      const [victimsRes, statsRes, centersRes, perpetratorsRes] =
+        await Promise.all([
+          fetch(`${API_URL}/valech?limit=100`),
+          fetch(`${API_URL}/valech/stats/all`),
+          fetch(`${API_URL}/valech/lists/detention-centers`),
+          fetch(`${API_URL}/valech/lists/perpetrators`),
+        ]);
 
       const victimsData = await victimsRes.json();
       const statsData = await statsRes.json();
       const centersData = await centersRes.json();
       const perpetratorsData = await perpetratorsRes.json();
 
-      if (victimsData.success) {setVictims(victimsData.data);}
-      if (statsData.success) {setStats(statsData.data);}
-      if (centersData.success) {setDetentionCenters(centersData.data);}
-      if (perpetratorsData.success) {setPerpetrators(perpetratorsData.data);}
+      if (victimsData.success) {
+        setVictims(victimsData.data);
+      }
+      if (statsData.success) {
+        setStats(statsData.data);
+      }
+      if (centersData.success) {
+        setDetentionCenters(centersData.data);
+      }
+      if (perpetratorsData.success) {
+        setPerpetrators(perpetratorsData.data);
+      }
 
       setLoading(false);
     } catch (error) {
@@ -59,10 +68,20 @@ function ValechDataViewer() {
       let url = `${API_URL}/valech/search/advanced?`;
       const params = [];
 
-      if (filters.search) {params.push(`name=${encodeURIComponent(filters.search)}`);}
-      if (filters.outcome) {params.push(`outcome=${encodeURIComponent(filters.outcome)}`);}
-      if (filters.detentionCenter) {params.push(`detentionCenter=${encodeURIComponent(filters.detentionCenter)}`);}
-      if (filters.perpetrator) {params.push(`perpetrator=${encodeURIComponent(filters.perpetrator)}`);}
+      if (filters.search) {
+        params.push(`name=${encodeURIComponent(filters.search)}`);
+      }
+      if (filters.outcome) {
+        params.push(`outcome=${encodeURIComponent(filters.outcome)}`);
+      }
+      if (filters.detentionCenter) {
+        params.push(
+          `detentionCenter=${encodeURIComponent(filters.detentionCenter)}`
+        );
+      }
+      if (filters.perpetrator) {
+        params.push(`perpetrator=${encodeURIComponent(filters.perpetrator)}`);
+      }
 
       url += params.join('&');
 
@@ -96,11 +115,21 @@ function ValechDataViewer() {
   };
 
   const getOutcomeColor = (outcome) => {
-    if (!outcome) {return 'outcome-unknown';}
-    if (outcome.includes('SURVIVED')) {return 'outcome-survived';}
-    if (outcome.includes('EXECUTED')) {return 'outcome-executed';}
-    if (outcome.includes('DISAPPEARED')) {return 'outcome-disappeared';}
-    if (outcome.includes('ASSASSINATED')) {return 'outcome-assassinated';}
+    if (!outcome) {
+      return 'outcome-unknown';
+    }
+    if (outcome.includes('SURVIVED')) {
+      return 'outcome-survived';
+    }
+    if (outcome.includes('EXECUTED')) {
+      return 'outcome-executed';
+    }
+    if (outcome.includes('DISAPPEARED')) {
+      return 'outcome-disappeared';
+    }
+    if (outcome.includes('ASSASSINATED')) {
+      return 'outcome-assassinated';
+    }
     return 'outcome-unknown';
   };
 
@@ -150,7 +179,6 @@ function ValechDataViewer() {
 
       {/* Main Content */}
       <div className="valech-viewer-content">
-
         {/* LIST VIEW */}
         {activeView === 'list' && (
           <div className="list-view">
@@ -162,13 +190,17 @@ function ValechDataViewer() {
                   type="text"
                   placeholder="Search by name..."
                   value={filters.search}
-                  onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+                  onChange={(e) =>
+                    setFilters({ ...filters, search: e.target.value })
+                  }
                   className="filter-input"
                 />
 
                 <select
                   value={filters.outcome}
-                  onChange={(e) => setFilters({ ...filters, outcome: e.target.value })}
+                  onChange={(e) =>
+                    setFilters({ ...filters, outcome: e.target.value })
+                  }
                   className="filter-select"
                 >
                   <option value="">All Outcomes</option>
@@ -180,23 +212,31 @@ function ValechDataViewer() {
 
                 <select
                   value={filters.detentionCenter}
-                  onChange={(e) => setFilters({ ...filters, detentionCenter: e.target.value })}
+                  onChange={(e) =>
+                    setFilters({ ...filters, detentionCenter: e.target.value })
+                  }
                   className="filter-select"
                 >
                   <option value="">All Detention Centers</option>
                   {detentionCenters.slice(0, 20).map((center, idx) => (
-                    <option key={idx} value={center}>{center}</option>
+                    <option key={idx} value={center}>
+                      {center}
+                    </option>
                   ))}
                 </select>
 
                 <select
                   value={filters.perpetrator}
-                  onChange={(e) => setFilters({ ...filters, perpetrator: e.target.value })}
+                  onChange={(e) =>
+                    setFilters({ ...filters, perpetrator: e.target.value })
+                  }
                   className="filter-select"
                 >
                   <option value="">All Perpetrators</option>
                   {perpetrators.slice(0, 20).map((perp, idx) => (
-                    <option key={idx} value={perp}>{perp}</option>
+                    <option key={idx} value={perp}>
+                      {perp}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -234,17 +274,23 @@ function ValechDataViewer() {
                         <td>{victim.age || 'N/A'}</td>
                         <td>{victim.gender || 'N/A'}</td>
                         <td>
-                          <span className={`outcome-badge ${getOutcomeColor(victim.outcome)}`}>
+                          <span
+                            className={`outcome-badge ${getOutcomeColor(victim.outcome)}`}
+                          >
                             {victim.outcome || 'UNKNOWN'}
                           </span>
                         </td>
                         <td className="detention-centers-cell">
-                          {victim.detentionCenters && victim.detentionCenters.length > 0
-                            ? victim.detentionCenters.map(c => c.name).join(', ')
+                          {victim.detentionCenters &&
+                          victim.detentionCenters.length > 0
+                            ? victim.detentionCenters
+                                .map((c) => c.name)
+                                .join(', ')
                             : 'N/A'}
                         </td>
                         <td className="perpetrators-cell">
-                          {victim.linkedPerpetrators && victim.linkedPerpetrators.length > 0
+                          {victim.linkedPerpetrators &&
+                          victim.linkedPerpetrators.length > 0
                             ? victim.linkedPerpetrators.join(', ')
                             : 'None'}
                         </td>
@@ -321,7 +367,9 @@ function ValechDataViewer() {
 
               <div className="stat-card linked">
                 <div className="stat-icon">🔗</div>
-                <div className="stat-number">{stats.withLinkedPerpetrators}</div>
+                <div className="stat-number">
+                  {stats.withLinkedPerpetrators}
+                </div>
                 <div className="stat-label">Linked to Perpetrators</div>
               </div>
             </div>
@@ -355,7 +403,10 @@ function ValechDataViewer() {
         {/* DETAIL VIEW */}
         {activeView === 'detail' && selectedVictim && (
           <div className="detail-view">
-            <button className="back-button" onClick={() => setActiveView('list')}>
+            <button
+              className="back-button"
+              onClick={() => setActiveView('list')}
+            >
               ← Back to List
             </button>
 
@@ -366,7 +417,8 @@ function ValechDataViewer() {
                 <h3>👤 Personal Information</h3>
                 <div className="detail-grid">
                   <div className="detail-item">
-                    <strong>ID Number:</strong> {selectedVictim.idNumber || 'N/A'}
+                    <strong>ID Number:</strong>{' '}
+                    {selectedVictim.idNumber || 'N/A'}
                   </div>
                   <div className="detail-item">
                     <strong>Age:</strong> {selectedVictim.age || 'N/A'}
@@ -375,14 +427,18 @@ function ValechDataViewer() {
                     <strong>Gender:</strong> {selectedVictim.gender || 'N/A'}
                   </div>
                   <div className="detail-item">
-                    <strong>Occupation:</strong> {selectedVictim.occupation || 'N/A'}
+                    <strong>Occupation:</strong>{' '}
+                    {selectedVictim.occupation || 'N/A'}
                   </div>
                   <div className="detail-item">
-                    <strong>Political Affiliation:</strong> {selectedVictim.politicalAffiliation || 'N/A'}
+                    <strong>Political Affiliation:</strong>{' '}
+                    {selectedVictim.politicalAffiliation || 'N/A'}
                   </div>
                   <div className="detail-item">
                     <strong>Outcome:</strong>
-                    <span className={`outcome-badge ${getOutcomeColor(selectedVictim.outcome)}`}>
+                    <span
+                      className={`outcome-badge ${getOutcomeColor(selectedVictim.outcome)}`}
+                    >
                       {selectedVictim.outcome || 'UNKNOWN'}
                     </span>
                   </div>
@@ -394,72 +450,99 @@ function ValechDataViewer() {
                   <h3>🔒 Detention Information</h3>
                   <div className="detail-grid">
                     <div className="detail-item">
-                      <strong>Arrested:</strong> {selectedVictim.detentionInfo.arrested
-                        ? new Date(selectedVictim.detentionInfo.arrested).toLocaleDateString()
+                      <strong>Arrested:</strong>{' '}
+                      {selectedVictim.detentionInfo.arrested
+                        ? new Date(
+                            selectedVictim.detentionInfo.arrested
+                          ).toLocaleDateString()
                         : 'N/A'}
                     </div>
                     <div className="detail-item">
-                      <strong>Released:</strong> {selectedVictim.detentionInfo.released
-                        ? new Date(selectedVictim.detentionInfo.released).toLocaleDateString()
+                      <strong>Released:</strong>{' '}
+                      {selectedVictim.detentionInfo.released
+                        ? new Date(
+                            selectedVictim.detentionInfo.released
+                          ).toLocaleDateString()
                         : 'N/A'}
                     </div>
                     <div className="detail-item">
-                      <strong>Duration:</strong> {selectedVictim.detentionInfo.duration
+                      <strong>Duration:</strong>{' '}
+                      {selectedVictim.detentionInfo.duration
                         ? `${selectedVictim.detentionInfo.duration} days`
                         : 'N/A'}
                     </div>
                     <div className="detail-item full-width">
-                      <strong>Circumstances:</strong> {selectedVictim.detentionInfo.circumstances || 'N/A'}
+                      <strong>Circumstances:</strong>{' '}
+                      {selectedVictim.detentionInfo.circumstances || 'N/A'}
                     </div>
                   </div>
                 </div>
               )}
 
-              {selectedVictim.detentionCenters && selectedVictim.detentionCenters.length > 0 && (
-                <div className="detail-section">
-                  <h3>🏛️ Detention Centers</h3>
-                  {selectedVictim.detentionCenters.map((center, idx) => (
-                    <div key={idx} className="detention-center-detail">
-                      <strong>{center.name}</strong>
-                      {center.codeName && ` (${center.codeName})`}
-                      {center.datesHeld && (
-                        <div className="dates-held">
-                          From: {center.datesHeld.from ? new Date(center.datesHeld.from).toLocaleDateString() : 'N/A'} →
-                          To: {center.datesHeld.to ? new Date(center.datesHeld.to).toLocaleDateString() : 'N/A'}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
+              {selectedVictim.detentionCenters &&
+                selectedVictim.detentionCenters.length > 0 && (
+                  <div className="detail-section">
+                    <h3>🏛️ Detention Centers</h3>
+                    {selectedVictim.detentionCenters.map((center, idx) => (
+                      <div key={idx} className="detention-center-detail">
+                        <strong>{center.name}</strong>
+                        {center.codeName && ` (${center.codeName})`}
+                        {center.datesHeld && (
+                          <div className="dates-held">
+                            From:{' '}
+                            {center.datesHeld.from
+                              ? new Date(
+                                  center.datesHeld.from
+                                ).toLocaleDateString()
+                              : 'N/A'}{' '}
+                            → To:{' '}
+                            {center.datesHeld.to
+                              ? new Date(
+                                  center.datesHeld.to
+                                ).toLocaleDateString()
+                              : 'N/A'}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
 
               {selectedVictim.tortureReported && (
                 <div className="detail-section">
                   <h3>⚠️ Torture Reported</h3>
-                  {selectedVictim.tortureReported.methods && selectedVictim.tortureReported.methods.length > 0 && (
-                    <div className="detail-subsection">
-                      <strong>Methods:</strong>
-                      <ul>
-                        {selectedVictim.tortureReported.methods.map((method, idx) => (
-                          <li key={idx}>{method}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {selectedVictim.tortureReported.perpetrators && selectedVictim.tortureReported.perpetrators.length > 0 && (
-                    <div className="detail-subsection">
-                      <strong>Perpetrators:</strong>
-                      <ul>
-                        {selectedVictim.tortureReported.perpetrators.map((perp, idx) => (
-                          <li key={idx}>{perp}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                  {selectedVictim.tortureReported.methods &&
+                    selectedVictim.tortureReported.methods.length > 0 && (
+                      <div className="detail-subsection">
+                        <strong>Methods:</strong>
+                        <ul>
+                          {selectedVictim.tortureReported.methods.map(
+                            (method, idx) => (
+                              <li key={idx}>{method}</li>
+                            )
+                          )}
+                        </ul>
+                      </div>
+                    )}
+                  {selectedVictim.tortureReported.perpetrators &&
+                    selectedVictim.tortureReported.perpetrators.length > 0 && (
+                      <div className="detail-subsection">
+                        <strong>Perpetrators:</strong>
+                        <ul>
+                          {selectedVictim.tortureReported.perpetrators.map(
+                            (perp, idx) => (
+                              <li key={idx}>{perp}</li>
+                            )
+                          )}
+                        </ul>
+                      </div>
+                    )}
                   {selectedVictim.tortureReported.medicalConsequences && (
                     <div className="detail-subsection">
                       <strong>Medical Consequences:</strong>
-                      <p>{selectedVictim.tortureReported.medicalConsequences}</p>
+                      <p>
+                        {selectedVictim.tortureReported.medicalConsequences}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -474,18 +557,19 @@ function ValechDataViewer() {
                 </div>
               )}
 
-              {selectedVictim.linkedPerpetrators && selectedVictim.linkedPerpetrators.length > 0 && (
-                <div className="detail-section">
-                  <h3>🔗 Linked Perpetrators</h3>
-                  <div className="linked-perpetrators-list">
-                    {selectedVictim.linkedPerpetrators.map((perp, idx) => (
-                      <div key={idx} className="linked-perpetrator-chip">
-                        {perp}
-                      </div>
-                    ))}
+              {selectedVictim.linkedPerpetrators &&
+                selectedVictim.linkedPerpetrators.length > 0 && (
+                  <div className="detail-section">
+                    <h3>🔗 Linked Perpetrators</h3>
+                    <div className="linked-perpetrators-list">
+                      {selectedVictim.linkedPerpetrators.map((perp, idx) => (
+                        <div key={idx} className="linked-perpetrator-chip">
+                          {perp}
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
               {selectedVictim.significance && (
                 <div className="detail-section">
@@ -499,10 +583,12 @@ function ValechDataViewer() {
                   <h3>📚 Source</h3>
                   <div className="detail-grid">
                     <div className="detail-item">
-                      <strong>Commission:</strong> {selectedVictim.source.commission || 'N/A'}
+                      <strong>Commission:</strong>{' '}
+                      {selectedVictim.source.commission || 'N/A'}
                     </div>
                     <div className="detail-item">
-                      <strong>Verification:</strong> {selectedVictim.source.verificationStatus || 'N/A'}
+                      <strong>Verification:</strong>{' '}
+                      {selectedVictim.source.verificationStatus || 'N/A'}
                     </div>
                   </div>
                 </div>
@@ -516,7 +602,8 @@ function ValechDataViewer() {
       <div className="valech-viewer-footer">
         <p>🕊️ In memory of all victims of dictatorship</p>
         <p className="footer-quote">
-          "Those who do not remember the past are condemned to repeat it." - George Santayana
+          "Those who do not remember the past are condemned to repeat it." -
+          George Santayana
         </p>
       </div>
     </div>

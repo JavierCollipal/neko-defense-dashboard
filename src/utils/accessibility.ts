@@ -17,17 +17,23 @@ export function checkColorContrast(
   const fgLuminance = getLuminance(foreground);
   const bgLuminance = getLuminance(background);
 
-  const ratio = (Math.max(fgLuminance, bgLuminance) + 0.05) / (Math.min(fgLuminance, bgLuminance) + 0.05);
+  const ratio =
+    (Math.max(fgLuminance, bgLuminance) + 0.05) /
+    (Math.min(fgLuminance, bgLuminance) + 0.05);
 
   // WCAG 2.2 requirements
   const required = largeText
-    ? (level === 'AAA' ? 4.5 : 3.0) // Large text
-    : (level === 'AAA' ? 7.0 : 4.5); // Normal text
+    ? level === 'AAA'
+      ? 4.5
+      : 3.0 // Large text
+    : level === 'AAA'
+      ? 7.0
+      : 4.5; // Normal text
 
   return {
     passes: ratio >= required,
     ratio: Math.round(ratio * 100) / 100,
-    required
+    required,
   };
 }
 
@@ -36,9 +42,11 @@ export function checkColorContrast(
  */
 function getLuminance(color: string): number {
   const rgb = hexToRgb(color);
-  if (!rgb) {return 0;}
+  if (!rgb) {
+    return 0;
+  }
 
-  const [r, g, b] = [rgb.r, rgb.g, rgb.b].map(val => {
+  const [r, g, b] = [rgb.r, rgb.g, rgb.b].map((val) => {
     val = val / 255;
     return val <= 0.03928 ? val / 12.92 : Math.pow((val + 0.055) / 1.055, 2.4);
   });
@@ -51,11 +59,13 @@ function getLuminance(color: string): number {
  */
 function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
-  } : null;
+  return result
+    ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16),
+      }
+    : null;
 }
 
 /**
@@ -80,8 +90,12 @@ export function generateAriaLabel(
   state?: string
 ): string {
   let label = element;
-  if (context) {label += `, ${context}`;}
-  if (state) {label += `, ${state}`;}
+  if (context) {
+    label += `, ${context}`;
+  }
+  if (state) {
+    label += `, ${state}`;
+  }
   return label;
 }
 
@@ -97,7 +111,9 @@ export function trapFocus(element: HTMLElement): () => void {
   const lastElement = focusableElements[focusableElements.length - 1];
 
   function handleTab(e: KeyboardEvent) {
-    if (e.key !== 'Tab') {return;}
+    if (e.key !== 'Tab') {
+      return;
+    }
 
     if (e.shiftKey && document.activeElement === firstElement) {
       e.preventDefault();
@@ -117,7 +133,10 @@ export function trapFocus(element: HTMLElement): () => void {
 /**
  * Announce content to screen readers (live region)
  */
-export function announceToScreenReader(message: string, priority: 'polite' | 'assertive' = 'polite') {
+export function announceToScreenReader(
+  message: string,
+  priority: 'polite' | 'assertive' = 'polite'
+) {
   const announcement = document.createElement('div');
   announcement.setAttribute('role', 'status');
   announcement.setAttribute('aria-live', priority);
@@ -150,7 +169,10 @@ export const KEYBOARD_SHORTCUTS = {
 /**
  * Skip navigation helper (WCAG 2.2)
  */
-export function createSkipLink(targetId: string, label: string = 'Skip to main content'): HTMLAnchorElement {
+export function createSkipLink(
+  targetId: string,
+  label: string = 'Skip to main content'
+): HTMLAnchorElement {
   const skipLink = document.createElement('a');
   skipLink.href = `#${targetId}`;
   skipLink.className = 'skip-link';
@@ -235,23 +257,23 @@ export function prefersReducedMotion(): boolean {
 export const ACCESSIBLE_COLORS = {
   // High contrast pairs (white background)
   text: {
-    primary: '#1a1a1a',    // 15.3:1 ratio
-    secondary: '#4a4a4a',  // 8.59:1 ratio
-    disabled: '#767676',   // 4.54:1 ratio
+    primary: '#1a1a1a', // 15.3:1 ratio
+    secondary: '#4a4a4a', // 8.59:1 ratio
+    disabled: '#767676', // 4.54:1 ratio
   },
 
   // Links (must be distinguishable)
   link: {
-    default: '#0066cc',    // 7.29:1 ratio
-    visited: '#800080',    // 10.69:1 ratio
-    hover: '#004499',      // 10.16:1 ratio
+    default: '#0066cc', // 7.29:1 ratio
+    visited: '#800080', // 10.69:1 ratio
+    hover: '#004499', // 10.16:1 ratio
   },
 
   // Status colors (accessible on white)
   status: {
-    success: '#0f5132',    // 9.44:1 ratio
-    warning: '#664d03',    // 9.51:1 ratio
-    error: '#842029',      // 11.03:1 ratio
-    info: '#055160',       // 8.28:1 ratio
+    success: '#0f5132', // 9.44:1 ratio
+    warning: '#664d03', // 9.51:1 ratio
+    error: '#842029', // 11.03:1 ratio
+    info: '#055160', // 8.28:1 ratio
   },
 } as const;

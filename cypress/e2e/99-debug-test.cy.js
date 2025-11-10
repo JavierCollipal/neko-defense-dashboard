@@ -6,7 +6,7 @@ describe('🔍 Debug Test', () => {
       onBeforeLoad(win) {
         cy.spy(win.console, 'log').as('consoleLog');
         cy.spy(win.console, 'error').as('consoleError');
-      }
+      },
     });
 
     // Wait a bit for page to load

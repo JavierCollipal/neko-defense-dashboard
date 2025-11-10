@@ -28,7 +28,11 @@ const useLanguagePreferences = (userId = 'default-user') => {
       const result = await response.json();
 
       if (result.success) {
-        const { language: userLang, isDefault: isDefaultPref, lastUpdated: lastUpdate } = result.data;
+        const {
+          language: userLang,
+          isDefault: isDefaultPref,
+          lastUpdated: lastUpdate,
+        } = result.data;
 
         setLanguage(userLang);
         setIsDefault(isDefaultPref);
@@ -43,10 +47,14 @@ const useLanguagePreferences = (userId = 'default-user') => {
         console.log('✅ [Language Hook] Preference loaded:', {
           language: userLang,
           isDefault: isDefaultPref,
-          lastUpdated: lastUpdate
+          lastUpdated: lastUpdate,
         });
 
-        return { language: userLang, isDefault: isDefaultPref, lastUpdated: lastUpdate };
+        return {
+          language: userLang,
+          isDefault: isDefaultPref,
+          lastUpdated: lastUpdate,
+        };
       } else {
         throw new Error(result.error || 'Failed to load language preference');
       }
@@ -66,84 +74,97 @@ const useLanguagePreferences = (userId = 'default-user') => {
   }, [userId, i18n]);
 
   // 💾 Save language preference to API
-  const saveLanguagePreference = useCallback(async (newLanguage) => {
-    try {
-      setError(null);
-      console.log('💾 [Language Hook] Saving preference:', newLanguage);
+  const saveLanguagePreference = useCallback(
+    async (newLanguage) => {
+      try {
+        setError(null);
+        console.log('💾 [Language Hook] Saving preference:', newLanguage);
 
-      const response = await fetch('/api/user/language-preference', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          userId: userId,
-          language: newLanguage,
-          userAgent: navigator.userAgent,
-          ipAddress: null // Server will handle if needed
-        })
-      });
+        const response = await fetch('/api/user/language-preference', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: userId,
+            language: newLanguage,
+            userAgent: navigator.userAgent,
+            ipAddress: null, // Server will handle if needed
+          }),
+        });
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+
+        if (result.success) {
+          const now = new Date();
+          setLanguage(newLanguage);
+          setIsDefault(false);
+          setLastUpdated(now);
+
+          // Update i18n
+          await i18n.changeLanguage(newLanguage);
+
+          console.log('✅ [Language Hook] Preference saved successfully');
+          return { success: true, language: newLanguage, lastUpdated: now };
+        } else {
+          throw new Error(result.error || 'Failed to save language preference');
+        }
+      } catch (err) {
+        console.error('❌ [Language Hook] Error saving preference:', err);
+        setError(err.message);
+        return { success: false, error: err.message };
       }
-
-      const result = await response.json();
-
-      if (result.success) {
-        const now = new Date();
-        setLanguage(newLanguage);
-        setIsDefault(false);
-        setLastUpdated(now);
-
-        // Update i18n
-        await i18n.changeLanguage(newLanguage);
-
-        console.log('✅ [Language Hook] Preference saved successfully');
-        return { success: true, language: newLanguage, lastUpdated: now };
-      } else {
-        throw new Error(result.error || 'Failed to save language preference');
-      }
-    } catch (err) {
-      console.error('❌ [Language Hook] Error saving preference:', err);
-      setError(err.message);
-      return { success: false, error: err.message };
-    }
-  }, [userId, i18n]);
+    },
+    [userId, i18n]
+  );
 
   // 🔄 Change language (combines setting + saving)
-  const changeLanguage = useCallback(async (newLanguage) => {
-    if (newLanguage === language) {
-      console.log('🔄 [Language Hook] Language already set to:', newLanguage);
-      return { success: true, language: newLanguage, changed: false };
-    }
-
-    try {
-      // Immediately update local state for responsiveness
-      setLanguage(newLanguage);
-
-      // Update i18n immediately
-      await i18n.changeLanguage(newLanguage);
-
-      // Save to database
-      const result = await saveLanguagePreference(newLanguage);
-
-      if (result.success) {
-        console.log('🔄 [Language Hook] Language changed successfully to:', newLanguage);
-        return { success: true, language: newLanguage, changed: true };
-      } else {
-        // Revert local state if save failed
-        const previousLang = language;
-        setLanguage(previousLang);
-        await i18n.changeLanguage(previousLang);
-
-        return { success: false, error: result.error, language: previousLang };
+  const changeLanguage = useCallback(
+    async (newLanguage) => {
+      if (newLanguage === language) {
+        console.log('🔄 [Language Hook] Language already set to:', newLanguage);
+        return { success: true, language: newLanguage, changed: false };
       }
-    } catch (err) {
-      console.error('❌ [Language Hook] Error changing language:', err);
-      return { success: false, error: err.message };
-    }
-  }, [language, i18n, saveLanguagePreference]);
+
+      try {
+        // Immediately update local state for responsiveness
+        setLanguage(newLanguage);
+
+        // Update i18n immediately
+        await i18n.changeLanguage(newLanguage);
+
+        // Save to database
+        const result = await saveLanguagePreference(newLanguage);
+
+        if (result.success) {
+          console.log(
+            '🔄 [Language Hook] Language changed successfully to:',
+            newLanguage
+          );
+          return { success: true, language: newLanguage, changed: true };
+        } else {
+          // Revert local state if save failed
+          const previousLang = language;
+          setLanguage(previousLang);
+          await i18n.changeLanguage(previousLang);
+
+          return {
+            success: false,
+            error: result.error,
+            language: previousLang,
+          };
+        }
+      } catch (err) {
+        console.error('❌ [Language Hook] Error changing language:', err);
+        return { success: false, error: err.message };
+      }
+    },
+    [language, i18n, saveLanguagePreference]
+  );
 
   // 📊 Get language statistics
   const getLanguageStats = useCallback(async () => {
@@ -177,7 +198,7 @@ const useLanguagePreferences = (userId = 'default-user') => {
       console.log('🗑️ [Language Hook] Clearing preference for user:', userId);
 
       const response = await fetch(`/api/user/language-preference/${userId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
       });
 
       if (!response.ok) {
@@ -235,7 +256,7 @@ const useLanguagePreferences = (userId = 'default-user') => {
     // Computed values
     isReady: !isLoading && !error,
     hasCustomPreference: !isDefault,
-    currentLanguage: language
+    currentLanguage: language,
   };
 };
 

@@ -26,7 +26,7 @@ function ConfessionsBlog() {
     evidence_links: '',
     submitted_by: 'Anonymous',
     contact_info: '',
-    priority: 'high'
+    priority: 'high',
   });
 
   // Fetch confessions
@@ -38,7 +38,9 @@ function ConfessionsBlog() {
   const fetchConfessions = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_URL}/confessions?category=${selectedCategory}`);
+      const response = await fetch(
+        `${API_URL}/confessions?category=${selectedCategory}`
+      );
       const data = await response.json();
       if (data.success) {
         setConfessions(data.data);
@@ -70,12 +72,12 @@ function ConfessionsBlog() {
       // Convert evidence_links string to array
       const evidence_array = formData.evidence_links
         .split('\n')
-        .map(link => link.trim())
-        .filter(link => link.length > 0);
+        .map((link) => link.trim())
+        .filter((link) => link.length > 0);
 
       const submission = {
         ...formData,
-        evidence_links: evidence_array
+        evidence_links: evidence_array,
       };
 
       const response = await fetch(`${API_URL}/confessions/submit`, {
@@ -83,7 +85,7 @@ function ConfessionsBlog() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(submission)
+        body: JSON.stringify(submission),
       });
 
       const data = await response.json();
@@ -100,7 +102,7 @@ function ConfessionsBlog() {
           evidence_links: '',
           submitted_by: 'Anonymous',
           contact_info: '',
-          priority: 'high'
+          priority: 'high',
         });
         // Switch back to list view after 3 seconds
         setTimeout(() => {
@@ -119,9 +121,9 @@ function ConfessionsBlog() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -178,11 +180,15 @@ function ConfessionsBlog() {
             <div className="stat-label">Pending</div>
           </div>
           <div className="stat-item">
-            <div className="stat-value">{stats.by_category?.predators || 0}</div>
+            <div className="stat-value">
+              {stats.by_category?.predators || 0}
+            </div>
             <div className="stat-label">Predators</div>
           </div>
           <div className="stat-item">
-            <div className="stat-value">{stats.by_category?.pedophiles || 0}</div>
+            <div className="stat-value">
+              {stats.by_category?.pedophiles || 0}
+            </div>
             <div className="stat-label">Pedophiles</div>
           </div>
         </div>
@@ -236,7 +242,10 @@ function ConfessionsBlog() {
             ) : (
               <div className="confessions-list">
                 {confessions.map((confession) => (
-                  <div key={confession.confession_id} className="confession-card">
+                  <div
+                    key={confession.confession_id}
+                    className="confession-card"
+                  >
                     <div className="confession-header-line">
                       <span className={`category-badge ${confession.category}`}>
                         {confession.category.toUpperCase()}
@@ -246,37 +255,58 @@ function ConfessionsBlog() {
                       </span>
                     </div>
 
-                    <h3 className="confession-title-text">{confession.title}</h3>
+                    <h3 className="confession-title-text">
+                      {confession.title}
+                    </h3>
 
                     <div className="confession-meta">
-                      <div>🎯 <strong>Target:</strong> {confession.threat_actor_name}</div>
-                      <div>📍 <strong>Location:</strong> {confession.threat_actor_location}</div>
-                      <div>👤 <strong>Reported by:</strong> {confession.submitted_by}</div>
-                      <div>📅 <strong>Date:</strong> {formatDate(confession.submitted_at)}</div>
+                      <div>
+                        🎯 <strong>Target:</strong>{' '}
+                        {confession.threat_actor_name}
+                      </div>
+                      <div>
+                        📍 <strong>Location:</strong>{' '}
+                        {confession.threat_actor_location}
+                      </div>
+                      <div>
+                        👤 <strong>Reported by:</strong>{' '}
+                        {confession.submitted_by}
+                      </div>
+                      <div>
+                        📅 <strong>Date:</strong>{' '}
+                        {formatDate(confession.submitted_at)}
+                      </div>
                     </div>
 
                     <div className="confession-description">
                       {confession.description}
                     </div>
 
-                    {confession.evidence_links && confession.evidence_links.length > 0 && (
-                      <div className="evidence-section">
-                        <strong>📋 Evidence Links:</strong>
-                        <ul className="evidence-list">
-                          {confession.evidence_links.map((link, idx) => (
-                            <li key={idx}>
-                              <a href={link} target="_blank" rel="noopener noreferrer">
-                                {link}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
+                    {confession.evidence_links &&
+                      confession.evidence_links.length > 0 && (
+                        <div className="evidence-section">
+                          <strong>📋 Evidence Links:</strong>
+                          <ul className="evidence-list">
+                            {confession.evidence_links.map((link, idx) => (
+                              <li key={idx}>
+                                <a
+                                  href={link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  {link}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
 
                     <div className="confession-footer">
                       <div className="views">👁️ {confession.views} views</div>
-                      <div className="upvotes">⬆️ {confession.upvotes} upvotes</div>
+                      <div className="upvotes">
+                        ⬆️ {confession.upvotes} upvotes
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -289,7 +319,10 @@ function ConfessionsBlog() {
             {submitSuccess ? (
               <div className="success-message">
                 <h2>✅ CONFESSION SUBMITTED SUCCESSFULLY!</h2>
-                <p>Thank you for reporting! Your confession has been sent for moderation.</p>
+                <p>
+                  Thank you for reporting! Your confession has been sent for
+                  moderation.
+                </p>
                 <p>You will be redirected to the confessions list...</p>
                 <div className="success-animation">🐾 NYA NYA NYA~! 🐾</div>
               </div>
@@ -297,7 +330,8 @@ function ConfessionsBlog() {
               <form className="confession-form" onSubmit={handleSubmit}>
                 <h2>🔥 SUBMIT A NEW REPORT 🔥</h2>
                 <p className="form-description">
-                  Report predators, pedophiles, or submit evidence. All submissions are reviewed before publication.
+                  Report predators, pedophiles, or submit evidence. All
+                  submissions are reviewed before publication.
                 </p>
 
                 <div className="form-group">
@@ -413,13 +447,16 @@ https://example.com/evidence2"
                     <option value="low">LOW - General concern</option>
                     <option value="medium">MEDIUM - Ongoing situation</option>
                     <option value="high">HIGH - Active threat</option>
-                    <option value="critical">CRITICAL - Immediate danger</option>
+                    <option value="critical">
+                      CRITICAL - Immediate danger
+                    </option>
                   </select>
                 </div>
 
                 <div className="form-notice">
-                  ⚠️ <strong>IMPORTANT:</strong> All submissions are reviewed before publication.
-                  False reports may result in legal action. Submit only factual information.
+                  ⚠️ <strong>IMPORTANT:</strong> All submissions are reviewed
+                  before publication. False reports may result in legal action.
+                  Submit only factual information.
                 </div>
 
                 <button

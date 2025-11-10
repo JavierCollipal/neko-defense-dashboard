@@ -19,7 +19,7 @@ export async function GET(request) {
     return NextResponse.json({
       success: true,
       data: [],
-      message: 'Demo mode - MongoDB not configured'
+      message: 'Demo mode - MongoDB not configured',
     });
   }
 
@@ -30,25 +30,27 @@ export async function GET(request) {
     const db = client.db('neko-defense-system');
     const collection = db.collection('ready-operations');
 
-    const operations = await collection.find({}).sort({ priority: -1, created_at: -1 }).limit(100).toArray();
+    const operations = await collection
+      .find({})
+      .sort({ priority: -1, created_at: -1 })
+      .limit(100)
+      .toArray();
 
     return NextResponse.json({
       success: true,
       data: operations,
-      count: operations.length
+      count: operations.length,
     });
-
   } catch (error) {
     console.error('❌ API Error:', error.message);
     return NextResponse.json(
       {
         success: false,
         error: error.message,
-        message: 'Failed to fetch ready operations'
+        message: 'Failed to fetch ready operations',
       },
       { status: 500 }
     );
-
   } finally {
     await client.close();
   }

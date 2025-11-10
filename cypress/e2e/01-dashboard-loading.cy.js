@@ -39,8 +39,7 @@ describe('🏠 Dashboard Loading & Initial State', () => {
     cy.visit('/');
 
     // Should show loading message initially
-    cy.contains('Loading, nyaa~! 🐾', { timeout: 1000 })
-      .should('exist');
+    cy.contains('Loading, nyaa~! 🐾', { timeout: 1000 }).should('exist');
   });
 
   it('should display all main dashboard components after loading', () => {
@@ -108,8 +107,12 @@ describe('🏠 Dashboard Loading & Initial State', () => {
 
     // Verify layout structure
     cy.get('.main-container').should('be.visible');
-    cy.get('.sidebar-left').should('have.css', 'display').and('not.equal', 'none');
-    cy.get('.dashboard-grid').should('have.css', 'display').and('not.equal', 'none');
+    cy.get('.sidebar-left')
+      .should('have.css', 'display')
+      .and('not.equal', 'none');
+    cy.get('.dashboard-grid')
+      .should('have.css', 'display')
+      .and('not.equal', 'none');
   });
 
   it('should successfully fetch data from all API endpoints', () => {

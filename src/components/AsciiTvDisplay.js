@@ -17,13 +17,17 @@ function AsciiTvDisplay({ artPiece, total, current }) {
     <div className="ascii-tv">
       <div className="tv-controls">
         <span className="tv-title">{artPiece.name}</span>
-        <span className="tv-counter">{current} / {total}</span>
+        <span className="tv-counter">
+          {current} / {total}
+        </span>
       </div>
-      
+
       <div className="tv-frame">
         <div className="tv-screen">
           <pre className="ascii-art">
-            {Array.isArray(artPiece.art) ? artPiece.art.join('\n') : artPiece.art}
+            {Array.isArray(artPiece.art)
+              ? artPiece.art.join('\n')
+              : artPiece.art}
           </pre>
         </div>
       </div>
@@ -32,14 +36,10 @@ function AsciiTvDisplay({ artPiece, total, current }) {
         <span className="threat-badge" data-level={artPiece.threat_level}>
           THREAT: {artPiece.threat_level || 'N/A'}
         </span>
-        <span className="category-badge">
-          CATEGORY: {artPiece.category}
-        </span>
+        <span className="category-badge">CATEGORY: {artPiece.category}</span>
       </div>
 
-      <div className="tv-description">
-        {artPiece.description}
-      </div>
+      <div className="tv-description">{artPiece.description}</div>
     </div>
   );
 }

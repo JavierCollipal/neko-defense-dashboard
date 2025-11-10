@@ -10,31 +10,41 @@ const GlobalThreatMap = ({ language = 'en' }) => {
   const locations = {
     // Chile - DINA headquarters and operations
     chile: {
-      name: { en: 'Chile (DINA HQ)', es: 'Chile (Cuartel DINA)', pt: 'Chile (QG DINA)', de: 'Chile (DINA-Hauptquartier)' },
+      name: {
+        en: 'Chile (DINA HQ)',
+        es: 'Chile (Cuartel DINA)',
+        pt: 'Chile (QG DINA)',
+        de: 'Chile (DINA-Hauptquartier)',
+      },
       coords: { x: 280, y: 420 }, // Relative to 800x500 map
       type: 'headquarters',
       details: {
         en: 'DINA Headquarters (1973-1977). 1,102+ disappeared, 2,095+ executed, 35,000+ tortured.',
         es: 'Cuartel General DINA (1973-1977). 1,102+ desaparecidos, 2,095+ ejecutados, 35,000+ torturados.',
         pt: 'Sede da DINA (1973-1977). 1,102+ desaparecidos, 2,095+ executados, 35,000+ torturados.',
-        de: 'DINA-Hauptquartier (1973-1977). 1,102+ Verschwundene, 2,095+ Hingerichtete, 35,000+ Gefolterte.'
+        de: 'DINA-Hauptquartier (1973-1977). 1,102+ Verschwundene, 2,095+ Hingerichtete, 35,000+ Gefolterte.',
       },
       facilities: ['Villa Grimaldi', 'Londres 38', 'Colonia Dignidad'],
-      perpetrators: ['Manuel Contreras', 'Paul Schäfer', 'Ronaldo Munzenmayer']
+      perpetrators: ['Manuel Contreras', 'Paul Schäfer', 'Ronaldo Munzenmayer'],
     },
     // Argentina - Operation Condor partner
     argentina: {
-      name: { en: 'Argentina', es: 'Argentina', pt: 'Argentina', de: 'Argentinien' },
+      name: {
+        en: 'Argentina',
+        es: 'Argentina',
+        pt: 'Argentina',
+        de: 'Argentinien',
+      },
       coords: { x: 310, y: 460 },
       type: 'condor_partner',
       details: {
         en: 'Operation Condor partner. Intelligence sharing, cross-border operations.',
         es: 'Socio de Operación Cóndor. Intercambio de inteligencia, operaciones transfronterizas.',
         pt: 'Parceiro da Operação Condor. Compartilhamento de inteligência, operações transfronteiriças.',
-        de: 'Operation Condor Partner. Informationsaustausch, grenzüberschreitende Operationen.'
+        de: 'Operation Condor Partner. Informationsaustausch, grenzüberschreitende Operationen.',
       },
       operations: ['Joint detention operations', 'Intelligence sharing'],
-      victims: '300+ Chilean refugees detained/disappeared'
+      victims: '300+ Chilean refugees detained/disappeared',
     },
     // Uruguay - Operation Condor partner
     uruguay: {
@@ -45,9 +55,9 @@ const GlobalThreatMap = ({ language = 'en' }) => {
         en: 'Operation Condor partner. Detention and torture of Chilean exiles.',
         es: 'Socio de Operación Cóndor. Detención y tortura de exiliados chilenos.',
         pt: 'Parceiro da Operação Condor. Detenção e tortura de exilados chilenos.',
-        de: 'Operation Condor Partner. Inhaftierung und Folter chilenischer Exilanten.'
+        de: 'Operation Condor Partner. Inhaftierung und Folter chilenischer Exilanten.',
       },
-      operations: ['Detention centers', 'Cross-border kidnappings']
+      operations: ['Detention centers', 'Cross-border kidnappings'],
     },
     // Paraguay - Operation Condor coordinator
     paraguay: {
@@ -58,9 +68,9 @@ const GlobalThreatMap = ({ language = 'en' }) => {
         en: 'Operation Condor coordination center (Stroessner regime).',
         es: 'Centro de coordinación de Operación Cóndor (régimen de Stroessner).',
         pt: 'Centro de coordenação da Operação Condor (regime Stroessner).',
-        de: 'Operation Condor Koordinationszentrum (Stroessner-Regime).'
+        de: 'Operation Condor Koordinationszentrum (Stroessner-Regime).',
       },
-      role: 'Intelligence coordination hub'
+      role: 'Intelligence coordination hub',
     },
     // Brazil - Operation Condor partner + Nazi refuge precedent
     brazil: {
@@ -71,23 +81,29 @@ const GlobalThreatMap = ({ language = 'en' }) => {
         en: 'Operation Condor partner. Nazi refuge precedent (Stangl captured here 1967).',
         es: 'Socio de Operación Cóndor. Precedente de refugio nazi (Stangl capturado aquí 1967).',
         pt: 'Parceiro da Operação Condor. Precedente de refúgio nazista (Stangl capturado aqui 1967).',
-        de: 'Operation Condor Partner. Nazi-Zufluchts-Präzedenzfall (Stangl hier 1967 festgenommen).'
+        de: 'Operation Condor Partner. Nazi-Zufluchts-Präzedenzfall (Stangl hier 1967 festgenommen).',
       },
-      precedent: 'Franz Stangl (Nazi) captured 1967 after 20-year Wiesenthal investigation'
+      precedent:
+        'Franz Stangl (Nazi) captured 1967 after 20-year Wiesenthal investigation',
     },
     // USA - Letelier assassination
     usa_dc: {
-      name: { en: 'Washington DC, USA', es: 'Washington DC, EE.UU.', pt: 'Washington DC, EUA', de: 'Washington DC, USA' },
+      name: {
+        en: 'Washington DC, USA',
+        es: 'Washington DC, EE.UU.',
+        pt: 'Washington DC, EUA',
+        de: 'Washington DC, USA',
+      },
       coords: { x: 260, y: 250 },
       type: 'international_crime',
       details: {
         en: 'Letelier-Moffitt assassination (Sept 21, 1976). DINA car bomb attack on US soil.',
         es: 'Asesinato de Letelier-Moffitt (21 sept 1976). Ataque con coche bomba de DINA en suelo estadounidense.',
         pt: 'Assassinato de Letelier-Moffitt (21 set 1976). Ataque com carro-bomba da DINA em solo americano.',
-        de: 'Letelier-Moffitt Attentat (21. Sept 1976). DINA Autobombenanschlag auf US-Boden.'
+        de: 'Letelier-Moffitt Attentat (21. Sept 1976). DINA Autobombenanschlag auf US-Boden.',
       },
       victims: ['Orlando Letelier', 'Ronnie Moffitt'],
-      perpetrators: ['Manuel Contreras (convicted)', 'DINA agents']
+      perpetrators: ['Manuel Contreras (convicted)', 'DINA agents'],
     },
     // Israel - Eichmann precedent
     israel: {
@@ -98,23 +114,29 @@ const GlobalThreatMap = ({ language = 'en' }) => {
         en: 'Eichmann trial (1961). Established cross-border jurisdiction for crimes against humanity.',
         es: 'Juicio de Eichmann (1961). Estableció jurisdicción transfronteriza para crímenes de lesa humanidad.',
         pt: 'Julgamento de Eichmann (1961). Estabeleceu jurisdição transfronteiriça para crimes contra a humanidade.',
-        de: 'Eichmann-Prozess (1961). Etablierte grenzüberschreitende Zuständigkeit für Verbrechen gegen die Menschlichkeit.'
+        de: 'Eichmann-Prozess (1961). Etablierte grenzüberschreitende Zuständigkeit für Verbrechen gegen die Menschlichkeit.',
       },
-      significance: 'Legal precedent for prosecuting crimes against humanity decades later'
+      significance:
+        'Legal precedent for prosecuting crimes against humanity decades later',
     },
     // Germany - Stangl trial precedent
     germany: {
-      name: { en: 'Germany', es: 'Alemania', pt: 'Alemanha', de: 'Deutschland' },
+      name: {
+        en: 'Germany',
+        es: 'Alemania',
+        pt: 'Alemanha',
+        de: 'Deutschland',
+      },
       coords: { x: 480, y: 220 },
       type: 'precedent',
       details: {
-        en: 'Stangl trial (1970). Wiesenthal\'s 20-year investigation led to conviction.',
+        en: "Stangl trial (1970). Wiesenthal's 20-year investigation led to conviction.",
         es: 'Juicio de Stangl (1970). Investigación de 20 años de Wiesenthal llevó a condena.',
         pt: 'Julgamento de Stangl (1970). Investigação de 20 anos de Wiesenthal levou à condenação.',
-        de: 'Stangl-Prozess (1970). Wiesenthals 20-jährige Untersuchung führte zur Verurteilung.'
+        de: 'Stangl-Prozess (1970). Wiesenthals 20-jährige Untersuchung führte zur Verurteilung.',
       },
-      significance: 'Proves long-term documentation enables justice'
-    }
+      significance: 'Proves long-term documentation enables justice',
+    },
   };
 
   useEffect(() => {
@@ -123,7 +145,9 @@ const GlobalThreatMap = ({ language = 'en' }) => {
 
   const drawMap = () => {
     const canvas = canvasRef.current;
-    if (!canvas) {return;}
+    if (!canvas) {
+      return;
+    }
 
     const ctx = canvas.getContext('2d');
     const width = canvas.width;
@@ -176,7 +200,7 @@ const GlobalThreatMap = ({ language = 'en' }) => {
 
     // Chile to all Condor partners
     const chileCoords = locations.chile.coords;
-    ['argentina', 'uruguay', 'paraguay', 'brazil'].forEach(country => {
+    ['argentina', 'uruguay', 'paraguay', 'brazil'].forEach((country) => {
       const coords = locations[country].coords;
       ctx.beginPath();
       ctx.moveTo(chileCoords.x, chileCoords.y);
@@ -212,7 +236,7 @@ const GlobalThreatMap = ({ language = 'en' }) => {
       condor_partner: '#ff6600',
       condor_coordinator: '#ff9900',
       international_crime: '#cc0000',
-      precedent: '#00ccff'
+      precedent: '#00ccff',
     };
 
     const color = colors[location.type] || '#ffffff';
@@ -257,19 +281,51 @@ const GlobalThreatMap = ({ language = 'en' }) => {
       en: '🌍 OPERATION CONDOR NETWORK',
       es: '🌍 RED OPERACIÓN CÓNDOR',
       pt: '🌍 REDE OPERAÇÃO CONDOR',
-      de: '🌍 OPERATION CONDOR NETZWERK'
+      de: '🌍 OPERATION CONDOR NETZWERK',
     };
     ctx.fillText(title[language] || title.en, legendX + 10, legendY + 20);
 
     const legendItems = [
-      { color: '#ff0000', label: { en: 'DINA HQ', es: 'Cuartel DINA', pt: 'QG DINA', de: 'DINA-HQ' } },
-      { color: '#ff6600', label: { en: 'Condor Partner', es: 'Socio Cóndor', pt: 'Parceiro Condor', de: 'Condor Partner' } },
-      { color: '#cc0000', label: { en: 'International Crime', es: 'Crimen Internacional', pt: 'Crime Internacional', de: 'Internationales Verbrechen' } },
-      { color: '#00ccff', label: { en: 'Legal Precedent', es: 'Precedente Legal', pt: 'Precedente Legal', de: 'Rechtspräzedenz' } }
+      {
+        color: '#ff0000',
+        label: {
+          en: 'DINA HQ',
+          es: 'Cuartel DINA',
+          pt: 'QG DINA',
+          de: 'DINA-HQ',
+        },
+      },
+      {
+        color: '#ff6600',
+        label: {
+          en: 'Condor Partner',
+          es: 'Socio Cóndor',
+          pt: 'Parceiro Condor',
+          de: 'Condor Partner',
+        },
+      },
+      {
+        color: '#cc0000',
+        label: {
+          en: 'International Crime',
+          es: 'Crimen Internacional',
+          pt: 'Crime Internacional',
+          de: 'Internationales Verbrechen',
+        },
+      },
+      {
+        color: '#00ccff',
+        label: {
+          en: 'Legal Precedent',
+          es: 'Precedente Legal',
+          pt: 'Precedente Legal',
+          de: 'Rechtspräzedenz',
+        },
+      },
     ];
 
     legendItems.forEach((item, i) => {
-      const y = legendY + 45 + (i * 22);
+      const y = legendY + 45 + i * 22;
 
       ctx.fillStyle = item.color;
       ctx.beginPath();
@@ -305,20 +361,20 @@ const GlobalThreatMap = ({ language = 'en' }) => {
       en: '🌍 GLOBAL DINA OPERATIONS MAP',
       es: '🌍 MAPA GLOBAL DE OPERACIONES DINA',
       pt: '🌍 MAPA GLOBAL DE OPERAÇÕES DINA',
-      de: '🌍 GLOBALE DINA-OPERATIONSKARTE'
+      de: '🌍 GLOBALE DINA-OPERATIONSKARTE',
     },
     subtitle: {
       en: 'Operation Condor International Death Squad Network (1975-1989)',
       es: 'Red Internacional de Escuadrones de la Muerte Operación Cóndor (1975-1989)',
       pt: 'Rede Internacional de Esquadrões da Morte Operação Condor (1975-1989)',
-      de: 'Operation Condor Internationales Todesschwadron-Netzwerk (1975-1989)'
+      de: 'Operation Condor Internationales Todesschwadron-Netzwerk (1975-1989)',
     },
     clickInstruction: {
       en: 'Click on markers to view details',
       es: 'Haz clic en los marcadores para ver detalles',
       pt: 'Clique nos marcadores para ver detalhes',
-      de: 'Klicken Sie auf Markierungen, um Details anzuzeigen'
-    }
+      de: 'Klicken Sie auf Markierungen, um Details anzuzeigen',
+    },
   };
 
   return (
@@ -326,7 +382,9 @@ const GlobalThreatMap = ({ language = 'en' }) => {
       <div className="map-header">
         <h2>{translations.title[language]}</h2>
         <p className="map-subtitle">{translations.subtitle[language]}</p>
-        <p className="map-instruction">{translations.clickInstruction[language]}</p>
+        <p className="map-instruction">
+          {translations.clickInstruction[language]}
+        </p>
       </div>
 
       <canvas
@@ -352,32 +410,68 @@ const GlobalThreatMap = ({ language = 'en' }) => {
 
           {selectedLocation.facilities && (
             <div className="detail-section">
-              <strong>{language === 'es' ? 'Instalaciones:' : language === 'pt' ? 'Instalações:' : language === 'de' ? 'Einrichtungen:' : 'Facilities:'}</strong>
+              <strong>
+                {language === 'es'
+                  ? 'Instalaciones:'
+                  : language === 'pt'
+                    ? 'Instalações:'
+                    : language === 'de'
+                      ? 'Einrichtungen:'
+                      : 'Facilities:'}
+              </strong>
               <ul>
-                {selectedLocation.facilities.map((f, i) => <li key={i}>{f}</li>)}
+                {selectedLocation.facilities.map((f, i) => (
+                  <li key={i}>{f}</li>
+                ))}
               </ul>
             </div>
           )}
 
           {selectedLocation.perpetrators && (
             <div className="detail-section">
-              <strong>{language === 'es' ? 'Perpetradores:' : language === 'pt' ? 'Perpetradores:' : language === 'de' ? 'Täter:' : 'Perpetrators:'}</strong>
+              <strong>
+                {language === 'es'
+                  ? 'Perpetradores:'
+                  : language === 'pt'
+                    ? 'Perpetradores:'
+                    : language === 'de'
+                      ? 'Täter:'
+                      : 'Perpetrators:'}
+              </strong>
               <ul>
-                {selectedLocation.perpetrators.map((p, i) => <li key={i}>{p}</li>)}
+                {selectedLocation.perpetrators.map((p, i) => (
+                  <li key={i}>{p}</li>
+                ))}
               </ul>
             </div>
           )}
 
           {selectedLocation.victims && (
             <div className="detail-section">
-              <strong>{language === 'es' ? 'Víctimas:' : language === 'pt' ? 'Vítimas:' : language === 'de' ? 'Opfer:' : 'Victims:'}</strong>
+              <strong>
+                {language === 'es'
+                  ? 'Víctimas:'
+                  : language === 'pt'
+                    ? 'Vítimas:'
+                    : language === 'de'
+                      ? 'Opfer:'
+                      : 'Victims:'}
+              </strong>
               <p>{selectedLocation.victims}</p>
             </div>
           )}
 
           {selectedLocation.significance && (
             <div className="detail-section precedent-info">
-              <strong>{language === 'es' ? 'Importancia:' : language === 'pt' ? 'Importância:' : language === 'de' ? 'Bedeutung:' : 'Significance:'}</strong>
+              <strong>
+                {language === 'es'
+                  ? 'Importancia:'
+                  : language === 'pt'
+                    ? 'Importância:'
+                    : language === 'de'
+                      ? 'Bedeutung:'
+                      : 'Significance:'}
+              </strong>
               <p>{selectedLocation.significance}</p>
             </div>
           )}
@@ -386,10 +480,14 @@ const GlobalThreatMap = ({ language = 'en' }) => {
 
       <div className="map-footer">
         <p className="legal-note">
-          ⚖️ {language === 'es' ? 'Jurisdicción Universal: Cualquier país puede procesar crímenes de lesa humanidad' :
-               language === 'pt' ? 'Jurisdição Universal: Qualquer país pode processar crimes contra a humanidade' :
-               language === 'de' ? 'Universelle Gerichtsbarkeit: Jedes Land kann Verbrechen gegen die Menschlichkeit verfolgen' :
-               'Universal Jurisdiction: Any country can prosecute crimes against humanity'}
+          ⚖️{' '}
+          {language === 'es'
+            ? 'Jurisdicción Universal: Cualquier país puede procesar crímenes de lesa humanidad'
+            : language === 'pt'
+              ? 'Jurisdição Universal: Qualquer país pode processar crimes contra a humanidade'
+              : language === 'de'
+                ? 'Universelle Gerichtsbarkeit: Jedes Land kann Verbrechen gegen die Menschlichkeit verfolgen'
+                : 'Universal Jurisdiction: Any country can prosecute crimes against humanity'}
         </p>
       </div>
     </div>

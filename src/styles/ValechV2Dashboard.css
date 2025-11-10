@@ -33,8 +33,12 @@
 }
 
 @keyframes glow {
-  from { text-shadow: 0 0 10px rgba(0, 255, 136, 0.5); }
-  to { text-shadow: 0 0 20px rgba(0, 255, 136, 1); }
+  from {
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+  }
+  to {
+    text-shadow: 0 0 20px rgba(0, 255, 136, 1);
+  }
 }
 
 .valech-v2-tagline {
@@ -127,7 +131,11 @@
 .overview-hero {
   text-align: center;
   padding: 30px;
-  background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(97, 218, 251, 0.2) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 136, 0.2) 0%,
+    rgba(97, 218, 251, 0.2) 100%
+  );
   border-radius: 15px;
   margin-bottom: 40px;
   border: 2px solid #00ff88;
@@ -770,7 +778,11 @@
 }
 
 .impact-summary-box {
-  background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(97, 218, 251, 0.2) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 136, 0.2) 0%,
+    rgba(97, 218, 251, 0.2) 100%
+  );
   border: 2px solid #00ff88;
   border-radius: 15px;
   padding: 30px;
@@ -840,8 +852,13 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /* ===========================================

@@ -6,12 +6,10 @@
  */
 
 describe('🧪 API Endpoint Tests', () => {
-
   describe('Language Preference API', () => {
-
     it('GET /api/user/language-preference/[userId] should return default preference', () => {
-      cy.request('/api/user/language-preference/test-user-123')
-        .then((response) => {
+      cy.request('/api/user/language-preference/test-user-123').then(
+        (response) => {
           // Verify response structure
           expect(response.status).to.eq(200);
           expect(response.body).to.have.property('success', true);
@@ -26,7 +24,8 @@ describe('🧪 API Endpoint Tests', () => {
           // Verify default values
           expect(data.language).to.eq('en');
           expect(data.isDefault).to.eq(true);
-        });
+        }
+      );
     });
 
     it('POST /api/user/language-preference should save language preference', () => {
@@ -37,8 +36,8 @@ describe('🧪 API Endpoint Tests', () => {
         url: '/api/user/language-preference',
         body: {
           userId: 'test-user-123',
-          language: testLanguage
-        }
+          language: testLanguage,
+        },
       }).then((response) => {
         // Verify response structure
         expect(response.status).to.eq(200);
@@ -61,9 +60,9 @@ describe('🧪 API Endpoint Tests', () => {
         method: 'POST',
         url: '/api/user/language-preference',
         body: {
-          userId: 'test-user-456'
+          userId: 'test-user-456',
           // No language provided
-        }
+        },
       }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.success).to.eq(true);
@@ -80,8 +79,8 @@ describe('🧪 API Endpoint Tests', () => {
           url: '/api/user/language-preference',
           body: {
             userId: 'test-user-multilang',
-            language: lang
-          }
+            language: lang,
+          },
         }).then((response) => {
           expect(response.status).to.eq(200);
           expect(response.body.data.language).to.eq(lang);
@@ -91,11 +90,10 @@ describe('🧪 API Endpoint Tests', () => {
   });
 
   describe('Confessions API (Future Implementation)', () => {
-
     it('GET /api/confessions/stats should return 404 (not yet implemented)', () => {
       cy.request({
         url: '/api/confessions/stats',
-        failOnStatusCode: false
+        failOnStatusCode: false,
       }).then((response) => {
         // Currently returns 404 - documented in ERROR-COLLECTION-REPORT-20251103.md
         expect(response.status).to.eq(404);
@@ -114,16 +112,15 @@ describe('🧪 API Endpoint Tests', () => {
   });
 
   describe('API Error Handling', () => {
-
     it('should handle invalid JSON in POST requests', () => {
       cy.request({
         method: 'POST',
         url: '/api/user/language-preference',
         body: 'invalid-json',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        failOnStatusCode: false
+        failOnStatusCode: false,
       }).then((response) => {
         // Should return error for invalid JSON
         expect(response.status).to.be.oneOf([400, 500]);
@@ -134,7 +131,7 @@ describe('🧪 API Endpoint Tests', () => {
       // Test with reasonable timeout
       cy.request({
         url: '/api/user/language-preference/timeout-test',
-        timeout: 5000 // 5 second timeout
+        timeout: 5000, // 5 second timeout
       }).then((response) => {
         // Should complete within timeout
         expect(response.status).to.eq(200);
@@ -144,15 +141,14 @@ describe('🧪 API Endpoint Tests', () => {
   });
 
   describe('API Response Consistency', () => {
-
     it('all API endpoints should return JSON', () => {
-      const endpoints = [
-        '/api/user/language-preference/test-user',
-      ];
+      const endpoints = ['/api/user/language-preference/test-user'];
 
       endpoints.forEach((endpoint) => {
         cy.request(endpoint).then((response) => {
-          expect(response.headers['content-type']).to.include('application/json');
+          expect(response.headers['content-type']).to.include(
+            'application/json'
+          );
         });
       });
     });
@@ -160,7 +156,9 @@ describe('🧪 API Endpoint Tests', () => {
     it('all API responses should include timestamp', () => {
       cy.request('/api/user/language-preference/test-user').then((response) => {
         expect(response.body).to.have.property('timestamp');
-        expect(new Date(response.body.timestamp).toString()).to.not.eq('Invalid Date');
+        expect(new Date(response.body.timestamp).toString()).to.not.eq(
+          'Invalid Date'
+        );
       });
     });
   });

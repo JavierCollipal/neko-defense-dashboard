@@ -62,6 +62,7 @@ This document details the **LEGENDARY improvements** made to the Neko Defense Da
 ## 🔬 RESEARCH SOURCES
 
 ### 1. Cypress Cloud Best Practices (2025)
+
 - **Source:** Cypress Documentation + Community Blogs
 - **Key Findings:**
   - Use Docker images for consistency across CI runners
@@ -71,6 +72,7 @@ This document details the **LEGENDARY improvements** made to the Neko Defense Da
   - Avoid re-running failed jobs (re-runs ALL tests, not just failed ones)
 
 ### 2. Next.js 14 CI/CD Optimization
+
 - **Source:** Next.js Documentation + Vercel Best Practices
 - **Key Findings:**
   - Use `npm ci` instead of `npm install` for deterministic builds
@@ -79,6 +81,7 @@ This document details the **LEGENDARY improvements** made to the Neko Defense Da
   - Separate staging/production workflows for safety
 
 ### 3. GitHub Actions Optimization (2025)
+
 - **Source:** GitHub Actions Documentation + Performance Guides
 - **Key Findings:**
   - **actions/cache@v4** released Feb 2025 with rewritten backend
@@ -95,12 +98,14 @@ This document details the **LEGENDARY improvements** made to the Neko Defense Da
 **Problem:** Cypress tests weren't being recorded to Cloud despite configuration
 
 **Root Causes:**
+
 - ❌ Wrong projectId: `jhwwrs` (should be `9xzw4h`)
 - ❌ Missing `record: true` parameter
 - ❌ Missing `parallel: true` parameter
 - ❌ Missing `GITHUB_TOKEN` for build identification
 
 **Solution:**
+
 ```yaml
 # cypress.config.js
 projectId: '9xzw4h', ✅
@@ -126,14 +131,16 @@ projectId: '9xzw4h', ✅
 **Problem:** ESLint failures didn't stop deployment
 
 **Root Cause:**
+
 ```yaml
 # Old pipeline
 - name: Run ESLint
   run: npm run lint
-  continue-on-error: true  # ❌ BAD!
+  continue-on-error: true # ❌ BAD!
 ```
 
 **Solution:**
+
 ```yaml
 # New pipeline
 - name: 🔍 Run ESLint
@@ -150,6 +157,7 @@ projectId: '9xzw4h', ✅
 **Problem:** No automated code formatting validation
 
 **Solution:**
+
 ```yaml
 # package.json
 "scripts": {
@@ -172,10 +180,11 @@ projectId: '9xzw4h', ✅
 **Problem:** Slow builds due to re-downloading dependencies
 
 **Solution:**
+
 ```yaml
 # Upgraded to actions/cache@v4 (Feb 2025 release)
 - name: 💾 Cache Next.js build
-  uses: actions/cache@v4  # ✅ Latest version!
+  uses: actions/cache@v4 # ✅ Latest version!
   with:
     path: |
       ~/.npm
@@ -195,11 +204,12 @@ projectId: '9xzw4h', ✅
 **Problem:** E2E tests ran sequentially, slow feedback loop
 
 **Solution:**
+
 ```yaml
 strategy:
-  fail-fast: false  # ✅ Cypress Cloud best practice!
+  fail-fast: false # ✅ Cypress Cloud best practice!
   matrix:
-    containers: [1, 2, 3, 4]  # ✅ 4 parallel runners!
+    containers: [1, 2, 3, 4] # ✅ 4 parallel runners!
 ```
 
 **Impact:** 4x faster test execution! Tests complete in ~25% of sequential time!
@@ -211,11 +221,13 @@ strategy:
 **Problem:** Secrets documentation showed incomplete MongoDB URI
 
 **Old:**
+
 ```
 mongodb+srv://pinochito1747:pinochito1747@free-cluster.svjei3w.mongodb.net/
 ```
 
 **Fixed:**
+
 ```
 mongodb+srv://pinochito1747:pinochito1747@free-cluster.svjei3w.mongodb.net/neko-defense-system
 ```
@@ -229,10 +241,11 @@ mongodb+srv://pinochito1747:pinochito1747@free-cluster.svjei3w.mongodb.net/neko-
 **Problem:** Multiple workflow runs for same branch wasting resources
 
 **Solution:**
+
 ```yaml
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true  # ✅ Cancel old runs!
+  cancel-in-progress: true # ✅ Cancel old runs!
 ```
 
 **Impact:** Saves CI/CD minutes and prevents queued runs!
@@ -243,14 +256,14 @@ concurrency:
 
 Verification against **CLAUDE.md** rules:
 
-| Rule | Requirement | Before | After |
-|------|-------------|--------|-------|
-| **2.1** | Tests must pass before merge | ✅ PASS | ✅ PASS |
-| **2.1** | Linting must pass | ❌ FAIL | ✅ **FIXED** |
-| **2.1** | Build must succeed | ✅ PASS | ✅ PASS |
-| **1.0** | Cypress Cloud recording | ❌ FAIL | ✅ **FIXED** |
-| **2.6** | Prettier formatting check | ❌ FAIL | ✅ **ADDED** |
-| **1.4** | Staging → Production flow | ✅ PASS | ✅ PASS |
+| Rule    | Requirement                  | Before  | After        |
+| ------- | ---------------------------- | ------- | ------------ |
+| **2.1** | Tests must pass before merge | ✅ PASS | ✅ PASS      |
+| **2.1** | Linting must pass            | ❌ FAIL | ✅ **FIXED** |
+| **2.1** | Build must succeed           | ✅ PASS | ✅ PASS      |
+| **1.0** | Cypress Cloud recording      | ❌ FAIL | ✅ **FIXED** |
+| **2.6** | Prettier formatting check    | ❌ FAIL | ✅ **ADDED** |
+| **1.4** | Staging → Production flow    | ✅ PASS | ✅ PASS      |
 
 **Before:** 3/6 (50%) ❌
 **After:** 6/6 (100%) ✅ **LEGENDARY!**
@@ -260,16 +273,19 @@ Verification against **CLAUDE.md** rules:
 ## 🎯 PERFORMANCE IMPROVEMENTS
 
 ### Build Time Reduction
+
 - **Before:** ~8-10 minutes (no caching)
 - **After:** ~2-3 minutes (with cache@v4)
 - **Improvement:** **70-80% faster!** ⚡
 
 ### Test Execution Time
+
 - **Before:** ~12-15 minutes (sequential)
 - **After:** ~3-4 minutes (4 parallel containers)
 - **Improvement:** **75% faster!** 🚀
 
 ### Total Pipeline Time
+
 - **Before:** ~20-25 minutes
 - **After:** ~5-7 minutes
 - **Improvement:** **72% faster!** 💖
@@ -281,6 +297,7 @@ Verification against **CLAUDE.md** rules:
 Make sure these are configured in GitHub repository settings:
 
 ### Critical Secrets
+
 1. ✅ `CYPRESS_RECORD_KEY` - **NEW!** For Cypress Cloud recording
 2. ✅ `MONGODB_URI` - Updated with database name
 3. ✅ `VERCEL_TOKEN` - For Vercel deployment
@@ -288,6 +305,7 @@ Make sure these are configured in GitHub repository settings:
 5. ✅ `VERCEL_PROJECT_ID` - For Vercel project linking
 
 ### Optional Secrets
+
 6. ⚠️ `RAILWAY_TOKEN` - For Railway API deployment
 7. ⚠️ `NEXT_PUBLIC_API_URL` - Production REST API URL
 8. ⚠️ `NEXT_PUBLIC_GRAPHQL_URL` - Production GraphQL URL
@@ -301,6 +319,7 @@ See **GITHUB-SECRETS-SETUP.md** for detailed setup instructions!
 **Project URL:** https://cloud.cypress.io/projects/9xzw4h
 
 **Features Now Available:**
+
 - ✅ Test run history with timestamps
 - ✅ Parallel execution analytics
 - ✅ Flaky test detection
@@ -313,6 +332,7 @@ See **GITHUB-SECRETS-SETUP.md** for detailed setup instructions!
 ## 🚦 USAGE
 
 ### Automatic Triggers
+
 ```bash
 # Push to main/master → Full pipeline runs
 git push origin main
@@ -324,6 +344,7 @@ git push origin feature/awesome-feature
 ```
 
 ### Manual Trigger
+
 ```bash
 # Go to GitHub → Actions tab → Select workflow → Run workflow
 ```
@@ -351,6 +372,7 @@ These workflows are now **redundant** and can be disabled/deleted:
    - **Action:** Delete or disable
 
 **Why Keep main.yml Only:**
+
 - Single source of truth
 - Easier to maintain
 - No duplicate workflows
@@ -361,6 +383,7 @@ These workflows are now **redundant** and can be disabled/deleted:
 ## 📚 BEST PRACTICES IMPLEMENTED
 
 ### ✅ 2025 GitHub Actions Best Practices
+
 - [x] Use latest action versions (@v4, @v5, @v6)
 - [x] Implement job dependencies (`needs`)
 - [x] Use matrix strategy for parallelization
@@ -369,6 +392,7 @@ These workflows are now **redundant** and can be disabled/deleted:
 - [x] Set `fail-fast: false` for parallel jobs
 
 ### ✅ Cypress Cloud Best Practices
+
 - [x] Use `record: true` for Cloud recording
 - [x] Use `parallel: true` for load balancing
 - [x] Pass `GITHUB_TOKEN` for build identification
@@ -377,6 +401,7 @@ These workflows are now **redundant** and can be disabled/deleted:
 - [x] Use `ci-build-id` for unique run identification
 
 ### ✅ Next.js CI/CD Best Practices
+
 - [x] Cache `.next/cache` directory
 - [x] Use `npm ci` instead of `npm install`
 - [x] Set `CI: false` to prevent warnings blocking builds
@@ -388,15 +413,19 @@ These workflows are now **redundant** and can be disabled/deleted:
 ## 🐛 TROUBLESHOOTING
 
 ### "Cypress recording failed"
+
 **Solution:** Verify `CYPRESS_RECORD_KEY` secret is set correctly
 
 ### "Prettier check failed"
+
 **Solution:** Run `npm run format` locally to fix formatting
 
 ### "ESLint errors blocking build"
+
 **Solution:** This is INTENTIONAL! Fix the errors - don't disable the check!
 
 ### "Cache not restoring"
+
 **Solution:** Make sure `package-lock.json` is committed to Git
 
 ---
@@ -404,12 +433,14 @@ These workflows are now **redundant** and can be disabled/deleted:
 ## 📖 REFERENCES
 
 ### Research Articles
+
 1. [Cypress Cloud GitHub Actions (2025)](https://docs.cypress.io/app/continuous-integration/github-actions)
 2. [GitHub Actions Cache v4 Migration](https://github.com/actions/cache)
 3. [Next.js CI/CD Best Practices](https://nextjs.org/docs/deployment)
 4. [Parallel Cypress Tests](https://www.cypress.io/blog/how-to-execute-test-cases-in-parallel-with-cypress-cloud)
 
 ### Internal Documentation
+
 - `GITHUB-SECRETS-SETUP.md` - Secret configuration guide
 - `cypress.config.js` - Cypress Cloud configuration
 - `package.json` - NPM scripts reference
@@ -428,6 +459,6 @@ These workflows are now **redundant** and can be disabled/deleted:
 - ✅ **Scalable** with parallel test execution
 - ✅ **Reliable** with advanced caching strategies
 
-*swishes tail with maximum CI/CD satisfaction*
+_swishes tail with maximum CI/CD satisfaction_
 
 **LEGENDARY MODE ACTIVATED, NYAA~!** 🐾⚡💖

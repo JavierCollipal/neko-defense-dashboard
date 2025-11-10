@@ -22,7 +22,7 @@ export async function GET(request) {
       success: true,
       data: [],
       count: 0,
-      message: 'Demo mode - MongoDB not configured'
+      message: 'Demo mode - MongoDB not configured',
     });
   }
 
@@ -43,20 +43,18 @@ export async function GET(request) {
       success: true,
       data: fallenOfficers,
       count: fallenOfficers.length,
-      message: `Loaded ${fallenOfficers.length} fallen Carabineros officers`
+      message: `Loaded ${fallenOfficers.length} fallen Carabineros officers`,
     });
-
   } catch (error) {
     console.error('❌ API Error (fallen-officers):', error.message);
     return NextResponse.json(
       {
         success: false,
         error: error.message,
-        message: 'Failed to fetch fallen officers'
+        message: 'Failed to fetch fallen officers',
       },
       { status: 500 }
     );
-
   } finally {
     await client.close();
   }

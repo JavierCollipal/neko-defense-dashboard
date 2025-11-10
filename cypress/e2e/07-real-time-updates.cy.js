@@ -7,23 +7,17 @@ describe('🔄 Real-Time Updates & Dynamic Content', () => {
 
   describe('🎨 ASCII Art Auto-Rotation', () => {
     it('should display first ASCII art on initial load', () => {
-      cy.get('.ascii-tv')
-        .should('be.visible');
+      cy.get('.ascii-tv').should('be.visible');
 
-      cy.get('.tv-counter')
-        .should('contain', '1 / 3');
+      cy.get('.tv-counter').should('contain', '1 / 3');
     });
 
     it('should display ASCII art title', () => {
-      cy.get('.tv-title')
-        .should('be.visible')
-        .and('not.be.empty');
+      cy.get('.tv-title').should('be.visible').and('not.be.empty');
     });
 
     it('should show threat level badge for ASCII art', () => {
-      cy.get('.threat-badge')
-        .should('be.visible')
-        .and('contain', 'THREAT:');
+      cy.get('.threat-badge').should('be.visible').and('contain', 'THREAT:');
     });
 
     it('should show category badge for ASCII art', () => {
@@ -33,15 +27,11 @@ describe('🔄 Real-Time Updates & Dynamic Content', () => {
     });
 
     it('should display ASCII art description', () => {
-      cy.get('.tv-description')
-        .should('be.visible')
-        .and('not.be.empty');
+      cy.get('.tv-description').should('be.visible').and('not.be.empty');
     });
 
     it('should contain actual ASCII art content in pre tag', () => {
-      cy.get('pre.ascii-art')
-        .should('be.visible')
-        .and('not.be.empty');
+      cy.get('pre.ascii-art').should('be.visible').and('not.be.empty');
     });
 
     it('should maintain ASCII art visibility during category changes', () => {
@@ -62,8 +52,7 @@ describe('🔄 Real-Time Updates & Dynamic Content', () => {
     it('should load threat counts from API', () => {
       cy.wait('@getThreatCounts');
 
-      cy.get('.category-count')
-        .should('have.length.at.least', 7);
+      cy.get('.category-count').should('have.length.at.least', 7);
     });
 
     it('should display correct count for all threats', () => {
@@ -91,10 +80,11 @@ describe('🔄 Real-Time Updates & Dynamic Content', () => {
     });
 
     it('should show zero counts for categories with no threats', () => {
-      cy.get('.category-count')
-        .each(($count) => {
-          cy.wrap($count).invoke('text').should('match', /\d+ detected/);
-        });
+      cy.get('.category-count').each(($count) => {
+        cy.wrap($count)
+          .invoke('text')
+          .should('match', /\d+ detected/);
+      });
     });
   });
 
@@ -113,14 +103,11 @@ describe('🔄 Real-Time Updates & Dynamic Content', () => {
     });
 
     it('should display threat actors after loading', () => {
-      cy.get('.threat-actor-card')
-        .should('have.length.at.least', 1);
+      cy.get('.threat-actor-card').should('have.length.at.least', 1);
     });
 
     it('should show target count in threat list header', () => {
-      cy.get('.targets-count')
-        .should('be.visible')
-        .and('contain', 'TARGET');
+      cy.get('.targets-count').should('be.visible').and('contain', 'TARGET');
     });
 
     it('should show hunt active status', () => {
@@ -140,13 +127,12 @@ describe('🔄 Real-Time Updates & Dynamic Content', () => {
       cy.wait('@getThreatActorsPredators');
 
       // Should update display
-      cy.get('.threat-list-header h2')
-        .should('contain', 'PREDATOR');
+      cy.get('.threat-list-header h2').should('contain', 'PREDATOR');
     });
 
     it('should maintain hunt status across category changes', () => {
       // Switch categories multiple times
-      ['Predators', 'Ransomware', 'All Threats'].forEach(cat => {
+      ['Predators', 'Ransomware', 'All Threats'].forEach((cat) => {
         cy.get('.category-switcher')
           .contains(cat)
           .parent('.category-item')
@@ -205,9 +191,9 @@ describe('🔄 Real-Time Updates & Dynamic Content', () => {
             _id: `threat${i}`,
             name: `Threat Actor ${i}`,
             threat_level: 'HIGH',
-            type: 'test'
-          }))
-        }
+            type: 'test',
+          })),
+        },
       }).as('getThreatActorsRefresh');
 
       // Change category to trigger refresh
@@ -244,7 +230,7 @@ describe('🔄 Real-Time Updates & Dynamic Content', () => {
     it('should show loading spinner during threat actor fetch', () => {
       cy.intercept('GET', '**/api/threat-actors?category=ransomware', {
         delay: 1000,
-        fixture: 'threat-actors-all.json'
+        fixture: 'threat-actors-all.json',
       }).as('getThreatActorsDelayed');
 
       cy.get('.category-switcher')
@@ -268,8 +254,8 @@ describe('🔄 Real-Time Updates & Dynamic Content', () => {
         body: {
           success: true,
           count: 0,
-          data: []
-        }
+          data: [],
+        },
       }).as('getThreatActorsEmpty');
 
       cy.get('.category-switcher')
@@ -292,8 +278,8 @@ describe('🔄 Real-Time Updates & Dynamic Content', () => {
         statusCode: 500,
         body: {
           success: false,
-          error: 'Server error'
-        }
+          error: 'Server error',
+        },
       }).as('getThreatActorsError');
 
       cy.get('.category-switcher')
@@ -304,8 +290,7 @@ describe('🔄 Real-Time Updates & Dynamic Content', () => {
       cy.wait('@getThreatActorsError');
 
       // Should show error state
-      cy.get('.error-message')
-        .should('be.visible');
+      cy.get('.error-message').should('be.visible');
 
       cy.get('.error-icon').should('contain', '⚠️');
     });
@@ -330,9 +315,14 @@ describe('🔄 Real-Time Updates & Dynamic Content', () => {
     });
 
     it('should handle rapid category switching', () => {
-      const categories = ['Predators', 'Ransomware', 'Crypto Crime', 'All Threats'];
+      const categories = [
+        'Predators',
+        'Ransomware',
+        'Crypto Crime',
+        'All Threats',
+      ];
 
-      categories.forEach(cat => {
+      categories.forEach((cat) => {
         cy.get('.category-switcher')
           .contains(cat)
           .parent('.category-item')

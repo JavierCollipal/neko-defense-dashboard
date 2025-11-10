@@ -10,7 +10,7 @@ describe('📱⚡ MOBILE RESPONSIVE DESIGN ⚡📱', () => {
     { name: 'Samsung Galaxy S20', width: 360, height: 800 },
     { name: 'iPad Mini', width: 768, height: 1024 },
     { name: 'iPad Air', width: 820, height: 1180 },
-    { name: 'iPad Pro', width: 1024, height: 1366 }
+    { name: 'iPad Pro', width: 1024, height: 1366 },
   ];
 
   describe('📱 Small Mobile Devices (320px - 414px)', () => {
@@ -49,13 +49,15 @@ describe('📱⚡ MOBILE RESPONSIVE DESIGN ⚡📱', () => {
     });
 
     it('should have touchable buttons (min 44x44px)', () => {
-      cy.get('button').first().then(($btn) => {
-        const rect = $btn[0].getBoundingClientRect();
+      cy.get('button')
+        .first()
+        .then(($btn) => {
+          const rect = $btn[0].getBoundingClientRect();
 
-        // WCAG 2.1 recommends minimum 44x44px touch targets
-        expect(rect.width).to.be.at.least(30); // Slightly smaller ok for mobile
-        expect(rect.height).to.be.at.least(30);
-      });
+          // WCAG 2.1 recommends minimum 44x44px touch targets
+          expect(rect.width).to.be.at.least(30); // Slightly smaller ok for mobile
+          expect(rect.height).to.be.at.least(30);
+        });
     });
 
     it('should hide or collapse sidebar on small screens', () => {
@@ -124,8 +126,7 @@ describe('📱⚡ MOBILE RESPONSIVE DESIGN ⚡📱', () => {
     it('should handle category switching on mobile', () => {
       cy.selectCategory('predators');
 
-      cy.get('.category-item.active')
-        .should('contain.text', /predators/i);
+      cy.get('.category-item.active').should('contain.text', /predators/i);
     });
 
     it('should navigate to Threat Actors view', () => {
@@ -177,7 +178,9 @@ describe('📱⚡ MOBILE RESPONSIVE DESIGN ⚡📱', () => {
     it('should display multi-column grid on tablets', () => {
       cy.get('.dashboard-grid').then(($grid) => {
         const gridStyle = window.getComputedStyle($grid[0]);
-        const gridTemplateColumns = gridStyle.getPropertyValue('grid-template-columns');
+        const gridTemplateColumns = gridStyle.getPropertyValue(
+          'grid-template-columns'
+        );
 
         // Should have grid layout on tablets
         expect(gridTemplateColumns).to.exist;
@@ -310,7 +313,9 @@ describe('📱⚡ MOBILE RESPONSIVE DESIGN ⚡📱', () => {
       cy.document().then((doc) => {
         const viewport = doc.querySelector('meta[name="viewport"]');
         expect(viewport).to.exist;
-        expect(viewport?.getAttribute('content')).to.include('width=device-width');
+        expect(viewport?.getAttribute('content')).to.include(
+          'width=device-width'
+        );
       });
     });
 
@@ -320,10 +325,12 @@ describe('📱⚡ MOBILE RESPONSIVE DESIGN ⚡📱', () => {
       cy.get('body').should('have.css', 'font-size');
 
       // Check that text is readable (not too small)
-      cy.get('p, span, div').first().then(($el) => {
-        const fontSize = parseFloat(window.getComputedStyle($el[0]).fontSize);
-        expect(fontSize).to.be.at.least(12); // Minimum 12px for readability
-      });
+      cy.get('p, span, div')
+        .first()
+        .then(($el) => {
+          const fontSize = parseFloat(window.getComputedStyle($el[0]).fontSize);
+          expect(fontSize).to.be.at.least(12); // Minimum 12px for readability
+        });
     });
 
     it('should scale images appropriately', () => {
@@ -341,7 +348,7 @@ describe('📱⚡ MOBILE RESPONSIVE DESIGN ⚡📱', () => {
       { name: 'Small', width: 480 },
       { name: 'Medium', width: 768 },
       { name: 'Large', width: 1024 },
-      { name: 'Extra Large', width: 1400 }
+      { name: 'Extra Large', width: 1400 },
     ];
 
     breakpoints.forEach((breakpoint) => {
@@ -457,7 +464,9 @@ describe('📱⚡ MOBILE RESPONSIVE DESIGN ⚡📱', () => {
           expect(win.navigator.serviceWorker).to.exist;
         } else {
           // Not a PWA or service worker not supported
-          console.log('💡 Service Worker not detected - consider PWA implementation');
+          console.log(
+            '💡 Service Worker not detected - consider PWA implementation'
+          );
         }
       });
     });

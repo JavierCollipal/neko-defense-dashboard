@@ -15,7 +15,8 @@ function LanguageSwitcher() {
     setIsOpen(false);
   };
 
-  const currentLang = languages.find(lang => lang.code === i18n.language) || languages[0];
+  const currentLang =
+    languages.find((lang) => lang.code === i18n.language) || languages[0];
 
   return (
     <div className="language-switcher" data-cy="language-switcher">
@@ -25,9 +26,15 @@ function LanguageSwitcher() {
         aria-label="Select language"
         data-cy="language-button"
       >
-        <span className="flag" data-cy="current-flag">{currentLang.flag}</span>
-        <span className="lang-code" data-cy="current-lang-code">{currentLang.code.toUpperCase()}</span>
-        <span className="dropdown-arrow" data-cy="dropdown-arrow">{isOpen ? '▲' : '▼'}</span>
+        <span className="flag" data-cy="current-flag">
+          {currentLang.flag}
+        </span>
+        <span className="lang-code" data-cy="current-lang-code">
+          {currentLang.code.toUpperCase()}
+        </span>
+        <span className="dropdown-arrow" data-cy="dropdown-arrow">
+          {isOpen ? '▲' : '▼'}
+        </span>
       </button>
 
       {isOpen && (
@@ -49,7 +56,9 @@ function LanguageSwitcher() {
                   <div className="lang-english">{lang.name}</div>
                 </div>
                 {i18n.language === lang.code && (
-                  <span className="check-mark" data-cy="active-check">✓</span>
+                  <span className="check-mark" data-cy="active-check">
+                    ✓
+                  </span>
                 )}
               </button>
             ))}

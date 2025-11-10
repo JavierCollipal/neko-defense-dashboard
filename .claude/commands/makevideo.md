@@ -24,17 +24,20 @@ The script is located at: `/home/wakibaka/Documents/github/neko-video-tools/simp
 ---
 
 **Execute now:**
+
 ```bash
 cd /home/wakibaka/Documents/github/neko-video-tools
 ./simple-video-maker.sh
 ```
 
 **Requirements:**
+
 - ffmpeg (install with `sudo apt install ffmpeg`)
 - Video file
 - Image file
 
 **Perfect for:**
+
 - Threat actor exposure videos 🎯
 - YouTube monetization content 💰
 - Evidence documentation with watermarks

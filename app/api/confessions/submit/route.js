@@ -22,7 +22,7 @@ export async function POST(request) {
       success: true,
       confession_id: 'demo_' + Date.now(),
       message: 'Demo mode - Confession received but not saved',
-      status: 'pending'
+      status: 'pending',
     });
   }
 
@@ -32,17 +32,24 @@ export async function POST(request) {
     // Parse request body
     const body = await request.json();
 
-    console.log('📝 [Confessions API] New confession submission received, nyaa~!');
+    console.log(
+      '📝 [Confessions API] New confession submission received, nyaa~!'
+    );
 
     // Validate required fields
-    const requiredFields = ['category', 'title', 'description', 'threat_actor_name'];
+    const requiredFields = [
+      'category',
+      'title',
+      'description',
+      'threat_actor_name',
+    ];
     for (const field of requiredFields) {
       if (!body[field] || body[field].trim() === '') {
         return NextResponse.json(
           {
             success: false,
             error: `Missing required field: ${field}`,
-            message: 'Please fill in all required fields'
+            message: 'Please fill in all required fields',
           },
           { status: 400 }
         );
@@ -63,7 +70,9 @@ export async function POST(request) {
       description: body.description.trim(),
       threat_actor_name: body.threat_actor_name.trim(),
       threat_actor_location: body.threat_actor_location?.trim() || 'Unknown',
-      evidence_links: Array.isArray(body.evidence_links) ? body.evidence_links : [],
+      evidence_links: Array.isArray(body.evidence_links)
+        ? body.evidence_links
+        : [],
       submitted_by: body.submitted_by?.trim() || 'Anonymous',
       contact_info: body.contact_info?.trim() || null,
       priority: body.priority || 'medium',
@@ -74,7 +83,7 @@ export async function POST(request) {
       downvotes: 0,
       moderation_notes: null,
       approved_at: null,
-      approved_by: null
+      approved_by: null,
     };
 
     // Insert into MongoDB
@@ -85,21 +94,20 @@ export async function POST(request) {
     return NextResponse.json({
       success: true,
       confession_id,
-      message: 'Confession submitted successfully! It will be reviewed before publication.',
-      status: 'pending'
+      message:
+        'Confession submitted successfully! It will be reviewed before publication.',
+      status: 'pending',
     });
-
   } catch (error) {
     console.error('❌ [Confessions API] Submission failed:', error.message);
     return NextResponse.json(
       {
         success: false,
         error: error.message,
-        message: 'Failed to submit confession'
+        message: 'Failed to submit confession',
       },
       { status: 500 }
     );
-
   } finally {
     await client.close();
   }

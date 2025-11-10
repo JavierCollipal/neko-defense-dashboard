@@ -16,7 +16,9 @@ describe('Family Tracker - Deceased Carabineros Intelligence', () => {
 
     it('should display the main header', () => {
       cy.contains('FAMILY TRACKER').should('be.visible');
-      cy.contains('Deceased Carabineros Intelligence System').should('be.visible');
+      cy.contains('Deceased Carabineros Intelligence System').should(
+        'be.visible'
+      );
     });
 
     it('should show statistics summary bar', () => {
@@ -25,7 +27,12 @@ describe('Family Tracker - Deceased Carabineros Intelligence', () => {
     });
 
     it('should display correct stat labels', () => {
-      const expectedLabels = ['Family Members', 'Deceased Officers', 'High Priority', 'Vulnerable'];
+      const expectedLabels = [
+        'Family Members',
+        'Deceased Officers',
+        'High Priority',
+        'Vulnerable',
+      ];
 
       expectedLabels.forEach((label) => {
         cy.contains('.stat-label', label).should('be.visible');
@@ -40,19 +47,31 @@ describe('Family Tracker - Deceased Carabineros Intelligence', () => {
     });
 
     it('should have Family Members tab active by default', () => {
-      cy.contains('.tab-button', 'Family Members').should('have.class', 'active');
+      cy.contains('.tab-button', 'Family Members').should(
+        'have.class',
+        'active'
+      );
     });
 
     it('should switch to Deceased Officers tab when clicked', () => {
       cy.contains('.tab-button', 'Deceased Officers').click();
-      cy.contains('.tab-button', 'Deceased Officers').should('have.class', 'active');
-      cy.contains('.tab-button', 'Family Members').should('not.have.class', 'active');
+      cy.contains('.tab-button', 'Deceased Officers').should(
+        'have.class',
+        'active'
+      );
+      cy.contains('.tab-button', 'Family Members').should(
+        'not.have.class',
+        'active'
+      );
     });
 
     it('should switch back to Family Members tab', () => {
       cy.contains('.tab-button', 'Deceased Officers').click();
       cy.contains('.tab-button', 'Family Members').click();
-      cy.contains('.tab-button', 'Family Members').should('have.class', 'active');
+      cy.contains('.tab-button', 'Family Members').should(
+        'have.class',
+        'active'
+      );
     });
 
     it('should show different content for each tab', () => {
@@ -147,7 +166,9 @@ describe('Family Tracker - Deceased Carabineros Intelligence', () => {
     it('should call deceased-officers API on page load', () => {
       cy.intercept('GET', '/api/deceased-officers*').as('getDeceasedOfficers');
       cy.visit('/family-tracker');
-      cy.wait('@getDeceasedOfficers').its('response.statusCode').should('eq', 200);
+      cy.wait('@getDeceasedOfficers')
+        .its('response.statusCode')
+        .should('eq', 200);
     });
 
     it('should handle API success responses', () => {
@@ -156,8 +177,8 @@ describe('Family Tracker - Deceased Carabineros Intelligence', () => {
         body: {
           success: true,
           data: [],
-          count: 0
-        }
+          count: 0,
+        },
       }).as('familyMembersSuccess');
 
       cy.visit('/family-tracker');
@@ -170,8 +191,8 @@ describe('Family Tracker - Deceased Carabineros Intelligence', () => {
         statusCode: 500,
         body: {
           success: false,
-          error: 'Internal Server Error'
-        }
+          error: 'Internal Server Error',
+        },
       }).as('familyMembersError');
 
       cy.visit('/family-tracker');
@@ -189,8 +210,8 @@ describe('Family Tracker - Deceased Carabineros Intelligence', () => {
         body: {
           success: true,
           data: [],
-          count: 0
-        }
+          count: 0,
+        },
       }).as('emptyFamilyMembers');
 
       cy.visit('/family-tracker');
@@ -228,19 +249,19 @@ describe('Family Tracker - Deceased Carabineros Intelligence', () => {
                 overall_score: 8,
                 financial_need: 7,
                 emotional_state: 9,
-                recruitment_potential: 6
+                recruitment_potential: 6,
               },
               social_media_profiles: {
                 facebook: true,
                 instagram: true,
                 twitter: false,
-                linkedin: false
+                linkedin: false,
               },
-              created_at: new Date().toISOString()
-            }
+              created_at: new Date().toISOString(),
+            },
           ],
-          count: 1
-        }
+          count: 1,
+        },
       }).as('mockFamilyMembers');
 
       cy.intercept('GET', '/api/deceased-officers*', {
@@ -258,13 +279,13 @@ describe('Family Tracker - Deceased Carabineros Intelligence', () => {
               unit: 'Special Operations',
               location_of_death: 'Santiago',
               family_members: [
-                { name: 'María González', relationship: 'Spouse' }
+                { name: 'María González', relationship: 'Spouse' },
               ],
-              tags: ['special-ops', 'decorated']
-            }
+              tags: ['special-ops', 'decorated'],
+            },
           ],
-          count: 1
-        }
+          count: 1,
+        },
       }).as('mockDeceasedOfficers');
 
       cy.visit('/family-tracker');
@@ -331,7 +352,10 @@ describe('Family Tracker - Deceased Carabineros Intelligence', () => {
       cy.contains('.tab-button', 'Family Members').click();
       cy.contains('.tab-button', 'Deceased Officers').click();
 
-      cy.contains('.tab-button', 'Deceased Officers').should('have.class', 'active');
+      cy.contains('.tab-button', 'Deceased Officers').should(
+        'have.class',
+        'active'
+      );
     });
 
     it('should combine search and filter functionality', () => {
@@ -372,10 +396,12 @@ describe('Family Tracker - Deceased Carabineros Intelligence', () => {
     it('should load within acceptable time', () => {
       const startTime = Date.now();
       cy.visit('/family-tracker');
-      cy.get('.family-tracker-container').should('be.visible').then(() => {
-        const loadTime = Date.now() - startTime;
-        expect(loadTime).to.be.lessThan(5000); // 5 seconds max
-      });
+      cy.get('.family-tracker-container')
+        .should('be.visible')
+        .then(() => {
+          const loadTime = Date.now() - startTime;
+          expect(loadTime).to.be.lessThan(5000); // 5 seconds max
+        });
     });
 
     it('should handle rapid tab switching', () => {
@@ -384,7 +410,10 @@ describe('Family Tracker - Deceased Carabineros Intelligence', () => {
         cy.contains('.tab-button', 'Family Members').click();
       }
 
-      cy.contains('.tab-button', 'Family Members').should('have.class', 'active');
+      cy.contains('.tab-button', 'Family Members').should(
+        'have.class',
+        'active'
+      );
     });
   });
 

@@ -31,19 +31,39 @@ import {
   IconButton,
   Accordion,
   AccordionSummary,
-  AccordionDetails
+  AccordionDetails,
 } from '@mui/material';
 
 // Temporary Box-based layout until Grid API compatibility is fixed
-const Grid = ({ container, spacing, xs, sm, md, sx, children, ...props }: any) => (
+const Grid = ({
+  container,
+  spacing,
+  xs,
+  sm,
+  md,
+  sx,
+  children,
+  ...props
+}: any) => (
   <Box
     sx={{
       display: container ? 'flex' : 'block',
       flexWrap: container ? 'wrap' : undefined,
       gap: container ? spacing : undefined,
       flex: xs || sm || md ? '1 1 auto' : undefined,
-      minWidth: xs === 12 ? '100%' : xs === 6 ? '48%' : xs === 3 ? '23%' : md === 2.4 ? '18%' : md === 6 ? '48%' : 'auto',
-      ...sx
+      minWidth:
+        xs === 12
+          ? '100%'
+          : xs === 6
+            ? '48%'
+            : xs === 3
+              ? '23%'
+              : md === 2.4
+                ? '18%'
+                : md === 6
+                  ? '48%'
+                  : 'auto',
+      ...sx,
     }}
     {...props}
   >
@@ -65,17 +85,25 @@ interface VictimDetailModalProps {
   onClose: () => void;
 }
 
-const VictimDetailModal: React.FC<VictimDetailModalProps> = ({ victim, open, onClose }) => {
-  if (!victim) {return null;}
+const VictimDetailModal: React.FC<VictimDetailModalProps> = ({
+  victim,
+  open,
+  onClose,
+}) => {
+  if (!victim) {
+    return null;
+  }
 
   // Format date
   const formatDate = (date: string | Date | undefined): string => {
-    if (!date) {return 'Unknown';}
+    if (!date) {
+      return 'Unknown';
+    }
     try {
       return new Date(date).toLocaleDateString('es-CL', {
         year: 'numeric',
         month: 'long',
-        day: 'numeric'
+        day: 'numeric',
       });
     } catch {
       return 'Invalid date';
@@ -83,8 +111,13 @@ const VictimDetailModal: React.FC<VictimDetailModalProps> = ({ victim, open, onC
   };
 
   // Calculate age at arrest
-  const calculateAge = (birthDate: Date | string | undefined, arrestDate: Date | string | undefined): string => {
-    if (!birthDate || !arrestDate) {return 'Unknown';}
+  const calculateAge = (
+    birthDate: Date | string | undefined,
+    arrestDate: Date | string | undefined
+  ): string => {
+    if (!birthDate || !arrestDate) {
+      return 'Unknown';
+    }
     try {
       const birth = new Date(birthDate);
       const arrest = new Date(arrestDate);
@@ -105,7 +138,13 @@ const VictimDetailModal: React.FC<VictimDetailModalProps> = ({ victim, open, onC
     >
       {/* Header */}
       <DialogTitle>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
           <Box>
             <Typography variant="h5" component="div">
               {victim.fullName}
@@ -126,14 +165,23 @@ const VictimDetailModal: React.FC<VictimDetailModalProps> = ({ victim, open, onC
           <Chip
             label={victim.outcome || 'UNKNOWN'}
             color={
-              victim.outcome === 'SURVIVED' ? 'success' :
-              victim.outcome === 'KILLED' ? 'error' :
-              victim.outcome === 'DISAPPEARED' ? 'warning' : 'default'
+              victim.outcome === 'SURVIVED'
+                ? 'success'
+                : victim.outcome === 'KILLED'
+                  ? 'error'
+                  : victim.outcome === 'DISAPPEARED'
+                    ? 'warning'
+                    : 'default'
             }
           />
-          <Chip label={victim.documentationStatus || 'N/A'} variant="outlined" />
+          <Chip
+            label={victim.documentationStatus || 'N/A'}
+            variant="outlined"
+          />
           <Chip label={victim.confidenceLevel || 'N/A'} variant="outlined" />
-          {victim.gender && <Chip icon={<PersonIcon />} label={victim.gender} size="small" />}
+          {victim.gender && (
+            <Chip icon={<PersonIcon />} label={victim.gender} size="small" />
+          )}
         </Box>
 
         {/* Personal Information */}
@@ -145,33 +193,58 @@ const VictimDetailModal: React.FC<VictimDetailModalProps> = ({ victim, open, onC
             </Typography>
             <Grid container spacing={2}>
               <Grid xs={6}>
-                <Typography variant="body2" color="text.secondary">Date of Birth</Typography>
-                <Typography variant="body1">{formatDate(victim.dateOfBirth)}</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Date of Birth
+                </Typography>
+                <Typography variant="body1">
+                  {formatDate(victim.dateOfBirth)}
+                </Typography>
               </Grid>
               <Grid xs={6}>
-                <Typography variant="body2" color="text.secondary">Place of Birth</Typography>
-                <Typography variant="body1">{victim.placeOfBirth || 'Unknown'}</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Place of Birth
+                </Typography>
+                <Typography variant="body1">
+                  {victim.placeOfBirth || 'Unknown'}
+                </Typography>
               </Grid>
               <Grid xs={6}>
-                <Typography variant="body2" color="text.secondary">Nationality</Typography>
-                <Typography variant="body1">{victim.nationality || 'Chilean'}</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Nationality
+                </Typography>
+                <Typography variant="body1">
+                  {victim.nationality || 'Chilean'}
+                </Typography>
               </Grid>
               <Grid xs={6}>
-                <Typography variant="body2" color="text.secondary">Profession</Typography>
-                <Typography variant="body1">{victim.profession || 'Unknown'}</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Profession
+                </Typography>
+                <Typography variant="body1">
+                  {victim.profession || 'Unknown'}
+                </Typography>
               </Grid>
               {victim.politicalAffiliation && (
                 <Grid xs={12}>
-                  <Typography variant="body2" color="text.secondary">Political Affiliation</Typography>
-                  <Typography variant="body1">{victim.politicalAffiliation}</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Political Affiliation
+                  </Typography>
+                  <Typography variant="body1">
+                    {victim.politicalAffiliation}
+                  </Typography>
                 </Grid>
               )}
-              {victim.alternativeNames && victim.alternativeNames.length > 0 && (
-                <Grid xs={12}>
-                  <Typography variant="body2" color="text.secondary">Also Known As</Typography>
-                  <Typography variant="body1">{victim.alternativeNames.join(', ')}</Typography>
-                </Grid>
-              )}
+              {victim.alternativeNames &&
+                victim.alternativeNames.length > 0 && (
+                  <Grid xs={12}>
+                    <Typography variant="body2" color="text.secondary">
+                      Also Known As
+                    </Typography>
+                    <Typography variant="body1">
+                      {victim.alternativeNames.join(', ')}
+                    </Typography>
+                  </Grid>
+                )}
             </Grid>
           </CardContent>
         </Card>
@@ -182,7 +255,8 @@ const VictimDetailModal: React.FC<VictimDetailModalProps> = ({ victim, open, onC
             <CardContent>
               <Typography variant="h6" gutterBottom>
                 <LocationOnIcon sx={{ mr: 1, verticalAlign: 'middle' }} />
-                Detention History ({victim.detentionHistory.length} location{victim.detentionHistory.length > 1 ? 's' : ''})
+                Detention History ({victim.detentionHistory.length} location
+                {victim.detentionHistory.length > 1 ? 's' : ''})
               </Typography>
               {victim.detentionHistory.map((detention: any, index: number) => (
                 <Accordion key={index} defaultExpanded={index === 0}>
@@ -192,51 +266,88 @@ const VictimDetailModal: React.FC<VictimDetailModalProps> = ({ victim, open, onC
                         {detention.detentionCenterName || 'Unknown Center'}
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
-                        {formatDate(detention.dateArrested)} - {formatDate(detention.dateReleased) || 'Unknown'}
-                        {detention.durationDays && ` (${detention.durationDays} days)`}
+                        {formatDate(detention.dateArrested)} -{' '}
+                        {formatDate(detention.dateReleased) || 'Unknown'}
+                        {detention.durationDays &&
+                          ` (${detention.durationDays} days)`}
                       </Typography>
                     </Box>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Grid container spacing={2}>
                       <Grid xs={12}>
-                        <Typography variant="body2" color="text.secondary">Location</Typography>
-                        <Typography variant="body1">{detention.centerLocation || 'Unknown'}</Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Location
+                        </Typography>
+                        <Typography variant="body1">
+                          {detention.centerLocation || 'Unknown'}
+                        </Typography>
                       </Grid>
                       {detention.conditionsDescription && (
                         <Grid xs={12}>
-                          <Typography variant="body2" color="text.secondary">Conditions</Typography>
-                          <Typography variant="body1">{detention.conditionsDescription}</Typography>
-                        </Grid>
-                      )}
-                      {detention.tortureMethodsUsed && detention.tortureMethodsUsed.length > 0 && (
-                        <Grid xs={12}>
                           <Typography variant="body2" color="text.secondary">
-                            <WarningIcon fontSize="small" sx={{ verticalAlign: 'middle', mr: 0.5 }} />
-                            Torture Methods Documented
+                            Conditions
                           </Typography>
-                          <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                            {detention.tortureMethodsUsed.map((method: string, i: number) => (
-                              <Chip key={i} label={method} size="small" color="error" variant="outlined" />
-                            ))}
-                          </Box>
+                          <Typography variant="body1">
+                            {detention.conditionsDescription}
+                          </Typography>
                         </Grid>
                       )}
-                      {detention.perpetratorNames && detention.perpetratorNames.length > 0 && (
-                        <Grid xs={12}>
-                          <Typography variant="body2" color="text.secondary">Perpetrators Present</Typography>
-                          <List dense>
-                            {detention.perpetratorNames.map((name: string, i: number) => (
-                              <ListItem key={i}>
-                                <ListItemText
-                                  primary={name}
-                                  secondary={detention.perpetratorIds?.[i] || 'ID unknown'}
-                                />
-                              </ListItem>
-                            ))}
-                          </List>
-                        </Grid>
-                      )}
+                      {detention.tortureMethodsUsed &&
+                        detention.tortureMethodsUsed.length > 0 && (
+                          <Grid xs={12}>
+                            <Typography variant="body2" color="text.secondary">
+                              <WarningIcon
+                                fontSize="small"
+                                sx={{ verticalAlign: 'middle', mr: 0.5 }}
+                              />
+                              Torture Methods Documented
+                            </Typography>
+                            <Box
+                              sx={{
+                                mt: 1,
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                gap: 0.5,
+                              }}
+                            >
+                              {detention.tortureMethodsUsed.map(
+                                (method: string, i: number) => (
+                                  <Chip
+                                    key={i}
+                                    label={method}
+                                    size="small"
+                                    color="error"
+                                    variant="outlined"
+                                  />
+                                )
+                              )}
+                            </Box>
+                          </Grid>
+                        )}
+                      {detention.perpetratorNames &&
+                        detention.perpetratorNames.length > 0 && (
+                          <Grid xs={12}>
+                            <Typography variant="body2" color="text.secondary">
+                              Perpetrators Present
+                            </Typography>
+                            <List dense>
+                              {detention.perpetratorNames.map(
+                                (name: string, i: number) => (
+                                  <ListItem key={i}>
+                                    <ListItemText
+                                      primary={name}
+                                      secondary={
+                                        detention.perpetratorIds?.[i] ||
+                                        'ID unknown'
+                                      }
+                                    />
+                                  </ListItem>
+                                )
+                              )}
+                            </List>
+                          </Grid>
+                        )}
                     </Grid>
                   </AccordionDetails>
                 </Accordion>
@@ -262,7 +373,12 @@ const VictimDetailModal: React.FC<VictimDetailModalProps> = ({ victim, open, onC
                         <>
                           {member.relationship}
                           {member.alsoVictimized && (
-                            <Chip label="Also victimized" size="small" color="warning" sx={{ ml: 1 }} />
+                            <Chip
+                              label="Also victimized"
+                              size="small"
+                              color="warning"
+                              sx={{ ml: 1 }}
+                            />
                           )}
                         </>
                       }
@@ -286,12 +402,22 @@ const VictimDetailModal: React.FC<VictimDetailModalProps> = ({ victim, open, onC
                 <Box key={index} sx={{ mb: 2 }}>
                   <Typography variant="subtitle2" color="text.secondary">
                     {formatDate(testimony.date)} - {testimony.location}
-                    {testimony.verified && <Chip label="Verified" size="small" color="success" sx={{ ml: 1 }} />}
+                    {testimony.verified && (
+                      <Chip
+                        label="Verified"
+                        size="small"
+                        color="success"
+                        sx={{ ml: 1 }}
+                      />
+                    )}
                   </Typography>
                   <Typography variant="body2" sx={{ mt: 1 }}>
-                    {testimony.summary || testimony.content?.substring(0, 200) + '...'}
+                    {testimony.summary ||
+                      testimony.content?.substring(0, 200) + '...'}
                   </Typography>
-                  {index < victim.testimonies.length - 1 && <Divider sx={{ mt: 2 }} />}
+                  {index < victim.testimonies.length - 1 && (
+                    <Divider sx={{ mt: 2 }} />
+                  )}
                 </Box>
               ))}
             </CardContent>
@@ -302,24 +428,45 @@ const VictimDetailModal: React.FC<VictimDetailModalProps> = ({ victim, open, onC
         {victim.legalCase && (
           <Card>
             <CardContent>
-              <Typography variant="h6" gutterBottom>Legal Case Information</Typography>
+              <Typography variant="h6" gutterBottom>
+                Legal Case Information
+              </Typography>
               <Grid container spacing={2}>
                 {victim.legalCase.caseNumber && (
                   <Grid xs={12}>
-                    <Typography variant="body2" color="text.secondary">Case Number</Typography>
-                    <Typography variant="body1">{victim.legalCase.caseNumber}</Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Case Number
+                    </Typography>
+                    <Typography variant="body1">
+                      {victim.legalCase.caseNumber}
+                    </Typography>
                   </Grid>
                 )}
                 <Grid xs={6}>
-                  <Typography variant="body2" color="text.secondary">Prosecution Status</Typography>
-                  <Chip label={victim.legalCase.prosecutionStatus} size="small" />
+                  <Typography variant="body2" color="text.secondary">
+                    Prosecution Status
+                  </Typography>
+                  <Chip
+                    label={victim.legalCase.prosecutionStatus}
+                    size="small"
+                  />
                 </Grid>
                 {victim.legalCase.reparationsReceived !== undefined && (
                   <Grid xs={6}>
-                    <Typography variant="body2" color="text.secondary">Reparations</Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Reparations
+                    </Typography>
                     <Chip
-                      label={victim.legalCase.reparationsReceived ? 'Received' : 'Not Received'}
-                      color={victim.legalCase.reparationsReceived ? 'success' : 'default'}
+                      label={
+                        victim.legalCase.reparationsReceived
+                          ? 'Received'
+                          : 'Not Received'
+                      }
+                      color={
+                        victim.legalCase.reparationsReceived
+                          ? 'success'
+                          : 'default'
+                      }
                       size="small"
                     />
                   </Grid>
@@ -338,8 +485,15 @@ const VictimDetailModal: React.FC<VictimDetailModalProps> = ({ victim, open, onC
             Last Updated: {formatDate(victim.lastUpdated)}
           </Typography>
           {victim.sources && victim.sources.length > 0 && (
-            <Typography variant="caption" color="text.secondary" display="block">
-              Sources: {victim.sources.map((s: any) => s.sourceName || s.sourceType).join(', ')}
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              display="block"
+            >
+              Sources:{' '}
+              {victim.sources
+                .map((s: any) => s.sourceName || s.sourceType)
+                .join(', ')}
             </Typography>
           )}
         </Box>

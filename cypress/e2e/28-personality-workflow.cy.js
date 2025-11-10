@@ -6,14 +6,12 @@
  */
 
 describe('🎭 Personality Workflow Page E2E Tests', () => {
-
   beforeEach(() => {
     // Visit personality workflow page before each test
     cy.visit('/personality-workflow');
   });
 
   describe('Page Load and Rendering', () => {
-
     it('should load personality workflow page successfully', () => {
       cy.url().should('include', '/personality-workflow');
       cy.contains(/personality|workflow/i).should('be.visible');
@@ -46,7 +44,6 @@ describe('🎭 Personality Workflow Page E2E Tests', () => {
   });
 
   describe('Workflow Stepper', () => {
-
     it('should display workflow stepper', () => {
       // MUI Stepper component should exist
       cy.get('[class*="MuiStepper"]')
@@ -68,7 +65,7 @@ describe('🎭 Personality Workflow Page E2E Tests', () => {
         /definition/i,
         /implementation/i,
         /testing/i,
-        /documentation/i
+        /documentation/i,
       ];
 
       // At least 2 of these should exist
@@ -91,13 +88,13 @@ describe('🎭 Personality Workflow Page E2E Tests', () => {
       cy.get('[class*="MuiStep"]').first().click({ force: true });
 
       // Should highlight or activate the phase
-      cy.get('[class*="MuiStepLabel-active"], [class*="active"]')
-        .should('exist');
+      cy.get('[class*="MuiStepLabel-active"], [class*="active"]').should(
+        'exist'
+      );
     });
   });
 
   describe('Tab Navigation', () => {
-
     it('should display tabs for different views', () => {
       // MUI Tabs component should exist
       cy.get('[class*="MuiTabs"]')
@@ -127,22 +124,24 @@ describe('🎭 Personality Workflow Page E2E Tests', () => {
       cy.get('[role="tab"]').then(($tabs) => {
         if ($tabs.length > 1) {
           // Get content from first tab
-          cy.get('[role="tabpanel"]').invoke('text').then((firstContent) => {
+          cy.get('[role="tabpanel"]')
+            .invoke('text')
+            .then((firstContent) => {
+              // Switch to second tab
+              cy.wrap($tabs[1]).click();
+              cy.wait(300);
 
-            // Switch to second tab
-            cy.wrap($tabs[1]).click();
-            cy.wait(300);
-
-            // Content should be different
-            cy.get('[role="tabpanel"]').invoke('text').should('not.eq', firstContent);
-          });
+              // Content should be different
+              cy.get('[role="tabpanel"]')
+                .invoke('text')
+                .should('not.eq', firstContent);
+            });
         }
       });
     });
   });
 
   describe('Personality Cards', () => {
-
     it('should display personality cards', () => {
       // MUI Cards should exist
       cy.get('[class*="MuiCard"]')
@@ -163,7 +162,7 @@ describe('🎭 Personality Workflow Page E2E Tests', () => {
         /theatrical/i,
         /precision/i,
         /street/i,
-        /forensic/i
+        /forensic/i,
       ];
 
       // At least 3 roles should be visible
@@ -183,24 +182,25 @@ describe('🎭 Personality Workflow Page E2E Tests', () => {
 
     it('should have hover effects on personality cards', () => {
       // Cards should have hover effects
-      cy.get('[class*="MuiCard"]').first().then(($card) => {
-        // Get initial position
-        const initialRect = $card[0].getBoundingClientRect();
+      cy.get('[class*="MuiCard"]')
+        .first()
+        .then(($card) => {
+          // Get initial position
+          const initialRect = $card[0].getBoundingClientRect();
 
-        // Hover over card
-        cy.wrap($card).trigger('mouseenter');
+          // Hover over card
+          cy.wrap($card).trigger('mouseenter');
 
-        cy.wait(500); // Wait for animation
+          cy.wait(500); // Wait for animation
 
-        // Card should transform (position/shadow change)
-        // This tests the hover effect existence
-        cy.wrap($card).should('have.css', 'transition');
-      });
+          // Card should transform (position/shadow change)
+          // This tests the hover effect existence
+          cy.wrap($card).should('have.css', 'transition');
+        });
     });
   });
 
   describe('Interactive Elements', () => {
-
     it('should display workflow phases with durations', () => {
       // Look for duration indicators (e.g., "30-60 min")
       cy.contains(/\d+.*min|\d+.*hour/i).should('exist');
@@ -208,9 +208,7 @@ describe('🎭 Personality Workflow Page E2E Tests', () => {
 
     it('should show phase steps/substeps', () => {
       // Each phase should have steps
-      cy.get('[data-testid="phase-steps"]')
-        .or('ul, ol')
-        .should('exist');
+      cy.get('[data-testid="phase-steps"]').or('ul, ol').should('exist');
     });
 
     it('should display status chips or badges', () => {
@@ -222,7 +220,6 @@ describe('🎭 Personality Workflow Page E2E Tests', () => {
   });
 
   describe('Loading and Error States', () => {
-
     it('should handle API loading state', () => {
       // Intercept API call with delay
       cy.intercept('GET', '**/api/personality-workflow*', (req) => {
@@ -247,7 +244,7 @@ describe('🎭 Personality Workflow Page E2E Tests', () => {
       // Intercept with error
       cy.intercept('GET', '**/api/personality-workflow*', {
         statusCode: 500,
-        body: { success: false, error: 'Server error' }
+        body: { success: false, error: 'Server error' },
       }).as('workflowError');
 
       cy.visit('/personality-workflow');
@@ -263,7 +260,9 @@ describe('🎭 Personality Workflow Page E2E Tests', () => {
 
     it('should work with or without API data', () => {
       // Page should render with static content even if API fails
-      cy.intercept('GET', '**/api/personality-workflow*', { forceNetworkError: true });
+      cy.intercept('GET', '**/api/personality-workflow*', {
+        forceNetworkError: true,
+      });
 
       cy.visit('/personality-workflow');
 
@@ -273,7 +272,6 @@ describe('🎭 Personality Workflow Page E2E Tests', () => {
   });
 
   describe('Responsive Design', () => {
-
     it('should display correctly on desktop', () => {
       cy.viewport(1920, 1080);
       cy.visit('/personality-workflow');
@@ -300,7 +298,6 @@ describe('🎭 Personality Workflow Page E2E Tests', () => {
   });
 
   describe('Animations and Visual Effects', () => {
-
     it('should have animated personality avatars', () => {
       // Avatars should have animations
       cy.get('[class*="MuiAvatar"]').first().should('have.css', 'animation');
@@ -317,15 +314,16 @@ describe('🎭 Personality Workflow Page E2E Tests', () => {
 
     it('should have bounce animations', () => {
       // Check for bounce animation in keyframes
-      cy.get('[class*="MuiAvatar"]').first().then(($avatar) => {
-        const animationName = $avatar.css('animation-name');
-        expect(animationName).to.not.eq('none');
-      });
+      cy.get('[class*="MuiAvatar"]')
+        .first()
+        .then(($avatar) => {
+          const animationName = $avatar.css('animation-name');
+          expect(animationName).to.not.eq('none');
+        });
     });
   });
 
   describe('Content Verification', () => {
-
     it('should display workflow description', () => {
       // Should explain the workflow process
       cy.contains(/workflow|process|addition|how to/i).should('exist');
@@ -337,7 +335,7 @@ describe('🎭 Personality Workflow Page E2E Tests', () => {
         /theater|performance/i,
         /precision|tactical/i,
         /street|culture/i,
-        /forensic|psychological/i
+        /forensic|psychological/i,
       ];
 
       // At least 3 domains mentioned
@@ -375,7 +373,6 @@ describe('🎭 Personality Workflow Page E2E Tests', () => {
   });
 
   describe('MUI Grid Deprecation Warnings (From Error Report)', () => {
-
     it('should not use deprecated MUI Grid v1 props', () => {
       // According to error report, MUI Grid v1 item/xs/md props are deprecated
       // This test documents the known issue for future fix

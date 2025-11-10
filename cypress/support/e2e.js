@@ -18,20 +18,20 @@ beforeEach(() => {
   // Intercept API calls to prevent real backend dependencies
   // Using explicit localhost pattern
   cy.intercept('GET', 'http://localhost:3000/api/ascii-art', {
-    fixture: 'ascii-art.json'
+    fixture: 'ascii-art.json',
   }).as('getAsciiArt');
 
   cy.intercept('GET', '/api/ascii-art', {
-    fixture: 'ascii-art.json'
+    fixture: 'ascii-art.json',
   }).as('getAsciiArtRelative');
 
   // FIX: App actually calls /api/threat-counts, not /api/stats
   cy.intercept('GET', 'http://localhost:3000/api/threat-counts', {
-    fixture: 'threat-counts.json'
+    fixture: 'threat-counts.json',
   }).as('getThreatCounts');
 
   cy.intercept('GET', '/api/threat-counts', {
-    fixture: 'threat-counts.json'
+    fixture: 'threat-counts.json',
   }).as('getThreatCountsRelative');
 
   // DEPRECATED: App doesn't use this endpoint anymore
@@ -41,20 +41,20 @@ beforeEach(() => {
 
   // Intercept threat actors endpoint with category filtering, desu! 🎯
   cy.intercept('GET', '**/api/threat-actors', {
-    fixture: 'threat-actors-all.json'
+    fixture: 'threat-actors-all.json',
   }).as('getThreatActors');
 
   cy.intercept('GET', '**/api/threat-actors?category=all', {
-    fixture: 'threat-actors-all.json'
+    fixture: 'threat-actors-all.json',
   }).as('getThreatActorsAll');
 
   cy.intercept('GET', '**/api/threat-actors?category=predators', {
-    fixture: 'threat-actors-predators.json'
+    fixture: 'threat-actors-predators.json',
   }).as('getThreatActorsPredators');
 
   // Other categories return filtered results
   cy.intercept('GET', '**/api/threat-actors?category=*', {
-    fixture: 'threat-actors-all.json'
+    fixture: 'threat-actors-all.json',
   }).as('getThreatActorsFiltered');
 });
 

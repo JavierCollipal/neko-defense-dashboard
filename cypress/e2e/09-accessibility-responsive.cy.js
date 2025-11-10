@@ -9,9 +9,7 @@ describe('♿ Accessibility & Responsive Design', () => {
       cy.visitDashboard();
 
       // Tab to first category
-      cy.get('.category-item')
-        .first()
-        .focus();
+      cy.get('.category-item').first().focus();
 
       // Should be focusable
       cy.focused().should('have.class', 'category-item');
@@ -27,17 +25,14 @@ describe('♿ Accessibility & Responsive Design', () => {
         .type('{enter}');
 
       // Category should be selected
-      cy.get('.category-item.active')
-        .should('contain', 'Predators');
+      cy.get('.category-item.active').should('contain', 'Predators');
     });
 
     it('should allow keyboard navigation for TV window buttons', () => {
       cy.visitDashboard();
       cy.stubWindowOpen();
 
-      cy.contains('📺 NEKO TV')
-        .focus()
-        .type('{enter}');
+      cy.contains('📺 NEKO TV').focus().type('{enter}');
 
       cy.get('@windowOpen').should('be.called');
     });
@@ -107,8 +102,7 @@ describe('♿ Accessibility & Responsive Design', () => {
         .parent()
         .click({ force: true });
 
-      cy.get('.category-item.active')
-        .should('contain', 'Predators');
+      cy.get('.category-item.active').should('contain', 'Predators');
     });
 
     it('should display footer on mobile', () => {
@@ -172,16 +166,13 @@ describe('♿ Accessibility & Responsive Design', () => {
     it('should show all threat actor cards in grid', () => {
       cy.visitDashboard();
 
-      cy.get('.threat-actor-card')
-        .should('have.length', 8)
-        .and('be.visible');
+      cy.get('.threat-actor-card').should('have.length', 8).and('be.visible');
     });
 
     it('should maintain proper spacing on large screens', () => {
       cy.visitDashboard();
 
-      cy.get('.threat-actors-grid')
-        .should('have.css', 'display');
+      cy.get('.threat-actors-grid').should('have.css', 'display');
     });
   });
 
@@ -213,9 +204,7 @@ describe('♿ Accessibility & Responsive Design', () => {
     it('should handle long text gracefully', () => {
       cy.visitDashboard();
 
-      cy.get('.actor-known-for')
-        .first()
-        .should('be.visible');
+      cy.get('.actor-known-for').first().should('be.visible');
     });
   });
 
@@ -223,32 +212,26 @@ describe('♿ Accessibility & Responsive Design', () => {
     it('should show hover states on buttons', () => {
       cy.visitDashboard();
 
-      cy.contains('📺 NEKO TV')
-        .should('have.css', 'cursor');
+      cy.contains('📺 NEKO TV').should('have.css', 'cursor');
     });
 
     it('should show hover states on categories', () => {
       cy.visitDashboard();
 
-      cy.get('.category-item')
-        .first()
-        .should('have.css', 'cursor');
+      cy.get('.category-item').first().should('have.css', 'cursor');
     });
 
     it('should make interactive elements clearly clickable', () => {
       cy.visitDashboard();
 
       // Check that interactive elements have pointer cursor
-      cy.get('.category-item')
-        .first()
-        .should('exist');
+      cy.get('.category-item').first().should('exist');
     });
 
     it('should provide visual feedback on active states', () => {
       cy.visitDashboard();
 
-      cy.get('.category-item.active')
-        .should('have.css', 'background-color');
+      cy.get('.category-item.active').should('have.css', 'background-color');
     });
   });
 
@@ -264,26 +247,23 @@ describe('♿ Accessibility & Responsive Design', () => {
     it('should show priority badges prominently', () => {
       cy.visitDashboard();
 
-      cy.get('.detail-item.priority')
-        .should('exist')
-        .and('be.visible');
+      cy.get('.detail-item.priority').should('exist').and('be.visible');
     });
 
     it('should use color coding for threat levels', () => {
       cy.visitDashboard();
 
-      cy.get('.threat-level-badge')
-        .each(($badge) => {
-          cy.wrap($badge)
-            .should('have.css', 'background-color')
-            .and('not.equal', 'rgba(0, 0, 0, 0)');
-        });
+      cy.get('.threat-level-badge').each(($badge) => {
+        cy.wrap($badge)
+          .should('have.css', 'background-color')
+          .and('not.equal', 'rgba(0, 0, 0, 0)');
+      });
     });
 
     it('should show loading indicators clearly', () => {
       cy.intercept('GET', '**/api/threat-actors?category=ransomware', {
         delay: 500,
-        fixture: 'threat-actors-all.json'
+        fixture: 'threat-actors-all.json',
       }).as('getDelayed');
 
       cy.visitDashboard();
@@ -340,10 +320,10 @@ describe('♿ Accessibility & Responsive Design', () => {
       { width: 768, height: 1024, name: 'iPad' },
       { width: 1024, height: 768, name: 'iPad Landscape' },
       { width: 1280, height: 720, name: 'Laptop' },
-      { width: 1920, height: 1080, name: 'Desktop' }
+      { width: 1920, height: 1080, name: 'Desktop' },
     ];
 
-    viewports.forEach(viewport => {
+    viewports.forEach((viewport) => {
       it(`should render correctly on ${viewport.name} (${viewport.width}x${viewport.height})`, () => {
         cy.viewport(viewport.width, viewport.height);
         cy.visitDashboard();
@@ -409,13 +389,9 @@ describe('♿ Accessibility & Responsive Design', () => {
     it('should allow touch interaction with categories', () => {
       cy.visitDashboard();
 
-      cy.get('.category-item')
-        .contains('Crypto Crime')
-        .parent()
-        .click();
+      cy.get('.category-item').contains('Crypto Crime').parent().click();
 
-      cy.get('.category-item.active')
-        .should('contain', 'Crypto Crime');
+      cy.get('.category-item.active').should('contain', 'Crypto Crime');
     });
   });
 
@@ -423,25 +399,19 @@ describe('♿ Accessibility & Responsive Design', () => {
     it('should handle overflow in threat actor names', () => {
       cy.visitDashboard();
 
-      cy.get('.actor-name h3')
-        .should('be.visible')
-        .and('have.css', 'overflow');
+      cy.get('.actor-name h3').should('be.visible').and('have.css', 'overflow');
     });
 
     it('should handle overflow in actor descriptions', () => {
       cy.visitDashboard();
 
-      cy.get('.actor-known-for')
-        .first()
-        .should('be.visible');
+      cy.get('.actor-known-for').first().should('be.visible');
     });
 
     it('should handle overflow in law enforcement status', () => {
       cy.visitDashboard();
 
-      cy.get('.law-enforcement-status')
-        .first()
-        .should('be.visible');
+      cy.get('.law-enforcement-status').first().should('be.visible');
     });
 
     it('should not have horizontal scrollbar on standard viewports', () => {
@@ -463,16 +433,13 @@ describe('♿ Accessibility & Responsive Design', () => {
     it('should use consistent typography', () => {
       cy.visitDashboard();
 
-      cy.get('h2')
-        .should('have.css', 'font-family');
+      cy.get('h2').should('have.css', 'font-family');
     });
 
     it('should use consistent spacing patterns', () => {
       cy.visitDashboard();
 
-      cy.get('.threat-actor-card')
-        .first()
-        .should('have.css', 'padding');
+      cy.get('.threat-actor-card').first().should('have.css', 'padding');
     });
 
     it('should maintain brand identity across all views', () => {
@@ -488,15 +455,13 @@ describe('♿ Accessibility & Responsive Design', () => {
     it('should have smooth transitions on category selection', () => {
       cy.visitDashboard();
 
-      cy.get('.category-item')
-        .first()
-        .should('have.css', 'transition');
+      cy.get('.category-item').first().should('have.css', 'transition');
     });
 
     it('should show loading animation smoothly', () => {
       cy.intercept('GET', '**/api/threat-actors?category=state_sponsored', {
         delay: 500,
-        fixture: 'threat-actors-all.json'
+        fixture: 'threat-actors-all.json',
       });
 
       cy.visitDashboard();
@@ -533,9 +498,7 @@ describe('♿ Accessibility & Responsive Design', () => {
     it('should maintain readability of all text', () => {
       cy.visitDashboard();
 
-      cy.get('.actor-name h3')
-        .should('be.visible')
-        .and('have.css', 'color');
+      cy.get('.actor-name h3').should('be.visible').and('have.css', 'color');
     });
   });
 });

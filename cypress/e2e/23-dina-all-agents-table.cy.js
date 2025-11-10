@@ -7,7 +7,9 @@ describe('DINA ALL AGENTS Table View', () => {
     cy.visit('/dina');
     cy.viewport(1400, 900);
     // Wait for DINA page to load
-    cy.contains('DINA INTERNATIONAL DOCUMENTATION', { timeout: 10000 }).should('be.visible');
+    cy.contains('DINA INTERNATIONAL DOCUMENTATION', { timeout: 10000 }).should(
+      'be.visible'
+    );
   });
 
   describe('ALL AGENTS Button Visibility', () => {
@@ -16,7 +18,9 @@ describe('DINA ALL AGENTS Table View', () => {
     });
 
     it('should show agent count in button label', () => {
-      cy.get('.nav-button').contains(/ALL AGENTS \(\d+\)/).should('be.visible');
+      cy.get('.nav-button')
+        .contains(/ALL AGENTS \(\d+\)/)
+        .should('be.visible');
     });
 
     it('should have 8 navigation buttons including ALL AGENTS', () => {
@@ -24,9 +28,11 @@ describe('DINA ALL AGENTS Table View', () => {
     });
 
     it('should position ALL AGENTS button after TIMELINE', () => {
-      cy.contains('.nav-button', 'TIMELINE').parent().within(() => {
-        cy.contains('.nav-button', 'ALL AGENTS');
-      });
+      cy.contains('.nav-button', 'TIMELINE')
+        .parent()
+        .within(() => {
+          cy.contains('.nav-button', 'ALL AGENTS');
+        });
     });
   });
 
@@ -56,7 +62,9 @@ describe('DINA ALL AGENTS Table View', () => {
     });
 
     it('should display comprehensive database heading', () => {
-      cy.contains('h2', 'ALL DINA AGENTS - COMPREHENSIVE DATABASE').should('be.visible');
+      cy.contains('h2', 'ALL DINA AGENTS - COMPREHENSIVE DATABASE').should(
+        'be.visible'
+      );
       cy.contains('.section-subtitle', 'Complete list').should('be.visible');
     });
 
@@ -79,7 +87,17 @@ describe('DINA ALL AGENTS Table View', () => {
     });
 
     it('should have correct table headers', () => {
-      const expectedHeaders = ['#', 'Full Name', 'Alias', 'Role', 'Rank', 'Status', 'Legal Status', 'Crimes', 'Actions'];
+      const expectedHeaders = [
+        '#',
+        'Full Name',
+        'Alias',
+        'Role',
+        'Rank',
+        'Status',
+        'Legal Status',
+        'Crimes',
+        'Actions',
+      ];
 
       expectedHeaders.forEach((header) => {
         cy.get('.agents-table thead th').contains(header).should('be.visible');
@@ -91,9 +109,11 @@ describe('DINA ALL AGENTS Table View', () => {
     });
 
     it('should display sequential index numbers', () => {
-      cy.get('.agents-table tbody tr').first().within(() => {
-        cy.get('td').first().should('contain', '1');
-      });
+      cy.get('.agents-table tbody tr')
+        .first()
+        .within(() => {
+          cy.get('td').first().should('contain', '1');
+        });
     });
   });
 
@@ -103,31 +123,48 @@ describe('DINA ALL AGENTS Table View', () => {
     });
 
     it('should display agent full names', () => {
-      cy.get('.agents-table tbody .name-cell').should('have.length.greaterThan', 0);
-      cy.get('.agents-table tbody .name-cell strong').first().should('not.be.empty');
+      cy.get('.agents-table tbody .name-cell').should(
+        'have.length.greaterThan',
+        0
+      );
+      cy.get('.agents-table tbody .name-cell strong')
+        .first()
+        .should('not.be.empty');
     });
 
     it('should display roles for each agent', () => {
-      cy.get('.agents-table tbody .role-cell').should('have.length.greaterThan', 0);
+      cy.get('.agents-table tbody .role-cell').should(
+        'have.length.greaterThan',
+        0
+      );
     });
 
     it('should display status badges with proper styling', () => {
-      cy.get('.agents-table tbody .status-badge-table').should('have.length.greaterThan', 0);
+      cy.get('.agents-table tbody .status-badge-table').should(
+        'have.length.greaterThan',
+        0
+      );
     });
 
     it('should show convicted/unprosecuted status', () => {
-      cy.get('.agents-table tbody .legal-cell').first().within(() => {
-        cy.contains(/CONVICTED|UNPROSECUTED/).should('be.visible');
-      });
+      cy.get('.agents-table tbody .legal-cell')
+        .first()
+        .within(() => {
+          cy.contains(/CONVICTED|UNPROSECUTED/).should('be.visible');
+        });
     });
 
     it('should display crimes count', () => {
-      cy.get('.agents-table tbody .crimes-cell').first()
+      cy.get('.agents-table tbody .crimes-cell')
+        .first()
         .should('contain', 'documented');
     });
 
     it('should show View Details button for each agent', () => {
-      cy.get('.agents-table tbody .view-btn-table').should('have.length.greaterThan', 0);
+      cy.get('.agents-table tbody .view-btn-table').should(
+        'have.length.greaterThan',
+        0
+      );
     });
   });
 
@@ -138,10 +175,12 @@ describe('DINA ALL AGENTS Table View', () => {
 
     it('should apply different row classes based on status', () => {
       cy.get('.agents-table tbody tr').then(($rows) => {
-        const hasColoredRows = $rows.toArray().some(row => {
-          return row.className.includes('row-at-large') ||
-                 row.className.includes('row-impunity') ||
-                 row.className.includes('row-convicted');
+        const hasColoredRows = $rows.toArray().some((row) => {
+          return (
+            row.className.includes('row-at-large') ||
+            row.className.includes('row-impunity') ||
+            row.className.includes('row-convicted')
+          );
         });
         expect(hasColoredRows).to.be.true;
       });
@@ -215,7 +254,7 @@ describe('DINA ALL AGENTS Table View', () => {
       // This test assumes API might fail or return no data
       cy.intercept('GET', '**/api/dina/perpetrators', {
         statusCode: 200,
-        body: { success: true, data: [], count: 0 }
+        body: { success: true, data: [], count: 0 },
       }).as('emptyAgents');
 
       cy.visit('/dina');
@@ -232,13 +271,17 @@ describe('DINA ALL AGENTS Table View', () => {
     });
 
     it('should display agents in sequential order', () => {
-      cy.get('.agents-table tbody tr').first().within(() => {
-        cy.get('td').first().should('contain', '1');
-      });
+      cy.get('.agents-table tbody tr')
+        .first()
+        .within(() => {
+          cy.get('td').first().should('contain', '1');
+        });
 
-      cy.get('.agents-table tbody tr').eq(1).within(() => {
-        cy.get('td').first().should('contain', '2');
-      });
+      cy.get('.agents-table tbody tr')
+        .eq(1)
+        .within(() => {
+          cy.get('td').first().should('contain', '2');
+        });
     });
 
     it('should show all agents without pagination', () => {
@@ -254,7 +297,9 @@ describe('DINA ALL AGENTS Table View', () => {
     it('should be scrollable horizontally on narrow screens', () => {
       cy.viewport(768, 1024);
       cy.get('.agents-table-container').then(($container) => {
-        expect($container[0].scrollWidth).to.be.greaterThan($container[0].clientWidth);
+        expect($container[0].scrollWidth).to.be.greaterThan(
+          $container[0].clientWidth
+        );
       });
     });
 
@@ -291,7 +336,10 @@ describe('DINA ALL AGENTS Table View', () => {
     });
 
     it('should have meaningful status indicators', () => {
-      cy.get('.status-badge-table').first().invoke('text').should('not.be.empty');
+      cy.get('.status-badge-table')
+        .first()
+        .invoke('text')
+        .should('not.be.empty');
     });
   });
 
@@ -357,18 +405,26 @@ describe('DINA ALL AGENTS Table View', () => {
     });
 
     it('should match stats banner count with table row count', () => {
-      cy.get('.agents-stats-banner .stat-item').first().find('strong').invoke('text').then((statsCount) => {
-        cy.get('.agents-table tbody tr').its('length').should('eq', parseInt(statsCount));
-      });
+      cy.get('.agents-stats-banner .stat-item')
+        .first()
+        .find('strong')
+        .invoke('text')
+        .then((statsCount) => {
+          cy.get('.agents-table tbody tr')
+            .its('length')
+            .should('eq', parseInt(statsCount));
+        });
     });
 
     it('should display consistent data across views', () => {
       cy.get('.agents-table tbody tr').its('length').as('tableCount');
 
       cy.contains('.nav-button', 'PERPETRATORS').click();
-      cy.get('.perp-grid-international .perp-card-international').its('length').then((cardCount) => {
-        cy.get('@tableCount').should('eq', cardCount);
-      });
+      cy.get('.perp-grid-international .perp-card-international')
+        .its('length')
+        .then((cardCount) => {
+          cy.get('@tableCount').should('eq', cardCount);
+        });
     });
   });
 });

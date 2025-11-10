@@ -48,12 +48,12 @@ export default function NekoTVPage() {
       try {
         // Fetch DINA agents
         const agentsResponse = await fetch('/api/dina-agents');
-        const agentsData = await agentsResponse.json() as APIResponse;
+        const agentsData = (await agentsResponse.json()) as APIResponse;
         setAgents((agentsData.data || agentsData) as DINAAgent[]);
 
         // Fetch brigade structure
         const brigadesResponse = await fetch('/api/dina-brigades');
-        const brigadesData = await brigadesResponse.json() as APIResponse;
+        const brigadesData = (await brigadesResponse.json()) as APIResponse;
         setBrigades((brigadesData.data || brigadesData) as Brigade[]);
 
         setLoading(false);
@@ -104,7 +104,9 @@ export default function NekoTVPage() {
               <div className="grid grid-cols-6 gap-4 text-center">
                 <div className="space-y-2">
                   <div className="text-4xl">🐾</div>
-                  <div className="text-pink-400 font-bold text-sm">NEKO-ARC</div>
+                  <div className="text-pink-400 font-bold text-sm">
+                    NEKO-ARC
+                  </div>
                   <div className="text-xs text-pink-300">Technical Lead</div>
                 </div>
                 <div className="space-y-2">
@@ -124,7 +126,9 @@ export default function NekoTVPage() {
                 </div>
                 <div className="space-y-2">
                   <div className="text-4xl">🧠</div>
-                  <div className="text-indigo-400 font-bold text-sm">HANNIBAL</div>
+                  <div className="text-indigo-400 font-bold text-sm">
+                    HANNIBAL
+                  </div>
                   <div className="text-xs text-indigo-300">Forensic Mind</div>
                 </div>
                 <div className="space-y-2">
@@ -139,13 +143,19 @@ export default function NekoTVPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <div className="bg-gradient-to-br from-pink-500/20 to-purple-500/20 backdrop-blur-md rounded-xl p-6 border border-pink-400/30 transform hover:scale-105 transition-transform">
                 <div className="text-5xl mb-2">👥</div>
-                <div className="text-3xl font-bold text-pink-300">{agents.length}</div>
+                <div className="text-3xl font-bold text-pink-300">
+                  {agents.length}
+                </div>
                 <div className="text-sm text-pink-200">DINA Agents</div>
               </div>
               <div className="bg-gradient-to-br from-purple-500/20 to-indigo-500/20 backdrop-blur-md rounded-xl p-6 border border-purple-400/30 transform hover:scale-105 transition-transform">
                 <div className="text-5xl mb-2">🏢</div>
-                <div className="text-3xl font-bold text-purple-300">{brigades.length}</div>
-                <div className="text-sm text-purple-200">Brigade Structures</div>
+                <div className="text-3xl font-bold text-purple-300">
+                  {brigades.length}
+                </div>
+                <div className="text-sm text-purple-200">
+                  Brigade Structures
+                </div>
               </div>
               <div className="bg-gradient-to-br from-indigo-500/20 to-cyan-500/20 backdrop-blur-md rounded-xl p-6 border border-indigo-400/30 transform hover:scale-105 transition-transform">
                 <div className="text-5xl mb-2">⚡</div>
@@ -166,7 +176,8 @@ export default function NekoTVPage() {
                 🕸️ DINA Organizational Network Map
               </h2>
               <p className="text-cyan-300 mt-2">
-                Interactive visualization of command structure and operational units
+                Interactive visualization of command structure and operational
+                units
               </p>
             </div>
 
@@ -194,13 +205,18 @@ export default function NekoTVPage() {
         <div className="max-w-4xl mx-auto">
           <div className="bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-cyan-500/10 backdrop-blur-md rounded-xl p-6 border border-pink-400/20">
             <p className="text-pink-300 text-sm">
-              🎬 Generated with <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-cyan-400">NEKO TV ARC</span>
+              🎬 Generated with{' '}
+              <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-cyan-400">
+                NEKO TV ARC
+              </span>
             </p>
             <p className="text-purple-300 text-xs mt-2">
-              Intelligence Visualization System | Real-time MongoDB Atlas Integration
+              Intelligence Visualization System | Real-time MongoDB Atlas
+              Integration
             </p>
             <p className="text-cyan-300 text-xs mt-1">
-              🐾 Neko-Arc + 🎭 Mario + 🗡️ Noel + 🎸 Glam + 🧠 Hannibal + 🎭 Tetora
+              🐾 Neko-Arc + 🎭 Mario + 🗡️ Noel + 🎸 Glam + 🧠 Hannibal + 🎭
+              Tetora
             </p>
           </div>
         </div>
@@ -210,7 +226,11 @@ export default function NekoTVPage() {
         .bg-grid-pattern {
           background-image:
             linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            linear-gradient(
+              90deg,
+              rgba(255, 255, 255, 0.05) 1px,
+              transparent 1px
+            );
           background-size: 50px 50px;
           animation: grid-scroll 20s linear infinite;
         }

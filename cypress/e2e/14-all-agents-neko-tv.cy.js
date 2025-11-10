@@ -13,10 +13,10 @@ describe('📺 All Agents Tab - Neko Arc TV Interface (E2E)', () => {
             total_known_agents: 1097,
             convicted: 12,
             atLarge: 5,
-            neverProsecuted: 1
-          }
-        }
-      }
+            neverProsecuted: 1,
+          },
+        },
+      },
     }).as('getStats');
 
     cy.intercept('GET', '**/api/dina/perpetrators', {
@@ -29,10 +29,10 @@ describe('📺 All Agents Tab - Neko Arc TV Interface (E2E)', () => {
             fullName: 'Test Agent',
             role: 'DINA Commander',
             legalStatus: { convicted: true },
-            crimesAccused: ['Torture', 'Kidnapping']
-          }
-        ]
-      }
+            crimesAccused: ['Torture', 'Kidnapping'],
+          },
+        ],
+      },
     }).as('getPerpetrators');
 
     // Mock All Agents API with pagination
@@ -41,19 +41,43 @@ describe('📺 All Agents Tab - Neko Arc TV Interface (E2E)', () => {
       body: {
         success: true,
         data: [
-          { agentNumber: 1, fullName: 'Agent One', rank: 'Colonel', status: 'DECEASED', source: '2008 Army List' },
-          { agentNumber: 2, fullName: 'Agent Two', rank: 'Major', status: 'UNLOCATED', source: '2008 Army List' },
-          { agentNumber: 3, fullName: 'Agent Three', rank: 'Captain', status: 'UNPROSECUTED', source: '2008 Army List' },
-          { agentNumber: 4, fullName: 'Test Search Agent', rank: 'Lieutenant', status: 'DECEASED', source: '2008 Army List' }
+          {
+            agentNumber: 1,
+            fullName: 'Agent One',
+            rank: 'Colonel',
+            status: 'DECEASED',
+            source: '2008 Army List',
+          },
+          {
+            agentNumber: 2,
+            fullName: 'Agent Two',
+            rank: 'Major',
+            status: 'UNLOCATED',
+            source: '2008 Army List',
+          },
+          {
+            agentNumber: 3,
+            fullName: 'Agent Three',
+            rank: 'Captain',
+            status: 'UNPROSECUTED',
+            source: '2008 Army List',
+          },
+          {
+            agentNumber: 4,
+            fullName: 'Test Search Agent',
+            rank: 'Lieutenant',
+            status: 'DECEASED',
+            source: '2008 Army List',
+          },
         ],
         pagination: {
           current_page: 1,
           total_pages: 22,
           total_agents: 1097,
           has_previous: false,
-          has_next: true
-        }
-      }
+          has_next: true,
+        },
+      },
     }).as('getAllAgentsPage1');
 
     cy.intercept('GET', '**/api/dina/all-agents?page=2&limit=50', {
@@ -61,16 +85,22 @@ describe('📺 All Agents Tab - Neko Arc TV Interface (E2E)', () => {
       body: {
         success: true,
         data: [
-          { agentNumber: 51, fullName: 'Page Two Agent', rank: 'Major', status: 'UNLOCATED', source: '2008 Army List' }
+          {
+            agentNumber: 51,
+            fullName: 'Page Two Agent',
+            rank: 'Major',
+            status: 'UNLOCATED',
+            source: '2008 Army List',
+          },
         ],
         pagination: {
           current_page: 2,
           total_pages: 22,
           total_agents: 1097,
           has_previous: true,
-          has_next: true
-        }
-      }
+          has_next: true,
+        },
+      },
     }).as('getAllAgentsPage2');
 
     // Mock search results
@@ -79,16 +109,22 @@ describe('📺 All Agents Tab - Neko Arc TV Interface (E2E)', () => {
       body: {
         success: true,
         data: [
-          { agentNumber: 4, fullName: 'Test Search Agent', rank: 'Lieutenant', status: 'DECEASED', source: '2008 Army List' }
+          {
+            agentNumber: 4,
+            fullName: 'Test Search Agent',
+            rank: 'Lieutenant',
+            status: 'DECEASED',
+            source: '2008 Army List',
+          },
         ],
         pagination: {
           current_page: 1,
           total_pages: 1,
           total_agents: 1,
           has_previous: false,
-          has_next: false
-        }
-      }
+          has_next: false,
+        },
+      },
     }).as('getSearchResults');
 
     // Visit dashboard
@@ -103,7 +139,9 @@ describe('📺 All Agents Tab - Neko Arc TV Interface (E2E)', () => {
       cy.wait('@getAllAgentsPage1');
 
       // Verify neko arc TV header
-      cy.contains('ALL 1,097 KNOWN DINA AGENTS - NEKO ARC TV ARCHIVE').should('be.visible');
+      cy.contains('ALL 1,097 KNOWN DINA AGENTS - NEKO ARC TV ARCHIVE').should(
+        'be.visible'
+      );
       cy.contains('Interactive Browsing, nyaa~').should('be.visible');
     });
 
@@ -181,9 +219,9 @@ describe('📺 All Agents Tab - Neko Arc TV Interface (E2E)', () => {
             total_pages: 0,
             total_agents: 0,
             has_previous: false,
-            has_next: false
-          }
-        }
+            has_next: false,
+          },
+        },
       }).as('getEmptySearch');
 
       cy.contains('📋 ALL AGENTS').click();
@@ -192,7 +230,9 @@ describe('📺 All Agents Tab - Neko Arc TV Interface (E2E)', () => {
       cy.get('[data-testid="agent-search-input"]').type('nonexistent');
       cy.wait('@getEmptySearch');
 
-      cy.contains('😿 No agents found matching "nonexistent"').should('be.visible');
+      cy.contains('😿 No agents found matching "nonexistent"').should(
+        'be.visible'
+      );
       cy.contains('Try a different search term, nyaa~').should('be.visible');
     });
 
@@ -378,7 +418,9 @@ describe('📺 All Agents Tab - Neko Arc TV Interface (E2E)', () => {
       cy.contains('📋 ALL AGENTS').click();
       cy.wait('@getAllAgentsPage1');
 
-      cy.contains('🐾 *purrs in archival excellence* 😻✨').should('be.visible');
+      cy.contains('🐾 *purrs in archival excellence* 😻✨').should(
+        'be.visible'
+      );
     });
 
     it('should have smooth animations on card hover', () => {

@@ -31,18 +31,38 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper
+  Paper,
 } from '@mui/material';
 // Temporary Box-based layout until Grid API compatibility is fixed
-const Grid = ({ container, spacing, xs, sm, md, sx, children, ...props }: any) => (
+const Grid = ({
+  container,
+  spacing,
+  xs,
+  sm,
+  md,
+  sx,
+  children,
+  ...props
+}: any) => (
   <Box
     sx={{
       display: container ? 'flex' : 'block',
       flexWrap: container ? 'wrap' : undefined,
       gap: container ? spacing : undefined,
       flex: xs || sm || md ? '1 1 auto' : undefined,
-      minWidth: xs === 12 ? '100%' : xs === 6 ? '48%' : xs === 3 ? '23%' : md === 2.4 ? '18%' : md === 6 ? '48%' : 'auto',
-      ...sx
+      minWidth:
+        xs === 12
+          ? '100%'
+          : xs === 6
+            ? '48%'
+            : xs === 3
+              ? '23%'
+              : md === 2.4
+                ? '18%'
+                : md === 6
+                  ? '48%'
+                  : 'auto',
+      ...sx,
     }}
     {...props}
   >
@@ -120,7 +140,7 @@ const ValechStatisticsDashboard: React.FC = () => {
 
       try {
         const response = await fetch('/api/valech/stats/comprehensive');
-        const data = await response.json() as any;
+        const data = (await response.json()) as any;
 
         if (data.success) {
           setStats(data.data);
@@ -140,7 +160,14 @@ const ValechStatisticsDashboard: React.FC = () => {
   // Loading state
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '400px',
+        }}
+      >
         <CircularProgress size={60} />
       </Box>
     );
@@ -171,7 +198,8 @@ const ValechStatisticsDashboard: React.FC = () => {
           🕯️ Valech 2.0 - Statistics Dashboard
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          Comprehensive analysis of 27,255 victims of the Chilean dictatorship (1973-1990)
+          Comprehensive analysis of 27,255 victims of the Chilean dictatorship
+          (1973-1990)
         </Typography>
         <Typography variant="caption" color="text.secondary">
           Last updated: {new Date(stats.lastCalculated).toLocaleString()}
@@ -198,7 +226,11 @@ const ValechStatisticsDashboard: React.FC = () => {
                 sx={{ mt: 1 }}
               />
               <Typography variant="caption" color="text.secondary">
-                Target: 27,255 ({((stats.overall.totalVictimsDocumented / 27255) * 100).toFixed(1)}%)
+                Target: 27,255 (
+                {((stats.overall.totalVictimsDocumented / 27255) * 100).toFixed(
+                  1
+                )}
+                %)
               </Typography>
             </CardContent>
           </Card>
@@ -216,8 +248,14 @@ const ValechStatisticsDashboard: React.FC = () => {
               <Typography variant="body2" color="text.secondary">
                 Perpetrators Tracked
               </Typography>
-              <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 1 }}>
-                Conviction Rate: {stats.justiceProgress.convictionRate.toFixed(1)}%
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                display="block"
+                sx={{ mt: 1 }}
+              >
+                Conviction Rate:{' '}
+                {stats.justiceProgress.convictionRate.toFixed(1)}%
               </Typography>
             </CardContent>
           </Card>
@@ -291,7 +329,13 @@ const ValechStatisticsDashboard: React.FC = () => {
               </Typography>
               <Grid container spacing={2}>
                 <Grid xs={6}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}
+                  >
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <CheckCircleIcon color="success" sx={{ mr: 1 }} />
                       <Typography variant="body2">Survived</Typography>
@@ -302,7 +346,13 @@ const ValechStatisticsDashboard: React.FC = () => {
                   </Box>
                 </Grid>
                 <Grid xs={6}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}
+                  >
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <ErrorIcon color="error" sx={{ mr: 1 }} />
                       <Typography variant="body2">Killed</Typography>
@@ -313,7 +363,13 @@ const ValechStatisticsDashboard: React.FC = () => {
                   </Box>
                 </Grid>
                 <Grid xs={6}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}
+                  >
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <WarningIcon color="warning" sx={{ mr: 1 }} />
                       <Typography variant="body2">Disappeared</Typography>
@@ -324,15 +380,26 @@ const ValechStatisticsDashboard: React.FC = () => {
                   </Box>
                 </Grid>
                 <Grid xs={6}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}
+                  >
                     <Typography variant="body2">Unknown</Typography>
-                    <Typography variant="h6">{stats.victimOutcomes.unknown.toLocaleString()}</Typography>
+                    <Typography variant="h6">
+                      {stats.victimOutcomes.unknown.toLocaleString()}
+                    </Typography>
                   </Box>
                 </Grid>
               </Grid>
               <Box sx={{ mt: 2, pt: 2, borderTop: 1, borderColor: 'divider' }}>
                 <Typography variant="body2" color="text.secondary">
-                  Survival Rate: <strong>{stats.victimOutcomes.survivalRate.toFixed(2)}%</strong>
+                  Survival Rate:{' '}
+                  <strong>
+                    {stats.victimOutcomes.survivalRate.toFixed(2)}%
+                  </strong>
                 </Typography>
               </Box>
             </CardContent>
@@ -348,23 +415,33 @@ const ValechStatisticsDashboard: React.FC = () => {
               </Typography>
               <Grid container spacing={2}>
                 <Grid xs={6}>
-                  <Typography variant="body2" color="text.secondary">Convicted</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Convicted
+                  </Typography>
                   <Typography variant="h6" color="success.main">
                     {stats.justiceProgress.perpetratorsConvicted}
                   </Typography>
                 </Grid>
                 <Grid xs={6}>
-                  <Typography variant="body2" color="text.secondary">At Large</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    At Large
+                  </Typography>
                   <Typography variant="h6" color="error.main">
                     {stats.justiceProgress.perpetratorsAtLarge}
                   </Typography>
                 </Grid>
                 <Grid xs={6}>
-                  <Typography variant="body2" color="text.secondary">Deceased</Typography>
-                  <Typography variant="h6">{stats.justiceProgress.perpetratorsDeceased}</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Deceased
+                  </Typography>
+                  <Typography variant="h6">
+                    {stats.justiceProgress.perpetratorsDeceased}
+                  </Typography>
                 </Grid>
                 <Grid xs={6}>
-                  <Typography variant="body2" color="text.secondary">Unprosecuted</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Unprosecuted
+                  </Typography>
                   <Typography variant="h6" color="warning.main">
                     {stats.justiceProgress.perpetratorsUnprosecuted}
                   </Typography>
@@ -372,12 +449,19 @@ const ValechStatisticsDashboard: React.FC = () => {
               </Grid>
               <Box sx={{ mt: 2, pt: 2, borderTop: 1, borderColor: 'divider' }}>
                 <Typography variant="body2" color="text.secondary">
-                  Conviction Rate: <strong>{stats.justiceProgress.convictionRate.toFixed(2)}%</strong>
+                  Conviction Rate:{' '}
+                  <strong>
+                    {stats.justiceProgress.convictionRate.toFixed(2)}%
+                  </strong>
                 </Typography>
                 <LinearProgress
                   variant="determinate"
                   value={stats.justiceProgress.convictionRate}
-                  color={stats.justiceProgress.convictionRate > 50 ? 'success' : 'warning'}
+                  color={
+                    stats.justiceProgress.convictionRate > 50
+                      ? 'success'
+                      : 'warning'
+                  }
                   sx={{ mt: 1 }}
                 />
               </Box>
@@ -412,7 +496,11 @@ const ValechStatisticsDashboard: React.FC = () => {
               </Typography>
             </Grid>
             <Grid xs={3}>
-              <Chip label="Needs Verification" color="error" sx={{ width: '100%' }} />
+              <Chip
+                label="Needs Verification"
+                color="error"
+                sx={{ width: '100%' }}
+              />
               <Typography variant="h6" align="center" sx={{ mt: 1 }}>
                 {stats.documentationQuality.needsVerification.toLocaleString()}
               </Typography>
@@ -420,12 +508,19 @@ const ValechStatisticsDashboard: React.FC = () => {
           </Grid>
           <Box sx={{ mt: 2 }}>
             <Typography variant="body2" color="text.secondary">
-              Completeness Rate: <strong>{stats.documentationQuality.completenessRate.toFixed(2)}%</strong>
+              Completeness Rate:{' '}
+              <strong>
+                {stats.documentationQuality.completenessRate.toFixed(2)}%
+              </strong>
             </Typography>
             <LinearProgress
               variant="determinate"
               value={stats.documentationQuality.completenessRate}
-              color={stats.documentationQuality.completenessRate > 70 ? 'success' : 'warning'}
+              color={
+                stats.documentationQuality.completenessRate > 70
+                  ? 'success'
+                  : 'warning'
+              }
               sx={{ mt: 1 }}
             />
           </Box>
@@ -443,9 +538,15 @@ const ValechStatisticsDashboard: React.FC = () => {
               <Table size="small">
                 <TableHead>
                   <TableRow>
-                    <TableCell><strong>Rank</strong></TableCell>
-                    <TableCell><strong>Center Name</strong></TableCell>
-                    <TableCell align="right"><strong>Victims</strong></TableCell>
+                    <TableCell>
+                      <strong>Rank</strong>
+                    </TableCell>
+                    <TableCell>
+                      <strong>Center Name</strong>
+                    </TableCell>
+                    <TableCell align="right">
+                      <strong>Victims</strong>
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -454,7 +555,11 @@ const ValechStatisticsDashboard: React.FC = () => {
                       <TableCell>#{index + 1}</TableCell>
                       <TableCell>{center.centerName}</TableCell>
                       <TableCell align="right">
-                        <Chip label={center.victims.toLocaleString()} size="small" color="primary" />
+                        <Chip
+                          label={center.victims.toLocaleString()}
+                          size="small"
+                          color="primary"
+                        />
                       </TableCell>
                     </TableRow>
                   ))}

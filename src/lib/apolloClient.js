@@ -2,7 +2,8 @@
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 
 // API URL - Use environment variable or default to localhost:5001
-const GRAPHQL_API_URL = process.env.NEXT_PUBLIC_GRAPHQL_API_URL || 'http://localhost:5001/graphql';
+const GRAPHQL_API_URL =
+  process.env.NEXT_PUBLIC_GRAPHQL_API_URL || 'http://localhost:5001/graphql';
 
 const httpLink = new HttpLink({
   uri: GRAPHQL_API_URL,

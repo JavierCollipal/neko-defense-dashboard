@@ -119,14 +119,17 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
 
     it('should have correct border colors for threat levels', () => {
       // CRITICAL = #ff0055
-      cy.get('.threat-actor-card').first()
+      cy.get('.threat-actor-card')
+        .first()
         .should('have.css', 'border-left-color', 'rgb(255, 0, 85)');
     });
   });
 
   describe('🔍 Search Functionality', () => {
     it('should render search input', () => {
-      cy.get('input[placeholder*="Search by name, ID, or alias"]').should('be.visible');
+      cy.get('input[placeholder*="Search by name, ID, or alias"]').should(
+        'be.visible'
+      );
     });
 
     it('should filter by actor name', () => {
@@ -158,9 +161,13 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
     });
 
     it('should show "no results" message for non-matching search', () => {
-      cy.get('input[placeholder*="Search by name"]').type('NonexistentActor123');
+      cy.get('input[placeholder*="Search by name"]').type(
+        'NonexistentActor123'
+      );
 
-      cy.contains('No threat actors found matching your filters, nyaa~').should('be.visible');
+      cy.contains('No threat actors found matching your filters, nyaa~').should(
+        'be.visible'
+      );
     });
 
     it('should clear search and show all actors', () => {
@@ -207,7 +214,9 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
 
     it('should activate clicked filter button', () => {
       cy.contains('💰 Ransomware').click();
-      cy.contains('💰 Ransomware').parent('button').should('have.class', 'active');
+      cy.contains('💰 Ransomware')
+        .parent('button')
+        .should('have.class', 'active');
     });
 
     it('should return to all when "All Types" is clicked', () => {
@@ -221,14 +230,18 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
 
   describe('🎭 Modal Functionality', () => {
     it('should open modal when card is clicked', () => {
-      cy.contains('Mikhail Pavlovich Matveev').closest('.threat-actor-card').click();
+      cy.contains('Mikhail Pavlovich Matveev')
+        .closest('.threat-actor-card')
+        .click();
 
       cy.get('.modal-overlay').should('be.visible');
       cy.contains('🎭 Aliases').should('be.visible');
     });
 
     it('should display full actor details in modal', () => {
-      cy.contains('Mikhail Pavlovich Matveev').closest('.threat-actor-card').click();
+      cy.contains('Mikhail Pavlovich Matveev')
+        .closest('.threat-actor-card')
+        .click();
 
       // Check header
       cy.get('.modal-header').within(() => {
@@ -239,7 +252,9 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
     });
 
     it('should display all aliases in modal', () => {
-      cy.contains('Mikhail Pavlovich Matveev').closest('.threat-actor-card').click();
+      cy.contains('Mikhail Pavlovich Matveev')
+        .closest('.threat-actor-card')
+        .click();
 
       cy.contains('Wazawaka').should('be.visible');
       cy.contains('m1x').should('be.visible');
@@ -247,7 +262,9 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
     });
 
     it('should display origin and attribution info', () => {
-      cy.contains('Mikhail Pavlovich Matveev').closest('.threat-actor-card').click();
+      cy.contains('Mikhail Pavlovich Matveev')
+        .closest('.threat-actor-card')
+        .click();
 
       cy.contains('📍 Origin & Attribution').should('be.visible');
       cy.contains('Country:').should('be.visible');
@@ -255,19 +272,25 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
     });
 
     it('should display FBI WANTED badge when applicable', () => {
-      cy.contains('Mikhail Pavlovich Matveev').closest('.threat-actor-card').click();
+      cy.contains('Mikhail Pavlovich Matveev')
+        .closest('.threat-actor-card')
+        .click();
 
       cy.contains('🚨 FBI WANTED').should('be.visible');
     });
 
     it('should display reward amount in modal', () => {
-      cy.contains('Mikhail Pavlovich Matveev').closest('.threat-actor-card').click();
+      cy.contains('Mikhail Pavlovich Matveev')
+        .closest('.threat-actor-card')
+        .click();
 
       cy.contains('$10,000,000').should('be.visible');
     });
 
     it('should display threat categories', () => {
-      cy.contains('Mikhail Pavlovich Matveev').closest('.threat-actor-card').click();
+      cy.contains('Mikhail Pavlovich Matveev')
+        .closest('.threat-actor-card')
+        .click();
 
       cy.contains('🎯 Threat Categories').should('be.visible');
       cy.contains('Ransomware').should('be.visible');
@@ -276,7 +299,9 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
     });
 
     it('should display technical profile', () => {
-      cy.contains('Mikhail Pavlovich Matveev').closest('.threat-actor-card').click();
+      cy.contains('Mikhail Pavlovich Matveev')
+        .closest('.threat-actor-card')
+        .click();
 
       cy.contains('🔧 Technical Profile').should('be.visible');
       cy.contains('Hive').should('be.visible');
@@ -285,7 +310,9 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
     });
 
     it('should display evidence and impact stats', () => {
-      cy.contains('Mikhail Pavlovich Matveev').closest('.threat-actor-card').click();
+      cy.contains('Mikhail Pavlovich Matveev')
+        .closest('.threat-actor-card')
+        .click();
 
       cy.contains('📊 Evidence & Impact').should('be.visible');
       cy.contains('200').should('be.visible'); // victims
@@ -294,7 +321,9 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
     });
 
     it('should display known incidents', () => {
-      cy.contains('Mikhail Pavlovich Matveev').closest('.threat-actor-card').click();
+      cy.contains('Mikhail Pavlovich Matveev')
+        .closest('.threat-actor-card')
+        .click();
 
       cy.contains('Notable Incidents:').should('be.visible');
       cy.contains('Hive Ransomware Campaign').should('be.visible');
@@ -302,7 +331,9 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
     });
 
     it('should display intelligence info', () => {
-      cy.contains('Mikhail Pavlovich Matveev').closest('.threat-actor-card').click();
+      cy.contains('Mikhail Pavlovich Matveev')
+        .closest('.threat-actor-card')
+        .click();
 
       cy.contains('🔍 Intelligence').should('be.visible');
       cy.contains('FBI, Interpol').should('be.visible');
@@ -310,14 +341,20 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
     });
 
     it('should display hunting notes when present', () => {
-      cy.contains('Mikhail Pavlovich Matveev').closest('.threat-actor-card').click();
+      cy.contains('Mikhail Pavlovich Matveev')
+        .closest('.threat-actor-card')
+        .click();
 
       cy.contains('🐾 Hunting Notes').should('be.visible');
-      cy.contains('Active FBI manhunt with $10M reward, nyaa~!').should('be.visible');
+      cy.contains('Active FBI manhunt with $10M reward, nyaa~!').should(
+        'be.visible'
+      );
     });
 
     it('should close modal when close button is clicked', () => {
-      cy.contains('Mikhail Pavlovich Matveev').closest('.threat-actor-card').click();
+      cy.contains('Mikhail Pavlovich Matveev')
+        .closest('.threat-actor-card')
+        .click();
       cy.get('.modal-overlay').should('be.visible');
 
       cy.get('.modal-close').click();
@@ -325,7 +362,9 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
     });
 
     it('should close modal when overlay is clicked', () => {
-      cy.contains('Mikhail Pavlovich Matveev').closest('.threat-actor-card').click();
+      cy.contains('Mikhail Pavlovich Matveev')
+        .closest('.threat-actor-card')
+        .click();
       cy.get('.modal-overlay').should('be.visible');
 
       cy.get('.modal-overlay').click({ force: true });
@@ -333,7 +372,9 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
     });
 
     it('should NOT close modal when content is clicked', () => {
-      cy.contains('Mikhail Pavlovich Matveev').closest('.threat-actor-card').click();
+      cy.contains('Mikhail Pavlovich Matveev')
+        .closest('.threat-actor-card')
+        .click();
 
       cy.get('.modal-content').click();
       cy.get('.modal-overlay').should('be.visible');
@@ -349,11 +390,13 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
       cy.contains('RansomHub Group').should('be.visible');
     });
 
-    it('should show no results when filters don\'t match', () => {
+    it("should show no results when filters don't match", () => {
       cy.contains('🎯 APT').click();
       cy.get('input[placeholder*="Search by name"]').type('Mikhail');
 
-      cy.contains('No threat actors found matching your filters, nyaa~').should('be.visible');
+      cy.contains('No threat actors found matching your filters, nyaa~').should(
+        'be.visible'
+      );
     });
   });
 
@@ -361,7 +404,7 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
     it('should display error message when API fails', () => {
       cy.intercept('GET', '**/api/threat-actors', {
         statusCode: 500,
-        body: { success: false, error: 'Server error' }
+        body: { success: false, error: 'Server error' },
       }).as('getFailedActors');
 
       cy.visit('/');
@@ -374,7 +417,7 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
     it('should retry API call when retry button is clicked', () => {
       cy.intercept('GET', '**/api/threat-actors', {
         statusCode: 500,
-        body: { success: false }
+        body: { success: false },
       }).as('getFailedActors');
 
       cy.visit('/');
@@ -382,7 +425,7 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
 
       // Now intercept with success
       cy.intercept('GET', '**/api/threat-actors', {
-        fixture: 'threat-actors-all.json'
+        fixture: 'threat-actors-all.json',
       }).as('getRetryActors');
 
       cy.contains('🔄 Retry').click();
@@ -398,17 +441,20 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
     });
 
     it('should display cards with proper structure', () => {
-      cy.get('.threat-actor-card').first().within(() => {
-        cy.get('.actor-header').should('exist');
-        cy.get('.actor-aliases').should('exist');
-        cy.get('.actor-info').should('exist');
-        cy.get('.actor-categories').should('exist');
-        cy.get('.actor-stats').should('exist');
-      });
+      cy.get('.threat-actor-card')
+        .first()
+        .within(() => {
+          cy.get('.actor-header').should('exist');
+          cy.get('.actor-aliases').should('exist');
+          cy.get('.actor-info').should('exist');
+          cy.get('.actor-categories').should('exist');
+          cy.get('.actor-stats').should('exist');
+        });
     });
 
     it('should have hover effects on cards (visual check)', () => {
-      cy.get('.threat-actor-card').first()
+      cy.get('.threat-actor-card')
+        .first()
         .should('have.css', 'cursor', 'pointer');
     });
   });
@@ -420,10 +466,12 @@ describe('🎯⚡ THREAT ACTORS PAGE - COMPREHENSIVE TESTING ⚡🎯', () => {
     });
 
     it('should handle actors with zero reward', () => {
-      cy.contains('APT29 / Cozy Bear').closest('.threat-actor-card').within(() => {
-        // Should NOT display $0 reward
-        cy.contains('$0').should('not.exist');
-      });
+      cy.contains('APT29 / Cozy Bear')
+        .closest('.threat-actor-card')
+        .within(() => {
+          // Should NOT display $0 reward
+          cy.contains('$0').should('not.exist');
+        });
     });
 
     it('should display all required fields for each actor', () => {

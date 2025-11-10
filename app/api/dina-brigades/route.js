@@ -16,7 +16,7 @@ export async function GET(request) {
     return NextResponse.json({
       success: true,
       data: [],
-      message: 'Demo mode - MongoDB not configured'
+      message: 'Demo mode - MongoDB not configured',
     });
   }
 
@@ -33,20 +33,18 @@ export async function GET(request) {
     return NextResponse.json({
       success: true,
       data: brigades,
-      count: brigades.length
+      count: brigades.length,
     });
-
   } catch (error) {
     console.error('❌ API Error:', error.message);
     return NextResponse.json(
       {
         success: false,
         error: error.message,
-        message: 'Failed to fetch DINA brigades'
+        message: 'Failed to fetch DINA brigades',
       },
       { status: 500 }
     );
-
   } finally {
     await client.close();
   }

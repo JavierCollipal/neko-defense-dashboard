@@ -19,7 +19,7 @@ export async function GET(request) {
     return NextResponse.json({
       success: true,
       data: [],
-      message: 'Demo mode - MongoDB not configured'
+      message: 'Demo mode - MongoDB not configured',
     });
   }
 
@@ -30,25 +30,27 @@ export async function GET(request) {
     const db = client.db('neko-defense-system');
     const collection = db.collection('honeypot-triggers');
 
-    const honeypots = await collection.find({}).sort({ triggered_at: -1 }).limit(100).toArray();
+    const honeypots = await collection
+      .find({})
+      .sort({ triggered_at: -1 })
+      .limit(100)
+      .toArray();
 
     return NextResponse.json({
       success: true,
       data: honeypots,
-      count: honeypots.length
+      count: honeypots.length,
     });
-
   } catch (error) {
     console.error('❌ API Error:', error.message);
     return NextResponse.json(
       {
         success: false,
         error: error.message,
-        message: 'Failed to fetch honeypots'
+        message: 'Failed to fetch honeypots',
       },
       { status: 500 }
     );
-
   } finally {
     await client.close();
   }

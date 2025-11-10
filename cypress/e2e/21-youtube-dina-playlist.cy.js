@@ -14,7 +14,9 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
     });
 
     it('should display the main subtitle', () => {
-      cy.contains('Public Exposure of Threat Actors & Bad Actor Systems').should('be.visible');
+      cy.contains(
+        'Public Exposure of Threat Actors & Bad Actor Systems'
+      ).should('be.visible');
     });
 
     it('should render the subscribe button', () => {
@@ -43,7 +45,9 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
     });
 
     it('should display DINA playlist subtitle', () => {
-      cy.contains('Complete video documentation of DINA human rights violations').should('be.visible');
+      cy.contains(
+        'Complete video documentation of DINA human rights violations'
+      ).should('be.visible');
     });
 
     it('should render the DINA playlist button', () => {
@@ -57,9 +61,11 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
         cy.contains('Evidence-Based:').should('be.visible');
         cy.contains('Documentary proof of DINA crimes').should('be.visible');
         cy.contains('Human Rights:').should('be.visible');
-        cy.contains('Victims\' testimonies & documentation').should('be.visible');
+        cy.contains("Victims' testimonies & documentation").should(
+          'be.visible'
+        );
         cy.contains('Historical Record:').should('be.visible');
-        cy.contains('Chile\'s dictatorship (1973-1990)').should('be.visible');
+        cy.contains("Chile's dictatorship (1973-1990)").should('be.visible');
         cy.contains('Justice:').should('be.visible');
         cy.contains('Supporting accountability & memory').should('be.visible');
       });
@@ -74,8 +80,8 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
       cy.get('.channel-stats').should('exist');
 
       // DINA section should come before stats in DOM
-      cy.get('.dina-playlist-featured').then($dina => {
-        cy.get('.channel-stats').then($stats => {
+      cy.get('.dina-playlist-featured').then(($dina) => {
+        cy.get('.channel-stats').then(($stats) => {
           const dinaPos = $dina[0].getBoundingClientRect().top;
           const statsPos = $stats[0].getBoundingClientRect().top;
           expect(dinaPos).to.be.lessThan(statsPos);
@@ -92,9 +98,7 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
     });
 
     it('should show hover effect on DINA button', () => {
-      cy.get('.dina-playlist-btn')
-        .trigger('mouseover')
-        .should('be.visible');
+      cy.get('.dina-playlist-btn').trigger('mouseover').should('be.visible');
     });
 
     it('should have proper button structure', () => {
@@ -105,7 +109,7 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
 
     it('should be clickable without errors', () => {
       // Stub window.open to prevent actual navigation
-      cy.window().then(win => {
+      cy.window().then((win) => {
         cy.stub(win, 'open').as('windowOpen');
       });
 
@@ -116,13 +120,14 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
     });
 
     it('should open correct DINA playlist URL', () => {
-      cy.window().then(win => {
+      cy.window().then((win) => {
         cy.stub(win, 'open').as('windowOpen');
       });
 
       cy.contains('📺 OPEN DINA VIDEO PLAYLIST').click();
 
-      cy.get('@windowOpen').should('have.been.calledWith',
+      cy.get('@windowOpen').should(
+        'have.been.calledWith',
         'https://www.youtube.com/playlist?list=PL-2OQDhuBcBnq9I-hk2qwoeIQsolRgMdM',
         '_blank',
         'noopener,noreferrer'
@@ -130,13 +135,13 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
     });
 
     it('should open in new tab with security flags', () => {
-      cy.window().then(win => {
+      cy.window().then((win) => {
         cy.stub(win, 'open').as('windowOpen');
       });
 
       cy.contains('📺 OPEN DINA VIDEO PLAYLIST').click();
 
-      cy.get('@windowOpen').then(stub => {
+      cy.get('@windowOpen').then((stub) => {
         expect(stub.getCall(0).args[1]).to.equal('_blank');
         expect(stub.getCall(0).args[2]).to.equal('noopener,noreferrer');
       });
@@ -188,7 +193,9 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
     });
 
     it('should display footer with neko message', () => {
-      cy.contains('Every bad actor caught = YouTube video made, nyaa~!').should('be.visible');
+      cy.contains('Every bad actor caught = YouTube video made, nyaa~!').should(
+        'be.visible'
+      );
     });
 
     it('should display exposure motto', () => {
@@ -203,7 +210,7 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
       cy.wait(500);
 
       // Open drawer if it exists
-      cy.get('body').then($body => {
+      cy.get('body').then(($body) => {
         if ($body.find('.hamburger-menu').length > 0) {
           cy.get('.hamburger-menu').click();
           cy.wait(300);
@@ -218,7 +225,7 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
       cy.visit('http://localhost:3000');
       cy.wait(500);
 
-      cy.get('body').then($body => {
+      cy.get('body').then(($body) => {
         if ($body.find('.hamburger-menu').length > 0) {
           cy.get('.hamburger-menu').click();
           cy.wait(300);
@@ -234,19 +241,18 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
 
   describe('♿ Accessibility', () => {
     it('should be keyboard navigable', () => {
-      cy.get('.dina-playlist-btn')
-        .focus()
-        .should('have.focus');
+      cy.get('.dina-playlist-btn').focus().should('have.focus');
     });
 
     it('should have proper button elements', () => {
-      cy.get('.dina-playlist-btn')
-        .should('have.prop', 'tagName', 'BUTTON');
+      cy.get('.dina-playlist-btn').should('have.prop', 'tagName', 'BUTTON');
     });
 
     it('should have visible text for screen readers', () => {
-      cy.get('.dina-playlist-btn')
-        .should('contain.text', 'OPEN DINA VIDEO PLAYLIST');
+      cy.get('.dina-playlist-btn').should(
+        'contain.text',
+        'OPEN DINA VIDEO PLAYLIST'
+      );
     });
 
     it('should have proper heading hierarchy', () => {
@@ -290,8 +296,7 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
 
   describe('🎨 Visual Appearance', () => {
     it('should have gradient background styling', () => {
-      cy.get('.youtube-playlist-container')
-        .should('have.css', 'background');
+      cy.get('.youtube-playlist-container').should('have.css', 'background');
     });
 
     it('should have DINA section with distinct styling', () => {
@@ -301,8 +306,7 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
     });
 
     it('should have button with hover animation', () => {
-      cy.get('.dina-playlist-btn')
-        .should('have.css', 'transition');
+      cy.get('.dina-playlist-btn').should('have.css', 'transition');
     });
 
     it('should render all emojis correctly', () => {
@@ -317,14 +321,11 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
 
   describe('🧪 Edge Cases & Error Handling', () => {
     it('should handle multiple rapid button clicks', () => {
-      cy.window().then(win => {
+      cy.window().then((win) => {
         cy.stub(win, 'open').as('windowOpen');
       });
 
-      cy.get('.dina-playlist-btn')
-        .click()
-        .click()
-        .click();
+      cy.get('.dina-playlist-btn').click().click().click();
 
       cy.get('@windowOpen').should('have.been.calledThrice');
     });
@@ -334,14 +335,16 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
       cy.wait(300);
 
       cy.get('.dina-playlist-featured').should('be.visible');
-      cy.get('.dina-featured-content').should('not.have.css', 'overflow', 'visible');
+      cy.get('.dina-featured-content').should(
+        'not.have.css',
+        'overflow',
+        'visible'
+      );
     });
 
     it('should handle window.open being blocked', () => {
       // Even if blocked, button should still work
-      cy.get('.dina-playlist-btn')
-        .should('be.visible')
-        .click();
+      cy.get('.dina-playlist-btn').should('be.visible').click();
 
       // Page should not crash
       cy.contains('🎯 DINA VIDEO PLAYLIST PROOF').should('be.visible');
@@ -350,7 +353,7 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
 
   describe('🎯 Multiple Button Interactions', () => {
     it('should allow clicking both subscribe and DINA buttons', () => {
-      cy.window().then(win => {
+      cy.window().then((win) => {
         cy.stub(win, 'open').as('windowOpen');
       });
 
@@ -364,16 +367,18 @@ describe('📺🎯 YouTube DINA Video Playlist Feature', () => {
     });
 
     it('should open different URLs for different buttons', () => {
-      cy.window().then(win => {
+      cy.window().then((win) => {
         cy.stub(win, 'open').as('windowOpen');
       });
 
       cy.contains('🔴 VISIT CHANNEL & SUBSCRIBE').click();
-      cy.get('@windowOpen').its('firstCall.args.0')
+      cy.get('@windowOpen')
+        .its('firstCall.args.0')
         .should('include', 'youtu.be');
 
       cy.contains('📺 OPEN DINA VIDEO PLAYLIST').click();
-      cy.get('@windowOpen').its('secondCall.args.0')
+      cy.get('@windowOpen')
+        .its('secondCall.args.0')
         .should('include', 'youtube.com/playlist');
     });
   });

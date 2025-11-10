@@ -24,7 +24,9 @@ export const PWAInstallPrompt = () => {
   }, []);
 
   const handleInstall = async () => {
-    if (!deferredPrompt) {return;}
+    if (!deferredPrompt) {
+      return;
+    }
 
     // Show the install prompt
     deferredPrompt.prompt();
@@ -43,7 +45,9 @@ export const PWAInstallPrompt = () => {
     setShowPrompt(false);
   };
 
-  if (!showPrompt) {return null;}
+  if (!showPrompt) {
+    return null;
+  }
 
   return (
     <div className="pwa-install-prompt">

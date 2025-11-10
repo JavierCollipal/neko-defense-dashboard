@@ -16,9 +16,7 @@ export const Layout = ({ children }) => {
       <TopTabs />
       <Drawer />
 
-      <main className="layout-main">
-        {children}
-      </main>
+      <main className="layout-main">{children}</main>
 
       {isMobile && <BottomTabs />}
 

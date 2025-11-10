@@ -7,25 +7,21 @@ describe('🎨 Component Interactions & Dynamic Content', () => {
 
   describe('🎨 ASCII Art Display & Rotation', () => {
     it('should display ASCII art section', () => {
-      cy.get('.ascii-tv-section')
-        .should('be.visible');
+      cy.get('.ascii-tv-section').should('be.visible');
     });
 
     it('should show ASCII art after data loads', () => {
       cy.verifyAsciiArt();
 
       // Should display some ASCII content
-      cy.get('.ascii-tv-section')
-        .should('not.contain', 'Loading, nyaa~! 🐾');
+      cy.get('.ascii-tv-section').should('not.contain', 'Loading, nyaa~! 🐾');
     });
 
     it('should display art piece counter (current/total)', () => {
-      cy.get('.ascii-tv-section')
-        .within(() => {
-          // Should show something like "1 / 3" for art navigation
-          cy.get('pre, .ascii-display, .ascii-art')
-            .should('exist');
-        });
+      cy.get('.ascii-tv-section').within(() => {
+        // Should show something like "1 / 3" for art navigation
+        cy.get('pre, .ascii-display, .ascii-art').should('exist');
+      });
     });
 
     it('should have accessible ASCII art container', () => {
@@ -37,8 +33,7 @@ describe('🎨 Component Interactions & Dynamic Content', () => {
 
   describe('📊 Defense Stats Display', () => {
     it('should display stats section', () => {
-      cy.get('.stats-section')
-        .should('be.visible');
+      cy.get('.stats-section').should('be.visible');
     });
 
     it('should show defense statistics after loading', () => {
@@ -65,8 +60,7 @@ describe('🎨 Component Interactions & Dynamic Content', () => {
 
   describe('🎯 Threat List & Intelligence', () => {
     it('should display threat intelligence section', () => {
-      cy.get('.threats-section')
-        .should('be.visible');
+      cy.get('.threats-section').should('be.visible');
     });
 
     it('should show threat intelligence header', () => {
@@ -82,8 +76,7 @@ describe('🎨 Component Interactions & Dynamic Content', () => {
     });
 
     it('should show honeypot traps section', () => {
-      cy.get('.honeypot-section')
-        .should('be.visible');
+      cy.get('.honeypot-section').should('be.visible');
 
       cy.contains('🍯 Active Honeypot Traps').should('be.visible');
     });
@@ -97,8 +90,7 @@ describe('🎨 Component Interactions & Dynamic Content', () => {
     });
 
     it('should show tracked threat actors section', () => {
-      cy.get('.actors-section')
-        .should('be.visible');
+      cy.get('.actors-section').should('be.visible');
 
       cy.contains('👁️ Tracked Threat Actors').should('be.visible');
     });
@@ -138,14 +130,11 @@ describe('🎨 Component Interactions & Dynamic Content', () => {
     });
 
     it('should show status dot animation', () => {
-      cy.get('.status-dot')
-        .should('be.visible')
-        .and('have.css', 'display');
+      cy.get('.status-dot').should('be.visible').and('have.css', 'display');
     });
 
     it('should highlight selected category visually', () => {
-      cy.get('.category-item.active')
-        .should('have.css', 'background-color');
+      cy.get('.category-item.active').should('have.css', 'background-color');
     });
   });
 
@@ -154,7 +143,7 @@ describe('🎨 Component Interactions & Dynamic Content', () => {
       // Switch through multiple categories
       const categories = ['Predators', 'Ransomware', 'All Threats'];
 
-      categories.forEach(cat => {
+      categories.forEach((cat) => {
         cy.get('.category-switcher')
           .contains(cat)
           .parent('.category-item')
@@ -183,9 +172,7 @@ describe('🎨 Component Interactions & Dynamic Content', () => {
 
   describe('🎯 Responsive Layout & Grid', () => {
     it('should display main container with proper layout', () => {
-      cy.get('.main-container')
-        .should('be.visible')
-        .and('have.css', 'display');
+      cy.get('.main-container').should('be.visible').and('have.css', 'display');
     });
 
     it('should show sidebar and main grid side by side', () => {
@@ -194,19 +181,17 @@ describe('🎨 Component Interactions & Dynamic Content', () => {
     });
 
     it('should properly arrange dashboard grid sections', () => {
-      cy.get('.dashboard-grid')
-        .within(() => {
-          cy.get('.ascii-tv-section').should('be.visible');
-          cy.get('.stats-section').should('be.visible');
-          cy.get('.threats-section').should('be.visible');
-        });
+      cy.get('.dashboard-grid').within(() => {
+        cy.get('.ascii-tv-section').should('be.visible');
+        cy.get('.stats-section').should('be.visible');
+        cy.get('.threats-section').should('be.visible');
+      });
     });
   });
 
   describe('🎨 Visual Indicators & Animations', () => {
     it('should show alert pulse for priority categories', () => {
-      cy.get('.alert-pulse')
-        .should('have.length.at.least', 3);
+      cy.get('.alert-pulse').should('have.length.at.least', 3);
     });
 
     it('should display status indicator as active', () => {
@@ -216,27 +201,22 @@ describe('🎨 Component Interactions & Dynamic Content', () => {
     });
 
     it('should show category border colors', () => {
-      cy.get('.category-item')
-        .each(($item) => {
-          cy.wrap($item)
-            .should('have.css', 'border-left-color');
-        });
+      cy.get('.category-item').each(($item) => {
+        cy.wrap($item).should('have.css', 'border-left-color');
+      });
     });
   });
 
   describe('📱 User Interaction Feedback', () => {
     it('should provide visual feedback on category hover', () => {
-      cy.get('.category-item')
-        .first()
-        .trigger('mouseover');
+      cy.get('.category-item').first().trigger('mouseover');
 
       // Category should be interactive
       cy.get('.category-item').first().should('exist');
     });
 
     it('should provide visual feedback on button hover', () => {
-      cy.contains('📺 NEKO TV')
-        .trigger('mouseover');
+      cy.contains('📺 NEKO TV').trigger('mouseover');
 
       cy.contains('📺 NEKO TV').should('have.css', 'cursor');
     });

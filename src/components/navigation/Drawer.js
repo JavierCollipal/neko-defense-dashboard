@@ -12,7 +12,7 @@ const menuItems = [
   { path: '/video', icon: '🎨', label: 'Video Maker & Personalities' },
   { path: '/youtube-generator', icon: '🎥', label: 'YouTube Video Generator' },
   { path: '/youtube', icon: '📺', label: 'DINA Video Playlist' },
-  { path: '/rag', icon: '🗄️', label: 'RAG System' }
+  { path: '/rag', icon: '🗄️', label: 'RAG System' },
 ];
 
 export const Drawer = () => {
@@ -77,14 +77,16 @@ export const Drawer = () => {
         </div>
 
         <ul className="drawer-menu">
-          {menuItems.map(item => (
+          {menuItems.map((item) => (
             <li key={item.path}>
               <Link
                 href={item.path}
                 className="menu-item"
                 onClick={handleLinkClick}
               >
-                <span className="menu-icon" aria-hidden="true">{item.icon}</span>
+                <span className="menu-icon" aria-hidden="true">
+                  {item.icon}
+                </span>
                 <span className="menu-label">{item.label}</span>
               </Link>
             </li>

@@ -11,14 +11,38 @@ describe('Complete Route Coverage - All 10 Routes', () => {
     const routes = [
       { path: '/', name: 'Home (Dashboard)', component: '.dashboard-page' },
       { path: '/threats', name: 'Threat Actors', heading: 'Threat Actors' },
-      { path: '/dina', name: 'DINA Documentation', heading: 'DINA INTERNATIONAL DOCUMENTATION' },
-      { path: '/valech', name: 'Valech Analytics', component: '.valech-v2-dashboard' },
+      {
+        path: '/dina',
+        name: 'DINA Documentation',
+        heading: 'DINA INTERNATIONAL DOCUMENTATION',
+      },
+      {
+        path: '/valech',
+        name: 'Valech Analytics',
+        component: '.valech-v2-dashboard',
+      },
       { path: '/abilities', name: 'Neko Abilities', heading: 'Neko-Arc' },
-      { path: '/video', name: 'Video Maker', component: '.video-maker-container' },
-      { path: '/youtube-generator', name: 'YouTube Generator', component: '.youtube-generator-container' },
+      {
+        path: '/video',
+        name: 'Video Maker',
+        component: '.video-maker-container',
+      },
+      {
+        path: '/youtube-generator',
+        name: 'YouTube Generator',
+        component: '.youtube-generator-container',
+      },
       { path: '/youtube', name: 'YouTube Playlist', heading: 'DINA' },
-      { path: '/rag', name: 'RAG System', component: '.ingestion-enrichment-dashboard' },
-      { path: '/confessions', name: 'Confessions Blog', component: '.confessions-blog' }
+      {
+        path: '/rag',
+        name: 'RAG System',
+        component: '.ingestion-enrichment-dashboard',
+      },
+      {
+        path: '/confessions',
+        name: 'Confessions Blog',
+        component: '.confessions-blog',
+      },
     ];
 
     routes.forEach((route) => {
@@ -179,7 +203,9 @@ describe('Complete Route Coverage - All 10 Routes', () => {
 
     it('should load YouTube Generator', () => {
       cy.visit('/youtube-generator');
-      cy.get('.youtube-generator-container', { timeout: 10000 }).should('be.visible');
+      cy.get('.youtube-generator-container', { timeout: 10000 }).should(
+        'be.visible'
+      );
     });
 
     it('should load YouTube Playlist', () => {
@@ -189,7 +215,9 @@ describe('Complete Route Coverage - All 10 Routes', () => {
 
     it('should load RAG System dashboard', () => {
       cy.visit('/rag');
-      cy.get('.ingestion-enrichment-dashboard', { timeout: 10000 }).should('be.visible');
+      cy.get('.ingestion-enrichment-dashboard', { timeout: 10000 }).should(
+        'be.visible'
+      );
     });
 
     it('should load Confessions Blog', () => {
@@ -256,7 +284,7 @@ describe('Complete Route Coverage - All 10 Routes', () => {
     it('should recover from API errors on routes', () => {
       cy.intercept('GET', '**/api/**', {
         statusCode: 500,
-        body: { error: 'Server error' }
+        body: { error: 'Server error' },
       }).as('apiError');
 
       cy.visit('/threats');

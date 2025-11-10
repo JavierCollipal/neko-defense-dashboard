@@ -10,16 +10,12 @@ export const mockApiResponses = {
     data: [
       {
         name: 'Neko Guardian',
-        art: [
-          ' /\\_/\\  ',
-          '( o.o ) ',
-          ' > ^ <  '
-        ],
+        art: [' /\\_/\\  ', '( o.o ) ', ' > ^ <  '],
         threat_level: 'HIGH',
         category: 'predators',
-        description: 'Test ASCII art, nyaa~!'
-      }
-    ]
+        description: 'Test ASCII art, nyaa~!',
+      },
+    ],
   },
 
   // Stats API response
@@ -31,11 +27,11 @@ export const mockApiResponses = {
       collections: [
         'threat_actors',
         'suspicious_content_trap',
-        'predator_detection_zone'
+        'predator_detection_zone',
       ],
       status: 'FORTRESS MODE ACTIVE',
-      timestamp: '2025-10-11T12:00:00.000Z'
-    }
+      timestamp: '2025-10-11T12:00:00.000Z',
+    },
   },
 
   // Threats summary API response
@@ -47,15 +43,15 @@ export const mockApiResponses = {
       honeypot_traps: [
         'suspicious_content_trap',
         'illegal_materials_monitor',
-        'admin_secrets_decoy'
+        'admin_secrets_decoy',
       ],
       threat_actors_tracked: [
         'Geppetto Master',
         'Crypto Thief Alpha',
-        'Predator Syndicate'
+        'Predator Syndicate',
       ],
-      last_updated: '2025-10-11T12:00:00.000Z'
-    }
+      last_updated: '2025-10-11T12:00:00.000Z',
+    },
   },
 
   // DINA stats API response
@@ -66,9 +62,9 @@ export const mockApiResponses = {
       perpetrators: {
         total: 45,
         convicted: 12,
-        unprosecuted: 33
-      }
-    }
+        unprosecuted: 33,
+      },
+    },
   },
 
   // DINA perpetrators API response
@@ -80,26 +76,26 @@ export const mockApiResponses = {
         role: 'DINA Agent',
         legalStatus: {
           convicted: true,
-          currentStatus: 'Imprisoned'
+          currentStatus: 'Imprisoned',
         },
         verificationStatus: 'VERIFIED',
         organization: ['DINA', 'Military Intelligence'],
         crimesAccused: ['Torture', 'Murder', 'Disappearances'],
-        tags: ['Operation Condor', 'State Terrorism']
+        tags: ['Operation Condor', 'State Terrorism'],
       },
       {
         fullName: 'Test Perpetrator 2',
         role: 'Military Officer',
         legalStatus: {
           convicted: false,
-          currentStatus: 'Free'
+          currentStatus: 'Free',
         },
         verificationStatus: 'VERIFIED',
         organization: ['Chilean Army'],
         crimesAccused: ['Human Rights Violations'],
-        tags: ['Pinochet Regime']
-      }
-    ]
+        tags: ['Pinochet Regime'],
+      },
+    ],
   },
 
   // Threat counts API response
@@ -112,9 +108,9 @@ export const mockApiResponses = {
       dina_network: 0,
       ransomware: 0,
       state_sponsored: 0,
-      crypto_crime: 0
-    }
-  }
+      crypto_crime: 0,
+    },
+  },
 };
 
 // 🌐 Setup fetch mocks, desu!
@@ -123,33 +119,33 @@ export const setupFetchMocks = () => {
     // Check DINA endpoints FIRST (more specific patterns)
     if (url.includes('/dina/stats')) {
       return Promise.resolve({
-        json: () => Promise.resolve(mockApiResponses.dinaStats)
+        json: () => Promise.resolve(mockApiResponses.dinaStats),
       });
     }
     if (url.includes('/dina/perpetrators')) {
       return Promise.resolve({
-        json: () => Promise.resolve(mockApiResponses.dinaPerpetrators)
+        json: () => Promise.resolve(mockApiResponses.dinaPerpetrators),
       });
     }
     // Then check general endpoints
     if (url.includes('/ascii-art')) {
       return Promise.resolve({
-        json: () => Promise.resolve(mockApiResponses.asciiArt)
+        json: () => Promise.resolve(mockApiResponses.asciiArt),
       });
     }
     if (url.includes('/stats')) {
       return Promise.resolve({
-        json: () => Promise.resolve(mockApiResponses.stats)
+        json: () => Promise.resolve(mockApiResponses.stats),
       });
     }
     if (url.includes('/threat-counts')) {
       return Promise.resolve({
-        json: () => Promise.resolve(mockApiResponses.threatCounts)
+        json: () => Promise.resolve(mockApiResponses.threatCounts),
       });
     }
     if (url.includes('/threats/summary')) {
       return Promise.resolve({
-        json: () => Promise.resolve(mockApiResponses.threatsSummary)
+        json: () => Promise.resolve(mockApiResponses.threatsSummary),
       });
     }
     // Default fallback
@@ -159,16 +155,14 @@ export const setupFetchMocks = () => {
 
 // 🚨 Mock failed API responses for error testing, nyaa~!
 export const setupFailedFetchMocks = () => {
-  global.fetch = jest.fn(() =>
-    Promise.reject(new Error('Network error'))
-  );
+  global.fetch = jest.fn(() => Promise.reject(new Error('Network error')));
 };
 
 // 📦 Mock API response with missing success field
 export const setupInvalidFetchMocks = () => {
   global.fetch = jest.fn(() =>
     Promise.resolve({
-      json: () => Promise.resolve({ data: {} }) // Missing 'success' field
+      json: () => Promise.resolve({ data: {} }), // Missing 'success' field
     })
   );
 };
@@ -190,7 +184,7 @@ export const createMockCanvas = () => {
     save: jest.fn(),
     restore: jest.fn(),
     setLineDash: jest.fn(),
-    canvas
+    canvas,
   };
 
   canvas.getContext = jest.fn(() => context);
@@ -202,14 +196,15 @@ export const createMockCanvas = () => {
 // 🪟 Create window.open mock with return value, nyaa~!
 export const setupWindowOpenMock = () => {
   const mockWindow = {
-    focus: jest.fn()
+    focus: jest.fn(),
   };
   global.window.open = jest.fn(() => mockWindow);
   return mockWindow;
 };
 
 // 🔄 Wait for async updates (for useEffect testing)
-export const waitForAsync = () => new Promise(resolve => setTimeout(resolve, 0));
+export const waitForAsync = () =>
+  new Promise((resolve) => setTimeout(resolve, 0));
 
 // 🎯 Custom render with common providers (if needed in future)
 export const customRender = (ui, options = {}) => {

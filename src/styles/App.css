@@ -4,11 +4,11 @@
  * MOBILE-FIRST CSS ARCHITECTURE
  * Load new system first, then legacy styles
  * ======================================== */
-@import './variables.css';      /* Design tokens & CSS variables */
-@import './typography.css';     /* Fluid typography system */
-@import './breakpoints.css';    /* Mobile-first breakpoints */
-@import './components.css';     /* Reusable component patterns */
-@import './rtl-support.css';    /* RTL language support */
+@import './variables.css'; /* Design tokens & CSS variables */
+@import './typography.css'; /* Fluid typography system */
+@import './breakpoints.css'; /* Mobile-first breakpoints */
+@import './components.css'; /* Reusable component patterns */
+@import './rtl-support.css'; /* RTL language support */
 
 /* Legacy :root variables (will be gradually replaced) */
 :root {
@@ -32,7 +32,11 @@
 body {
   margin: 0;
   font-family: 'Courier New', monospace;
-  background: linear-gradient(135deg, var(--neko-darker) 0%, var(--neko-dark) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--neko-darker) 0%,
+    var(--neko-dark) 100%
+  );
   color: var(--neko-secondary);
   min-height: 100vh;
   overflow-x: hidden;
@@ -46,17 +50,30 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(255, 20, 147, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+  background:
+    radial-gradient(
+      circle at 20% 50%,
+      rgba(255, 20, 147, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 50%,
+      rgba(0, 255, 255, 0.1) 0%,
+      transparent 50%
+    );
   animation: pulse 4s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .App {
@@ -85,8 +102,13 @@ body::before {
 }
 
 @keyframes glow-pulse {
-  0%, 100% { text-shadow: 0 0 10px var(--neko-secondary); }
-  50% { text-shadow: var(--neko-glow); }
+  0%,
+  100% {
+    text-shadow: 0 0 10px var(--neko-secondary);
+  }
+  50% {
+    text-shadow: var(--neko-glow);
+  }
 }
 
 .status-bar {
@@ -111,8 +133,14 @@ body::before {
 }
 
 @keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0.5; }
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0.5;
+  }
 }
 
 .kawaii-meter {
@@ -123,7 +151,11 @@ body::before {
 /* TV Window Button */
 .tv-window-button {
   padding: 10px 20px;
-  background: linear-gradient(135deg, var(--neko-primary), var(--neko-secondary));
+  background: linear-gradient(
+    135deg,
+    var(--neko-primary),
+    var(--neko-secondary)
+  );
   border: 2px solid var(--neko-accent);
   border-radius: 25px;
   color: #fff;
@@ -139,7 +171,11 @@ body::before {
 .tv-window-button:hover {
   transform: scale(1.1);
   box-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
-  background: linear-gradient(135deg, var(--neko-secondary), var(--neko-primary));
+  background: linear-gradient(
+    135deg,
+    var(--neko-secondary),
+    var(--neko-primary)
+  );
 }
 
 .tv-window-button:active {
@@ -147,7 +183,8 @@ body::before {
 }
 
 @keyframes tv-button-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 15px rgba(255, 20, 147, 0.5);
   }
   50% {
@@ -167,7 +204,8 @@ body::before {
 }
 
 @keyframes multi-channel-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
   }
   50% {
@@ -177,19 +215,20 @@ body::before {
 
 /* DINA Documentation Button - Justice Mode */
 .tv-window-button.dina-doc {
-  background: linear-gradient(135deg, #FFD700, #FF6B6B);
-  border-color: #FFD700;
+  background: linear-gradient(135deg, #ffd700, #ff6b6b);
+  border-color: #ffd700;
   animation: dina-justice-glow 2s ease-in-out infinite;
 }
 
 .tv-window-button.dina-doc:hover {
-  background: linear-gradient(135deg, #FF6B6B, #FFD700);
+  background: linear-gradient(135deg, #ff6b6b, #ffd700);
   box-shadow: 0 0 35px rgba(255, 215, 0, 0.9);
   transform: scale(1.15);
 }
 
 @keyframes dina-justice-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
   }
   50% {
@@ -199,19 +238,20 @@ body::before {
 
 /* DINA TV Button - Justice Broadcasting */
 .tv-window-button.dina-tv {
-  background: linear-gradient(135deg, #00ff00, #FFD700);
+  background: linear-gradient(135deg, #00ff00, #ffd700);
   border-color: #00ff00;
   animation: dina-tv-glow 2s ease-in-out infinite;
 }
 
 .tv-window-button.dina-tv:hover {
-  background: linear-gradient(135deg, #FFD700, #00ff00);
+  background: linear-gradient(135deg, #ffd700, #00ff00);
   box-shadow: 0 0 35px rgba(0, 255, 0, 0.9);
   transform: scale(1.15);
 }
 
 @keyframes dina-tv-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
   }
   50% {
@@ -233,7 +273,8 @@ body::before {
 }
 
 @keyframes mongodb-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
   }
   50% {
@@ -259,7 +300,8 @@ body::before {
 }
 
 @keyframes youtube-exposure-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
   }
   50% {
@@ -342,8 +384,12 @@ body::before {
 }
 
 @keyframes scan {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(100%); }
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100%);
+  }
 }
 
 .tv-screen {
@@ -368,7 +414,8 @@ body::before {
   flex-wrap: wrap;
 }
 
-.threat-badge, .category-badge {
+.threat-badge,
+.category-badge {
   padding: 8px 15px;
   border-radius: 5px;
   font-weight: bold;
@@ -382,13 +429,18 @@ body::before {
   color: var(--neko-danger);
 }
 
-.threat-badge[data-level="CRITICAL"] {
+.threat-badge[data-level='CRITICAL'] {
   animation: pulse-red 1s infinite;
 }
 
 @keyframes pulse-red {
-  0%, 100% { box-shadow: 0 0 10px var(--neko-danger); }
-  50% { box-shadow: 0 0 20px var(--neko-danger); }
+  0%,
+  100% {
+    box-shadow: 0 0 10px var(--neko-danger);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--neko-danger);
+  }
 }
 
 .category-badge {
@@ -434,7 +486,9 @@ body::before {
   border-radius: 10px;
   padding: 15px;
   text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
 }
 
 .stat-card:hover {
@@ -564,20 +618,24 @@ body::before {
   text-shadow: 0 0 10px var(--neko-success);
 }
 
-.honeypot-section, .actors-section {
+.honeypot-section,
+.actors-section {
   margin-top: 20px;
 }
 
-.honeypot-section h3, .actors-section h3 {
+.honeypot-section h3,
+.actors-section h3 {
   color: var(--neko-accent);
   margin-bottom: 10px;
 }
 
-.trap-list, .actor-list {
+.trap-list,
+.actor-list {
   list-style: none;
 }
 
-.trap-item, .actor-item {
+.trap-item,
+.actor-item {
   padding: 8px;
   margin: 5px 0;
   background: rgba(0, 0, 0, 0.3);
@@ -586,7 +644,8 @@ body::before {
   font-size: 0.9rem;
 }
 
-.trap-icon, .actor-icon {
+.trap-icon,
+.actor-icon {
   margin-right: 8px;
 }
 
@@ -731,8 +790,13 @@ body::before {
 }
 
 @keyframes fortress-pulse {
-  0%, 100% { box-shadow: 0 0 10px var(--neko-primary); }
-  50% { box-shadow: 0 0 20px var(--neko-primary); }
+  0%,
+  100% {
+    box-shadow: 0 0 10px var(--neko-primary);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--neko-primary);
+  }
 }
 
 /* Categories List */
@@ -777,11 +841,12 @@ body::before {
 }
 
 @keyframes priority-alert {
-  0%, 100% { 
-    box-shadow: 0 0 10px rgba(255, 0, 51, 0.5); 
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(255, 0, 51, 0.5);
   }
-  50% { 
-    box-shadow: 0 0 30px rgba(255, 0, 51, 0.9); 
+  50% {
+    box-shadow: 0 0 30px rgba(255, 0, 51, 0.9);
   }
 }
 
@@ -815,8 +880,13 @@ body::before {
 }
 
 @keyframes blink-text {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
 }
 
 .category-count {
@@ -896,7 +966,7 @@ body::before {
   .sidebar-left {
     width: 250px;
   }
-  
+
   .category-name {
     font-size: 0.9rem;
   }
@@ -906,7 +976,7 @@ body::before {
   .main-container {
     flex-direction: column;
   }
-  
+
   .sidebar-left {
     width: 100%;
     height: auto;
@@ -914,13 +984,13 @@ body::before {
     border-right: none;
     border-bottom: 3px solid var(--neko-primary);
   }
-  
+
   .categories-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 10px;
   }
-  
+
   .category-item {
     margin-bottom: 0;
   }

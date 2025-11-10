@@ -12,58 +12,58 @@ const GEOLOCATION_API = 'http://ip-api.com/json';
 // Country code to language mapping for automatic translation
 const COUNTRY_TO_LANGUAGE = {
   // Spanish-speaking countries
-  'ES': 'es', // Spain
-  'MX': 'es', // Mexico
-  'AR': 'es', // Argentina
-  'CL': 'es', // Chile
-  'CO': 'es', // Colombia
-  'PE': 'es', // Peru
-  'VE': 'es', // Venezuela
-  'EC': 'es', // Ecuador
-  'BO': 'es', // Bolivia
-  'PY': 'es', // Paraguay
-  'UY': 'es', // Uruguay
-  'CR': 'es', // Costa Rica
-  'PA': 'es', // Panama
-  'GT': 'es', // Guatemala
-  'HN': 'es', // Honduras
-  'SV': 'es', // El Salvador
-  'NI': 'es', // Nicaragua
-  'DO': 'es', // Dominican Republic
-  'CU': 'es', // Cuba
-  'PR': 'es', // Puerto Rico
+  ES: 'es', // Spain
+  MX: 'es', // Mexico
+  AR: 'es', // Argentina
+  CL: 'es', // Chile
+  CO: 'es', // Colombia
+  PE: 'es', // Peru
+  VE: 'es', // Venezuela
+  EC: 'es', // Ecuador
+  BO: 'es', // Bolivia
+  PY: 'es', // Paraguay
+  UY: 'es', // Uruguay
+  CR: 'es', // Costa Rica
+  PA: 'es', // Panama
+  GT: 'es', // Guatemala
+  HN: 'es', // Honduras
+  SV: 'es', // El Salvador
+  NI: 'es', // Nicaragua
+  DO: 'es', // Dominican Republic
+  CU: 'es', // Cuba
+  PR: 'es', // Puerto Rico
 
   // Other major languages
-  'CN': 'zh', // China
-  'IN': 'hi', // India
-  'SA': 'ar', // Saudi Arabia
-  'AE': 'ar', // UAE
-  'EG': 'ar', // Egypt
-  'FR': 'fr', // France
-  'DE': 'de', // Germany
-  'IT': 'it', // Italy
-  'PT': 'pt', // Portugal
-  'BR': 'pt', // Brazil
-  'RU': 'ru', // Russia
-  'JP': 'ja', // Japan
-  'KR': 'ko', // South Korea
-  'NL': 'nl', // Netherlands
-  'SE': 'sv', // Sweden
-  'NO': 'no', // Norway
-  'DK': 'da', // Denmark
-  'FI': 'fi', // Finland
-  'PL': 'pl', // Poland
-  'TR': 'tr', // Turkey
-  'GR': 'el', // Greece
+  CN: 'zh', // China
+  IN: 'hi', // India
+  SA: 'ar', // Saudi Arabia
+  AE: 'ar', // UAE
+  EG: 'ar', // Egypt
+  FR: 'fr', // France
+  DE: 'de', // Germany
+  IT: 'it', // Italy
+  PT: 'pt', // Portugal
+  BR: 'pt', // Brazil
+  RU: 'ru', // Russia
+  JP: 'ja', // Japan
+  KR: 'ko', // South Korea
+  NL: 'nl', // Netherlands
+  SE: 'sv', // Sweden
+  NO: 'no', // Norway
+  DK: 'da', // Denmark
+  FI: 'fi', // Finland
+  PL: 'pl', // Poland
+  TR: 'tr', // Turkey
+  GR: 'el', // Greece
 
   // Default to English for other countries
-  'US': 'en',
-  'GB': 'en',
-  'CA': 'en',
-  'AU': 'en',
-  'NZ': 'en',
-  'IE': 'en',
-  'ZA': 'en'
+  US: 'en',
+  GB: 'en',
+  CA: 'en',
+  AU: 'en',
+  NZ: 'en',
+  IE: 'en',
+  ZA: 'en',
 };
 
 // GET /api/geolocation/detect - Detect user location and suggest language
@@ -77,7 +77,11 @@ export async function GET(request) {
     console.log('🌍 Geolocation request for IP:', clientIP);
 
     // Handle localhost/development
-    if (clientIP === '127.0.0.1' || clientIP === '::1' || clientIP.startsWith('192.168.')) {
+    if (
+      clientIP === '127.0.0.1' ||
+      clientIP === '::1' ||
+      clientIP.startsWith('192.168.')
+    ) {
       console.log('🏠 Localhost detected, defaulting to Chile (Spanish)');
       return NextResponse.json({
         success: true,
@@ -87,20 +91,22 @@ export async function GET(request) {
           region: 'RM',
           city: 'Santiago',
           ip: clientIP,
-          isLocalhost: true
+          isLocalhost: true,
         },
         suggestedLanguage: 'es',
         confidence: 'high',
         privacy: {
           dataMinimized: true,
           gdprCompliant: true,
-          storagePolicy: 'No IP addresses stored'
-        }
+          storagePolicy: 'No IP addresses stored',
+        },
       });
     }
 
     // Query geolocation API
-    const geoResponse = await fetch(`${GEOLOCATION_API}/${clientIP}?fields=status,country,countryCode,region,city,timezone`);
+    const geoResponse = await fetch(
+      `${GEOLOCATION_API}/${clientIP}?fields=status,country,countryCode,region,city,timezone`
+    );
 
     if (!geoResponse.ok) {
       throw new Error('Geolocation service unavailable');
@@ -119,7 +125,9 @@ export async function GET(request) {
     // Calculate confidence based on country recognition
     const confidence = COUNTRY_TO_LANGUAGE[countryCode] ? 'high' : 'medium';
 
-    console.log(`🎯 Location detected: ${geoData.country} (${countryCode}) → Language: ${suggestedLanguage}`);
+    console.log(
+      `🎯 Location detected: ${geoData.country} (${countryCode}) → Language: ${suggestedLanguage}`
+    );
 
     return NextResponse.json({
       success: true,
@@ -130,7 +138,7 @@ export async function GET(request) {
         city: geoData.city,
         timezone: geoData.timezone,
         ip: clientIP,
-        isLocalhost: false
+        isLocalhost: false,
       },
       suggestedLanguage,
       confidence,
@@ -138,27 +146,29 @@ export async function GET(request) {
         dataMinimized: true,
         gdprCompliant: true,
         storagePolicy: 'No IP addresses stored permanently',
-        userControl: 'Users can override language selection'
-      }
+        userControl: 'Users can override language selection',
+      },
     });
-
   } catch (error) {
     console.error('❌ Geolocation detection error:', error.message);
 
     // Fallback to English with privacy notice
-    return NextResponse.json({
-      success: false,
-      error: error.message,
-      fallback: {
-        suggestedLanguage: 'en',
-        confidence: 'low',
-        reason: 'Geolocation service error - defaulting to English'
+    return NextResponse.json(
+      {
+        success: false,
+        error: error.message,
+        fallback: {
+          suggestedLanguage: 'en',
+          confidence: 'low',
+          reason: 'Geolocation service error - defaulting to English',
+        },
+        privacy: {
+          dataMinimized: true,
+          gdprCompliant: true,
+          storagePolicy: 'No data collected due to error',
+        },
       },
-      privacy: {
-        dataMinimized: true,
-        gdprCompliant: true,
-        storagePolicy: 'No data collected due to error'
-      }
-    }, { status: 200 }); // Still return 200 with fallback
+      { status: 200 }
+    ); // Still return 200 with fallback
   }
 }

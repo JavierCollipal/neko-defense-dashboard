@@ -27,15 +27,15 @@ export async function GET() {
 
     // Calculate statistics
     const convicted = await perpetratorsCollection.countDocuments({
-      'legalStatus.convicted': true
+      'legalStatus.convicted': true,
     });
 
     const atLarge = await perpetratorsCollection.countDocuments({
-      status: { $regex: /AT LARGE/i }
+      status: { $regex: /AT LARGE/i },
     });
 
     const neverProsecuted = await perpetratorsCollection.countDocuments({
-      status: { $regex: /NEVER PROSECUTED/i }
+      status: { $regex: /NEVER PROSECUTED/i },
     });
 
     const stats = {
@@ -44,15 +44,14 @@ export async function GET() {
         documented: totalPerpetrators,
         convicted: convicted,
         atLarge: atLarge,
-        neverProsecuted: neverProsecuted
-      }
+        neverProsecuted: neverProsecuted,
+      },
     };
 
     return NextResponse.json({
       success: true,
-      data: stats
+      data: stats,
     });
-
   } catch (error) {
     console.error('❌ [API] DINA stats error:', error);
     return NextResponse.json(

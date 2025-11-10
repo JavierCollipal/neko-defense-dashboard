@@ -6,7 +6,8 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata = {
   title: 'Neko Defense Dashboard',
-  description: 'Real-time threat monitoring with MAXIMUM KAWAII POWER, nyaa~! 🐾⚡',
+  description:
+    'Real-time threat monitoring with MAXIMUM KAWAII POWER, nyaa~! 🐾⚡',
 };
 
 export default function RootLayout({ children }) {

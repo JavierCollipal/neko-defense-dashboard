@@ -70,7 +70,7 @@ export async function GET(request: NextRequest) {
       } else {
         query.fullName = {
           $regex: nameValue,
-          $options: 'i'  // Case-insensitive
+          $options: 'i', // Case-insensitive
         };
       }
     }
@@ -79,7 +79,7 @@ export async function GET(request: NextRequest) {
     if (params.get('alternativeName')) {
       query.alternativeNames = {
         $regex: params.get('alternativeName')!,
-        $options: 'i'
+        $options: 'i',
       };
     }
 
@@ -87,12 +87,13 @@ export async function GET(request: NextRequest) {
     if (params.get('detentionCenter')) {
       query['detentionHistory.detentionCenterName'] = {
         $regex: params.get('detentionCenter')!,
-        $options: 'i'
+        $options: 'i',
       };
     }
 
     if (params.get('detentionCenterId')) {
-      query['detentionHistory.detentionCenterId'] = params.get('detentionCenterId')!;
+      query['detentionHistory.detentionCenterId'] =
+        params.get('detentionCenterId')!;
     }
 
     // Date range filter
@@ -100,11 +101,15 @@ export async function GET(request: NextRequest) {
       query['detentionHistory.dateArrested'] = {};
 
       if (params.get('dateArrestedFrom')) {
-        query['detentionHistory.dateArrested'].$gte = new Date(params.get('dateArrestedFrom')!);
+        query['detentionHistory.dateArrested'].$gte = new Date(
+          params.get('dateArrestedFrom')!
+        );
       }
 
       if (params.get('dateArrestedTo')) {
-        query['detentionHistory.dateArrested'].$lte = new Date(params.get('dateArrestedTo')!);
+        query['detentionHistory.dateArrested'].$lte = new Date(
+          params.get('dateArrestedTo')!
+        );
       }
     }
 
@@ -122,7 +127,7 @@ export async function GET(request: NextRequest) {
     if (params.get('profession')) {
       query.profession = {
         $regex: params.get('profession')!,
-        $options: 'i'
+        $options: 'i',
       };
     }
 
@@ -130,7 +135,7 @@ export async function GET(request: NextRequest) {
     if (params.get('politicalAffiliation')) {
       query.politicalAffiliation = {
         $regex: params.get('politicalAffiliation')!,
-        $options: 'i'
+        $options: 'i',
       };
     }
 
@@ -152,7 +157,8 @@ export async function GET(request: NextRequest) {
     // Perpetrator cross-reference filter
     if (params.get('perpetratorId')) {
       // This requires a cross-reference lookup
-      const crossRefs = await db.collection('valech_cross_references')
+      const crossRefs = await db
+        .collection('valech_cross_references')
         .find({ perpetratorId: params.get('perpetratorId')! })
         .toArray();
 
@@ -162,7 +168,7 @@ export async function GET(request: NextRequest) {
 
     // Pagination
     const page = parseInt(params.get('page') || '1');
-    const limit = Math.min(parseInt(params.get('limit') || '50'), 100);  // Max 100 per page
+    const limit = Math.min(parseInt(params.get('limit') || '50'), 100); // Max 100 per page
     const skip = (page - 1) * limit;
 
     // Sorting
@@ -172,13 +178,8 @@ export async function GET(request: NextRequest) {
 
     // Execute query
     const [victims, totalCount] = await Promise.all([
-      collection
-        .find(query)
-        .sort(sort)
-        .skip(skip)
-        .limit(limit)
-        .toArray(),
-      collection.countDocuments(query)
+      collection.find(query).sort(sort).skip(skip).limit(limit).toArray(),
+      collection.countDocuments(query),
     ]);
 
     const executionTime = Date.now() - startTime;
@@ -190,19 +191,18 @@ export async function GET(request: NextRequest) {
         page,
         limit,
         total: totalCount,
-        pages: Math.ceil(totalCount / limit)
+        pages: Math.ceil(totalCount / limit),
       },
-      query: query,  // For debugging
-      executionTime: `${executionTime}ms`
+      query: query, // For debugging
+      executionTime: `${executionTime}ms`,
     });
-
   } catch (error: any) {
     console.error('[Valech Victims API] Error:', error);
     return NextResponse.json(
       {
         success: false,
         error: error.message,
-        code: 'VICTIMS_QUERY_FAILED'
+        code: 'VICTIMS_QUERY_FAILED',
       },
       { status: 500 }
     );
@@ -227,7 +227,7 @@ export async function POST(request: NextRequest) {
     const collection = db.collection(COLLECTION_NAME);
 
     // Parse request body
-    const body = await request.json() as any;
+    const body = (await request.json()) as any;
 
     // Validate required fields
     const requiredFields = ['victimId', 'fullName', 'outcome'];
@@ -238,7 +238,7 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           error: `Missing required fields: ${missingFields.join(', ')}`,
-          code: 'MISSING_REQUIRED_FIELDS'
+          code: 'MISSING_REQUIRED_FIELDS',
         },
         { status: 400 }
       );
@@ -251,7 +251,7 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           error: `Victim with ID "${body.victimId}" already exists`,
-          code: 'DUPLICATE_VICTIM_ID'
+          code: 'DUPLICATE_VICTIM_ID',
         },
         { status: 409 }
       );
@@ -263,7 +263,7 @@ export async function POST(request: NextRequest) {
       ...body,
       createdAt: now,
       lastUpdated: now,
-      createdBy: body.createdBy || 'api-user'
+      createdBy: body.createdBy || 'api-user',
     };
 
     // Insert
@@ -274,20 +274,19 @@ export async function POST(request: NextRequest) {
         success: true,
         data: {
           _id: result.insertedId,
-          victimId: body.victimId
+          victimId: body.victimId,
         },
-        message: 'Victim record created successfully'
+        message: 'Victim record created successfully',
       },
       { status: 201 }
     );
-
   } catch (error: any) {
     console.error('[Valech Victims API] Error creating victim:', error);
     return NextResponse.json(
       {
         success: false,
         error: error.message,
-        code: 'VICTIM_CREATION_FAILED'
+        code: 'VICTIM_CREATION_FAILED',
       },
       { status: 500 }
     );

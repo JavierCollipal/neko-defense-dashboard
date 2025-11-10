@@ -12,14 +12,22 @@ import { Dashboard } from './page-components/Dashboard';
 // Lazy load: All other pages for code splitting
 const ThreatActors = lazy(() => import('./components/ThreatActors'));
 const ValechV2Dashboard = lazy(() => import('./components/ValechV2Dashboard'));
-const DinaDocumentationInternational = lazy(() => import('./components/DinaDocumentationInternational'));
+const DinaDocumentationInternational = lazy(
+  () => import('./components/DinaDocumentationInternational')
+);
 const NekoArcAbilities = lazy(() => import('./components/NekoArcAbilities'));
 const VideoMaker = lazy(() => import('./components/VideoMaker'));
-const YouTubeVideoGenerator = lazy(() => import('./components/YouTubeVideoGenerator'));
+const YouTubeVideoGenerator = lazy(
+  () => import('./components/YouTubeVideoGenerator')
+);
 const YouTubePlaylist = lazy(() => import('./components/YouTubePlaylist'));
-const IngestionEnrichmentDashboard = lazy(() => import('./components/IngestionEnrichmentDashboard'));
+const IngestionEnrichmentDashboard = lazy(
+  () => import('./components/IngestionEnrichmentDashboard')
+);
 const ConfessionsBlog = lazy(() => import('./components/ConfessionsBlog'));
-const TranslationDashboard = lazy(() => import('./components/TranslationDashboard'));
+const TranslationDashboard = lazy(
+  () => import('./components/TranslationDashboard')
+);
 
 function App() {
   return (
@@ -31,10 +39,16 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/threats" element={<ThreatActors />} />
               <Route path="/valech" element={<ValechV2Dashboard />} />
-              <Route path="/dina" element={<DinaDocumentationInternational />} />
+              <Route
+                path="/dina"
+                element={<DinaDocumentationInternational />}
+              />
               <Route path="/abilities" element={<NekoArcAbilities />} />
               <Route path="/video" element={<VideoMaker />} />
-              <Route path="/youtube-generator" element={<YouTubeVideoGenerator />} />
+              <Route
+                path="/youtube-generator"
+                element={<YouTubeVideoGenerator />}
+              />
               <Route path="/youtube" element={<YouTubePlaylist />} />
               <Route path="/rag" element={<IngestionEnrichmentDashboard />} />
               <Route path="/confessions" element={<ConfessionsBlog />} />

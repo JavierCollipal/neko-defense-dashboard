@@ -27,10 +27,10 @@ export async function GET(request) {
           threat_level: 'MEDIUM',
           origin: { country: 'Unknown' },
           categories: ['Demo'],
-          status: 'active'
-        }
+          status: 'active',
+        },
       ],
-      message: 'Demo mode - MongoDB not configured'
+      message: 'Demo mode - MongoDB not configured',
     });
   }
 
@@ -47,20 +47,18 @@ export async function GET(request) {
     return NextResponse.json({
       success: true,
       data: threatActors,
-      count: threatActors.length
+      count: threatActors.length,
     });
-
   } catch (error) {
     console.error('❌ API Error:', error.message);
     return NextResponse.json(
       {
         success: false,
         error: error.message,
-        message: 'Failed to fetch threat actors'
+        message: 'Failed to fetch threat actors',
       },
       { status: 500 }
     );
-
   } finally {
     await client.close();
   }

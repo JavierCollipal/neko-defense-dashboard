@@ -19,9 +19,8 @@ export async function GET() {
 
     return NextResponse.json({
       ascii: asciiArt,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
-
   } catch (error) {
     console.error('[API] ASCII Art error:', error);
     return NextResponse.json(

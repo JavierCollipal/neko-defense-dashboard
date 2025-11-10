@@ -10,39 +10,59 @@ const AutoTranslationPrompt = ({
   suggestedLanguage,
   onAccept,
   onDecline,
-  onEnableWithoutLocation
+  onEnableWithoutLocation,
 }) => {
   const { t } = useTranslation();
 
-  if (!isVisible) {return null;}
+  if (!isVisible) {
+    return null;
+  }
 
   const getLanguageName = (code) => {
     // Fix: Add null check before calling .toUpperCase()
-    if (!code) {return 'Unknown';}
+    if (!code) {
+      return 'Unknown';
+    }
 
     const languages = {
-      'es': 'Español',
-      'en': 'English',
-      'fr': 'Français',
-      'de': 'Deutsch',
-      'it': 'Italiano',
-      'pt': 'Português',
-      'ru': 'Русский',
-      'zh': '中文',
-      'ja': '日本語',
-      'ko': '한국어',
-      'ar': 'العربية',
-      'hi': 'हिन्दी'
+      es: 'Español',
+      en: 'English',
+      fr: 'Français',
+      de: 'Deutsch',
+      it: 'Italiano',
+      pt: 'Português',
+      ru: 'Русский',
+      zh: '中文',
+      ja: '日本語',
+      ko: '한국어',
+      ar: 'العربية',
+      hi: 'हिन्दी',
     };
     return languages[code] || code.toUpperCase();
   };
 
   const getCountryFlag = (countryCode) => {
     const flags = {
-      'CL': '🇨🇱', 'ES': '🇪🇸', 'MX': '🇲🇽', 'AR': '🇦🇷', 'CO': '🇨🇴',
-      'PE': '🇵🇪', 'VE': '🇻🇪', 'EC': '🇪🇨', 'US': '🇺🇸', 'GB': '🇬🇧',
-      'FR': '🇫🇷', 'DE': '🇩🇪', 'IT': '🇮🇹', 'PT': '🇵🇹', 'BR': '🇧🇷',
-      'CN': '🇨🇳', 'JP': '🇯🇵', 'KR': '🇰🇷', 'RU': '🇷🇺', 'IN': '🇮🇳'
+      CL: '🇨🇱',
+      ES: '🇪🇸',
+      MX: '🇲🇽',
+      AR: '🇦🇷',
+      CO: '🇨🇴',
+      PE: '🇵🇪',
+      VE: '🇻🇪',
+      EC: '🇪🇨',
+      US: '🇺🇸',
+      GB: '🇬🇧',
+      FR: '🇫🇷',
+      DE: '🇩🇪',
+      IT: '🇮🇹',
+      PT: '🇵🇹',
+      BR: '🇧🇷',
+      CN: '🇨🇳',
+      JP: '🇯🇵',
+      KR: '🇰🇷',
+      RU: '🇷🇺',
+      IN: '🇮🇳',
     };
     return flags[countryCode] || '🌍';
   };
@@ -67,7 +87,11 @@ const AutoTranslationPrompt = ({
               </span>
               <div>
                 <p className="font-medium">
-                  {t('autoTranslation.prompt.detectedLocation', 'Detected Location')}:
+                  {t(
+                    'autoTranslation.prompt.detectedLocation',
+                    'Detected Location'
+                  )}
+                  :
                 </p>
                 <p className="text-sm">
                   {detectedLocation.city}, {detectedLocation.country}
@@ -81,7 +105,11 @@ const AutoTranslationPrompt = ({
         {suggestedLanguage && (
           <div className="mb-4">
             <p className="text-gray-300 mb-3">
-              {t('autoTranslation.prompt.suggestion', 'Based on your location, we recommend')}:
+              {t(
+                'autoTranslation.prompt.suggestion',
+                'Based on your location, we recommend'
+              )}
+              :
             </p>
             <div className="bg-blue-600 bg-opacity-20 border border-blue-500 rounded-lg p-3">
               <div className="flex items-center">
@@ -91,7 +119,10 @@ const AutoTranslationPrompt = ({
                     {getLanguageName(suggestedLanguage)}
                   </p>
                   <p className="text-gray-400 text-sm">
-                    {t('autoTranslation.prompt.automaticTranslation', 'Automatic translation')}
+                    {t(
+                      'autoTranslation.prompt.automaticTranslation',
+                      'Automatic translation'
+                    )}
                   </p>
                 </div>
               </div>
@@ -108,7 +139,10 @@ const AutoTranslationPrompt = ({
                 {t('autoTranslation.prompt.privacyTitle', 'Privacy Notice')}
               </p>
               <p>
-                {t('autoTranslation.prompt.privacyText', 'We use your IP address to detect location for language suggestions. No personal data is stored permanently.')}
+                {t(
+                  'autoTranslation.prompt.privacyText',
+                  'We use your IP address to detect location for language suggestions. No personal data is stored permanently.'
+                )}
               </p>
             </div>
           </div>
@@ -122,7 +156,10 @@ const AutoTranslationPrompt = ({
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center"
           >
             <span className="mr-2">✅</span>
-            {t('autoTranslation.prompt.acceptWithLocation', 'Enable Auto Translation')}
+            {t(
+              'autoTranslation.prompt.acceptWithLocation',
+              'Enable Auto Translation'
+            )}
           </button>
 
           {/* Enable without location */}
@@ -131,7 +168,10 @@ const AutoTranslationPrompt = ({
             className="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center"
           >
             <span className="mr-2">🌐</span>
-            {t('autoTranslation.prompt.enableWithoutLocation', 'Enable Without Location')}
+            {t(
+              'autoTranslation.prompt.enableWithoutLocation',
+              'Enable Without Location'
+            )}
           </button>
 
           {/* Decline */}
@@ -139,13 +179,19 @@ const AutoTranslationPrompt = ({
             onClick={() => onDecline()}
             className="w-full bg-transparent border border-gray-600 hover:bg-gray-700 text-gray-300 font-medium py-2 px-4 rounded-lg transition-colors"
           >
-            {t('autoTranslation.prompt.decline', 'No Thanks, Keep Current Language')}
+            {t(
+              'autoTranslation.prompt.decline',
+              'No Thanks, Keep Current Language'
+            )}
           </button>
         </div>
 
         {/* Footer Note */}
         <p className="text-xs text-gray-500 mt-4 text-center">
-          {t('autoTranslation.prompt.footer', 'You can change this preference anytime in settings')}
+          {t(
+            'autoTranslation.prompt.footer',
+            'You can change this preference anytime in settings'
+          )}
         </p>
       </div>
     </div>

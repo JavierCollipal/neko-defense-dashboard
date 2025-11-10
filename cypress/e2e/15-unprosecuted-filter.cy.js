@@ -14,10 +14,10 @@ describe('⚖️ Unprosecuted Filter Button - Full E2E Flow', () => {
             convicted: 800,
             unprosecuted: 297,
             atLarge: 5,
-            neverProsecuted: 1
-          }
-        }
-      }
+            neverProsecuted: 1,
+          },
+        },
+      },
     }).as('getStats');
 
     cy.intercept('GET', '**/api/dina/perpetrators', {
@@ -30,10 +30,10 @@ describe('⚖️ Unprosecuted Filter Button - Full E2E Flow', () => {
             fullName: 'Test Agent',
             role: 'DINA Commander',
             legalStatus: { convicted: true },
-            crimesAccused: ['Torture', 'Kidnapping']
-          }
-        ]
-      }
+            crimesAccused: ['Torture', 'Kidnapping'],
+          },
+        ],
+      },
     }).as('getPerpetrators');
 
     // Mock All Agents API - No filter
@@ -42,61 +42,117 @@ describe('⚖️ Unprosecuted Filter Button - Full E2E Flow', () => {
       body: {
         success: true,
         data: [
-          { agentNumber: 1, fullName: 'Convicted Agent One', rank: 'Colonel', status: 'CONVICTED - IMPRISONED', legalStatus: { convicted: true } },
-          { agentNumber: 2, fullName: 'Convicted Agent Two', rank: 'Major', status: 'CONVICTED - DECEASED', legalStatus: { convicted: true } },
-          { agentNumber: 3, fullName: 'Unprosecuted Agent One', rank: 'Captain', status: 'UNPROSECUTED', legalStatus: { convicted: false } },
-          { agentNumber: 4, fullName: 'Unprosecuted Agent Two', rank: 'Lieutenant', status: 'UNPROSECUTED', legalStatus: { convicted: false } }
+          {
+            agentNumber: 1,
+            fullName: 'Convicted Agent One',
+            rank: 'Colonel',
+            status: 'CONVICTED - IMPRISONED',
+            legalStatus: { convicted: true },
+          },
+          {
+            agentNumber: 2,
+            fullName: 'Convicted Agent Two',
+            rank: 'Major',
+            status: 'CONVICTED - DECEASED',
+            legalStatus: { convicted: true },
+          },
+          {
+            agentNumber: 3,
+            fullName: 'Unprosecuted Agent One',
+            rank: 'Captain',
+            status: 'UNPROSECUTED',
+            legalStatus: { convicted: false },
+          },
+          {
+            agentNumber: 4,
+            fullName: 'Unprosecuted Agent Two',
+            rank: 'Lieutenant',
+            status: 'UNPROSECUTED',
+            legalStatus: { convicted: false },
+          },
         ],
         pagination: {
           current_page: 1,
           total_pages: 22,
           total_agents: 1097,
           has_previous: false,
-          has_next: true
+          has_next: true,
         },
-        filter: 'none'
-      }
+        filter: 'none',
+      },
     }).as('getAllAgentsNoFilter');
 
     // Mock All Agents API - WITH unprosecuted filter
-    cy.intercept('GET', '**/api/dina/all-agents?page=1&limit=50&filter=unprosecuted', {
-      statusCode: 200,
-      body: {
-        success: true,
-        data: [
-          { agentNumber: 3, fullName: 'Unprosecuted Agent One', rank: 'Captain', status: 'UNPROSECUTED', legalStatus: { convicted: false } },
-          { agentNumber: 4, fullName: 'Unprosecuted Agent Two', rank: 'Lieutenant', status: 'UNPROSECUTED', legalStatus: { convicted: false } },
-          { agentNumber: 7, fullName: 'Unprosecuted Agent Three', rank: 'Sergeant', status: 'UNPROSECUTED', legalStatus: { convicted: false } }
-        ],
-        pagination: {
-          current_page: 1,
-          total_pages: 6,
-          total_agents: 297,
-          has_previous: false,
-          has_next: true
+    cy.intercept(
+      'GET',
+      '**/api/dina/all-agents?page=1&limit=50&filter=unprosecuted',
+      {
+        statusCode: 200,
+        body: {
+          success: true,
+          data: [
+            {
+              agentNumber: 3,
+              fullName: 'Unprosecuted Agent One',
+              rank: 'Captain',
+              status: 'UNPROSECUTED',
+              legalStatus: { convicted: false },
+            },
+            {
+              agentNumber: 4,
+              fullName: 'Unprosecuted Agent Two',
+              rank: 'Lieutenant',
+              status: 'UNPROSECUTED',
+              legalStatus: { convicted: false },
+            },
+            {
+              agentNumber: 7,
+              fullName: 'Unprosecuted Agent Three',
+              rank: 'Sergeant',
+              status: 'UNPROSECUTED',
+              legalStatus: { convicted: false },
+            },
+          ],
+          pagination: {
+            current_page: 1,
+            total_pages: 6,
+            total_agents: 297,
+            has_previous: false,
+            has_next: true,
+          },
+          filter: 'unprosecuted',
         },
-        filter: 'unprosecuted'
       }
-    }).as('getAllAgentsFiltered');
+    ).as('getAllAgentsFiltered');
 
     // Mock page 2 with filter
-    cy.intercept('GET', '**/api/dina/all-agents?page=2&limit=50&filter=unprosecuted', {
-      statusCode: 200,
-      body: {
-        success: true,
-        data: [
-          { agentNumber: 54, fullName: 'Unprosecuted Page Two Agent', rank: 'Major', status: 'UNPROSECUTED', legalStatus: { convicted: false } }
-        ],
-        pagination: {
-          current_page: 2,
-          total_pages: 6,
-          total_agents: 297,
-          has_previous: true,
-          has_next: true
+    cy.intercept(
+      'GET',
+      '**/api/dina/all-agents?page=2&limit=50&filter=unprosecuted',
+      {
+        statusCode: 200,
+        body: {
+          success: true,
+          data: [
+            {
+              agentNumber: 54,
+              fullName: 'Unprosecuted Page Two Agent',
+              rank: 'Major',
+              status: 'UNPROSECUTED',
+              legalStatus: { convicted: false },
+            },
+          ],
+          pagination: {
+            current_page: 2,
+            total_pages: 6,
+            total_agents: 297,
+            has_previous: true,
+            has_next: true,
+          },
+          filter: 'unprosecuted',
         },
-        filter: 'unprosecuted'
       }
-    }).as('getFilteredPage2');
+    ).as('getFilteredPage2');
 
     // Visit dashboard
     cy.visit('http://localhost:5000');
@@ -277,16 +333,24 @@ describe('⚖️ Unprosecuted Filter Button - Full E2E Flow', () => {
         statusCode: 200,
         body: {
           success: true,
-          data: [{ agentNumber: 51, fullName: 'Page Two Agent', rank: 'Major', status: 'DECEASED', legalStatus: { convicted: true } }],
+          data: [
+            {
+              agentNumber: 51,
+              fullName: 'Page Two Agent',
+              rank: 'Major',
+              status: 'DECEASED',
+              legalStatus: { convicted: true },
+            },
+          ],
           pagination: {
             current_page: 2,
             total_pages: 22,
             total_agents: 1097,
             has_previous: true,
-            has_next: true
+            has_next: true,
           },
-          filter: 'none'
-        }
+          filter: 'none',
+        },
       }).as('getPage2NoFilter');
 
       // Go to page 2
@@ -315,8 +379,10 @@ describe('⚖️ Unprosecuted Filter Button - Full E2E Flow', () => {
       cy.wait('@getFilteredPage2');
 
       // Filter should still be active
-      cy.get('[data-testid="unprosecuted-filter-button"]')
-        .should('have.class', 'active');
+      cy.get('[data-testid="unprosecuted-filter-button"]').should(
+        'have.class',
+        'active'
+      );
 
       // Should show filtered page 2
       cy.contains('Unprosecuted Page Two Agent').should('be.visible');
@@ -356,8 +422,10 @@ describe('⚖️ Unprosecuted Filter Button - Full E2E Flow', () => {
       cy.wait('@getAllAgentsFiltered');
 
       // Filter should still be active
-      cy.get('[data-testid="unprosecuted-filter-button"]')
-        .should('have.class', 'active');
+      cy.get('[data-testid="unprosecuted-filter-button"]').should(
+        'have.class',
+        'active'
+      );
 
       // Should show only unprosecuted agents
       cy.contains('Unprosecuted Agent One').should('be.visible');
@@ -377,8 +445,10 @@ describe('⚖️ Unprosecuted Filter Button - Full E2E Flow', () => {
       cy.contains('📋 Agent Information').should('be.visible');
 
       // Filter should still be active
-      cy.get('[data-testid="unprosecuted-filter-button"]')
-        .should('have.class', 'active');
+      cy.get('[data-testid="unprosecuted-filter-button"]').should(
+        'have.class',
+        'active'
+      );
     });
 
     it('should filter cards then expand to view details', () => {
@@ -409,8 +479,10 @@ describe('⚖️ Unprosecuted Filter Button - Full E2E Flow', () => {
       cy.contains('✖ Close Details').click();
 
       // Filter should still be active
-      cy.get('[data-testid="unprosecuted-filter-button"]')
-        .should('have.class', 'active');
+      cy.get('[data-testid="unprosecuted-filter-button"]').should(
+        'have.class',
+        'active'
+      );
 
       // Should still show filtered results
       cy.contains('📋 Total: 297 agents').should('be.visible');
@@ -420,23 +492,33 @@ describe('⚖️ Unprosecuted Filter Button - Full E2E Flow', () => {
   describe('🔍 Filter Interaction with Search', () => {
     it('should maintain filter when searching', () => {
       // Mock search with filter
-      cy.intercept('GET', '**/api/dina/all-agents?page=1&limit=50&filter=unprosecuted&search=*', {
-        statusCode: 200,
-        body: {
-          success: true,
-          data: [
-            { agentNumber: 3, fullName: 'Unprosecuted Agent One', rank: 'Captain', status: 'UNPROSECUTED', legalStatus: { convicted: false } }
-          ],
-          pagination: {
-            current_page: 1,
-            total_pages: 1,
-            total_agents: 1,
-            has_previous: false,
-            has_next: false
+      cy.intercept(
+        'GET',
+        '**/api/dina/all-agents?page=1&limit=50&filter=unprosecuted&search=*',
+        {
+          statusCode: 200,
+          body: {
+            success: true,
+            data: [
+              {
+                agentNumber: 3,
+                fullName: 'Unprosecuted Agent One',
+                rank: 'Captain',
+                status: 'UNPROSECUTED',
+                legalStatus: { convicted: false },
+              },
+            ],
+            pagination: {
+              current_page: 1,
+              total_pages: 1,
+              total_agents: 1,
+              has_previous: false,
+              has_next: false,
+            },
+            filter: 'unprosecuted',
           },
-          filter: 'unprosecuted'
         }
-      }).as('getFilteredSearchResults');
+      ).as('getFilteredSearchResults');
 
       cy.contains('📋 ALL AGENTS').click();
       cy.wait('@getAllAgentsNoFilter');
@@ -450,8 +532,10 @@ describe('⚖️ Unprosecuted Filter Button - Full E2E Flow', () => {
       cy.wait('@getFilteredSearchResults');
 
       // Filter should still be active
-      cy.get('[data-testid="unprosecuted-filter-button"]')
-        .should('have.class', 'active');
+      cy.get('[data-testid="unprosecuted-filter-button"]').should(
+        'have.class',
+        'active'
+      );
 
       // Should show filtered search result
       cy.contains('🎯 Found: 1 agents').should('be.visible');
@@ -459,23 +543,33 @@ describe('⚖️ Unprosecuted Filter Button - Full E2E Flow', () => {
     });
 
     it('should apply both search and filter simultaneously', () => {
-      cy.intercept('GET', '**/api/dina/all-agents?page=1&limit=50&filter=unprosecuted&search=*', {
-        statusCode: 200,
-        body: {
-          success: true,
-          data: [
-            { agentNumber: 4, fullName: 'Unprosecuted Agent Two', rank: 'Lieutenant', status: 'UNPROSECUTED', legalStatus: { convicted: false } }
-          ],
-          pagination: {
-            current_page: 1,
-            total_pages: 1,
-            total_agents: 1,
-            has_previous: false,
-            has_next: false
+      cy.intercept(
+        'GET',
+        '**/api/dina/all-agents?page=1&limit=50&filter=unprosecuted&search=*',
+        {
+          statusCode: 200,
+          body: {
+            success: true,
+            data: [
+              {
+                agentNumber: 4,
+                fullName: 'Unprosecuted Agent Two',
+                rank: 'Lieutenant',
+                status: 'UNPROSECUTED',
+                legalStatus: { convicted: false },
+              },
+            ],
+            pagination: {
+              current_page: 1,
+              total_pages: 1,
+              total_agents: 1,
+              has_previous: false,
+              has_next: false,
+            },
+            filter: 'unprosecuted',
           },
-          filter: 'unprosecuted'
         }
-      }).as('getFilteredSearch');
+      ).as('getFilteredSearch');
 
       cy.contains('📋 ALL AGENTS').click();
       cy.wait('@getAllAgentsNoFilter');
@@ -487,7 +581,10 @@ describe('⚖️ Unprosecuted Filter Button - Full E2E Flow', () => {
       cy.wait('@getFilteredSearch');
 
       // Both filter and search should be active
-      cy.get('[data-testid="unprosecuted-filter-button"]').should('have.class', 'active');
+      cy.get('[data-testid="unprosecuted-filter-button"]').should(
+        'have.class',
+        'active'
+      );
       cy.get('[data-testid="agent-search-input"]').should('have.value', 'Two');
 
       // Should show combined result
@@ -511,7 +608,10 @@ describe('⚖️ Unprosecuted Filter Button - Full E2E Flow', () => {
       cy.wait('@getAllAgentsFiltered');
 
       // Verify filtered state
-      cy.get('[data-testid="unprosecuted-filter-button"]').should('have.class', 'active');
+      cy.get('[data-testid="unprosecuted-filter-button"]').should(
+        'have.class',
+        'active'
+      );
       cy.contains('📋 Total: 297 agents').should('be.visible');
       cy.contains('Unprosecuted Agent One').should('be.visible');
       cy.contains('Convicted Agent One').should('not.exist');
@@ -527,23 +627,33 @@ describe('⚖️ Unprosecuted Filter Button - Full E2E Flow', () => {
       cy.wait('@getAllAgentsFiltered');
 
       // Mock search with filter
-      cy.intercept('GET', '**/api/dina/all-agents?page=1&limit=50&filter=unprosecuted&search=*', {
-        statusCode: 200,
-        body: {
-          success: true,
-          data: [
-            { agentNumber: 3, fullName: 'Unprosecuted Agent One', rank: 'Captain', status: 'UNPROSECUTED', legalStatus: { convicted: false } }
-          ],
-          pagination: {
-            current_page: 1,
-            total_pages: 1,
-            total_agents: 1,
-            has_previous: false,
-            has_next: false
+      cy.intercept(
+        'GET',
+        '**/api/dina/all-agents?page=1&limit=50&filter=unprosecuted&search=*',
+        {
+          statusCode: 200,
+          body: {
+            success: true,
+            data: [
+              {
+                agentNumber: 3,
+                fullName: 'Unprosecuted Agent One',
+                rank: 'Captain',
+                status: 'UNPROSECUTED',
+                legalStatus: { convicted: false },
+              },
+            ],
+            pagination: {
+              current_page: 1,
+              total_pages: 1,
+              total_agents: 1,
+              has_previous: false,
+              has_next: false,
+            },
+            filter: 'unprosecuted',
           },
-          filter: 'unprosecuted'
         }
-      }).as('getFilteredSearch');
+      ).as('getFilteredSearch');
 
       // Search within filtered results
       cy.get('[data-testid="agent-search-input"]').type('One');
@@ -593,8 +703,10 @@ describe('⚖️ Unprosecuted Filter Button - Full E2E Flow', () => {
       cy.wait('@getAllAgentsFiltered');
 
       // Filter should still be active through all navigation
-      cy.get('[data-testid="unprosecuted-filter-button"]')
-        .should('have.class', 'active');
+      cy.get('[data-testid="unprosecuted-filter-button"]').should(
+        'have.class',
+        'active'
+      );
 
       cy.contains('📋 Total: 297 agents').should('be.visible');
     });
@@ -616,8 +728,10 @@ describe('⚖️ Unprosecuted Filter Button - Full E2E Flow', () => {
       cy.wait('@getAllAgentsFiltered');
 
       // Should end in filtered state
-      cy.get('[data-testid="unprosecuted-filter-button"]')
-        .should('have.class', 'active');
+      cy.get('[data-testid="unprosecuted-filter-button"]').should(
+        'have.class',
+        'active'
+      );
 
       cy.contains('📋 Total: 297 agents').should('be.visible');
     });

@@ -17,22 +17,21 @@ export async function GET(request, { params }) {
       data: {
         language: 'en', // Default to English
         isDefault: true, // This is a default preference
-        lastUpdated: null // Never updated
+        lastUpdated: null, // Never updated
       },
       userId: userId,
       timestamp: new Date().toISOString(),
-      message: 'Default language preference (no backend configured)'
+      message: 'Default language preference (no backend configured)',
     };
 
     return NextResponse.json(defaultPreference, { status: 200 });
-
   } catch (error) {
     console.error('❌ Get Language Preference API Error:', error.message);
     return NextResponse.json(
       {
         success: false,
         error: error.message,
-        message: 'Failed to get language preference'
+        message: 'Failed to get language preference',
       },
       { status: 500 }
     );

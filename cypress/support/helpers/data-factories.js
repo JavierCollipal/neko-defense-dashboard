@@ -12,7 +12,7 @@ export const generateUser = (overrides = {}) => ({
   name: 'Test User',
   role: 'user',
   createdAt: new Date().toISOString(),
-  ...overrides
+  ...overrides,
 });
 
 /**
@@ -22,7 +22,13 @@ export const generateUser = (overrides = {}) => ({
  */
 export const generateThreatActor = (overrides = {}) => {
   const id = `TA-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
-  const names = ['Mikhail Matveev', 'RansomHub Group', 'APT29', 'Cozy Bear', 'Frost Spider'];
+  const names = [
+    'Mikhail Matveev',
+    'RansomHub Group',
+    'APT29',
+    'Cozy Bear',
+    'Frost Spider',
+  ];
   const randomName = names[Math.floor(Math.random() * names.length)];
 
   return {
@@ -32,12 +38,14 @@ export const generateThreatActor = (overrides = {}) => {
     threatLevel: 'CRITICAL',
     origin: {
       country: 'Russia',
-      region: 'Unknown'
+      region: 'Unknown',
     },
     type: 'individual',
     status: 'active',
     ipAddress: `192.168.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`,
-    firstSeen: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString(),
+    firstSeen: new Date(
+      Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000
+    ).toISOString(),
     lastActivity: new Date().toISOString(),
     victimCount: Math.floor(Math.random() * 500),
     financialDamage: Math.floor(Math.random() * 1000000000),
@@ -48,7 +56,7 @@ export const generateThreatActor = (overrides = {}) => {
     attackVectors: ['Phishing', 'Exploit', 'RDP'],
     huntingNotes: `Generated threat actor for testing, nyaa~! ID: ${id}`,
     createdAt: new Date().toISOString(),
-    ...overrides
+    ...overrides,
   };
 };
 
@@ -77,7 +85,7 @@ export const generateHoneypotTrigger = (overrides = {}) => ({
   payload: { username: 'admin', password: 'test' },
   severity: 'HIGH',
   blocked: true,
-  ...overrides
+  ...overrides,
 });
 
 /**
@@ -93,7 +101,7 @@ export const generateDefenseStats = (overrides = {}) => ({
   successRate: (Math.random() * 100).toFixed(2),
   uptime: (Math.random() * 100).toFixed(2),
   lastUpdate: new Date().toISOString(),
-  ...overrides
+  ...overrides,
 });
 
 /**
@@ -110,7 +118,7 @@ export const generateThreatSummary = (overrides = {}) => ({
   affectedSystems: Math.floor(Math.random() * 100),
   detectedAt: new Date().toISOString(),
   mitigated: Math.random() > 0.5,
-  ...overrides
+  ...overrides,
 });
 
 /**
@@ -126,8 +134,10 @@ export const generateDINAAgent = (overrides = {}) => ({
   specialization: 'Digital Forensics',
   status: 'active',
   caseCount: Math.floor(Math.random() * 50),
-  joinedAt: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString(),
-  ...overrides
+  joinedAt: new Date(
+    Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000
+  ).toISOString(),
+  ...overrides,
 });
 
 /**
@@ -143,10 +153,12 @@ export const generateEvidencePackage = (overrides = {}) => ({
   evidenceType: 'Network Logs',
   filePath: `/evidence/${Date.now()}.zip`,
   fileSize: Math.floor(Math.random() * 1000000000),
-  hashSHA256: Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join(''),
+  hashSHA256: Array.from({ length: 64 }, () =>
+    Math.floor(Math.random() * 16).toString(16)
+  ).join(''),
   verified: true,
   chainOfCustody: ['Neko-Arc', 'DINA Center', 'FBI'],
-  ...overrides
+  ...overrides,
 });
 
 /**
@@ -164,7 +176,7 @@ export const generateAsciiArt = (overrides = {}) => ({
   NEKO!
   `,
   name: 'Test Neko',
-  ...overrides
+  ...overrides,
 });
 
 /**
@@ -180,7 +192,7 @@ export const generateThreatCounts = (overrides = {}) => ({
   scammers: Math.floor(Math.random() * 100),
   hackers: Math.floor(Math.random() * 100),
   total: 0, // Will be calculated
-  ...overrides
+  ...overrides,
 });
 
 /**
@@ -195,7 +207,7 @@ export const generateCompleteTestDataset = () => ({
   dinaAgents: Array.from({ length: 8 }, () => generateDINAAgent()),
   evidencePackages: Array.from({ length: 3 }, () => generateEvidencePackage()),
   asciiArt: generateAsciiArt(),
-  threatCounts: generateThreatCounts()
+  threatCounts: generateThreatCounts(),
 });
 
 /**
@@ -214,7 +226,9 @@ export const randomFrom = (array) => {
  * @returns {string} ISO date string
  */
 export const randomDate = (start = new Date(2020, 0, 1), end = new Date()) => {
-  const date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  const date = new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  );
   return date.toISOString();
 };
 
@@ -224,7 +238,9 @@ export const randomDate = (start = new Date(2020, 0, 1), end = new Date()) => {
  * @returns {string} Random string
  */
 export const randomString = (length = 10) => {
-  return Math.random().toString(36).substring(2, 2 + length);
+  return Math.random()
+    .toString(36)
+    .substring(2, 2 + length);
 };
 
 /**
@@ -263,7 +279,7 @@ export default {
   randomDate,
   randomString,
   randomNumber,
-  randomBoolean
+  randomBoolean,
 };
 
 // *purrs in data generation excellence* 😻📊

@@ -29,15 +29,24 @@ function FamilyTracker() {
     console.log('🔍 [FamilyTracker] Fetching family members from API, desu~');
     try {
       setLoading(true);
-      const response = await fetch(`${API_URL}/family-members?lang=${userLang}`);
+      const response = await fetch(
+        `${API_URL}/family-members?lang=${userLang}`
+      );
       console.log('📡 [FamilyTracker] Response status:', response.status);
 
       const data = await response.json();
-      console.log('✅ [FamilyTracker] Received data:', { count: data.count, success: data.success });
+      console.log('✅ [FamilyTracker] Received data:', {
+        count: data.count,
+        success: data.success,
+      });
 
       if (data.success) {
         setFamilyMembers(data.data);
-        console.log('💖 [FamilyTracker] Loaded', data.count, 'family members, nyaa~!');
+        console.log(
+          '💖 [FamilyTracker] Loaded',
+          data.count,
+          'family members, nyaa~!'
+        );
       } else {
         setError('Failed to load family members');
         console.error('❌ [FamilyTracker] API returned success: false');
@@ -56,34 +65,41 @@ function FamilyTracker() {
       const data = await response.json();
       if (data.success) {
         setDeceasedOfficers(data.data);
-        console.log('💀 [FamilyTracker] Loaded', data.count, 'deceased officers');
+        console.log(
+          '💀 [FamilyTracker] Loaded',
+          data.count,
+          'deceased officers'
+        );
       }
     } catch (err) {
-      console.error('💥 [FamilyTracker] Error fetching deceased officers:', err);
+      console.error(
+        '💥 [FamilyTracker] Error fetching deceased officers:',
+        err
+      );
     }
   };
 
   const getPriorityColor = (priority) => {
     const colors = {
-      'High': '#ff0055',
-      'Medium': '#ffaa00',
-      'Low': '#88ff88',
-      'Critical': '#cc0000'
+      High: '#ff0055',
+      Medium: '#ffaa00',
+      Low: '#88ff88',
+      Critical: '#cc0000',
     };
     return colors[priority] || '#888888';
   };
 
   const getRelationshipIcon = (relationship) => {
     const icons = {
-      'Spouse': '💔',
-      'Child': '👶',
-      'Parent': '👵',
-      'Sibling': '👫',
-      'Son': '👦',
-      'Daughter': '👧',
-      'Widow': '💔',
-      'Mother': '👩',
-      'Father': '👨'
+      Spouse: '💔',
+      Child: '👶',
+      Parent: '👵',
+      Sibling: '👫',
+      Son: '👦',
+      Daughter: '👧',
+      Widow: '💔',
+      Mother: '👩',
+      Father: '👨',
     };
     return icons[relationship] || '👥';
   };
@@ -92,19 +108,30 @@ function FamilyTracker() {
     return member.vulnerability_profile?.overall_score || 0;
   };
 
-  const filteredMembers = familyMembers.filter(member => {
-    const matchesPriority = filterPriority === 'all' || member.priority === filterPriority;
-    const matchesRelationship = filterRelationship === 'all' || member.relationship === filterRelationship;
-    const matchesSearch = !searchTerm ||
-      (member.full_name && member.full_name.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (member.deceased_officer_name && member.deceased_officer_name.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredMembers = familyMembers.filter((member) => {
+    const matchesPriority =
+      filterPriority === 'all' || member.priority === filterPriority;
+    const matchesRelationship =
+      filterRelationship === 'all' ||
+      member.relationship === filterRelationship;
+    const matchesSearch =
+      !searchTerm ||
+      (member.full_name &&
+        member.full_name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (member.deceased_officer_name &&
+        member.deceased_officer_name
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()));
     return matchesPriority && matchesRelationship && matchesSearch;
   });
 
-  const filteredOfficers = deceasedOfficers.filter(officer => {
-    const matchesSearch = !searchTerm ||
-      (officer.full_name && officer.full_name.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (officer.rank && officer.rank.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredOfficers = deceasedOfficers.filter((officer) => {
+    const matchesSearch =
+      !searchTerm ||
+      (officer.full_name &&
+        officer.full_name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (officer.rank &&
+        officer.rank.toLowerCase().includes(searchTerm.toLowerCase()));
     return matchesSearch;
   });
 
@@ -145,11 +172,18 @@ function FamilyTracker() {
             <span className="stat-label">Deceased Officers</span>
           </div>
           <div className="stat-item">
-            <span className="stat-value">{familyMembers.filter(m => m.priority === 'High').length}</span>
+            <span className="stat-value">
+              {familyMembers.filter((m) => m.priority === 'High').length}
+            </span>
             <span className="stat-label">High Priority</span>
           </div>
           <div className="stat-item">
-            <span className="stat-value">{familyMembers.filter(m => getVulnerabilityScore(m) >= 7).length}</span>
+            <span className="stat-value">
+              {
+                familyMembers.filter((m) => getVulnerabilityScore(m) >= 7)
+                  .length
+              }
+            </span>
             <span className="stat-label">Vulnerable</span>
           </div>
         </div>
@@ -205,28 +239,45 @@ function FamilyTracker() {
           </div>
 
           <div className="family-grid">
-            {filteredMembers.map(member => (
+            {filteredMembers.map((member) => (
               <div
                 key={member.family_member_id}
                 className="family-card"
                 onClick={() => setSelectedMember(member)}
               >
                 <div className="card-header">
-                  <span className="relationship-icon">{getRelationshipIcon(member.relationship)}</span>
+                  <span className="relationship-icon">
+                    {getRelationshipIcon(member.relationship)}
+                  </span>
                   <h3>{member.full_name}</h3>
                   <span
                     className="priority-badge"
-                    style={{ backgroundColor: getPriorityColor(member.priority) }}
+                    style={{
+                      backgroundColor: getPriorityColor(member.priority),
+                    }}
                   >
                     {member.priority}
                   </span>
                 </div>
 
                 <div className="card-info">
-                  <p><strong>Relationship:</strong> {member.relationship}</p>
-                  <p><strong>Deceased Officer:</strong> {member.deceased_officer_name}</p>
-                  {member.age && <p><strong>Age:</strong> {member.age}</p>}
-                  {member.occupation && <p><strong>Occupation:</strong> {member.occupation}</p>}
+                  <p>
+                    <strong>Relationship:</strong> {member.relationship}
+                  </p>
+                  <p>
+                    <strong>Deceased Officer:</strong>{' '}
+                    {member.deceased_officer_name}
+                  </p>
+                  {member.age && (
+                    <p>
+                      <strong>Age:</strong> {member.age}
+                    </p>
+                  )}
+                  {member.occupation && (
+                    <p>
+                      <strong>Occupation:</strong> {member.occupation}
+                    </p>
+                  )}
                 </div>
 
                 <div className="vulnerability-section">
@@ -241,11 +292,17 @@ function FamilyTracker() {
                               className="bar-fill"
                               style={{
                                 width: `${(member.vulnerability_profile.overall_score || 0) * 10}%`,
-                                backgroundColor: member.vulnerability_profile.overall_score >= 7 ? '#ff0055' : '#ffaa00'
+                                backgroundColor:
+                                  member.vulnerability_profile.overall_score >=
+                                  7
+                                    ? '#ff0055'
+                                    : '#ffaa00',
                               }}
                             />
                           </div>
-                          <span>{member.vulnerability_profile.overall_score || 0}/10</span>
+                          <span>
+                            {member.vulnerability_profile.overall_score || 0}/10
+                          </span>
                         </div>
                         <div className="vuln-bar">
                           <span>Financial:</span>
@@ -254,11 +311,14 @@ function FamilyTracker() {
                               className="bar-fill"
                               style={{
                                 width: `${(member.vulnerability_profile.financial_need || 0) * 10}%`,
-                                backgroundColor: '#ffaa00'
+                                backgroundColor: '#ffaa00',
                               }}
                             />
                           </div>
-                          <span>{member.vulnerability_profile.financial_need || 0}/10</span>
+                          <span>
+                            {member.vulnerability_profile.financial_need || 0}
+                            /10
+                          </span>
                         </div>
                         <div className="vuln-bar">
                           <span>Emotional:</span>
@@ -267,11 +327,14 @@ function FamilyTracker() {
                               className="bar-fill"
                               style={{
                                 width: `${(member.vulnerability_profile.emotional_state || 0) * 10}%`,
-                                backgroundColor: '#88aaff'
+                                backgroundColor: '#88aaff',
                               }}
                             />
                           </div>
-                          <span>{member.vulnerability_profile.emotional_state || 0}/10</span>
+                          <span>
+                            {member.vulnerability_profile.emotional_state || 0}
+                            /10
+                          </span>
                         </div>
                         <div className="vuln-bar">
                           <span>Recruitment:</span>
@@ -280,11 +343,15 @@ function FamilyTracker() {
                               className="bar-fill"
                               style={{
                                 width: `${(member.vulnerability_profile.recruitment_potential || 0) * 10}%`,
-                                backgroundColor: '#ff6b35'
+                                backgroundColor: '#ff6b35',
                               }}
                             />
                           </div>
-                          <span>{member.vulnerability_profile.recruitment_potential || 0}/10</span>
+                          <span>
+                            {member.vulnerability_profile
+                              .recruitment_potential || 0}
+                            /10
+                          </span>
                         </div>
                       </>
                     )}
@@ -295,18 +362,31 @@ function FamilyTracker() {
                   <div className="social-media-section">
                     <h4>📱 Social Media:</h4>
                     <div className="social-icons">
-                      {member.social_media_profiles.facebook && <span title="Facebook">📘</span>}
-                      {member.social_media_profiles.instagram && <span title="Instagram">📷</span>}
-                      {member.social_media_profiles.twitter && <span title="Twitter">🐦</span>}
-                      {member.social_media_profiles.linkedin && <span title="LinkedIn">💼</span>}
+                      {member.social_media_profiles.facebook && (
+                        <span title="Facebook">📘</span>
+                      )}
+                      {member.social_media_profiles.instagram && (
+                        <span title="Instagram">📷</span>
+                      )}
+                      {member.social_media_profiles.twitter && (
+                        <span title="Twitter">🐦</span>
+                      )}
+                      {member.social_media_profiles.linkedin && (
+                        <span title="LinkedIn">💼</span>
+                      )}
                     </div>
                   </div>
                 )}
 
                 <div className="card-footer">
-                  <span className="status-badge">{member.status || 'Identified'}</span>
+                  <span className="status-badge">
+                    {member.status || 'Identified'}
+                  </span>
                   <span className="last-updated">
-                    Updated: {new Date(member.last_updated || member.created_at).toLocaleDateString()}
+                    Updated:{' '}
+                    {new Date(
+                      member.last_updated || member.created_at
+                    ).toLocaleDateString()}
                   </span>
                 </div>
               </div>
@@ -334,39 +414,69 @@ function FamilyTracker() {
           </div>
 
           <div className="deceased-grid">
-            {filteredOfficers.map(officer => (
+            {filteredOfficers.map((officer) => (
               <div key={officer.officer_id} className="deceased-card">
                 <div className="card-header">
                   <span className="death-icon">💀</span>
                   <h3>{officer.full_name}</h3>
-                  <span className="rank-badge">{officer.rank || 'Unknown'}</span>
+                  <span className="rank-badge">
+                    {officer.rank || 'Unknown'}
+                  </span>
                 </div>
 
                 <div className="card-info">
                   {officer.date_of_death && (
-                    <p><strong>Date of Death:</strong> {new Date(officer.date_of_death).toLocaleDateString()}</p>
+                    <p>
+                      <strong>Date of Death:</strong>{' '}
+                      {new Date(officer.date_of_death).toLocaleDateString()}
+                    </p>
                   )}
-                  {officer.age_at_death && <p><strong>Age:</strong> {officer.age_at_death}</p>}
-                  {officer.cause_of_death && <p><strong>Cause:</strong> {officer.cause_of_death}</p>}
-                  {officer.unit && <p><strong>Unit:</strong> {officer.unit}</p>}
-                  {officer.location_of_death && <p><strong>Location:</strong> {officer.location_of_death}</p>}
+                  {officer.age_at_death && (
+                    <p>
+                      <strong>Age:</strong> {officer.age_at_death}
+                    </p>
+                  )}
+                  {officer.cause_of_death && (
+                    <p>
+                      <strong>Cause:</strong> {officer.cause_of_death}
+                    </p>
+                  )}
+                  {officer.unit && (
+                    <p>
+                      <strong>Unit:</strong> {officer.unit}
+                    </p>
+                  )}
+                  {officer.location_of_death && (
+                    <p>
+                      <strong>Location:</strong> {officer.location_of_death}
+                    </p>
+                  )}
                 </div>
 
-                {officer.family_members && officer.family_members.length > 0 && (
-                  <div className="family-count-section">
-                    <p><strong>👥 Family Members:</strong> {officer.family_members.length}</p>
-                    <ul>
-                      {officer.family_members.slice(0, 3).map((fm, idx) => (
-                        <li key={idx}>{getRelationshipIcon(fm.relationship)} {fm.name} ({fm.relationship})</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                {officer.family_members &&
+                  officer.family_members.length > 0 && (
+                    <div className="family-count-section">
+                      <p>
+                        <strong>👥 Family Members:</strong>{' '}
+                        {officer.family_members.length}
+                      </p>
+                      <ul>
+                        {officer.family_members.slice(0, 3).map((fm, idx) => (
+                          <li key={idx}>
+                            {getRelationshipIcon(fm.relationship)} {fm.name} (
+                            {fm.relationship})
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                 {officer.tags && officer.tags.length > 0 && (
                   <div className="tags-section">
                     {officer.tags.slice(0, 5).map((tag, idx) => (
-                      <span key={idx} className="tag">{tag}</span>
+                      <span key={idx} className="tag">
+                        {tag}
+                      </span>
                     ))}
                   </div>
                 )}

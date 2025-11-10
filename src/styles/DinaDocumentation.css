@@ -13,7 +13,7 @@
   margin-bottom: 30px;
   padding: 30px;
   background: rgba(255, 215, 0, 0.1);
-  border: 2px solid #FFD700;
+  border: 2px solid #ffd700;
   border-radius: 15px;
   box-shadow: 0 8px 32px rgba(255, 215, 0, 0.2);
 }
@@ -21,7 +21,7 @@
 .dina-header h2 {
   font-size: 36px;
   margin-bottom: 10px;
-  color: #FFD700;
+  color: #ffd700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -48,13 +48,18 @@
   text-align: center;
   font-size: 24px;
   padding: 50px;
-  color: #FFD700;
+  color: #ffd700;
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .dina-stats-summary {
@@ -76,7 +81,7 @@
 
 .stat-box:hover {
   transform: translateY(-5px);
-  border-color: #FFD700;
+  border-color: #ffd700;
   box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
 }
 
@@ -92,7 +97,7 @@
 .stat-value {
   font-size: 48px;
   font-weight: bold;
-  color: #FFD700;
+  color: #ffd700;
   margin-bottom: 10px;
 }
 
@@ -113,7 +118,7 @@
 
 .perpetrators-list h3 {
   font-size: 28px;
-  color: #FFD700;
+  color: #ffd700;
   margin-bottom: 25px;
   text-align: center;
 }
@@ -136,7 +141,7 @@
 
 .perp-card:hover {
   transform: translateY(-5px) scale(1.02);
-  border-color: #FFD700;
+  border-color: #ffd700;
   box-shadow: 0 12px 40px rgba(255, 215, 0, 0.3);
   background: rgba(255, 255, 255, 0.12);
 }
@@ -144,7 +149,7 @@
 .perp-name {
   font-size: 20px;
   font-weight: bold;
-  color: #FFD700;
+  color: #ffd700;
   margin-bottom: 10px;
 }
 
@@ -209,8 +214,14 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .back-button {
@@ -240,7 +251,7 @@
 
 .details-content h2 {
   font-size: 32px;
-  color: #FFD700;
+  color: #ffd700;
   margin-bottom: 30px;
   text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -256,7 +267,7 @@
 
 .detail-section h3 {
   font-size: 20px;
-  color: #FFD700;
+  color: #ffd700;
   margin-bottom: 15px;
 }
 
@@ -300,10 +311,10 @@
   display: inline-block;
   padding: 6px 12px;
   background: rgba(255, 215, 0, 0.2);
-  border: 1px solid #FFD700;
+  border: 1px solid #ffd700;
   border-radius: 15px;
   font-size: 12px;
-  color: #FFD700;
+  color: #ffd700;
 }
 
 .detail-section.verification {
@@ -328,7 +339,7 @@
 
 .dina-principle {
   font-size: 16px;
-  color: #FFD700;
+  color: #ffd700;
   margin: 10px 0;
   font-weight: bold;
 }
@@ -369,7 +380,7 @@
 }
 
 .stat-category h3 {
-  color: #FFD700;
+  color: #ffd700;
   font-size: 18px;
   margin-bottom: 20px;
   text-align: center;
@@ -388,7 +399,7 @@
   text-align: center;
   font-size: 24px;
   font-weight: bold;
-  color: #FFD700;
+  color: #ffd700;
   border: 2px solid rgba(255, 215, 0, 0.3);
 }
 
@@ -432,7 +443,7 @@
   background: rgba(255, 255, 255, 0.1);
   border: 2px solid rgba(255, 215, 0, 0.3);
   border-radius: 10px;
-  color: #FFD700;
+  color: #ffd700;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
@@ -442,15 +453,15 @@
 
 .nav-btn:hover {
   background: rgba(255, 215, 0, 0.2);
-  border-color: #FFD700;
+  border-color: #ffd700;
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
 }
 
 .nav-btn.active {
-  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
   color: #1a1a2e;
-  border-color: #FFD700;
+  border-color: #ffd700;
   box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
 }
 
@@ -466,7 +477,7 @@
 
 .overview-banner {
   text-align: center;
-  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
   color: #1a1a2e;
   padding: 30px;
   border-radius: 15px;
@@ -496,12 +507,12 @@
 
 .overview-card:hover {
   transform: translateY(-5px);
-  border-color: #FFD700;
+  border-color: #ffd700;
   box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
 }
 
 .overview-card h3 {
-  color: #FFD700;
+  color: #ffd700;
   font-size: 20px;
   margin-bottom: 15px;
 }
@@ -570,7 +581,7 @@
 }
 
 .center-card h3 {
-  color: #FFD700;
+  color: #ffd700;
   font-size: 22px;
   margin-bottom: 15px;
 }
@@ -667,11 +678,11 @@
   padding: 15px;
   background: rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-  border-left: 3px solid #FFD700;
+  border-left: 3px solid #ffd700;
 }
 
 .center-list-item h4 {
-  color: #FFD700;
+  color: #ffd700;
   margin-bottom: 8px;
 }
 
@@ -684,7 +695,7 @@
 }
 
 .centers-network-info h3 {
-  color: #FFD700;
+  color: #ffd700;
   font-size: 22px;
   margin-bottom: 15px;
 }
@@ -768,7 +779,7 @@
 }
 
 .crime-card h3 {
-  color: #FFD700;
+  color: #ffd700;
   font-size: 24px;
   margin-bottom: 15px;
 }
@@ -826,7 +837,7 @@
   padding: 15px;
   background: rgba(255, 215, 0, 0.1);
   border-radius: 10px;
-  border-left: 4px solid #FFD700;
+  border-left: 4px solid #ffd700;
 }
 
 .condor-info {
@@ -834,7 +845,7 @@
 }
 
 .condor-info h4 {
-  color: #FFD700;
+  color: #ffd700;
   margin-bottom: 10px;
 }
 
@@ -873,7 +884,7 @@
 }
 
 .contreras-final-record h3 {
-  color: #FFD700;
+  color: #ffd700;
   font-size: 24px;
   text-align: center;
   margin-bottom: 10px;
@@ -903,7 +914,7 @@
 
 .contreras-stat .stat-value {
   font-size: 48px;
-  color: #FFD700;
+  color: #ffd700;
 }
 
 .contreras-stat .stat-label {
@@ -1174,7 +1185,7 @@
 }
 
 .wanted-agents-view h2 {
-  color: #FFD700;
+  color: #ffd700;
   font-size: 32px;
   text-align: center;
   margin-bottom: 15px;
@@ -1212,7 +1223,7 @@
 .wanted-stat-card .stat-number {
   font-size: 42px;
   font-weight: bold;
-  color: #FFD700;
+  color: #ffd700;
   margin-bottom: 10px;
 }
 
@@ -1256,7 +1267,7 @@
 }
 
 .wanted-agents-comprehensive h3 {
-  color: #FFD700;
+  color: #ffd700;
   font-size: 26px;
   text-align: center;
   margin-bottom: 15px;
@@ -1298,8 +1309,8 @@
 
 .filter-btn.active {
   background: rgba(255, 215, 0, 0.2);
-  border-color: #FFD700;
-  color: #FFD700;
+  border-color: #ffd700;
+  color: #ffd700;
 }
 
 .filter-btn.warning {
@@ -1349,7 +1360,7 @@
 .wanted-agent-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 40px rgba(255, 215, 0, 0.3);
-  border-color: #FFD700;
+  border-color: #ffd700;
 }
 
 .wanted-agent-card.at-large {
@@ -1406,8 +1417,8 @@
 
 .status-badge.deceased-convicted {
   background: rgba(255, 215, 0, 0.2);
-  color: #FFD700;
-  border: 1px solid #FFD700;
+  color: #ffd700;
+  border: 1px solid #ffd700;
 }
 
 .status-badge.deceased {
@@ -1417,8 +1428,13 @@
 }
 
 @keyframes criticalPulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
 }
 
 /* Agent Header */
@@ -1428,15 +1444,19 @@
 }
 
 .agent-header h3 {
-  color: #FFD700;
+  color: #ffd700;
   font-size: 22px;
   margin-bottom: 10px;
   font-weight: bold;
 }
 
 .agent-codename {
-  background: linear-gradient(135deg, rgba(138, 43, 226, 0.2) 0%, rgba(75, 0, 130, 0.2) 100%);
-  color: #9370DB;
+  background: linear-gradient(
+    135deg,
+    rgba(138, 43, 226, 0.2) 0%,
+    rgba(75, 0, 130, 0.2) 100%
+  );
+  color: #9370db;
   padding: 8px 16px;
   border-radius: 8px;
   display: inline-block;
@@ -1449,7 +1469,7 @@
 
 .agent-alias {
   background: rgba(255, 215, 0, 0.1);
-  color: #FFD700;
+  color: #ffd700;
   padding: 6px 12px;
   border-radius: 6px;
   display: inline-block;
@@ -1503,7 +1523,11 @@
 }
 
 .research-capability {
-  background: linear-gradient(135deg, rgba(78, 205, 196, 0.08) 0%, rgba(68, 163, 160, 0.08) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(78, 205, 196, 0.08) 0%,
+    rgba(68, 163, 160, 0.08) 100%
+  );
   border-left-color: #4ecdc4;
 }
 
@@ -1512,7 +1536,11 @@
 }
 
 .work-capability {
-  background: linear-gradient(135deg, rgba(255, 165, 2, 0.08) 0%, rgba(255, 107, 107, 0.08) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 165, 2, 0.08) 0%,
+    rgba(255, 107, 107, 0.08) 100%
+  );
   border-left-color: #ffa502;
 }
 
@@ -1530,7 +1558,7 @@
 }
 
 .agent-legal-status h4 {
-  color: #FFD700;
+  color: #ffd700;
   font-size: 16px;
   margin-bottom: 15px;
   text-transform: uppercase;
@@ -1675,13 +1703,13 @@
   padding: 15px;
   background: rgba(255, 215, 0, 0.08);
   border-radius: 10px;
-  border-left: 4px solid #FFD700;
+  border-left: 4px solid #ffd700;
   font-size: 14px;
   line-height: 1.6;
 }
 
 .agent-significance strong {
-  color: #FFD700;
+  color: #ffd700;
 }
 
 .agent-significance.critical {
@@ -1726,8 +1754,8 @@
 
 .tag-default {
   background: rgba(255, 215, 0, 0.2);
-  color: #FFD700;
-  border: 1px solid #FFD700;
+  color: #ffd700;
+  border: 1px solid #ffd700;
 }
 
 /* Agent Verification */
@@ -1756,7 +1784,7 @@
 }
 
 .wanted-context-section h3 {
-  color: #FFD700;
+  color: #ffd700;
   font-size: 26px;
   text-align: center;
   margin-bottom: 30px;
@@ -1773,11 +1801,11 @@
 
 .context-card:hover {
   transform: translateX(5px);
-  border-left-color: #FFD700;
+  border-left-color: #ffd700;
 }
 
 .context-card h4 {
-  color: #FFD700;
+  color: #ffd700;
   font-size: 18px;
   margin-bottom: 12px;
 }
@@ -1880,7 +1908,7 @@
 .wanted-agent-card-modern:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow: 0 20px 60px rgba(255, 215, 0, 0.3);
-  border-color: #FFD700;
+  border-color: #ffd700;
 }
 
 .wanted-agent-card-modern.at-large-card {
@@ -1946,7 +1974,7 @@
 }
 
 .badge-deceased-convicted {
-  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
   color: #1a1a2e;
   font-weight: 900;
 }
@@ -1957,22 +1985,24 @@
 }
 
 @keyframes pulseWarning {
-  0%, 100% { 
+  0%,
+  100% {
     box-shadow: 0 4px 12px rgba(255, 107, 107, 0.6);
     transform: scale(1);
   }
-  50% { 
+  50% {
     box-shadow: 0 6px 20px rgba(255, 107, 107, 0.9);
     transform: scale(1.05);
   }
 }
 
 @keyframes pulseCritical {
-  0%, 100% { 
+  0%,
+  100% {
     box-shadow: 0 4px 12px rgba(255, 71, 87, 0.6);
     opacity: 1;
   }
-  50% { 
+  50% {
     box-shadow: 0 6px 24px rgba(255, 71, 87, 1);
     opacity: 0.9;
   }
@@ -1982,7 +2012,7 @@
 .agent-name-modern {
   font-size: 24px;
   font-weight: 900;
-  color: #FFD700;
+  color: #ffd700;
   margin-bottom: 8px;
   margin-top: 10px;
   line-height: 1.2;
@@ -1990,8 +2020,12 @@
 }
 
 .agent-alias-modern {
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 0, 0.15) 100%);
-  color: #FFD700;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 215, 0, 0.15) 0%,
+    rgba(255, 165, 0, 0.15) 100%
+  );
+  color: #ffd700;
   padding: 6px 14px;
   border-radius: 8px;
   display: inline-block;
@@ -2047,7 +2081,7 @@
 }
 
 .wanted-agent-card-modern:hover .expand-indicator {
-  color: #FFD700;
+  color: #ffd700;
 }
 
 /* Expanded Details Section */
@@ -2055,7 +2089,11 @@
   padding: 25px;
   padding-top: 0;
   animation: expandDetails 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
 }
 
 @keyframes expandDetails {
@@ -2109,11 +2147,11 @@
 
 /* Legal Section */
 .legal-section {
-  border-left-color: #FFD700;
+  border-left-color: #ffd700;
 }
 
 .legal-section h4 {
-  color: #FFD700;
+  color: #ffd700;
 }
 
 .legal-grid {
@@ -2215,7 +2253,7 @@
 }
 
 .timeline-list-modern li::before {
-  content: "●";
+  content: '●';
   position: absolute;
   left: 12px;
   color: #4ecdc4;
@@ -2224,12 +2262,12 @@
 
 /* Significance Section */
 .significance-section {
-  border-left-color: #FFD700;
+  border-left-color: #ffd700;
   background: rgba(255, 215, 0, 0.05);
 }
 
 .significance-section h4 {
-  color: #FFD700;
+  color: #ffd700;
 }
 
 .critical-significance {
@@ -2287,8 +2325,8 @@
 
 .tag-default-modern {
   background: rgba(255, 215, 0, 0.2);
-  color: #FFD700;
-  border: 1px solid #FFD700;
+  color: #ffd700;
+  border: 1px solid #ffd700;
 }
 
 /* Verification Section */

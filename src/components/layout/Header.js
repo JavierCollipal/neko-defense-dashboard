@@ -27,7 +27,9 @@ export const Header = () => {
             <div className="mobile-language-selector">
               <LanguageSelector
                 userId="current-user"
-                onLanguageChange={(lang) => console.log('🌍 Mobile language changed to:', lang)}
+                onLanguageChange={(lang) =>
+                  console.log('🌍 Mobile language changed to:', lang)
+                }
               />
             </div>
           )}
@@ -37,7 +39,9 @@ export const Header = () => {
           <div className="header-actions">
             <LanguageSelector
               userId="current-user"
-              onLanguageChange={(lang) => console.log('🌍 Language changed to:', lang)}
+              onLanguageChange={(lang) =>
+                console.log('🌍 Language changed to:', lang)
+              }
             />
             <button className="tv-window-button">📺 TV Windows</button>
           </div>
@@ -50,9 +54,7 @@ export const Header = () => {
             <span className="status-dot"></span>
             THREAT MONITORING: ACTIVE
           </div>
-          <div className="kawaii-meter">
-            💖 KAWAII LEVEL: ∞
-          </div>
+          <div className="kawaii-meter">💖 KAWAII LEVEL: ∞</div>
         </div>
       )}
     </header>

@@ -15,7 +15,11 @@ interface HoverGlowProps {
   intensity?: number;
 }
 
-export function HoverGlow({ children, glowColor = '#00ff88', intensity = 0.5 }: HoverGlowProps) {
+export function HoverGlow({
+  children,
+  glowColor = '#00ff88',
+  intensity = 0.5,
+}: HoverGlowProps) {
   const [isHovered, setIsHovered] = useState(false);
   const reducedMotion = prefersReducedMotion();
 
@@ -46,8 +50,14 @@ interface RippleProps {
   duration?: number;
 }
 
-export function Ripple({ children, color = 'rgba(255, 255, 255, 0.5)', duration = 600 }: RippleProps) {
-  const [ripples, setRipples] = useState<Array<{ x: number; y: number; id: number }>>([]);
+export function Ripple({
+  children,
+  color = 'rgba(255, 255, 255, 0.5)',
+  duration = 600,
+}: RippleProps) {
+  const [ripples, setRipples] = useState<
+    Array<{ x: number; y: number; id: number }>
+  >([]);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
@@ -116,10 +126,26 @@ export function Tooltip({ children, text, position = 'top' }: TooltipProps) {
   const reducedMotion = prefersReducedMotion();
 
   const positionStyles = {
-    top: { bottom: '100%', left: '50%', transform: 'translateX(-50%) translateY(-8px)' },
-    bottom: { top: '100%', left: '50%', transform: 'translateX(-50%) translateY(8px)' },
-    left: { right: '100%', top: '50%', transform: 'translateY(-50%) translateX(-8px)' },
-    right: { left: '100%', top: '50%', transform: 'translateY(-50%) translateX(8px)' },
+    top: {
+      bottom: '100%',
+      left: '50%',
+      transform: 'translateX(-50%) translateY(-8px)',
+    },
+    bottom: {
+      top: '100%',
+      left: '50%',
+      transform: 'translateX(-50%) translateY(8px)',
+    },
+    left: {
+      right: '100%',
+      top: '50%',
+      transform: 'translateY(-50%) translateX(-8px)',
+    },
+    right: {
+      left: '100%',
+      top: '50%',
+      transform: 'translateY(-50%) translateX(8px)',
+    },
   };
 
   return (
@@ -172,7 +198,10 @@ interface LoadingSpinnerProps {
   color?: string;
 }
 
-export function LoadingSpinner({ size = 40, color = '#00ff88' }: LoadingSpinnerProps) {
+export function LoadingSpinner({
+  size = 40,
+  color = '#00ff88',
+}: LoadingSpinnerProps) {
   return (
     <div
       role="status"
@@ -206,13 +235,19 @@ interface PulseProps {
   duration?: number;
 }
 
-export function Pulse({ children, color = '#ff6b6b', duration = 2000 }: PulseProps) {
+export function Pulse({
+  children,
+  color = '#ff6b6b',
+  duration = 2000,
+}: PulseProps) {
   const reducedMotion = prefersReducedMotion();
 
   return (
     <div
       style={{
-        animation: reducedMotion ? 'none' : `pulse-animation ${duration}ms infinite`,
+        animation: reducedMotion
+          ? 'none'
+          : `pulse-animation ${duration}ms infinite`,
       }}
     >
       {children}
@@ -239,7 +274,11 @@ interface SkeletonProps {
   borderRadius?: string | number;
 }
 
-export function Skeleton({ width = '100%', height = 20, borderRadius = 4 }: SkeletonProps) {
+export function Skeleton({
+  width = '100%',
+  height = 20,
+  borderRadius = 4,
+}: SkeletonProps) {
   return (
     <div
       aria-label="Loading content"
@@ -247,7 +286,8 @@ export function Skeleton({ width = '100%', height = 20, borderRadius = 4 }: Skel
         width,
         height,
         borderRadius,
-        background: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
+        background:
+          'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
         backgroundSize: '200% 100%',
         animation: 'skeleton-loading 1.5s ease-in-out infinite',
       }}
@@ -297,9 +337,15 @@ export function FadeInOnScroll({ children, delay = 0 }: FadeInOnScrollProps) {
     <div
       ref={ref}
       style={{
-        opacity: reducedMotion ? 1 : (isVisible ? 1 : 0),
-        transform: reducedMotion ? 'none' : (isVisible ? 'translateY(0)' : 'translateY(20px)'),
-        transition: reducedMotion ? 'none' : 'opacity 0.6s ease, transform 0.6s ease',
+        opacity: reducedMotion ? 1 : isVisible ? 1 : 0,
+        transform: reducedMotion
+          ? 'none'
+          : isVisible
+            ? 'translateY(0)'
+            : 'translateY(20px)',
+        transition: reducedMotion
+          ? 'none'
+          : 'opacity 0.6s ease, transform 0.6s ease',
       }}
     >
       {children}
@@ -316,7 +362,11 @@ interface IconTransitionProps {
   isActive: boolean;
 }
 
-export function IconTransition({ fromIcon, toIcon, isActive }: IconTransitionProps) {
+export function IconTransition({
+  fromIcon,
+  toIcon,
+  isActive,
+}: IconTransitionProps) {
   const reducedMotion = prefersReducedMotion();
 
   return (
@@ -324,8 +374,14 @@ export function IconTransition({ fromIcon, toIcon, isActive }: IconTransitionPro
       <div
         style={{
           opacity: isActive ? 0 : 1,
-          transform: reducedMotion ? 'none' : (isActive ? 'scale(0.8) rotate(90deg)' : 'scale(1) rotate(0deg)'),
-          transition: reducedMotion ? 'none' : 'opacity 0.3s ease, transform 0.3s ease',
+          transform: reducedMotion
+            ? 'none'
+            : isActive
+              ? 'scale(0.8) rotate(90deg)'
+              : 'scale(1) rotate(0deg)',
+          transition: reducedMotion
+            ? 'none'
+            : 'opacity 0.3s ease, transform 0.3s ease',
         }}
       >
         {fromIcon}
@@ -336,8 +392,14 @@ export function IconTransition({ fromIcon, toIcon, isActive }: IconTransitionPro
           top: 0,
           left: 0,
           opacity: isActive ? 1 : 0,
-          transform: reducedMotion ? 'none' : (isActive ? 'scale(1) rotate(0deg)' : 'scale(0.8) rotate(-90deg)'),
-          transition: reducedMotion ? 'none' : 'opacity 0.3s ease, transform 0.3s ease',
+          transform: reducedMotion
+            ? 'none'
+            : isActive
+              ? 'scale(1) rotate(0deg)'
+              : 'scale(0.8) rotate(-90deg)',
+          transition: reducedMotion
+            ? 'none'
+            : 'opacity 0.3s ease, transform 0.3s ease',
         }}
       >
         {toIcon}
@@ -356,7 +418,12 @@ interface NumberCounterProps {
   suffix?: string;
 }
 
-export function NumberCounter({ from, to, duration = 1000, suffix = '' }: NumberCounterProps) {
+export function NumberCounter({
+  from,
+  to,
+  duration = 1000,
+  suffix = '',
+}: NumberCounterProps) {
   const [count, setCount] = useState(from);
   const reducedMotion = prefersReducedMotion();
 
@@ -371,7 +438,10 @@ export function NumberCounter({ from, to, duration = 1000, suffix = '' }: Number
 
     const timer = setInterval(() => {
       current += increment;
-      if ((increment > 0 && current >= to) || (increment < 0 && current <= to)) {
+      if (
+        (increment > 0 && current >= to) ||
+        (increment < 0 && current <= to)
+      ) {
         setCount(to);
         clearInterval(timer);
       } else {
@@ -382,18 +452,28 @@ export function NumberCounter({ from, to, duration = 1000, suffix = '' }: Number
     return () => clearInterval(timer);
   }, [from, to, duration, reducedMotion]);
 
-  return <span>{count}{suffix}</span>;
+  return (
+    <span>
+      {count}
+      {suffix}
+    </span>
+  );
 }
 
 // ========================================
 // 10. BUTTON WITH LOADING STATE
 // ========================================
-interface LoadingButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface LoadingButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   children: React.ReactNode;
 }
 
-export function LoadingButton({ isLoading, children, ...props }: LoadingButtonProps) {
+export function LoadingButton({
+  isLoading,
+  children,
+  ...props
+}: LoadingButtonProps) {
   return (
     <button
       {...props}

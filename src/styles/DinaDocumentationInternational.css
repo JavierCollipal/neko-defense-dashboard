@@ -87,8 +87,13 @@
 }
 
 @keyframes glow {
-  0%, 100% { text-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
-  50% { text-shadow: 0 0 50px rgba(255, 215, 0, 0.8); }
+  0%,
+  100% {
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+  }
+  50% {
+    text-shadow: 0 0 50px rgba(255, 215, 0, 0.8);
+  }
 }
 
 .dina-subtitle {
@@ -119,7 +124,11 @@
 }
 
 .stat-box-international {
-  background: linear-gradient(135deg, rgba(20, 20, 60, 0.8), rgba(40, 40, 80, 0.8));
+  background: linear-gradient(
+    135deg,
+    rgba(20, 20, 60, 0.8),
+    rgba(40, 40, 80, 0.8)
+  );
   padding: 25px;
   border-radius: 15px;
   text-align: center;
@@ -167,7 +176,11 @@
 }
 
 .nav-button {
-  background: linear-gradient(135deg, rgba(20, 20, 60, 0.8), rgba(40, 40, 80, 0.8));
+  background: linear-gradient(
+    135deg,
+    rgba(20, 20, 60, 0.8),
+    rgba(40, 40, 80, 0.8)
+  );
   color: white;
   border: 2px solid #00ffff;
   padding: 15px 30px;
@@ -199,8 +212,14 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Overview Section */
@@ -219,8 +238,13 @@
 }
 
 @keyframes pulse {
-  0%, 100% { box-shadow: 0 8px 32px rgba(255, 0, 0, 0.4); }
-  50% { box-shadow: 0 8px 32px rgba(255, 0, 0, 0.7); }
+  0%,
+  100% {
+    box-shadow: 0 8px 32px rgba(255, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 8px 32px rgba(255, 0, 0, 0.7);
+  }
 }
 
 .overview-banner h2 {
@@ -486,7 +510,11 @@
 .neko-tv-header {
   text-align: center;
   margin-bottom: 30px;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.3),
+    rgba(118, 75, 162, 0.3)
+  );
   padding: 30px;
   border-radius: 20px;
   border: 2px solid #ffd700;
@@ -495,12 +523,15 @@
 }
 
 @keyframes neko-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
     border-color: #ffd700;
   }
   50% {
-    box-shadow: 0 0 60px rgba(255, 215, 0, 0.6), 0 0 100px rgba(102, 126, 234, 0.3);
+    box-shadow:
+      0 0 60px rgba(255, 215, 0, 0.6),
+      0 0 100px rgba(102, 126, 234, 0.3);
     border-color: #00ffff;
   }
 }
@@ -611,7 +642,11 @@
 
 /* 📺 Neko Agent Card */
 .neko-agent-card {
-  background: linear-gradient(135deg, rgba(20, 20, 60, 0.9), rgba(40, 40, 80, 0.9));
+  background: linear-gradient(
+    135deg,
+    rgba(20, 20, 60, 0.9),
+    rgba(40, 40, 80, 0.9)
+  );
   border: 2px solid #667eea;
   border-radius: 20px;
   padding: 25px;
@@ -643,14 +678,20 @@
 }
 
 @keyframes neko-shine {
-  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
 }
 
 .neko-agent-card:hover {
   border-color: #ffd700;
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 15px 50px rgba(255, 215, 0, 0.4), 0 0 30px rgba(102, 126, 234, 0.3);
+  box-shadow:
+    0 15px 50px rgba(255, 215, 0, 0.4),
+    0 0 30px rgba(102, 126, 234, 0.3);
 }
 
 .neko-agent-card.expanded {
@@ -885,7 +926,11 @@
 .neko-info-panel {
   margin-top: 40px;
   padding: 30px;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.2),
+    rgba(118, 75, 162, 0.2)
+  );
   border-radius: 20px;
   border: 2px solid rgba(255, 215, 0, 0.3);
 }
@@ -946,8 +991,12 @@
 }
 
 @keyframes neko-spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .neko-loading p {
@@ -1030,7 +1079,11 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background: linear-gradient(135deg, rgba(255, 0, 51, 0.3), rgba(255, 102, 0, 0.3));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 0, 51, 0.3),
+    rgba(255, 102, 0, 0.3)
+  );
   color: white;
   border: 2px solid #ff3333;
   padding: 15px 30px;
@@ -1054,7 +1107,9 @@
   border-radius: 50%;
   background: rgba(255, 215, 0, 0.3);
   transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
+  transition:
+    width 0.6s,
+    height 0.6s;
 }
 
 .neko-filter-button:hover::before {
@@ -1071,16 +1126,23 @@
 .neko-filter-button.active {
   background: linear-gradient(135deg, #ff3333, #ff6600);
   border-color: #ffd700;
-  box-shadow: 0 6px 30px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 0, 51, 0.4);
+  box-shadow:
+    0 6px 30px rgba(255, 215, 0, 0.6),
+    0 0 40px rgba(255, 0, 51, 0.4);
   animation: filter-active-pulse 2s ease-in-out infinite;
 }
 
 @keyframes filter-active-pulse {
-  0%, 100% {
-    box-shadow: 0 6px 30px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 0, 51, 0.4);
+  0%,
+  100% {
+    box-shadow:
+      0 6px 30px rgba(255, 215, 0, 0.6),
+      0 0 40px rgba(255, 0, 51, 0.4);
   }
   50% {
-    box-shadow: 0 8px 40px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 0, 51, 0.6);
+    box-shadow:
+      0 8px 40px rgba(255, 215, 0, 0.8),
+      0 0 60px rgba(255, 0, 51, 0.6);
   }
 }
 
@@ -1107,8 +1169,13 @@
 }
 
 @keyframes check-bounce {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.3); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
 }
 
 /* Filter Button Pressed Effect */
@@ -1145,7 +1212,8 @@
 }
 
 @keyframes youtube-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 8px 32px rgba(255, 0, 0, 0.4);
   }
   50% {
@@ -1195,7 +1263,8 @@
 }
 
 @keyframes youtube-pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {

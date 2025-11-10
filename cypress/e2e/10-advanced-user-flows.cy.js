@@ -21,7 +21,10 @@ describe('🎮 Complex Multi-Step User Flows', () => {
         .click({ force: true });
 
       cy.wait('@getThreatActorsPredators');
-      cy.get('.threat-list-header h2').should('contain', 'PREDATOR THREAT ACTORS');
+      cy.get('.threat-list-header h2').should(
+        'contain',
+        'PREDATOR THREAT ACTORS'
+      );
 
       // Go back to dashboard
       cy.contains('Back to Dashboard').click();
@@ -29,7 +32,10 @@ describe('🎮 Complex Multi-Step User Flows', () => {
 
       // Navigate to DINA Docs
       cy.get('.tv-window-button.dina-doc').click();
-      cy.get('.App-header h1').should('contain', 'DINA INTERNATIONAL HUNT OPERATION');
+      cy.get('.App-header h1').should(
+        'contain',
+        'DINA INTERNATIONAL HUNT OPERATION'
+      );
 
       // Return to dashboard
       cy.contains('Back to Dashboard').click();
@@ -82,7 +88,12 @@ describe('🎮 Complex Multi-Step User Flows', () => {
     });
 
     it('should handle category switching with API calls in sequence', () => {
-      const categories = ['Predators', 'Pedophiles', 'DINA Network', 'Ransomware'];
+      const categories = [
+        'Predators',
+        'Pedophiles',
+        'DINA Network',
+        'Ransomware',
+      ];
 
       categories.forEach((category) => {
         cy.get('.category-switcher')
@@ -265,7 +276,7 @@ describe('🎮 Complex Multi-Step User Flows', () => {
       // Simulate API failure
       cy.intercept('GET', '**/api/threat-actors*', {
         statusCode: 500,
-        body: { success: false, error: 'Server error, nyaa~!' }
+        body: { success: false, error: 'Server error, nyaa~!' },
       }).as('apiError');
 
       // Navigate to Threat Actors
@@ -318,7 +329,7 @@ describe('🎮 Complex Multi-Step User Flows', () => {
     it('should handle view navigation with empty threat data', () => {
       // Intercept with empty data
       cy.intercept('GET', '**/api/threat-actors*', {
-        body: { success: true, count: 0, data: [] }
+        body: { success: true, count: 0, data: [] },
       }).as('emptyData');
 
       cy.get('.tv-window-button.threat-actors').click();
@@ -353,7 +364,13 @@ describe('🎮 Complex Multi-Step User Flows', () => {
 
   describe('⚡ Performance Under Complex Workflows', () => {
     it('should handle 20 consecutive category switches without lag', () => {
-      const categories = ['Predators', 'Pedophiles', 'DINA Network', 'Ransomware', 'All Threats'];
+      const categories = [
+        'Predators',
+        'Pedophiles',
+        'DINA Network',
+        'Ransomware',
+        'All Threats',
+      ];
 
       // Switch categories 20 times (4 full cycles)
       for (let i = 0; i < 20; i++) {
@@ -399,7 +416,7 @@ describe('🎮 Complex Multi-Step User Flows', () => {
     it('should handle all views accessed in random order', () => {
       const views = [
         { button: '.threat-actors', title: 'THREAT ACTORS' },
-        { button: '.dina-doc', title: 'DINA INTERNATIONAL' }
+        { button: '.dina-doc', title: 'DINA INTERNATIONAL' },
       ];
 
       // Access views in random order multiple times
@@ -428,7 +445,7 @@ describe('🎮 Session Management & State Persistence', () => {
     it('should recover gracefully from API timeout during view change', () => {
       // Simulate slow API
       cy.intercept('GET', '**/api/threat-actors*', (req) => {
-        req.reply({ delay: 10000 }) // 10 second delay
+        req.reply({ delay: 10000 }); // 10 second delay
       }).as('slowApi');
 
       cy.get('.tv-window-button.threat-actors').click();
@@ -450,7 +467,7 @@ describe('🎮 Session Management & State Persistence', () => {
 
       // Cause an error
       cy.intercept('GET', '**/api/stats', {
-        statusCode: 500
+        statusCode: 500,
       }).as('statsError');
 
       // Navigate to trigger error

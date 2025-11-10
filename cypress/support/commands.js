@@ -5,23 +5,48 @@
 
 /**
  * 🐾 Custom command to visit the dashboard and wait for it to load
+ * 🚀 OPTIMIZED: Uses cy.session() to cache dashboard state and avoid reloading
  * @example cy.visitDashboard()
  */
 Cypress.Commands.add('visitDashboard', () => {
-  console.log('🐾 [visitDashboard] Loading Neko Defense Dashboard, nyaa~!');
+  console.log(
+    '🐾 [visitDashboard] Loading Neko Defense Dashboard with session caching, nyaa~!'
+  );
 
+  // 🚀 OPTIMIZATION: Cache the dashboard session to avoid reloading on every test
+  cy.session(
+    'dashboard-session',
+    () => {
+      console.log('🔄 [SESSION] First dashboard load - caching session state');
+      cy.visit('/');
+
+      // Wait for app to be fully loaded
+      cy.get('.app-header', { timeout: 15000 }).should('be.visible');
+      cy.contains('NEKO DEFENSE SYSTEM', { timeout: 10000 }).should(
+        'be.visible'
+      );
+
+      // Wait for main components to stabilize
+      cy.get('.main-container', { timeout: 10000 }).should('be.visible');
+    },
+    {
+      validate: () => {
+        // Validate session is still good by checking if dashboard is loaded
+        cy.get('.app-header').should('be.visible');
+      },
+      cacheAcrossSpecs: true,
+    }
+  );
+
+  // After session restored, just visit to ensure we're on the right page
   cy.visit('/');
 
-  // FIX: Wait for React app to mount and render (matching debug test approach)
-  // The debug test waits 3000ms and passes, so we'll do the same
-  cy.wait(3000);
+  // Quick verification that session is valid
+  cy.get('.app-header', { timeout: 5000 }).should('be.visible');
 
-  // NOW verify dashboard loaded by checking UI elements
-  // FIX: Use lowercase 'app-header' to match actual className in Header.js
-  cy.get('.app-header', { timeout: 10000 }).should('be.visible');
-  cy.contains('NEKO DEFENSE SYSTEM').should('be.visible');
-
-  console.log('✅ [visitDashboard] Dashboard loaded successfully, desu!');
+  console.log(
+    '✅ [visitDashboard] Dashboard loaded from cache - MAXIMUM SPEED, desu!'
+  );
 });
 
 /**
@@ -40,8 +65,7 @@ Cypress.Commands.add('selectCategory', (categoryId) => {
     .click({ force: true });
 
   // Verify category is active
-  cy.get('.category-item.active')
-    .should('exist');
+  cy.get('.category-item.active').should('exist');
 
   console.log(`✅ [selectCategory] Category ${categoryId} selected, nyaa~!`);
 });
@@ -53,8 +77,7 @@ Cypress.Commands.add('selectCategory', (categoryId) => {
 Cypress.Commands.add('navigateToThreatActors', () => {
   console.log('📺 [navigateToThreatActors] Opening Threat Actors registry');
 
-  cy.contains('🎯 THREAT ACTORS')
-    .click();
+  cy.contains('🎯 THREAT ACTORS').click();
 
   // Verify we're on the Threat Actors page
   cy.contains('THREAT ACTORS REGISTRY').should('be.visible');
@@ -70,8 +93,7 @@ Cypress.Commands.add('navigateToThreatActors', () => {
 Cypress.Commands.add('navigateToDinaDocs', () => {
   console.log('⚖️ [navigateToDinaDocs] Opening DINA Documentation');
 
-  cy.contains('⚖️ DINA DOCS')
-    .click();
+  cy.contains('⚖️ DINA DOCS').click();
 
   // Verify we're on the DINA Docs page
   cy.contains('DINA INTERNATIONAL HUNT OPERATION').should('be.visible');
@@ -87,8 +109,7 @@ Cypress.Commands.add('navigateToDinaDocs', () => {
 Cypress.Commands.add('backToDashboard', () => {
   console.log('🔙 [backToDashboard] Returning to main dashboard');
 
-  cy.contains('← Back to Dashboard')
-    .click();
+  cy.contains('← Back to Dashboard').click();
 
   // Verify we're back on dashboard
   cy.contains('NEKO-ARC DEFENSE SYSTEM').should('be.visible');
@@ -104,15 +125,12 @@ Cypress.Commands.add('backToDashboard', () => {
 Cypress.Commands.add('verifyAsciiArt', () => {
   console.log('🎨 [verifyAsciiArt] Checking ASCII art display');
 
-  cy.get('.ascii-tv-section')
-    .should('be.visible');
+  cy.get('.ascii-tv-section').should('be.visible');
 
   // Check for ASCII TV component and art content
-  cy.get('.ascii-tv')
-    .should('exist');
+  cy.get('.ascii-tv').should('exist');
 
-  cy.get('pre.ascii-art, .tv-frame')
-    .should('exist');
+  cy.get('pre.ascii-art, .tv-frame').should('exist');
 
   console.log('✅ [verifyAsciiArt] ASCII art verified, nyaa~!');
 });
@@ -124,8 +142,7 @@ Cypress.Commands.add('verifyAsciiArt', () => {
 Cypress.Commands.add('verifyStats', () => {
   console.log('📊 [verifyStats] Checking defense stats display');
 
-  cy.get('.stats-section')
-    .should('be.visible');
+  cy.get('.stats-section').should('be.visible');
 
   console.log('✅ [verifyStats] Stats verified, desu!');
 });
@@ -137,8 +154,7 @@ Cypress.Commands.add('verifyStats', () => {
 Cypress.Commands.add('verifyThreatList', () => {
   console.log('🎯 [verifyThreatList] Checking threat intelligence display');
 
-  cy.get('.threats-section')
-    .should('be.visible');
+  cy.get('.threats-section').should('be.visible');
 
   cy.contains('THREAT INTELLIGENCE').should('be.visible');
 
@@ -150,7 +166,9 @@ Cypress.Commands.add('verifyThreatList', () => {
  * @example cy.verifyDashboardComponents()
  */
 Cypress.Commands.add('verifyDashboardComponents', () => {
-  console.log('🔍 [verifyDashboardComponents] Verifying all dashboard components');
+  console.log(
+    '🔍 [verifyDashboardComponents] Verifying all dashboard components'
+  );
 
   // Header
   cy.get('.App-header').should('be.visible');
@@ -196,7 +214,9 @@ Cypress.Commands.add('stubWindowOpen', () => {
  * @example cy.verifyTvWindowOpened('/tv-window.html')
  */
 Cypress.Commands.add('verifyTvWindowOpened', (urlPattern) => {
-  console.log(`📺 [verifyTvWindowOpened] Verifying TV window with pattern: ${urlPattern}`);
+  console.log(
+    `📺 [verifyTvWindowOpened] Verifying TV window with pattern: ${urlPattern}`
+  );
 
   cy.get('@windowOpen').should('be.calledWith', urlPattern);
 
@@ -269,11 +289,13 @@ Cypress.Commands.add('waitForTranslationAPI', () => {
  * @example cy.verifyTranslationQuality(80)
  */
 Cypress.Commands.add('verifyTranslationQuality', (expectedMinScore = 60) => {
-  cy.get('.quality-score').should('be.visible').then(($el) => {
-    const scoreText = $el.text();
-    const score = parseInt(scoreText.match(/\d+/)[0]);
-    expect(score).to.be.at.least(expectedMinScore);
-  });
+  cy.get('.quality-score')
+    .should('be.visible')
+    .then(($el) => {
+      const scoreText = $el.text();
+      const score = parseInt(scoreText.match(/\d+/)[0]);
+      expect(score).to.be.at.least(expectedMinScore);
+    });
 });
 
 /**
@@ -285,15 +307,17 @@ Cypress.Commands.add('selectLanguage', (languageCode) => {
   console.log(`🌐 [selectLanguage] Switching to language: ${languageCode}`);
 
   // Open language selector (handle both desktop and mobile)
-  cy.get('.language-selector-container .current-selection, [data-testid="language-selector"] .current-selection')
-    .click();
+  cy.get(
+    '.language-selector-container .current-selection, [data-testid="language-selector"] .current-selection'
+  ).click();
 
   // Select specific language
   cy.get(`[data-language-code="${languageCode}"]`).click();
 
   // Verify selection (check for language name in current selection)
-  cy.get('.language-selector-container, [data-testid="language-selector"]')
-    .should('be.visible');
+  cy.get(
+    '.language-selector-container, [data-testid="language-selector"]'
+  ).should('be.visible');
 
   console.log(`✅ [selectLanguage] Language ${languageCode} selected, nyaa~!`);
 });
@@ -319,34 +343,48 @@ Cypress.Commands.add('clearTranslationForm', () => {
  * @param {string} sourceLang - Source language code
  * @example cy.performStandardTranslation('Hello world', 'es', 'en')
  */
-Cypress.Commands.add('performStandardTranslation', (text, targetLang = 'es', sourceLang = 'en') => {
-  console.log(`🔄 [performStandardTranslation] Translating "${text}" from ${sourceLang} to ${targetLang}`);
+Cypress.Commands.add(
+  'performStandardTranslation',
+  (text, targetLang = 'es', sourceLang = 'en') => {
+    console.log(
+      `🔄 [performStandardTranslation] Translating "${text}" from ${sourceLang} to ${targetLang}`
+    );
 
-  cy.clearTranslationForm();
-  cy.get('#translate-text').type(text);
-  cy.get('#source-language').select(sourceLang);
-  cy.get('#target-language').select(targetLang);
-  cy.get('#translate-button').click();
-  cy.waitForTranslationAPI();
+    cy.clearTranslationForm();
+    cy.get('#translate-text').type(text);
+    cy.get('#source-language').select(sourceLang);
+    cy.get('#target-language').select(targetLang);
+    cy.get('#translate-button').click();
+    cy.waitForTranslationAPI();
 
-  console.log('✅ [performStandardTranslation] Translation completed, nyaa~!');
-});
+    console.log(
+      '✅ [performStandardTranslation] Translation completed, nyaa~!'
+    );
+  }
+);
 
 /**
  * 🔧 Custom command to verify provider health
  * @param {string} providerName - Provider name to check
  * @example cy.verifyProviderHealth('Google Translate')
  */
-Cypress.Commands.add('verifyProviderHealth', (providerName = 'Google Translate') => {
-  console.log(`🔧 [verifyProviderHealth] Checking ${providerName} status`);
+Cypress.Commands.add(
+  'verifyProviderHealth',
+  (providerName = 'Google Translate') => {
+    console.log(`🔧 [verifyProviderHealth] Checking ${providerName} status`);
 
-  cy.get('.provider-card').contains(providerName).within(() => {
-    cy.get('.provider-health').should('exist');
-    cy.get('.provider-status').should('contain.text', 'healthy').or('contain.text', 'online');
-  });
+    cy.get('.provider-card')
+      .contains(providerName)
+      .within(() => {
+        cy.get('.provider-health').should('exist');
+        cy.get('.provider-status')
+          .should('contain.text', 'healthy')
+          .or('contain.text', 'online');
+      });
 
-  console.log(`✅ [verifyProviderHealth] ${providerName} is healthy, desu!`);
-});
+    console.log(`✅ [verifyProviderHealth] ${providerName} is healthy, desu!`);
+  }
+);
 
 /**
  * 📋 Custom command to switch dashboard tabs
@@ -409,13 +447,15 @@ Cypress.Commands.add('setResponsiveViewport', (device) => {
     mobile: [375, 667],
     tablet: [768, 1024],
     desktop: [1200, 800],
-    large: [1920, 1080]
+    large: [1920, 1080],
   };
 
   const [width, height] = viewports[device] || viewports.desktop;
   cy.viewport(width, height);
 
-  console.log(`✅ [setResponsiveViewport] Viewport set to ${width}x${height}, desu!`);
+  console.log(
+    `✅ [setResponsiveViewport] Viewport set to ${width}x${height}, desu!`
+  );
 });
 
 /**
@@ -424,17 +464,22 @@ Cypress.Commands.add('setResponsiveViewport', (device) => {
  * @param {boolean} shouldBeLoading - Whether element should be loading
  * @example cy.verifyLoadingState('.translation-loading', true)
  */
-Cypress.Commands.add('verifyLoadingState', (selector, shouldBeLoading = true) => {
-  console.log(`⏳ [verifyLoadingState] Checking loading state for ${selector}`);
+Cypress.Commands.add(
+  'verifyLoadingState',
+  (selector, shouldBeLoading = true) => {
+    console.log(
+      `⏳ [verifyLoadingState] Checking loading state for ${selector}`
+    );
 
-  if (shouldBeLoading) {
-    cy.get(selector).should('be.visible');
-  } else {
-    cy.get(selector).should('not.exist');
+    if (shouldBeLoading) {
+      cy.get(selector).should('be.visible');
+    } else {
+      cy.get(selector).should('not.exist');
+    }
+
+    console.log(`✅ [verifyLoadingState] Loading state verified, nyaa~!`);
   }
-
-  console.log(`✅ [verifyLoadingState] Loading state verified, nyaa~!`);
-});
+);
 
 /**
  * 📦 Custom command to perform bulk translation
@@ -443,7 +488,9 @@ Cypress.Commands.add('verifyLoadingState', (selector, shouldBeLoading = true) =>
  * @example cy.performBulkTranslation(['Hello', 'World'], 'es')
  */
 Cypress.Commands.add('performBulkTranslation', (texts, targetLang = 'es') => {
-  console.log(`📦 [performBulkTranslation] Bulk translating ${texts.length} texts to ${targetLang}`);
+  console.log(
+    `📦 [performBulkTranslation] Bulk translating ${texts.length} texts to ${targetLang}`
+  );
 
   cy.get('#translation-mode-bulk').click();
 
@@ -482,11 +529,16 @@ Cypress.Commands.add('verifyErrorMessage', (expectedMessage) => {
  * @example cy.verifySuccessMessage('Translation completed')
  */
 Cypress.Commands.add('verifySuccessMessage', (expectedMessage) => {
-  console.log(`✅ [verifySuccessMessage] Checking for success: ${expectedMessage}`);
+  console.log(
+    `✅ [verifySuccessMessage] Checking for success: ${expectedMessage}`
+  );
 
   cy.get('.success-message, .alert-success').should('be.visible');
   if (expectedMessage) {
-    cy.get('.success-message, .alert-success').should('contain', expectedMessage);
+    cy.get('.success-message, .alert-success').should(
+      'contain',
+      expectedMessage
+    );
   }
 
   console.log('✅ [verifySuccessMessage] Success message verified, desu!');
@@ -503,14 +555,14 @@ Cypress.Commands.add('seedTranslationData', () => {
   const testTranslations = [
     { text: 'Hello world', target: 'es' },
     { text: 'Good morning', target: 'fr' },
-    { text: 'Thank you', target: 'de' }
+    { text: 'Thank you', target: 'de' },
   ];
 
   testTranslations.forEach(({ text, target }) => {
     cy.request('POST', '/api/translate/enhanced', {
       text,
       targetLang: target,
-      sourceLang: 'en'
+      sourceLang: 'en',
     });
   });
 
@@ -528,7 +580,7 @@ Cypress.Commands.add('cleanTestData', () => {
   cy.request({
     method: 'DELETE',
     url: '/api/translate/cache/clear',
-    failOnStatusCode: false
+    failOnStatusCode: false,
   }).then(() => {
     console.log('✅ [cleanTestData] Test data cleaned, desu!');
   });
@@ -543,7 +595,7 @@ Cypress.Commands.add('verifyDatabaseConnection', () => {
 
   cy.request({
     url: '/api/health/database',
-    failOnStatusCode: false
+    failOnStatusCode: false,
   }).then((response) => {
     expect(response.status).to.eq(200);
     console.log('✅ [verifyDatabaseConnection] Database connected, nyaa~!');
@@ -558,8 +610,8 @@ Cypress.Commands.add('verifyDatabaseConnection', () => {
 Cypress.Commands.add('debugState', (label = 'Debug') => {
   console.log(`🔍 [debugState] ${label} - Capturing current state`);
 
-  cy.url().then(url => console.log(`URL: ${url}`));
-  cy.get('body').then($body => {
+  cy.url().then((url) => console.log(`URL: ${url}`));
+  cy.get('body').then(($body) => {
     console.log(`Body classes: ${$body.attr('class')}`);
   });
 
@@ -585,7 +637,9 @@ Cypress.Commands.add('waitForAsync', (timeout = 5000) => {
  * @example cy.navigateToTranslationDashboard()
  */
 Cypress.Commands.add('navigateToTranslationDashboard', () => {
-  console.log('🌍 [navigateToTranslationDashboard] Navigating to translation dashboard');
+  console.log(
+    '🌍 [navigateToTranslationDashboard] Navigating to translation dashboard'
+  );
 
   cy.visit('/translation');
   cy.wait(1000);
@@ -598,7 +652,7 @@ Cypress.Commands.add('navigateToTranslationDashboard', () => {
 });
 
 // Enhanced assertion for translation results
-chai.Assertion.addMethod('validTranslation', function() {
+chai.Assertion.addMethod('validTranslation', function () {
   const obj = this._obj;
 
   new chai.Assertion(obj).to.be.a('string');
@@ -607,5 +661,7 @@ chai.Assertion.addMethod('validTranslation', function() {
   new chai.Assertion(obj).to.not.contain('undefined');
 });
 
-console.log('🐾⚡ NEKO CUSTOM COMMANDS LOADED - LEGENDARY MODE ACTIVATED! ⚡🐾');
+console.log(
+  '🐾⚡ NEKO CUSTOM COMMANDS LOADED - LEGENDARY MODE ACTIVATED! ⚡🐾'
+);
 console.log('🌍✨ ENHANCED TRANSLATION COMMANDS LOADED - MAXIMUM POWER! ✨🌍');

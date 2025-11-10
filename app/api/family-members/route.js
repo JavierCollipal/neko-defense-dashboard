@@ -22,7 +22,7 @@ export async function GET(request) {
       success: true,
       data: [],
       count: 0,
-      message: 'Demo mode - MongoDB not configured'
+      message: 'Demo mode - MongoDB not configured',
     });
   }
 
@@ -42,20 +42,18 @@ export async function GET(request) {
     return NextResponse.json({
       success: true,
       data: familyMembers,
-      count: familyMembers.length
+      count: familyMembers.length,
     });
-
   } catch (error) {
     console.error('❌ API Error (family-members):', error.message);
     return NextResponse.json(
       {
         success: false,
         error: error.message,
-        message: 'Failed to fetch family members'
+        message: 'Failed to fetch family members',
       },
       { status: 500 }
     );
-
   } finally {
     await client.close();
   }

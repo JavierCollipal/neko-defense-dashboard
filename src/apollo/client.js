@@ -8,7 +8,8 @@ console.log('🎮 [Apollo Client] Initializing GraphQL client, nyaa~!');
 
 // 🎯 Dynamic GraphQL API URL from environment variables
 // Falls back to port 4000 if not specified, desu~!
-const GRAPHQL_URI = process.env.REACT_APP_GRAPHQL_URL || 'http://localhost:4000/graphql';
+const GRAPHQL_URI =
+  process.env.REACT_APP_GRAPHQL_URL || 'http://localhost:4000/graphql';
 console.log('🔗 [Apollo Client] Connecting to GraphQL API:', GRAPHQL_URI);
 
 // HTTP connection to the GraphQL API
@@ -26,7 +27,10 @@ const retryLink = new RetryLink({
   attempts: {
     max: 5,
     retryIf: (error, _operation) => {
-      console.log('🔄 [Apollo Client] Connection error, retrying...', error.message);
+      console.log(
+        '🔄 [Apollo Client] Connection error, retrying...',
+        error.message
+      );
       return !!error;
     },
   },
@@ -44,7 +48,9 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
 
   if (networkError) {
     console.error('🌐 [Network Error]:', networkError.message);
-    console.log('🔄 [Apollo Client] Will retry connection automatically, desu~!');
+    console.log(
+      '🔄 [Apollo Client] Will retry connection automatically, desu~!'
+    );
   }
 });
 
@@ -53,13 +59,16 @@ const authLink = setContext((_, { headers }) => {
   // Get token from localStorage
   const token = localStorage.getItem('neko_auth_token');
 
-  console.log('🔐 [Apollo Client] Adding auth header:', token ? 'Token present' : 'No token');
+  console.log(
+    '🔐 [Apollo Client] Adding auth header:',
+    token ? 'Token present' : 'No token'
+  );
 
   return {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : '',
-    }
+    },
   };
 });
 
@@ -83,4 +92,6 @@ export const apolloClient = new ApolloClient({
   },
 });
 
-console.log('✅ [Apollo Client] GraphQL client ready with auto-reconnection, desu~!');
+console.log(
+  '✅ [Apollo Client] GraphQL client ready with auto-reconnection, desu~!'
+);

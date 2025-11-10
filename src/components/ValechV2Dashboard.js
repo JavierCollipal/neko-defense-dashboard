@@ -43,20 +43,20 @@ function ValechV2Dashboard() {
           perpetrators: 8,
           crossReferences: 11,
           ingestion: 'Manual',
-          automation: 0
+          automation: 0,
         },
         v2: {
           victimsTarget: 27255,
           perpetratorsTarget: 1097,
           crossReferencesTarget: 10000,
           ingestion: 'Automated 8-Step Pipeline',
-          automation: 100
+          automation: 100,
         },
         components: {
           total: 6,
           linesOfCode: 2300,
           functions: 67,
-          filesCreated: 8
+          filesCreated: 8,
         },
         capabilities: [
           'INDH DSpace API Integration',
@@ -64,8 +64,8 @@ function ValechV2Dashboard() {
           'Spanish NLP Entity Extraction',
           'ML Cross-Reference Engine',
           'Real-Time Court Monitoring',
-          'Complete 8-Step Pipeline'
-        ]
+          'Complete 8-Step Pipeline',
+        ],
       });
 
       setLoading(false);
@@ -93,7 +93,9 @@ function ValechV2Dashboard() {
         <div className="valech-v2-version-badge">
           <span className="version-label">VERSION:</span>
           <span className="version-number">{stats.version}</span>
-          <span className="version-date">Released: {stats.implementationDate}</span>
+          <span className="version-date">
+            Released: {stats.implementationDate}
+          </span>
         </div>
       </div>
 
@@ -133,13 +135,15 @@ function ValechV2Dashboard() {
 
       {/* Main Content Area */}
       <div className="valech-v2-content">
-
         {/* OVERVIEW VIEW */}
         {activeView === 'overview' && (
           <div className="overview-section">
             <div className="overview-hero">
               <h2>🎉 UPGRADE COMPLETE - MAXIMUM CAPACITY ACHIEVED! 🎉</h2>
-              <p>Transforming historical justice documentation with cutting-edge automation, nyaa~! ⚡✨</p>
+              <p>
+                Transforming historical justice documentation with cutting-edge
+                automation, nyaa~! ⚡✨
+              </p>
             </div>
 
             {/* Key Achievements */}
@@ -147,7 +151,9 @@ function ValechV2Dashboard() {
               <div className="achievement-card scale">
                 <div className="achievement-icon">📈</div>
                 <div className="achievement-value">272x</div>
-                <div className="achievement-label">Victim Coverage Increase</div>
+                <div className="achievement-label">
+                  Victim Coverage Increase
+                </div>
                 <div className="achievement-detail">10 → 27,255 victims</div>
               </div>
               <div className="achievement-card automation">
@@ -160,7 +166,9 @@ function ValechV2Dashboard() {
                 <div className="achievement-icon">💻</div>
                 <div className="achievement-value">2,300</div>
                 <div className="achievement-label">Lines of Code</div>
-                <div className="achievement-detail">6 production components</div>
+                <div className="achievement-detail">
+                  6 production components
+                </div>
               </div>
               <div className="achievement-card ml">
                 <div className="achievement-icon">🧠</div>
@@ -188,15 +196,19 @@ function ValechV2Dashboard() {
               <h3>⚖️ THE IMPACT</h3>
               <div className="impact-content">
                 <div className="impact-point">
-                  <strong>🏗️ Before (V1.0):</strong> 10 manually entered victims, limited scalability
+                  <strong>🏗️ Before (V1.0):</strong> 10 manually entered
+                  victims, limited scalability
                 </div>
                 <div className="impact-arrow">↓</div>
                 <div className="impact-point success">
-                  <strong>🚀 After (V2.0):</strong> 27,255 victim capability, fully automated, ML-powered
+                  <strong>🚀 After (V2.0):</strong> 27,255 victim capability,
+                  fully automated, ML-powered
                 </div>
               </div>
               <p className="impact-quote">
-                "Following Simon Wiesenthal's precedent: Systematic documentation and pursuit of justice, regardless of time elapsed." - Neko-Arc 2025
+                "Following Simon Wiesenthal's precedent: Systematic
+                documentation and pursuit of justice, regardless of time
+                elapsed." - Neko-Arc 2025
               </p>
             </div>
           </div>
@@ -221,7 +233,9 @@ function ValechV2Dashboard() {
                   <tr className="data-row">
                     <td>Victims</td>
                     <td className="v1-value">{stats.v1.victims}</td>
-                    <td className="v2-value">{stats.v2.victimsTarget.toLocaleString()}</td>
+                    <td className="v2-value">
+                      {stats.v2.victimsTarget.toLocaleString()}
+                    </td>
                     <td className="improvement">
                       <span className="improvement-badge">272,450% ↑</span>
                     </td>
@@ -229,7 +243,9 @@ function ValechV2Dashboard() {
                   <tr className="data-row">
                     <td>Perpetrators</td>
                     <td className="v1-value">{stats.v1.perpetrators}</td>
-                    <td className="v2-value">{stats.v2.perpetratorsTarget.toLocaleString()}</td>
+                    <td className="v2-value">
+                      {stats.v2.perpetratorsTarget.toLocaleString()}
+                    </td>
                     <td className="improvement">
                       <span className="improvement-badge">13,612% ↑</span>
                     </td>
@@ -237,7 +253,9 @@ function ValechV2Dashboard() {
                   <tr className="data-row">
                     <td>Cross-References</td>
                     <td className="v1-value">{stats.v1.crossReferences}</td>
-                    <td className="v2-value">{stats.v2.crossReferencesTarget.toLocaleString()}+</td>
+                    <td className="v2-value">
+                      {stats.v2.crossReferencesTarget.toLocaleString()}+
+                    </td>
                     <td className="improvement">
                       <span className="improvement-badge">90,809% ↑</span>
                     </td>
@@ -247,7 +265,9 @@ function ValechV2Dashboard() {
                     <td className="v1-value">{stats.v1.ingestion}</td>
                     <td className="v2-value">{stats.v2.ingestion}</td>
                     <td className="improvement">
-                      <span className="improvement-badge-text">Fully Automated</span>
+                      <span className="improvement-badge-text">
+                        Fully Automated
+                      </span>
                     </td>
                   </tr>
                   <tr>
@@ -255,7 +275,9 @@ function ValechV2Dashboard() {
                     <td className="v1-value">❌ None</td>
                     <td className="v2-value">✅ Advanced + OCR</td>
                     <td className="improvement">
-                      <span className="improvement-badge-text">New Capability</span>
+                      <span className="improvement-badge-text">
+                        New Capability
+                      </span>
                     </td>
                   </tr>
                   <tr>
@@ -263,7 +285,9 @@ function ValechV2Dashboard() {
                     <td className="v1-value">❌ None</td>
                     <td className="v2-value">✅ Spanish NER (XLM-RoBERTa)</td>
                     <td className="improvement">
-                      <span className="improvement-badge-text">New Capability</span>
+                      <span className="improvement-badge-text">
+                        New Capability
+                      </span>
                     </td>
                   </tr>
                   <tr>
@@ -279,7 +303,9 @@ function ValechV2Dashboard() {
                     <td className="v1-value">❌ None</td>
                     <td className="v2-value">✅ Real-Time 24h Daemon</td>
                     <td className="improvement">
-                      <span className="improvement-badge-text">New Capability</span>
+                      <span className="improvement-badge-text">
+                        New Capability
+                      </span>
                     </td>
                   </tr>
                   <tr>
@@ -297,11 +323,22 @@ function ValechV2Dashboard() {
             <div className="comparison-summary">
               <h3>🎯 Summary</h3>
               <ul>
-                <li>✅ <strong>272x increase</strong> in victim documentation capability</li>
-                <li>✅ <strong>Fully automated</strong> 8-step ingestion pipeline</li>
-                <li>✅ <strong>6 new AI/ML components</strong> implemented</li>
-                <li>✅ <strong>Real-time monitoring</strong> of court developments</li>
-                <li>✅ <strong>Zero manual entry</strong> required for new victims</li>
+                <li>
+                  ✅ <strong>272x increase</strong> in victim documentation
+                  capability
+                </li>
+                <li>
+                  ✅ <strong>Fully automated</strong> 8-step ingestion pipeline
+                </li>
+                <li>
+                  ✅ <strong>6 new AI/ML components</strong> implemented
+                </li>
+                <li>
+                  ✅ <strong>Real-time monitoring</strong> of court developments
+                </li>
+                <li>
+                  ✅ <strong>Zero manual entry</strong> required for new victims
+                </li>
               </ul>
             </div>
           </div>
@@ -312,7 +349,9 @@ function ValechV2Dashboard() {
           <div className="components-section">
             <h2>💻 Implementation Components</h2>
             <p className="components-intro">
-              {stats.components.total} production-ready components totaling {stats.components.linesOfCode.toLocaleString()} lines of code, desu! ⚡
+              {stats.components.total} production-ready components totaling{' '}
+              {stats.components.linesOfCode.toLocaleString()} lines of code,
+              desu! ⚡
             </p>
 
             <div className="components-grid">
@@ -324,7 +363,8 @@ function ValechV2Dashboard() {
                 </div>
                 <div className="component-body">
                   <p className="component-description">
-                    Automated PDF downloads from Chilean National Institute of Human Rights digital library
+                    Automated PDF downloads from Chilean National Institute of
+                    Human Rights digital library
                   </p>
                   <div className="component-features">
                     <h4>Key Features:</h4>
@@ -349,7 +389,8 @@ function ValechV2Dashboard() {
                 </div>
                 <div className="component-body">
                   <p className="component-description">
-                    Intelligent text extraction with Tesseract.js OCR fallback for scanned documents
+                    Intelligent text extraction with Tesseract.js OCR fallback
+                    for scanned documents
                   </p>
                   <div className="component-features">
                     <h4>Key Features:</h4>
@@ -374,7 +415,8 @@ function ValechV2Dashboard() {
                 </div>
                 <div className="component-body">
                   <p className="component-description">
-                    XLM-RoBERTa Named Entity Recognition for Spanish testimonies (0.95 F1 score)
+                    XLM-RoBERTa Named Entity Recognition for Spanish testimonies
+                    (0.95 F1 score)
                   </p>
                   <div className="component-features">
                     <h4>Key Features:</h4>
@@ -400,7 +442,8 @@ function ValechV2Dashboard() {
                 </div>
                 <div className="component-body">
                   <p className="component-description">
-                    Automated victim-perpetrator linking with fuzzy string matching
+                    Automated victim-perpetrator linking with fuzzy string
+                    matching
                   </p>
                   <div className="component-features">
                     <h4>Algorithms:</h4>
@@ -426,7 +469,8 @@ function ValechV2Dashboard() {
                 </div>
                 <div className="component-body">
                   <p className="component-description">
-                    Real-time monitoring of Chilean judiciary for DINA-related cases
+                    Real-time monitoring of Chilean judiciary for DINA-related
+                    cases
                   </p>
                   <div className="component-features">
                     <h4>Key Features:</h4>
@@ -478,15 +522,21 @@ function ValechV2Dashboard() {
                   <div className="metric-label">Components</div>
                 </div>
                 <div className="metric-box">
-                  <div className="metric-value">{stats.components.linesOfCode.toLocaleString()}</div>
+                  <div className="metric-value">
+                    {stats.components.linesOfCode.toLocaleString()}
+                  </div>
                   <div className="metric-label">Lines of Code</div>
                 </div>
                 <div className="metric-box">
-                  <div className="metric-value">{stats.components.functions}</div>
+                  <div className="metric-value">
+                    {stats.components.functions}
+                  </div>
                   <div className="metric-label">Functions</div>
                 </div>
                 <div className="metric-box">
-                  <div className="metric-value">{stats.components.filesCreated}</div>
+                  <div className="metric-value">
+                    {stats.components.filesCreated}
+                  </div>
                   <div className="metric-label">Files Created</div>
                 </div>
               </div>
@@ -499,7 +549,8 @@ function ValechV2Dashboard() {
           <div className="pipeline-section">
             <h2>🔄 8-Step Automated Pipeline</h2>
             <p className="pipeline-intro">
-              Complete end-to-end automation from PDF download to MongoDB storage, nyaa~! ⚡
+              Complete end-to-end automation from PDF download to MongoDB
+              storage, nyaa~! ⚡
             </p>
 
             <div className="pipeline-diagram">
@@ -507,7 +558,10 @@ function ValechV2Dashboard() {
                 <div className="step-number">1</div>
                 <div className="step-content">
                   <h3>📥 Download PDFs from INDH</h3>
-                  <p>DSpace API integration fetches all Valech documents from Chilean digital library</p>
+                  <p>
+                    DSpace API integration fetches all Valech documents from
+                    Chilean digital library
+                  </p>
                 </div>
                 <div className="step-arrow">↓</div>
               </div>
@@ -516,7 +570,10 @@ function ValechV2Dashboard() {
                 <div className="step-number">2</div>
                 <div className="step-content">
                   <h3>📄 Parse PDFs with OCR</h3>
-                  <p>Advanced text extraction with intelligent OCR fallback for scanned documents</p>
+                  <p>
+                    Advanced text extraction with intelligent OCR fallback for
+                    scanned documents
+                  </p>
                 </div>
                 <div className="step-arrow">↓</div>
               </div>
@@ -525,7 +582,10 @@ function ValechV2Dashboard() {
                 <div className="step-number">3</div>
                 <div className="step-content">
                   <h3>🔬 NLP Entity Extraction</h3>
-                  <p>Spanish NER extracts perpetrators, torture methods, detention centers, dates</p>
+                  <p>
+                    Spanish NER extracts perpetrators, torture methods,
+                    detention centers, dates
+                  </p>
                 </div>
                 <div className="step-arrow">↓</div>
               </div>
@@ -534,7 +594,9 @@ function ValechV2Dashboard() {
                 <div className="step-number">4</div>
                 <div className="step-content">
                   <h3>🗂️ Structure Victim Data</h3>
-                  <p>Format extracted entities into MongoDB schema with metadata</p>
+                  <p>
+                    Format extracted entities into MongoDB schema with metadata
+                  </p>
                 </div>
                 <div className="step-arrow">↓</div>
               </div>
@@ -543,7 +605,10 @@ function ValechV2Dashboard() {
                 <div className="step-number">5</div>
                 <div className="step-content">
                   <h3>🤖 ML Cross-Referencing</h3>
-                  <p>Fuzzy matching automatically links victims to perpetrators (75%+ confidence)</p>
+                  <p>
+                    Fuzzy matching automatically links victims to perpetrators
+                    (75%+ confidence)
+                  </p>
                 </div>
                 <div className="step-arrow">↓</div>
               </div>
@@ -570,7 +635,9 @@ function ValechV2Dashboard() {
                 <div className="step-number">8</div>
                 <div className="step-content">
                   <h3>📊 Generate Statistics</h3>
-                  <p>Comprehensive analytics and reports for all ingested data</p>
+                  <p>
+                    Comprehensive analytics and reports for all ingested data
+                  </p>
                 </div>
               </div>
             </div>
@@ -581,12 +648,17 @@ function ValechV2Dashboard() {
                 <div className="benefit-card">
                   <div className="benefit-icon">⚡</div>
                   <h4>Speed</h4>
-                  <p>Process 27,255 victims in hours vs months of manual work</p>
+                  <p>
+                    Process 27,255 victims in hours vs months of manual work
+                  </p>
                 </div>
                 <div className="benefit-card">
                   <div className="benefit-icon">🎯</div>
                   <h4>Accuracy</h4>
-                  <p>ML-powered with 75%+ confidence thresholds for cross-references</p>
+                  <p>
+                    ML-powered with 75%+ confidence thresholds for
+                    cross-references
+                  </p>
                 </div>
                 <div className="benefit-card">
                   <div className="benefit-icon">♻️</div>
@@ -622,7 +694,9 @@ function ValechV2Dashboard() {
                     <div className="stat-label">Perpetrators</div>
                   </div>
                   <div className="stat-box">
-                    <div className="stat-number">{stats.v1.crossReferences}</div>
+                    <div className="stat-number">
+                      {stats.v1.crossReferences}
+                    </div>
                     <div className="stat-label">Cross-References</div>
                   </div>
                 </div>
@@ -633,17 +707,23 @@ function ValechV2Dashboard() {
                 <h3>🚀 V2.0 Target Capacity</h3>
                 <div className="stats-row">
                   <div className="stat-box large">
-                    <div className="stat-number">{stats.v2.victimsTarget.toLocaleString()}</div>
+                    <div className="stat-number">
+                      {stats.v2.victimsTarget.toLocaleString()}
+                    </div>
                     <div className="stat-label">Victims (Target)</div>
                     <div className="stat-change">+272,450%</div>
                   </div>
                   <div className="stat-box large">
-                    <div className="stat-number">{stats.v2.perpetratorsTarget.toLocaleString()}</div>
+                    <div className="stat-number">
+                      {stats.v2.perpetratorsTarget.toLocaleString()}
+                    </div>
                     <div className="stat-label">Perpetrators (Target)</div>
                     <div className="stat-change">+13,612%</div>
                   </div>
                   <div className="stat-box large">
-                    <div className="stat-number">{stats.v2.crossReferencesTarget.toLocaleString()}+</div>
+                    <div className="stat-number">
+                      {stats.v2.crossReferencesTarget.toLocaleString()}+
+                    </div>
                     <div className="stat-label">Cross-References (Target)</div>
                     <div className="stat-change">+90,809%</div>
                   </div>
@@ -656,26 +736,36 @@ function ValechV2Dashboard() {
                 <div className="stats-grid">
                   <div className="stat-item">
                     <span className="stat-item-label">Components:</span>
-                    <span className="stat-item-value">{stats.components.total}</span>
+                    <span className="stat-item-value">
+                      {stats.components.total}
+                    </span>
                   </div>
                   <div className="stat-item">
                     <span className="stat-item-label">Lines of Code:</span>
-                    <span className="stat-item-value">{stats.components.linesOfCode.toLocaleString()}</span>
+                    <span className="stat-item-value">
+                      {stats.components.linesOfCode.toLocaleString()}
+                    </span>
                   </div>
                   <div className="stat-item">
                     <span className="stat-item-label">Functions:</span>
-                    <span className="stat-item-value">{stats.components.functions}</span>
+                    <span className="stat-item-value">
+                      {stats.components.functions}
+                    </span>
                   </div>
                   <div className="stat-item">
                     <span className="stat-item-label">Files Created:</span>
-                    <span className="stat-item-value">{stats.components.filesCreated}</span>
+                    <span className="stat-item-value">
+                      {stats.components.filesCreated}
+                    </span>
                   </div>
                   <div className="stat-item">
                     <span className="stat-item-label">NPM Dependencies:</span>
                     <span className="stat-item-value">13</span>
                   </div>
                   <div className="stat-item">
-                    <span className="stat-item-label">MongoDB Collections:</span>
+                    <span className="stat-item-label">
+                      MongoDB Collections:
+                    </span>
                     <span className="stat-item-value">15+</span>
                   </div>
                 </div>
@@ -700,19 +790,23 @@ function ValechV2Dashboard() {
               <h3>🎯 Impact Summary</h3>
               <div className="impact-facts">
                 <div className="impact-fact">
-                  <strong>🏗️ Scale:</strong> From 10 to 27,255 victims (272x increase)
+                  <strong>🏗️ Scale:</strong> From 10 to 27,255 victims (272x
+                  increase)
                 </div>
                 <div className="impact-fact">
-                  <strong>🤖 Automation:</strong> From 0% to 100% automated pipeline
+                  <strong>🤖 Automation:</strong> From 0% to 100% automated
+                  pipeline
                 </div>
                 <div className="impact-fact">
-                  <strong>🧠 AI/ML:</strong> Advanced NLP + fuzzy matching integrated
+                  <strong>🧠 AI/ML:</strong> Advanced NLP + fuzzy matching
+                  integrated
                 </div>
                 <div className="impact-fact">
                   <strong>⚖️ Justice:</strong> Real-time court monitoring active
                 </div>
                 <div className="impact-fact">
-                  <strong>📚 Preservation:</strong> Complete historical documentation system
+                  <strong>📚 Preservation:</strong> Complete historical
+                  documentation system
                 </div>
               </div>
             </div>
@@ -724,10 +818,12 @@ function ValechV2Dashboard() {
       <div className="valech-v2-footer">
         <p>🐾 *purrs in MAXIMUM upgrade satisfaction* 😻⚡</p>
         <p className="footer-mission">
-          Mission: Automate historical justice documentation for 27,255 Valech victims
+          Mission: Automate historical justice documentation for 27,255 Valech
+          victims
         </p>
         <p className="footer-principle">
-          "Technology + determination = LEGENDARY HISTORICAL DOCUMENTATION, desu!" - Neko-Arc 2025
+          "Technology + determination = LEGENDARY HISTORICAL DOCUMENTATION,
+          desu!" - Neko-Arc 2025
         </p>
       </div>
     </div>

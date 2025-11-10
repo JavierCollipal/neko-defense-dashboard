@@ -31,7 +31,9 @@ export const useAutoTranslation = () => {
 
       // If user manually set language, don't auto-translate
       if (manualOverride === 'true') {
-        console.log('👤 Manual language override detected - skipping auto-translation');
+        console.log(
+          '👤 Manual language override detected - skipping auto-translation'
+        );
         return;
       }
 
@@ -49,7 +51,9 @@ export const useAutoTranslation = () => {
   }, []);
 
   const detectLocationAndSuggestLanguage = async () => {
-    if (isLoading) {return;}
+    if (isLoading) {
+      return;
+    }
 
     setIsLoading(true);
     console.log('🌍 Starting automatic location detection...');
@@ -68,7 +72,9 @@ export const useAutoTranslation = () => {
         // Auto-switch language if different from current
         const currentLanguage = i18n.language;
         if (data.suggestedLanguage !== currentLanguage) {
-          console.log(`🔄 Auto-switching: ${currentLanguage} → ${data.suggestedLanguage}`);
+          console.log(
+            `🔄 Auto-switching: ${currentLanguage} → ${data.suggestedLanguage}`
+          );
           await i18n.changeLanguage(data.suggestedLanguage);
 
           // Save language preference to backend
@@ -80,8 +86,8 @@ export const useAutoTranslation = () => {
                 userId: 'current-user', // Could be actual user ID if logged in
                 language: data.suggestedLanguage,
                 detectedFrom: 'geolocation',
-                location: data.location
-              })
+                location: data.location,
+              }),
             });
             console.log('💾 Language preference saved to MongoDB');
           } catch (error) {
@@ -168,6 +174,6 @@ export const useAutoTranslation = () => {
     disableAutoTranslation,
     setManualLanguageOverride,
     resetAutoTranslation,
-    detectLocationAndSuggestLanguage
+    detectLocationAndSuggestLanguage,
   };
 };

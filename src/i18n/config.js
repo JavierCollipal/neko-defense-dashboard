@@ -25,50 +25,50 @@ import plTranslation from './locales/pl.json';
 // Language resources configuration
 const resources = {
   en: {
-    translation: enTranslation
+    translation: enTranslation,
   },
   zh: {
-    translation: zhTranslation
+    translation: zhTranslation,
   },
   hi: {
-    translation: hiTranslation
+    translation: hiTranslation,
   },
   es: {
-    translation: esTranslation
+    translation: esTranslation,
   },
   ar: {
-    translation: arTranslation
+    translation: arTranslation,
   },
   fr: {
-    translation: frTranslation
+    translation: frTranslation,
   },
   de: {
-    translation: deTranslation
+    translation: deTranslation,
   },
   ja: {
-    translation: jaTranslation
+    translation: jaTranslation,
   },
   ru: {
-    translation: ruTranslation
+    translation: ruTranslation,
   },
   pt: {
-    translation: ptTranslation
+    translation: ptTranslation,
   },
   ko: {
-    translation: koTranslation
+    translation: koTranslation,
   },
   it: {
-    translation: itTranslation
+    translation: itTranslation,
   },
   nl: {
-    translation: nlTranslation
+    translation: nlTranslation,
   },
   tr: {
-    translation: trTranslation
+    translation: trTranslation,
   },
   pl: {
-    translation: plTranslation
-  }
+    translation: plTranslation,
+  },
 };
 
 // Initialize i18next with all configurations
@@ -106,7 +106,7 @@ i18n
       transEmptyNodeValue: '',
       transSupportBasicHtmlNodes: true,
       transKeepBasicHtmlNodesFor: ['br', 'strong', 'i', 'p', 'span'],
-    }
+    },
   });
 
 // Language metadata for UI display (15 languages total!)
@@ -117,7 +117,7 @@ export const languages = [
     nativeName: 'English',
     flag: '🇬🇧',
     dir: 'ltr',
-    priority: 1
+    priority: 1,
   },
   {
     code: 'es',
@@ -125,7 +125,7 @@ export const languages = [
     nativeName: 'Español',
     flag: '🇪🇸',
     dir: 'ltr',
-    priority: 2
+    priority: 2,
   },
   {
     code: 'zh',
@@ -133,7 +133,7 @@ export const languages = [
     nativeName: '中文',
     flag: '🇨🇳',
     dir: 'ltr',
-    priority: 3
+    priority: 3,
   },
   {
     code: 'hi',
@@ -141,7 +141,7 @@ export const languages = [
     nativeName: 'हिन्दी',
     flag: '🇮🇳',
     dir: 'ltr',
-    priority: 4
+    priority: 4,
   },
   {
     code: 'ar',
@@ -149,7 +149,7 @@ export const languages = [
     nativeName: 'العربية',
     flag: '🇸🇦',
     dir: 'rtl', // Right-to-left for Arabic
-    priority: 5
+    priority: 5,
   },
   {
     code: 'fr',
@@ -157,7 +157,7 @@ export const languages = [
     nativeName: 'Français',
     flag: '🇫🇷',
     dir: 'ltr',
-    priority: 6
+    priority: 6,
   },
   {
     code: 'de',
@@ -165,7 +165,7 @@ export const languages = [
     nativeName: 'Deutsch',
     flag: '🇩🇪',
     dir: 'ltr',
-    priority: 7
+    priority: 7,
   },
   {
     code: 'ja',
@@ -173,7 +173,7 @@ export const languages = [
     nativeName: '日本語',
     flag: '🇯🇵',
     dir: 'ltr',
-    priority: 8
+    priority: 8,
   },
   {
     code: 'ru',
@@ -181,7 +181,7 @@ export const languages = [
     nativeName: 'Русский',
     flag: '🇷🇺',
     dir: 'ltr',
-    priority: 9
+    priority: 9,
   },
   {
     code: 'pt',
@@ -189,7 +189,7 @@ export const languages = [
     nativeName: 'Português',
     flag: '🇧🇷',
     dir: 'ltr',
-    priority: 10
+    priority: 10,
   },
   {
     code: 'ko',
@@ -197,7 +197,7 @@ export const languages = [
     nativeName: '한국어',
     flag: '🇰🇷',
     dir: 'ltr',
-    priority: 11
+    priority: 11,
   },
   {
     code: 'it',
@@ -205,7 +205,7 @@ export const languages = [
     nativeName: 'Italiano',
     flag: '🇮🇹',
     dir: 'ltr',
-    priority: 12
+    priority: 12,
   },
   {
     code: 'nl',
@@ -213,7 +213,7 @@ export const languages = [
     nativeName: 'Nederlands',
     flag: '🇳🇱',
     dir: 'ltr',
-    priority: 13
+    priority: 13,
   },
   {
     code: 'tr',
@@ -221,7 +221,7 @@ export const languages = [
     nativeName: 'Türkçe',
     flag: '🇹🇷',
     dir: 'ltr',
-    priority: 14
+    priority: 14,
   },
   {
     code: 'pl',
@@ -229,20 +229,22 @@ export const languages = [
     nativeName: 'Polski',
     flag: '🇵🇱',
     dir: 'ltr',
-    priority: 15
-  }
+    priority: 15,
+  },
 ];
 
 // Helper function to get current language metadata
 export const getCurrentLanguage = () => {
   const currentLangCode = i18n.language || 'en';
-  return languages.find(lang => lang.code === currentLangCode) || languages[0];
+  return (
+    languages.find((lang) => lang.code === currentLangCode) || languages[0]
+  );
 };
 
 // Helper function to change language and update document direction
 export const changeLanguage = (langCode) => {
   i18n.changeLanguage(langCode);
-  const lang = languages.find(l => l.code === langCode);
+  const lang = languages.find((l) => l.code === langCode);
   if (lang) {
     document.documentElement.dir = lang.dir;
     document.documentElement.lang = langCode;

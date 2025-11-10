@@ -10,7 +10,7 @@ class EnhancedTranslationService {
     this.metricsCollection = 'translation_metrics';
     this.providersConfig = {
       google: { enabled: true, priority: 1 },
-      fallback: { enabled: true, priority: 2 }
+      fallback: { enabled: true, priority: 2 },
     };
 
     console.log('🌟 Enhanced Translation Service v2.0 initialized, nyaa~!');
@@ -19,10 +19,12 @@ class EnhancedTranslationService {
   async initialize() {
     try {
       // Ensure indexes for cache performance
-      await this.db.collection(this.cacheCollection).createIndex(
-        { textHash: 1, targetLang: 1 },
-        { name: 'cache_lookup_index' }
-      );
+      await this.db
+        .collection(this.cacheCollection)
+        .createIndex(
+          { textHash: 1, targetLang: 1 },
+          { name: 'cache_lookup_index' }
+        );
 
       await this.db.collection(this.cacheCollection).createIndex(
         { createdAt: 1 },
@@ -32,7 +34,10 @@ class EnhancedTranslationService {
       console.log('✅ Enhanced Translation Service indexes created, desu~!');
       return true;
     } catch (error) {
-      console.error('❌ Enhanced Translation Service initialization error:', error);
+      console.error(
+        '❌ Enhanced Translation Service initialization error:',
+        error
+      );
       return false;
     }
   }
@@ -47,7 +52,13 @@ class EnhancedTranslationService {
   }
 
   // Enhanced translation with quality scoring
-  async translateWithQuality(text, targetLang, sourceLang = 'auto', context = null, preferredProvider = 'google') {
+  async translateWithQuality(
+    text,
+    targetLang,
+    sourceLang = 'auto',
+    context = null,
+    preferredProvider = 'google'
+  ) {
     try {
       const textHash = this.generateTextHash(text, sourceLang, targetLang);
 
@@ -59,10 +70,21 @@ class EnhancedTranslationService {
       }
 
       // Translate using primary provider
-      const result = await this.performTranslation(text, targetLang, sourceLang, preferredProvider, context);
+      const result = await this.performTranslation(
+        text,
+        targetLang,
+        sourceLang,
+        preferredProvider,
+        context
+      );
 
       // Calculate quality score
-      const qualityScore = await this.calculateQualityScore(text, result.translatedText, sourceLang, targetLang);
+      const qualityScore = await this.calculateQualityScore(
+        text,
+        result.translatedText,
+        sourceLang,
+        targetLang
+      );
       result.quality = qualityScore;
 
       // Cache the result
@@ -71,9 +93,10 @@ class EnhancedTranslationService {
       // Log metrics
       await this.logMetrics(text, result, preferredProvider);
 
-      console.log(`✅ [Enhanced Translation] Completed with quality: ${qualityScore.overallScore}`);
+      console.log(
+        `✅ [Enhanced Translation] Completed with quality: ${qualityScore.overallScore}`
+      );
       return result;
-
     } catch (error) {
       console.error('❌ [Enhanced Translation] Error:', error);
       throw error;
@@ -89,7 +112,7 @@ class EnhancedTranslationService {
       if (provider === 'google' || provider === 'fallback') {
         const result = await translate(text, {
           to: targetLang,
-          from: sourceLang === 'auto' ? undefined : sourceLang
+          from: sourceLang === 'auto' ? undefined : sourceLang,
         });
 
         translatedText = result.text;
@@ -104,24 +127,33 @@ class EnhancedTranslationService {
         targetLang,
         provider,
         context,
-        timestamp: new Date()
+        timestamp: new Date(),
       };
-
     } catch (error) {
-      console.error(`❌ [Enhanced Translation] Provider ${provider} failed:`, error);
+      console.error(
+        `❌ [Enhanced Translation] Provider ${provider} failed:`,
+        error
+      );
       throw error;
     }
   }
 
   // Calculate quality score
-  async calculateQualityScore(originalText, translatedText, sourceLang, targetLang) {
+  async calculateQualityScore(
+    originalText,
+    translatedText,
+    sourceLang,
+    targetLang
+  ) {
     try {
       const metrics = {
         lengthRatio: translatedText.length / originalText.length,
         hasContent: translatedText.length > 0,
         notIdentical: originalText !== translatedText,
-        noErrorMarkers: !translatedText.includes('[ERROR]') && !translatedText.includes('Error:'),
-        complexity: this.calculateTextComplexity(originalText)
+        noErrorMarkers:
+          !translatedText.includes('[ERROR]') &&
+          !translatedText.includes('Error:'),
+        complexity: this.calculateTextComplexity(originalText),
       };
 
       // Calculate scores
@@ -130,41 +162,49 @@ class EnhancedTranslationService {
         contentScore: metrics.hasContent ? 100 : 0,
         uniquenessScore: metrics.notIdentical ? 100 : 0,
         errorScore: metrics.noErrorMarkers ? 100 : 0,
-        complexityScore: metrics.complexity
+        complexityScore: metrics.complexity,
       };
 
       const overallScore = Math.round(
-        (scores.lengthScore * 0.2 +
-         scores.contentScore * 0.3 +
-         scores.uniquenessScore * 0.2 +
-         scores.errorScore * 0.2 +
-         scores.complexityScore * 0.1)
+        scores.lengthScore * 0.2 +
+          scores.contentScore * 0.3 +
+          scores.uniquenessScore * 0.2 +
+          scores.errorScore * 0.2 +
+          scores.complexityScore * 0.1
       );
 
       return {
         overallScore,
         breakdown: scores,
         metrics,
-        grade: this.getQualityGrade(overallScore)
+        grade: this.getQualityGrade(overallScore),
       };
-
     } catch (error) {
-      console.error('❌ [Enhanced Translation] Quality calculation error:', error);
+      console.error(
+        '❌ [Enhanced Translation] Quality calculation error:',
+        error
+      );
       return {
         overallScore: 50,
         breakdown: {},
         metrics: {},
         grade: 'C',
-        error: error.message
+        error: error.message,
       };
     }
   }
 
   // Score length ratio (ideal is 0.8-1.2)
   scoreLengthRatio(ratio) {
-    if (ratio >= 0.8 && ratio <= 1.2) {return 100;}
-    if (ratio >= 0.6 && ratio <= 1.4) {return 80;}
-    if (ratio >= 0.4 && ratio <= 1.6) {return 60;}
+    if (ratio >= 0.8 && ratio <= 1.2) {
+      return 100;
+    }
+    if (ratio >= 0.6 && ratio <= 1.4) {
+      return 80;
+    }
+    if (ratio >= 0.4 && ratio <= 1.6) {
+      return 60;
+    }
     return 40;
   }
 
@@ -180,14 +220,30 @@ class EnhancedTranslationService {
 
   // Get quality grade
   getQualityGrade(score) {
-    if (score >= 90) {return 'A+';}
-    if (score >= 85) {return 'A';}
-    if (score >= 80) {return 'B+';}
-    if (score >= 75) {return 'B';}
-    if (score >= 70) {return 'C+';}
-    if (score >= 65) {return 'C';}
-    if (score >= 60) {return 'D+';}
-    if (score >= 55) {return 'D';}
+    if (score >= 90) {
+      return 'A+';
+    }
+    if (score >= 85) {
+      return 'A';
+    }
+    if (score >= 80) {
+      return 'B+';
+    }
+    if (score >= 75) {
+      return 'B';
+    }
+    if (score >= 70) {
+      return 'C+';
+    }
+    if (score >= 65) {
+      return 'C';
+    }
+    if (score >= 60) {
+      return 'D+';
+    }
+    if (score >= 55) {
+      return 'D';
+    }
     return 'F';
   }
 
@@ -199,7 +255,7 @@ class EnhancedTranslationService {
         targetLang,
         result,
         createdAt: new Date(),
-        hits: 0
+        hits: 0,
       });
     } catch (error) {
       console.error('❌ [Enhanced Translation] Cache save error:', error);
@@ -211,15 +267,17 @@ class EnhancedTranslationService {
     try {
       const cached = await this.db.collection(this.cacheCollection).findOne({
         textHash,
-        targetLang
+        targetLang,
       });
 
       if (cached) {
         // Increment hit counter
-        await this.db.collection(this.cacheCollection).updateOne(
-          { _id: cached._id },
-          { $inc: { hits: 1 }, $set: { lastAccessed: new Date() } }
-        );
+        await this.db
+          .collection(this.cacheCollection)
+          .updateOne(
+            { _id: cached._id },
+            { $inc: { hits: 1 }, $set: { lastAccessed: new Date() } }
+          );
       }
 
       return cached;
@@ -239,7 +297,7 @@ class EnhancedTranslationService {
         provider,
         qualityScore: result.quality?.overallScore || 0,
         cached: result.cached || false,
-        timestamp: new Date()
+        timestamp: new Date(),
       });
     } catch (error) {
       console.error('❌ [Enhanced Translation] Metrics logging error:', error);
@@ -249,7 +307,9 @@ class EnhancedTranslationService {
   // Bulk translation
   async translateBulk(texts, targetLang, sourceLang = 'auto', context = null) {
     try {
-      console.log(`📦 [Enhanced Translation] Bulk translating ${texts.length} texts`);
+      console.log(
+        `📦 [Enhanced Translation] Bulk translating ${texts.length} texts`
+      );
 
       const results = [];
       for (let i = 0; i < texts.length; i++) {
@@ -266,7 +326,7 @@ class EnhancedTranslationService {
             error: error.message,
             originalText: texts[i],
             translatedText: texts[i], // Fallback to original
-            quality: { overallScore: 0 }
+            quality: { overallScore: 0 },
           });
         }
       }
@@ -280,28 +340,48 @@ class EnhancedTranslationService {
 
   // Analyze quality of existing translation
   async analyzeQuality(originalText, translatedText, sourceLang, targetLang) {
-    return await this.calculateQualityScore(originalText, translatedText, sourceLang, targetLang);
+    return await this.calculateQualityScore(
+      originalText,
+      translatedText,
+      sourceLang,
+      targetLang
+    );
   }
 
   // Get cache statistics
   async getCacheStats() {
     try {
-      const totalEntries = await this.db.collection(this.cacheCollection).countDocuments();
-      const totalHits = await this.db.collection(this.cacheCollection).aggregate([
-        { $group: { _id: null, totalHits: { $sum: '$hits' } } }
-      ]).toArray();
+      const totalEntries = await this.db
+        .collection(this.cacheCollection)
+        .countDocuments();
+      const totalHits = await this.db
+        .collection(this.cacheCollection)
+        .aggregate([{ $group: { _id: null, totalHits: { $sum: '$hits' } } }])
+        .toArray();
 
-      const languageStats = await this.db.collection(this.cacheCollection).aggregate([
-        { $group: { _id: '$targetLang', count: { $sum: 1 }, hits: { $sum: '$hits' } } },
-        { $sort: { count: -1 } }
-      ]).toArray();
+      const languageStats = await this.db
+        .collection(this.cacheCollection)
+        .aggregate([
+          {
+            $group: {
+              _id: '$targetLang',
+              count: { $sum: 1 },
+              hits: { $sum: '$hits' },
+            },
+          },
+          { $sort: { count: -1 } },
+        ])
+        .toArray();
 
       return {
         totalEntries,
         totalHits: totalHits[0]?.totalHits || 0,
-        hitRate: totalEntries > 0 ? ((totalHits[0]?.totalHits || 0) / totalEntries * 100).toFixed(2) : 0,
+        hitRate:
+          totalEntries > 0
+            ? (((totalHits[0]?.totalHits || 0) / totalEntries) * 100).toFixed(2)
+            : 0,
         languageBreakdown: languageStats,
-        generatedAt: new Date()
+        generatedAt: new Date(),
       };
     } catch (error) {
       console.error('❌ [Enhanced Translation] Cache stats error:', error);
@@ -322,7 +402,9 @@ class EnhancedTranslationService {
         filter.createdAt = { $lt: new Date(Date.now() - olderThan) };
       }
 
-      const result = await this.db.collection(this.cacheCollection).deleteMany(filter);
+      const result = await this.db
+        .collection(this.cacheCollection)
+        .deleteMany(filter);
       return result.deletedCount;
     } catch (error) {
       console.error('❌ [Enhanced Translation] Cache clear error:', error);
@@ -350,7 +432,7 @@ class EnhancedTranslationService {
             status: 'healthy',
             priority: config.priority,
             lastChecked: new Date(),
-            testTranslation: testResult.translatedText
+            testTranslation: testResult.translatedText,
           };
         } catch (error) {
           providerStatus[provider] = {
@@ -358,7 +440,7 @@ class EnhancedTranslationService {
             status: 'error',
             priority: config.priority,
             lastChecked: new Date(),
-            error: error.message
+            error: error.message,
           };
         }
       }
@@ -374,30 +456,42 @@ class EnhancedTranslationService {
   async getUsageMetrics(startDate = null, endDate = null) {
     try {
       const dateFilter = {};
-      if (startDate) {dateFilter.$gte = new Date(startDate);}
-      if (endDate) {dateFilter.$lte = new Date(endDate);}
+      if (startDate) {
+        dateFilter.$gte = new Date(startDate);
+      }
+      if (endDate) {
+        dateFilter.$lte = new Date(endDate);
+      }
 
-      const filter = Object.keys(dateFilter).length > 0 ? { timestamp: dateFilter } : {};
+      const filter =
+        Object.keys(dateFilter).length > 0 ? { timestamp: dateFilter } : {};
 
-      const metrics = await this.db.collection(this.metricsCollection).aggregate([
-        { $match: filter },
-        {
-          $group: {
-            _id: null,
-            totalTranslations: { $sum: 1 },
-            avgQuality: { $avg: '$qualityScore' },
-            languagePairs: { $addToSet: { source: '$sourceLang', target: '$targetLang' } },
-            providers: { $addToSet: '$provider' }
-          }
+      const metrics = await this.db
+        .collection(this.metricsCollection)
+        .aggregate([
+          { $match: filter },
+          {
+            $group: {
+              _id: null,
+              totalTranslations: { $sum: 1 },
+              avgQuality: { $avg: '$qualityScore' },
+              languagePairs: {
+                $addToSet: { source: '$sourceLang', target: '$targetLang' },
+              },
+              providers: { $addToSet: '$provider' },
+            },
+          },
+        ])
+        .toArray();
+
+      return (
+        metrics[0] || {
+          totalTranslations: 0,
+          avgQuality: 0,
+          languagePairs: [],
+          providers: [],
         }
-      ]).toArray();
-
-      return metrics[0] || {
-        totalTranslations: 0,
-        avgQuality: 0,
-        languagePairs: [],
-        providers: []
-      };
+      );
     } catch (error) {
       console.error('❌ [Enhanced Translation] Usage metrics error:', error);
       return { error: error.message };
@@ -408,20 +502,45 @@ class EnhancedTranslationService {
   async getSupportedLanguages() {
     const languages = [
       { code: 'en', name: 'English', nativeName: 'English', region: 'Global' },
-      { code: 'es', name: 'Spanish', nativeName: 'Español', region: 'Spain/Latin America' },
+      {
+        code: 'es',
+        name: 'Spanish',
+        nativeName: 'Español',
+        region: 'Spain/Latin America',
+      },
       { code: 'fr', name: 'French', nativeName: 'Français', region: 'France' },
       { code: 'de', name: 'German', nativeName: 'Deutsch', region: 'Germany' },
       { code: 'it', name: 'Italian', nativeName: 'Italiano', region: 'Italy' },
-      { code: 'pt', name: 'Portuguese', nativeName: 'Português', region: 'Portugal/Brazil' },
+      {
+        code: 'pt',
+        name: 'Portuguese',
+        nativeName: 'Português',
+        region: 'Portugal/Brazil',
+      },
       { code: 'ru', name: 'Russian', nativeName: 'Русский', region: 'Russia' },
       { code: 'ja', name: 'Japanese', nativeName: '日本語', region: 'Japan' },
-      { code: 'ko', name: 'Korean', nativeName: '한국어', region: 'South Korea' },
+      {
+        code: 'ko',
+        name: 'Korean',
+        nativeName: '한국어',
+        region: 'South Korea',
+      },
       { code: 'zh', name: 'Chinese', nativeName: '中文', region: 'China' },
-      { code: 'ar', name: 'Arabic', nativeName: 'العربية', region: 'Middle East' },
+      {
+        code: 'ar',
+        name: 'Arabic',
+        nativeName: 'العربية',
+        region: 'Middle East',
+      },
       { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी', region: 'India' },
-      { code: 'nl', name: 'Dutch', nativeName: 'Nederlands', region: 'Netherlands' },
+      {
+        code: 'nl',
+        name: 'Dutch',
+        nativeName: 'Nederlands',
+        region: 'Netherlands',
+      },
       { code: 'tr', name: 'Turkish', nativeName: 'Türkçe', region: 'Turkey' },
-      { code: 'pl', name: 'Polish', nativeName: 'Polski', region: 'Poland' }
+      { code: 'pl', name: 'Polish', nativeName: 'Polski', region: 'Poland' },
     ];
 
     return languages;
@@ -434,14 +553,17 @@ class EnhancedTranslationService {
       return {
         language: result.from?.language?.iso || 'unknown',
         confidence: result.from?.text?.autoCorrected ? 0.8 : 0.9,
-        detectedText: result.from?.text?.value || text
+        detectedText: result.from?.text?.value || text,
       };
     } catch (error) {
-      console.error('❌ [Enhanced Translation] Language detection error:', error);
+      console.error(
+        '❌ [Enhanced Translation] Language detection error:',
+        error
+      );
       return {
         language: 'unknown',
         confidence: 0,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -454,11 +576,16 @@ class EnhancedTranslationService {
       legal: 'This is legal document text.',
       business: 'This is business communication.',
       casual: 'This is casual conversation.',
-      academic: 'This is academic writing.'
+      academic: 'This is academic writing.',
     };
 
     const context = contextMap[domain] || null;
-    return await this.translateWithQuality(text, targetLang, sourceLang, context);
+    return await this.translateWithQuality(
+      text,
+      targetLang,
+      sourceLang,
+      context
+    );
   }
 
   // Compare providers A/B testing
@@ -478,7 +605,7 @@ class EnhancedTranslationService {
           results.push({
             provider,
             success: true,
-            ...result
+            ...result,
           });
         } catch (error) {
           results.push({
@@ -486,21 +613,27 @@ class EnhancedTranslationService {
             success: false,
             error: error.message,
             translatedText: '',
-            quality: { overallScore: 0 }
+            quality: { overallScore: 0 },
           });
         }
       }
 
       // Sort by quality score
-      results.sort((a, b) => (b.quality?.overallScore || 0) - (a.quality?.overallScore || 0));
+      results.sort(
+        (a, b) =>
+          (b.quality?.overallScore || 0) - (a.quality?.overallScore || 0)
+      );
 
       return {
         bestProvider: results[0]?.provider,
         results,
-        timestamp: new Date()
+        timestamp: new Date(),
       };
     } catch (error) {
-      console.error('❌ [Enhanced Translation] Provider comparison error:', error);
+      console.error(
+        '❌ [Enhanced Translation] Provider comparison error:',
+        error
+      );
       throw error;
     }
   }

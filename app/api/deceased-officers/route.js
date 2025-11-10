@@ -22,7 +22,7 @@ export async function GET(request) {
       success: true,
       data: [],
       count: 0,
-      message: 'Demo mode - MongoDB not configured'
+      message: 'Demo mode - MongoDB not configured',
     });
   }
 
@@ -42,20 +42,18 @@ export async function GET(request) {
     return NextResponse.json({
       success: true,
       data: deceasedOfficers,
-      count: deceasedOfficers.length
+      count: deceasedOfficers.length,
     });
-
   } catch (error) {
     console.error('❌ API Error (deceased-officers):', error.message);
     return NextResponse.json(
       {
         success: false,
         error: error.message,
-        message: 'Failed to fetch deceased officers'
+        message: 'Failed to fetch deceased officers',
       },
       { status: 500 }
     );
-
   } finally {
     await client.close();
   }

@@ -9,7 +9,7 @@ const YouTubePlaylist = () => {
   const channelInfo = {
     channelUrl: 'https://youtu.be/bRNkW-SYSEk?si=swxBiVXF0RziqRhZ',
     channelName: 'NEKO DEFENSE - Threat Actor Exposure',
-    description: 'Public exposure of bad actors and threat intelligence'
+    description: 'Public exposure of bad actors and threat intelligence',
   };
 
   // 📺 Threat Actor Exposure Videos (Add your actual videos here!)
@@ -20,8 +20,8 @@ const YouTubePlaylist = () => {
       description: 'Subscribe for threat actor exposure videos!',
       thumbnail: `https://img.youtube.com/vi/bRNkW-SYSEk/maxresdefault.jpg`,
       views: 'Subscribe!',
-      uploadDate: '2025'
-    }
+      uploadDate: '2025',
+    },
     // 🐾 Add more videos here as you upload them!
     // {
     //   id: 'VIDEO_ID_HERE',
@@ -41,7 +41,11 @@ const YouTubePlaylist = () => {
   }, [selectedVideo]);
 
   const openInYouTube = (videoId) => {
-    window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank', 'noopener,noreferrer');
+    window.open(
+      `https://www.youtube.com/watch?v=${videoId}`,
+      '_blank',
+      'noopener,noreferrer'
+    );
   };
 
   const openChannelPage = () => {
@@ -49,7 +53,11 @@ const YouTubePlaylist = () => {
   };
 
   const openDinaPlaylist = () => {
-    window.open('https://www.youtube.com/playlist?list=PL-2OQDhuBcBnq9I-hk2qwoeIQsolRgMdM', '_blank', 'noopener,noreferrer');
+    window.open(
+      'https://www.youtube.com/playlist?list=PL-2OQDhuBcBnq9I-hk2qwoeIQsolRgMdM',
+      '_blank',
+      'noopener,noreferrer'
+    );
   };
 
   return (
@@ -76,19 +84,28 @@ const YouTubePlaylist = () => {
         <div className="dina-featured-content">
           <div className="dina-featured-info">
             <ul className="dina-info-list">
-              <li>📹 <strong>Evidence-Based:</strong> Documentary proof of DINA crimes</li>
-              <li>🛡️ <strong>Human Rights:</strong> Victims' testimonies & documentation</li>
-              <li>🌍 <strong>Historical Record:</strong> Chile's dictatorship (1973-1990)</li>
-              <li>⚖️ <strong>Justice:</strong> Supporting accountability & memory</li>
+              <li>
+                📹 <strong>Evidence-Based:</strong> Documentary proof of DINA
+                crimes
+              </li>
+              <li>
+                🛡️ <strong>Human Rights:</strong> Victims' testimonies &
+                documentation
+              </li>
+              <li>
+                🌍 <strong>Historical Record:</strong> Chile's dictatorship
+                (1973-1990)
+              </li>
+              <li>
+                ⚖️ <strong>Justice:</strong> Supporting accountability & memory
+              </li>
             </ul>
           </div>
           <div className="dina-featured-action">
             <button className="dina-playlist-btn" onClick={openDinaPlaylist}>
               📺 OPEN DINA VIDEO PLAYLIST
             </button>
-            <p className="dina-playlist-cta">
-              Watch full playlist on YouTube
-            </p>
+            <p className="dina-playlist-cta">Watch full playlist on YouTube</p>
           </div>
         </div>
       </div>
@@ -183,19 +200,30 @@ const YouTubePlaylist = () => {
       <div className="youtube-info-section">
         <h3>💡 About This Channel</h3>
         <ul className="info-list">
-          <li>🎯 <strong>Purpose:</strong> Expose threat actors & bad actor systems</li>
-          <li>🛡️ <strong>Content:</strong> Evidence-based threat intelligence</li>
-          <li>📹 <strong>Videos:</strong> Created with VideoMaker tool</li>
-          <li>💰 <strong>Monetization:</strong> YouTube-ready content</li>
-          <li>🌍 <strong>Impact:</strong> Public awareness & deterrence</li>
+          <li>
+            🎯 <strong>Purpose:</strong> Expose threat actors & bad actor
+            systems
+          </li>
+          <li>
+            🛡️ <strong>Content:</strong> Evidence-based threat intelligence
+          </li>
+          <li>
+            📹 <strong>Videos:</strong> Created with VideoMaker tool
+          </li>
+          <li>
+            💰 <strong>Monetization:</strong> YouTube-ready content
+          </li>
+          <li>
+            🌍 <strong>Impact:</strong> Public awareness & deterrence
+          </li>
         </ul>
       </div>
 
       {/* 🐾 Footer */}
       <div className="youtube-footer">
         <p className="neko-message">
-          *purrs with broadcasting power*
-          Every bad actor caught = YouTube video made, nyaa~! 🎬✨
+          *purrs with broadcasting power* Every bad actor caught = YouTube video
+          made, nyaa~! 🎬✨
         </p>
         <p className="exposure-motto">
           "Defend. Document. Expose. Monetize." - Neko Defense System 🐾
