@@ -69,7 +69,7 @@ async function testVercelPersonalityWorkflow() {
     }
   });
 
-  page.on('pageerror', (error) => {
+  page.on('pageerror', (error: any) => {
     errors.page.push({ message: error.message, timestamp: new Date() });
     console.log('🚨 PAGE ERROR:', error.message);
   });

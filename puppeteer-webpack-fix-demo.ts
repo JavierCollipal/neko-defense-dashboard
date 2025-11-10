@@ -51,7 +51,7 @@ async function demonstrateWebpackFix() {
     }
   });
 
-  page.on('pageerror', error => {
+  page.on('pageerror', (error: any) => {
     pageErrors++;
     console.log('🚨 PAGE ERROR:', error.message);
   });

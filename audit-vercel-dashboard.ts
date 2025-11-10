@@ -95,15 +95,16 @@ class DashboardAuditor {
 
     // JavaScript errors
     this.page.on('pageerror', (error) => {
+      const err = error as Error;
       const errorCapture: ErrorCapture = {
         type: 'javascript_error',
-        message: error.message,
+        message: err.message || String(error),
         route: this.currentRoute,
         timestamp: new Date(),
         severity: 'CRITICAL'
       };
       this.errors.push(errorCapture);
-      console.log('🚨 PAGE ERROR:', error.message);
+      console.log('🚨 PAGE ERROR:', err.message || String(error));
     });
 
     // Network monitoring

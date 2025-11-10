@@ -246,7 +246,8 @@ async function auditVercelProduction(): Promise<void> {
   });
 
   page.on('pageerror', async (error) => {
-    await errorCollector.saveJavaScriptError(error, {
+    const err = error as Error;
+    await errorCollector.saveJavaScriptError(err, {
       route: currentRoute,
       url: page.url()
     });

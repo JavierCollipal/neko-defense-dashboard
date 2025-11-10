@@ -85,7 +85,7 @@ async function investigateCasePatterns() {
     });
 
     // Monitor page errors (JavaScript exceptions)
-    page.on('pageerror', error => {
+    page.on('pageerror', (error: any) => {
       console.log('🚨 [PAGE ERROR]:', error.message);
       errors.push({
         type: 'pageerror',

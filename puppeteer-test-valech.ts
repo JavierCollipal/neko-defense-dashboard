@@ -82,7 +82,7 @@ async function testValechInterface() {
     }
   });
 
-  page.on('pageerror', error => {
+  page.on('pageerror', (error: any) => {
     console.log('🚨 PAGE ERROR:', error.message);
     errors.push({ type: 'pageerror', message: error.message, timestamp: new Date() });
   });

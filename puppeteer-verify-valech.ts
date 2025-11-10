@@ -28,7 +28,7 @@ async function quickVerify() {
     }
   });
 
-  page.on('pageerror', error => {
+  page.on('pageerror', (error: any) => {
     console.log(`🚨 PAGE ERROR: ${error.message}`);
     errorCount++;
   });

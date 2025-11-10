@@ -145,7 +145,7 @@ async function investigateValechPage() {
     }
   });
 
-  page.on('pageerror', async (error) => {
+  page.on('pageerror', async (error: any) => {
     console.log('🚨 [PAGE ERROR]:', error.message);
     await errorCollector.saveError({
       type: 'pageerror',

@@ -93,7 +93,7 @@ class PuppeteerVercelScanner {
     });
 
     // Monitor page errors
-    page.on('pageerror', (error) => {
+    page.on('pageerror', (error: any) => {
       console.log('🚨 [PAGE ERROR]:', error.message);
       this.pageErrors.push({
         message: error.message,
