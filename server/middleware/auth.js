@@ -7,9 +7,9 @@
 
 const jwt = require('jsonwebtoken');
 
-// JWT secret from environment variable
+// JWT secret from environment variable (MUST be set in production)
 const JWT_SECRET =
-  process.env.JWT_SECRET || 'neko-arc-supreme-secret-change-in-production';
+  process.env.JWT_SECRET || 'dev-test-secret-DO-NOT-USE-IN-PRODUCTION';
 const JWT_EXPIRES_IN = '24h'; // Token expiration time
 const JWT_REFRESH_EXPIRES_IN = '7d'; // Refresh token expiration
 
