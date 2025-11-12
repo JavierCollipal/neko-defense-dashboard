@@ -116,10 +116,9 @@ describe('Achievement Model - Functions with Database', () => {
 
     it('should return true for earned content achievement', async () => {
       // Update user stats
-      await db.collection('users').updateOne(
-        { _id: userId },
-        { $set: { 'stats.content_count': 1 } }
-      );
+      await db
+        .collection('users')
+        .updateOne({ _id: userId }, { $set: { 'stats.content_count': 1 } });
 
       const achievement = ACHIEVEMENTS.first_post;
       const earned = await checkAchievementEarned(db, userId, achievement);
@@ -182,10 +181,12 @@ describe('Achievement Model - Functions with Database', () => {
     });
 
     it('should check login streak achievement', async () => {
-      await db.collection('users').updateOne(
-        { _id: userId },
-        { $set: { 'gamification.login_streak': 30 } }
-      );
+      await db
+        .collection('users')
+        .updateOne(
+          { _id: userId },
+          { $set: { 'gamification.login_streak': 30 } }
+        );
 
       const achievement = ACHIEVEMENTS.streak_master;
       const earned = await checkAchievementEarned(db, userId, achievement);
@@ -196,10 +197,9 @@ describe('Achievement Model - Functions with Database', () => {
   describe('awardAchievement', () => {
     it('should award achievement when earned', async () => {
       // Setup conditions for first_post achievement
-      await db.collection('users').updateOne(
-        { _id: userId },
-        { $set: { 'stats.content_count': 1 } }
-      );
+      await db
+        .collection('users')
+        .updateOne({ _id: userId }, { $set: { 'stats.content_count': 1 } });
 
       const achievement = ACHIEVEMENTS.first_post;
       const awarded = await awardAchievement(db, userId, achievement);
@@ -224,10 +224,9 @@ describe('Achievement Model - Functions with Database', () => {
     });
 
     it('should not award achievement twice', async () => {
-      await db.collection('users').updateOne(
-        { _id: userId },
-        { $set: { 'stats.content_count': 1 } }
-      );
+      await db
+        .collection('users')
+        .updateOne({ _id: userId }, { $set: { 'stats.content_count': 1 } });
 
       const achievement = ACHIEVEMENTS.first_post;
 
@@ -248,16 +247,19 @@ describe('Achievement Model - Functions with Database', () => {
   describe('checkAllAchievements', () => {
     it('should check and award all eligible achievements', async () => {
       // Setup conditions for multiple achievements
-      await db.collection('users').updateOne(
-        { _id: userId },
-        { $set: { 'stats.content_count': 10 } }
-      );
+      await db
+        .collection('users')
+        .updateOne({ _id: userId }, { $set: { 'stats.content_count': 10 } });
 
       const newlyEarned = await checkAllAchievements(db, userId);
 
       // Should earn first_post and prolific_writer
       expect(newlyEarned.length).toBeGreaterThanOrEqual(1);
-      expect(newlyEarned.some((a) => a.id === 'first_post' || a.id === 'prolific_writer')).toBe(true);
+      expect(
+        newlyEarned.some(
+          (a) => a.id === 'first_post' || a.id === 'prolific_writer'
+        )
+      ).toBe(true);
     });
 
     it('should return achievements when eligible', async () => {
@@ -284,10 +286,12 @@ describe('Achievement Model - Functions with Database', () => {
       // Simulate next day login
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
-      await db.collection('users').updateOne(
-        { _id: userId },
-        { $set: { 'gamification.last_login': yesterday } }
-      );
+      await db
+        .collection('users')
+        .updateOne(
+          { _id: userId },
+          { $set: { 'gamification.last_login': yesterday } }
+        );
 
       const streak = await updateLoginStreak(db, userId);
       expect(streak).toBe(2);
@@ -306,10 +310,12 @@ describe('Achievement Model - Functions with Database', () => {
       // Simulate login 3 days later
       const threeDaysAgo = new Date();
       threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
-      await db.collection('users').updateOne(
-        { _id: userId },
-        { $set: { 'gamification.last_login': threeDaysAgo } }
-      );
+      await db
+        .collection('users')
+        .updateOne(
+          { _id: userId },
+          { $set: { 'gamification.last_login': threeDaysAgo } }
+        );
 
       const streak = await updateLoginStreak(db, userId);
       expect(streak).toBe(1);

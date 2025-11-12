@@ -23,7 +23,14 @@ const { optionalAuth, requireAuth } = require('../middleware/auth');
 router.get('/search', optionalAuth, async (req, res) => {
   try {
     const db = req.app.locals.db;
-    const { q, category, tags, sort = 'relevance', page = 1, limit = 20 } = req.query;
+    const {
+      q,
+      category,
+      tags,
+      sort = 'relevance',
+      page = 1,
+      limit = 20,
+    } = req.query;
 
     if (!q || q.trim().length === 0) {
       return res.status(400).json({ error: 'Search query is required' });
@@ -42,7 +49,7 @@ router.get('/search', optionalAuth, async (req, res) => {
 
     // Apply tag filter
     if (tags) {
-      const tagArray = tags.split(',').map(t => t.trim());
+      const tagArray = tags.split(',').map((t) => t.trim());
       query.tags = { $in: tagArray };
     }
 
@@ -66,9 +73,8 @@ router.get('/search', optionalAuth, async (req, res) => {
     const skip = (pageNum - 1) * limitNum;
 
     // Execute search with text score for relevance
-    const projection = sort === 'relevance'
-      ? { score: { $meta: 'textScore' } }
-      : {};
+    const projection =
+      sort === 'relevance' ? { score: { $meta: 'textScore' } } : {};
 
     const results = await db
       .collection('user_generated_content')
@@ -86,12 +92,17 @@ router.get('/search', optionalAuth, async (req, res) => {
     // Populate author information
     for (const content of results) {
       if (content.author_id) {
-        const author = await db
-          .collection('users')
-          .findOne(
-            { _id: new ObjectId(content.author_id) },
-            { projection: { username: 1, display_name: 1, avatar_url: 1, verified: 1 } }
-          );
+        const author = await db.collection('users').findOne(
+          { _id: new ObjectId(content.author_id) },
+          {
+            projection: {
+              username: 1,
+              display_name: 1,
+              avatar_url: 1,
+              verified: 1,
+            },
+          }
+        );
         content.author = author;
       }
     }
@@ -200,12 +211,17 @@ router.get('/content/trending', optionalAuth, async (req, res) => {
     // Populate author information
     for (const content of trending) {
       if (content.author_id) {
-        const author = await db
-          .collection('users')
-          .findOne(
-            { _id: new ObjectId(content.author_id) },
-            { projection: { username: 1, display_name: 1, avatar_url: 1, verified: 1 } }
-          );
+        const author = await db.collection('users').findOne(
+          { _id: new ObjectId(content.author_id) },
+          {
+            projection: {
+              username: 1,
+              display_name: 1,
+              avatar_url: 1,
+              verified: 1,
+            },
+          }
+        );
         content.author = author;
       }
     }
@@ -239,7 +255,9 @@ router.get('/content/recommended', requireAuth, async (req, res) => {
     const limit = Math.min(50, Math.max(1, parseInt(req.query.limit) || 20));
 
     // 1. Get user's interaction history
-    const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
+    const user = await db
+      .collection('users')
+      .findOne({ _id: new ObjectId(userId) });
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
@@ -255,8 +273,12 @@ router.get('/content/recommended', requireAuth, async (req, res) => {
       .toArray();
 
     // Extract categories and tags from liked content
-    const preferredCategories = [...new Set(likedContent.map(c => c.category))];
-    const preferredTags = [...new Set(likedContent.flatMap(c => c.tags || []))];
+    const preferredCategories = [
+      ...new Set(likedContent.map((c) => c.category)),
+    ];
+    const preferredTags = [
+      ...new Set(likedContent.flatMap((c) => c.tags || [])),
+    ];
 
     // 3. Content-based recommendations (40% weight)
     const contentBasedQuery = {
@@ -317,7 +339,7 @@ router.get('/content/recommended', requireAuth, async (req, res) => {
       ])
       .toArray();
 
-    const similarUsers = similarUserIds.map(u => u._id);
+    const similarUsers = similarUserIds.map((u) => u._id);
 
     let collaborative = [];
     if (similarUsers.length > 0) {
@@ -363,12 +385,17 @@ router.get('/content/recommended', requireAuth, async (req, res) => {
     // 7. Populate author information
     for (const content of recommendations) {
       if (content.author_id) {
-        const author = await db
-          .collection('users')
-          .findOne(
-            { _id: new ObjectId(content.author_id) },
-            { projection: { username: 1, display_name: 1, avatar_url: 1, verified: 1 } }
-          );
+        const author = await db.collection('users').findOne(
+          { _id: new ObjectId(content.author_id) },
+          {
+            projection: {
+              username: 1,
+              display_name: 1,
+              avatar_url: 1,
+              verified: 1,
+            },
+          }
+        );
         content.author = author;
       }
     }
@@ -505,7 +532,9 @@ async function initializeSearchIndexes(db) {
 
     // Check if text index exists
     const indexes = await collection.indexes();
-    const hasTextIndex = indexes.some(idx => idx.name === 'content_text_search');
+    const hasTextIndex = indexes.some(
+      (idx) => idx.name === 'content_text_search'
+    );
 
     if (!hasTextIndex) {
       // Create text search index
@@ -530,9 +559,18 @@ async function initializeSearchIndexes(db) {
     }
 
     // Create performance indexes
-    await collection.createIndex({ created_at: -1 }, { name: 'created_at_desc' });
-    await collection.createIndex({ published_at: -1 }, { name: 'published_at_desc' });
-    await collection.createIndex({ 'engagement.views': -1 }, { name: 'views_desc' });
+    await collection.createIndex(
+      { created_at: -1 },
+      { name: 'created_at_desc' }
+    );
+    await collection.createIndex(
+      { published_at: -1 },
+      { name: 'published_at_desc' }
+    );
+    await collection.createIndex(
+      { 'engagement.views': -1 },
+      { name: 'views_desc' }
+    );
     await collection.createIndex(
       { category: 1, created_at: -1 },
       { name: 'category_created_desc' }

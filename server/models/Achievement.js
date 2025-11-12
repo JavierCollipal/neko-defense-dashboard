@@ -281,23 +281,18 @@ async function checkAchievementEarned(db, userId, achievement) {
     case 'ideas_voted':
       // Count ideas where user has voted
       const votedIdeas = await db.collection('community_ideas').countDocuments({
-        $or: [
-          { 'votes.upvotes': userId },
-          { 'votes.downvotes': userId },
-        ],
+        $or: [{ 'votes.upvotes': userId }, { 'votes.downvotes': userId }],
       });
       return votedIdeas >= trigger.count;
 
     case 'post_at_hour':
       // Check if user has posted at specific hour
-      const postAtHour = await db
-        .collection('user_generated_content')
-        .findOne({
-          author_id: userId,
-          $expr: {
-            $eq: [{ $hour: '$created_at' }, trigger.hour],
-          },
-        });
+      const postAtHour = await db.collection('user_generated_content').findOne({
+        author_id: userId,
+        $expr: {
+          $eq: [{ $hour: '$created_at' }, trigger.hour],
+        },
+      });
       return !!postAtHour;
 
     case 'content_per_month':
@@ -465,7 +460,11 @@ async function completeDailyQuest(db, userId, questId) {
   const quests = await getDailyQuestProgress(db, userId);
   const questProgress = quests.find((q) => q.id === questId);
 
-  if (!questProgress || !questProgress.completed || questProgress.already_completed_today) {
+  if (
+    !questProgress ||
+    !questProgress.completed ||
+    questProgress.already_completed_today
+  ) {
     return false;
   }
 

@@ -199,8 +199,10 @@ module.exports = {
   generateRefreshToken,
   verifyToken,
   authenticateToken,
+  requireAuth: authenticateToken, // Alias for authenticateToken (used in routes)
   optionalAuth,
   authorize,
+  requireRole: authorize, // Alias for authorize (role-based access control)
   checkBanned,
   JWT_SECRET,
   JWT_EXPIRES_IN,

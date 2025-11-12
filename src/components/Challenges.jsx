@@ -54,9 +54,20 @@ const Challenges = ({ currentUser }) => {
   const [challenges, setChallenges] = useState([]);
   const [selectedTab, setSelectedTab] = useState('active');
   const [loading, setLoading] = useState(true);
-  const [submitDialog, setSubmitDialog] = useState({ open: false, challenge: null });
-  const [submissionData, setSubmissionData] = useState({ title: '', description: '', submission_url: '' });
-  const [notification, setNotification] = useState({ open: false, message: '', severity: 'success' });
+  const [submitDialog, setSubmitDialog] = useState({
+    open: false,
+    challenge: null,
+  });
+  const [submissionData, setSubmissionData] = useState({
+    title: '',
+    description: '',
+    submission_url: '',
+  });
+  const [notification, setNotification] = useState({
+    open: false,
+    message: '',
+    severity: 'success',
+  });
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
   const authToken = localStorage.getItem('auth_token');
@@ -120,12 +131,15 @@ const Challenges = ({ currentUser }) => {
    */
   const registerForChallenge = async (challengeId) => {
     try {
-      const response = await fetch(`${API_URL}/api/challenges/${challengeId}/register`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
+      const response = await fetch(
+        `${API_URL}/api/challenges/${challengeId}/register`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
 
       if (!response.ok) throw new Error('Failed to register');
 
@@ -159,14 +173,17 @@ const Challenges = ({ currentUser }) => {
    */
   const submitEntry = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/challenges/${submitDialog.challenge._id}/submit`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${authToken}`,
-        },
-        body: JSON.stringify(submissionData),
-      });
+      const response = await fetch(
+        `${API_URL}/api/challenges/${submitDialog.challenge._id}/submit`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${authToken}`,
+          },
+          body: JSON.stringify(submissionData),
+        }
+      );
 
       if (!response.ok) throw new Error('Failed to submit');
 
@@ -213,7 +230,14 @@ const Challenges = ({ currentUser }) => {
       >
         <CardContent>
           {/* Header */}
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-start',
+              mb: 2,
+            }}
+          >
             <Box>
               <Typography variant="h5" gutterBottom>
                 {challenge.title}
@@ -237,7 +261,9 @@ const Challenges = ({ currentUser }) => {
           <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
             <Chip label={challenge.type} size="small" variant="outlined" />
             <Chip label={challenge.category} size="small" variant="outlined" />
-            {challenge.featured && <Chip label="Featured" size="small" color="primary" />}
+            {challenge.featured && (
+              <Chip label="Featured" size="small" color="primary" />
+            )}
           </Stack>
 
           {/* Stats */}
@@ -278,7 +304,8 @@ const Challenges = ({ currentUser }) => {
                 variant="determinate"
                 value={
                   ((new Date() - new Date(challenge.start_time)) /
-                    (new Date(challenge.end_time) - new Date(challenge.start_time))) *
+                    (new Date(challenge.end_time) -
+                      new Date(challenge.start_time))) *
                   100
                 }
                 sx={{ height: 6, borderRadius: 3 }}
@@ -292,7 +319,8 @@ const Challenges = ({ currentUser }) => {
               <Typography variant="body2" color="text.secondary">
                 Login to participate
               </Typography>
-            ) : challenge.status === 'active' || challenge.status === 'upcoming' ? (
+            ) : challenge.status === 'active' ||
+              challenge.status === 'upcoming' ? (
               <>
                 {!isRegistered ? (
                   <Button
@@ -340,7 +368,14 @@ const Challenges = ({ currentUser }) => {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 400 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: 400,
+        }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -354,7 +389,11 @@ const Challenges = ({ currentUser }) => {
       </Typography>
 
       {/* Tabs */}
-      <Tabs value={selectedTab} onChange={(e, newValue) => setSelectedTab(newValue)} sx={{ mb: 3 }}>
+      <Tabs
+        value={selectedTab}
+        onChange={(e, newValue) => setSelectedTab(newValue)}
+        sx={{ mb: 3 }}
+      >
         <Tab label="Active" value="active" />
         <Tab label="Upcoming" value="upcoming" />
         <Tab label="Completed" value="completed" />
@@ -370,7 +409,11 @@ const Challenges = ({ currentUser }) => {
           ))
         ) : (
           <Grid item xs={12}>
-            <Typography variant="body1" color="text.secondary" textAlign="center">
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              textAlign="center"
+            >
               No {selectedTab} challenges at the moment.
             </Typography>
           </Grid>
@@ -391,7 +434,9 @@ const Challenges = ({ currentUser }) => {
             fullWidth
             margin="normal"
             value={submissionData.title}
-            onChange={(e) => setSubmissionData({ ...submissionData, title: e.target.value })}
+            onChange={(e) =>
+              setSubmissionData({ ...submissionData, title: e.target.value })
+            }
           />
           <TextField
             label="Description"
@@ -400,19 +445,37 @@ const Challenges = ({ currentUser }) => {
             rows={4}
             margin="normal"
             value={submissionData.description}
-            onChange={(e) => setSubmissionData({ ...submissionData, description: e.target.value })}
+            onChange={(e) =>
+              setSubmissionData({
+                ...submissionData,
+                description: e.target.value,
+              })
+            }
           />
           <TextField
             label="Submission URL (optional)"
             fullWidth
             margin="normal"
             value={submissionData.submission_url}
-            onChange={(e) => setSubmissionData({ ...submissionData, submission_url: e.target.value })}
+            onChange={(e) =>
+              setSubmissionData({
+                ...submissionData,
+                submission_url: e.target.value,
+              })
+            }
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setSubmitDialog({ open: false, challenge: null })}>Cancel</Button>
-          <Button variant="contained" onClick={submitEntry} disabled={!submissionData.title || !submissionData.description}>
+          <Button
+            onClick={() => setSubmitDialog({ open: false, challenge: null })}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            onClick={submitEntry}
+            disabled={!submissionData.title || !submissionData.description}
+          >
             Submit Entry
           </Button>
         </DialogActions>

@@ -108,7 +108,9 @@ const Leaderboard = ({ currentUser }) => {
   const getRankDisplay = (rank) => {
     if (rank <= 3) {
       return (
-        <Tooltip title={`${rank === 1 ? 'Gold' : rank === 2 ? 'Silver' : 'Bronze'} Medal`}>
+        <Tooltip
+          title={`${rank === 1 ? 'Gold' : rank === 2 ? 'Silver' : 'Bronze'} Medal`}
+        >
           <TrophyIcon sx={{ color: MEDAL_COLORS[rank], fontSize: 32 }} />
         </Tooltip>
       );
@@ -159,7 +161,14 @@ const Leaderboard = ({ currentUser }) => {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 400 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: 400,
+        }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -177,7 +186,11 @@ const Leaderboard = ({ currentUser }) => {
         <Box sx={{ display: 'flex', gap: 2, mb: 3, flexWrap: 'wrap' }}>
           <FormControl sx={{ minWidth: 200 }}>
             <InputLabel>Timeframe</InputLabel>
-            <Select value={timeframe} label="Timeframe" onChange={(e) => setTimeframe(e.target.value)}>
+            <Select
+              value={timeframe}
+              label="Timeframe"
+              onChange={(e) => setTimeframe(e.target.value)}
+            >
               <MenuItem value="all">All Time</MenuItem>
               <MenuItem value="month">This Month</MenuItem>
               <MenuItem value="week">This Week</MenuItem>
@@ -218,7 +231,13 @@ const Leaderboard = ({ currentUser }) => {
         {currentUser && currentUserRank && (
           <Card sx={{ mb: 3, bgcolor: 'primary.main', color: 'white' }}>
             <CardContent>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                   <Avatar
                     src={currentUser.avatar_url}
@@ -284,7 +303,9 @@ const Leaderboard = ({ currentUser }) => {
 
                   {/* User */}
                   <TableCell>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <Box
+                      sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}
+                    >
                       <Avatar
                         src={entry.user.avatar_url}
                         alt={entry.user.username}
@@ -293,8 +314,19 @@ const Leaderboard = ({ currentUser }) => {
                         {entry.user.username?.charAt(0).toUpperCase()}
                       </Avatar>
                       <Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                          <Typography variant="body1" fontWeight={isCurrentUser(entry) ? 'bold' : 'normal'}>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 0.5,
+                          }}
+                        >
+                          <Typography
+                            variant="body1"
+                            fontWeight={
+                              isCurrentUser(entry) ? 'bold' : 'normal'
+                            }
+                          >
                             {entry.user.display_name || entry.user.username}
                           </Typography>
                           {entry.user.verified && (
@@ -334,7 +366,11 @@ const Leaderboard = ({ currentUser }) => {
             ) : (
               <TableRow>
                 <TableCell colSpan={4} align="center">
-                  <Typography variant="body1" color="text.secondary" sx={{ py: 4 }}>
+                  <Typography
+                    variant="body1"
+                    color="text.secondary"
+                    sx={{ py: 4 }}
+                  >
                     No leaderboard data available yet.
                   </Typography>
                 </TableCell>
@@ -345,8 +381,13 @@ const Leaderboard = ({ currentUser }) => {
       </TableContainer>
 
       {/* Footer note */}
-      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 2, textAlign: 'center' }}>
-        Leaderboard updates in real-time. Rankings reset based on selected timeframe.
+      <Typography
+        variant="caption"
+        color="text.secondary"
+        sx={{ display: 'block', mt: 2, textAlign: 'center' }}
+      >
+        Leaderboard updates in real-time. Rankings reset based on selected
+        timeframe.
       </Typography>
     </Box>
   );

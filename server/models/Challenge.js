@@ -103,7 +103,10 @@ function validateChallenge(challengeData) {
     errors.push('Title is required');
   }
 
-  if (!challengeData.description || challengeData.description.trim().length === 0) {
+  if (
+    !challengeData.description ||
+    challengeData.description.trim().length === 0
+  ) {
     errors.push('Description is required');
   }
 
@@ -112,8 +115,13 @@ function validateChallenge(challengeData) {
   }
 
   // Validate type
-  if (challengeData.type && !Object.keys(CHALLENGE_TYPES).includes(challengeData.type)) {
-    errors.push(`Invalid challenge type. Must be one of: ${Object.keys(CHALLENGE_TYPES).join(', ')}`);
+  if (
+    challengeData.type &&
+    !Object.keys(CHALLENGE_TYPES).includes(challengeData.type)
+  ) {
+    errors.push(
+      `Invalid challenge type. Must be one of: ${Object.keys(CHALLENGE_TYPES).join(', ')}`
+    );
   }
 
   // Validate dates
@@ -144,7 +152,9 @@ function createSubmission(submissionData) {
     user_id: new ObjectId(submissionData.user_id),
 
     // Submission content
-    content_id: submissionData.content_id ? new ObjectId(submissionData.content_id) : null,
+    content_id: submissionData.content_id
+      ? new ObjectId(submissionData.content_id)
+      : null,
     title: submissionData.title,
     description: submissionData.description,
     submission_url: submissionData.submission_url || null,
@@ -194,16 +204,20 @@ function calculateChallengeStatus(challenge) {
  * @returns {Promise<string>} Updated status
  */
 async function updateChallengeStatus(db, challengeId) {
-  const challenge = await db.collection('challenges').findOne({ _id: challengeId });
+  const challenge = await db
+    .collection('challenges')
+    .findOne({ _id: challengeId });
   if (!challenge) return null;
 
   const newStatus = calculateChallengeStatus(challenge);
 
   if (newStatus !== challenge.status) {
-    await db.collection('challenges').updateOne(
-      { _id: challengeId },
-      { $set: { status: newStatus, updated_at: new Date() } }
-    );
+    await db
+      .collection('challenges')
+      .updateOne(
+        { _id: challengeId },
+        { $set: { status: newStatus, updated_at: new Date() } }
+      );
   }
 
   return newStatus;
@@ -217,16 +231,23 @@ async function updateChallengeStatus(db, challengeId) {
  * @returns {Promise<boolean>} Success status
  */
 async function registerForChallenge(db, challengeId, userId) {
-  const challenge = await db.collection('challenges').findOne({ _id: challengeId });
+  const challenge = await db
+    .collection('challenges')
+    .findOne({ _id: challengeId });
 
   if (!challenge) return false;
 
   // Check if already registered
-  const alreadyRegistered = challenge.participants.some((p) => p.user_id.equals(userId));
+  const alreadyRegistered = challenge.participants.some((p) =>
+    p.user_id.equals(userId)
+  );
   if (alreadyRegistered) return false;
 
   // Check if max participants reached
-  if (challenge.max_participants && challenge.total_participants >= challenge.max_participants) {
+  if (
+    challenge.max_participants &&
+    challenge.total_participants >= challenge.max_participants
+  ) {
     return false;
   }
 
@@ -262,7 +283,9 @@ async function registerForChallenge(db, challengeId, userId) {
  * @returns {Promise<Object|null>} Created submission or null
  */
 async function submitToChallenge(db, challengeId, submissionData) {
-  const challenge = await db.collection('challenges').findOne({ _id: challengeId });
+  const challenge = await db
+    .collection('challenges')
+    .findOne({ _id: challengeId });
 
   if (!challenge) return null;
 
@@ -311,8 +334,17 @@ async function submitToChallenge(db, challengeId, submissionData) {
  * @param {string} comment - Judge's comment
  * @returns {Promise<boolean>} Success status
  */
-async function scoreSubmission(db, challengeId, submissionId, judgeId, scores, comment) {
-  const challenge = await db.collection('challenges').findOne({ _id: challengeId });
+async function scoreSubmission(
+  db,
+  challengeId,
+  submissionId,
+  judgeId,
+  scores,
+  comment
+) {
+  const challenge = await db
+    .collection('challenges')
+    .findOne({ _id: challengeId });
 
   if (!challenge) return false;
 
@@ -354,10 +386,16 @@ async function scoreSubmission(db, challengeId, submissionId, judgeId, scores, c
   );
 
   // Recalculate average score
-  const updatedChallenge = await db.collection('challenges').findOne({ _id: challengeId });
-  const submission = updatedChallenge.submissions.find((s) => s.submission_id.equals(submissionId));
+  const updatedChallenge = await db
+    .collection('challenges')
+    .findOne({ _id: challengeId });
+  const submission = updatedChallenge.submissions.find((s) =>
+    s.submission_id.equals(submissionId)
+  );
 
-  const averageScore = submission.scores.reduce((sum, s) => sum + s.total_score, 0) / submission.scores.length;
+  const averageScore =
+    submission.scores.reduce((sum, s) => sum + s.total_score, 0) /
+    submission.scores.length;
 
   await db.collection('challenges').updateOne(
     {
@@ -379,7 +417,9 @@ async function scoreSubmission(db, challengeId, submissionId, judgeId, scores, c
  * @returns {Promise<Array>} Winners array
  */
 async function determineWinners(db, challengeId) {
-  const challenge = await db.collection('challenges').findOne({ _id: challengeId });
+  const challenge = await db
+    .collection('challenges')
+    .findOne({ _id: challengeId });
 
   if (!challenge) return [];
 
@@ -390,7 +430,11 @@ async function determineWinners(db, challengeId) {
 
   // Award prizes
   const winners = [];
-  for (let i = 0; i < Math.min(challenge.prizes.length, rankedSubmissions.length); i++) {
+  for (
+    let i = 0;
+    i < Math.min(challenge.prizes.length, rankedSubmissions.length);
+    i++
+  ) {
     const submission = rankedSubmissions[i];
     const prize = challenge.prizes[i];
 
@@ -415,7 +459,12 @@ async function determineWinners(db, challengeId) {
             description: `${challenge.title} - Place #${prize.place}`,
             icon: prize.place === 1 ? '🥇' : prize.place === 2 ? '🥈' : '🥉',
             category: 'challenges',
-            rarity: prize.place === 1 ? 'legendary' : prize.place === 2 ? 'epic' : 'rare',
+            rarity:
+              prize.place === 1
+                ? 'legendary'
+                : prize.place === 2
+                  ? 'epic'
+                  : 'rare',
             earned_at: new Date(),
           },
         },

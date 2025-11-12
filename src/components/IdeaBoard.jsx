@@ -42,9 +42,17 @@ import {
 // Idea statuses with colors
 const IDEA_STATUSES = {
   proposed: { label: 'Proposed', color: '#95a5a6', icon: <ProposedIcon /> },
-  reviewing: { label: 'Under Review', color: '#f39c12', icon: <TrendingIcon /> },
+  reviewing: {
+    label: 'Under Review',
+    color: '#f39c12',
+    icon: <TrendingIcon />,
+  },
   approved: { label: 'Approved', color: '#3498db', icon: <TrendingIcon /> },
-  in_progress: { label: 'In Progress', color: '#9b59b6', icon: <InProgressIcon /> },
+  in_progress: {
+    label: 'In Progress',
+    color: '#9b59b6',
+    icon: <InProgressIcon />,
+  },
   completed: { label: 'Completed', color: '#27ae60', icon: <CompletedIcon /> },
   rejected: { label: 'Rejected', color: '#e74c3c', icon: <ProposedIcon /> },
 };
@@ -128,13 +136,24 @@ const IdeaCard = ({ idea, currentUser, onVote, onClick }) => {
         {idea.tags && idea.tags.length > 0 && (
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 2 }}>
             {idea.tags.slice(0, 3).map((tag) => (
-              <Chip key={tag} label={`#${tag}`} size="small" variant="outlined" />
+              <Chip
+                key={tag}
+                label={`#${tag}`}
+                size="small"
+                variant="outlined"
+              />
             ))}
           </Box>
         )}
 
         {/* Voting + Stats */}
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
           <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
             <Tooltip title="Upvote">
               <IconButton
@@ -146,7 +165,10 @@ const IdeaCard = ({ idea, currentUser, onVote, onClick }) => {
                 <UpvoteIcon fontSize="small" />
               </IconButton>
             </Tooltip>
-            <Typography variant="subtitle2" sx={{ fontWeight: 'bold', minWidth: 30 }}>
+            <Typography
+              variant="subtitle2"
+              sx={{ fontWeight: 'bold', minWidth: 30 }}
+            >
               {idea.votes?.score || 0}
             </Typography>
             <Tooltip title="Downvote">
@@ -208,7 +230,10 @@ const IdeaBoard = ({ currentUser, authToken }) => {
         params.append('category', categoryFilter);
       }
 
-      const response = await fetch(`${API_URL}/api/ideas?${params.toString()}`, { headers });
+      const response = await fetch(
+        `${API_URL}/api/ideas?${params.toString()}`,
+        { headers }
+      );
       const result = await response.json();
 
       if (!response.ok) {
@@ -302,7 +327,14 @@ const IdeaBoard = ({ currentUser, authToken }) => {
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          mb: 3,
+        }}
+      >
         <Typography variant="h4">💡 Community Ideas Board</Typography>
         {authToken && (
           <Button
@@ -332,15 +364,23 @@ const IdeaBoard = ({ currentUser, authToken }) => {
         </Select>
       </FormControl>
 
-      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
       {loading && <LinearProgress sx={{ mb: 2 }} />}
 
       {/* Trello-style Board */}
       <Grid container spacing={2}>
         {Object.entries(IDEA_STATUSES).map(([status, statusInfo]) => (
           <Grid item xs={12} sm={6} md={4} lg={2} key={status}>
-            <Box sx={{ bgcolor: '#f5f5f5', p: 2, borderRadius: 1, minHeight: 400 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+            <Box
+              sx={{ bgcolor: '#f5f5f5', p: 2, borderRadius: 1, minHeight: 400 }}
+            >
+              <Box
+                sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}
+              >
                 {statusInfo.icon}
                 <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
                   {statusInfo.label}
@@ -398,7 +438,10 @@ const NewIdeaDialog = ({ open, onClose, onSubmit }) => {
       title,
       description,
       category,
-      tags: tags.split(',').map((t) => t.trim()).filter((t) => t),
+      tags: tags
+        .split(',')
+        .map((t) => t.trim())
+        .filter((t) => t),
     };
     onSubmit(ideaData);
     setTitle('');
@@ -434,7 +477,11 @@ const NewIdeaDialog = ({ open, onClose, onSubmit }) => {
 
           <FormControl fullWidth>
             <InputLabel>Category</InputLabel>
-            <Select value={category} label="Category" onChange={(e) => setCategory(e.target.value)}>
+            <Select
+              value={category}
+              label="Category"
+              onChange={(e) => setCategory(e.target.value)}
+            >
               {Object.entries(IDEA_CATEGORIES).map(([key, cat]) => (
                 <MenuItem key={key} value={key}>
                   {cat.icon} {cat.label}
@@ -455,7 +502,11 @@ const NewIdeaDialog = ({ open, onClose, onSubmit }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button variant="contained" onClick={handleSubmit} disabled={!title || !description}>
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
+          disabled={!title || !description}
+        >
           Submit Idea
         </Button>
       </DialogActions>
@@ -472,9 +523,18 @@ const IdeaDetailDialog = ({ idea, onClose }) => {
   return (
     <Dialog open={Boolean(idea)} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
           <span>{idea.title}</span>
-          <Chip label={statusInfo.label} sx={{ bgcolor: statusInfo.color, color: 'white' }} />
+          <Chip
+            label={statusInfo.label}
+            sx={{ bgcolor: statusInfo.color, color: 'white' }}
+          />
         </Box>
       </DialogTitle>
       <DialogContent>
@@ -482,7 +542,9 @@ const IdeaDetailDialog = ({ idea, onClose }) => {
           {idea.description}
         </Typography>
         <Box sx={{ display: 'flex', gap: 1 }}>
-          {idea.tags?.map((tag) => <Chip key={tag} label={`#${tag}`} size="small" />)}
+          {idea.tags?.map((tag) => (
+            <Chip key={tag} label={`#${tag}`} size="small" />
+          ))}
         </Box>
       </DialogContent>
       <DialogActions>

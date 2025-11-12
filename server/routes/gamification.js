@@ -168,45 +168,49 @@ router.get('/daily-quests', requireAuth, async (req, res) => {
  * Complete a daily quest and claim rewards
  * Requires authentication
  */
-router.post('/daily-quests/:quest_id/complete', requireAuth, async (req, res) => {
-  try {
-    const db = req.app.locals.db;
-    const userId = new ObjectId(req.user.user_id);
-    const questId = req.params.quest_id;
+router.post(
+  '/daily-quests/:quest_id/complete',
+  requireAuth,
+  async (req, res) => {
+    try {
+      const db = req.app.locals.db;
+      const userId = new ObjectId(req.user.user_id);
+      const questId = req.params.quest_id;
 
-    const success = await completeDailyQuest(db, userId, questId);
+      const success = await completeDailyQuest(db, userId, questId);
 
-    if (!success) {
-      return res.status(400).json({
-        error: 'Quest not completed or already claimed today',
+      if (!success) {
+        return res.status(400).json({
+          error: 'Quest not completed or already claimed today',
+        });
+      }
+
+      const quest = DAILY_QUESTS[questId];
+
+      // Emit Socket.io notification
+      const io = req.app.locals.io;
+      if (io) {
+        io.to(`user:${req.user.user_id}`).emit('notification', {
+          type: 'quest_complete',
+          title: 'Daily Quest Complete!',
+          message: `${quest.icon} ${quest.name} - Earned ${quest.points} points`,
+          time: new Date().toISOString(),
+        });
+      }
+
+      res.json({
+        success: true,
+        message: 'Quest completed successfully',
+        reward: {
+          points: quest.points,
+        },
       });
+    } catch (error) {
+      console.error('Complete daily quest error:', error);
+      res.status(500).json({ error: 'Failed to complete quest' });
     }
-
-    const quest = DAILY_QUESTS[questId];
-
-    // Emit Socket.io notification
-    const io = req.app.locals.io;
-    if (io) {
-      io.to(`user:${req.user.user_id}`).emit('notification', {
-        type: 'quest_complete',
-        title: 'Daily Quest Complete!',
-        message: `${quest.icon} ${quest.name} - Earned ${quest.points} points`,
-        time: new Date().toISOString(),
-      });
-    }
-
-    res.json({
-      success: true,
-      message: 'Quest completed successfully',
-      reward: {
-        points: quest.points,
-      },
-    });
-  } catch (error) {
-    console.error('Complete daily quest error:', error);
-    res.status(500).json({ error: 'Failed to complete quest' });
   }
-});
+);
 
 /**
  * POST /api/gamification/login-streak

@@ -61,7 +61,11 @@ const AchievementDisplay = ({ currentUser }) => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [loading, setLoading] = useState(true);
   const [checking, setChecking] = useState(false);
-  const [notification, setNotification] = useState({ open: false, message: '', severity: 'success' });
+  const [notification, setNotification] = useState({
+    open: false,
+    message: '',
+    severity: 'success',
+  });
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
   const authToken = localStorage.getItem('auth_token');
@@ -81,23 +85,30 @@ const AchievementDisplay = ({ currentUser }) => {
       setLoading(true);
 
       // Fetch earned achievements
-      const earnedResponse = await fetch(`${API_URL}/api/gamification/my-achievements`, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
+      const earnedResponse = await fetch(
+        `${API_URL}/api/gamification/my-achievements`,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
 
-      if (!earnedResponse.ok) throw new Error('Failed to fetch earned achievements');
+      if (!earnedResponse.ok)
+        throw new Error('Failed to fetch earned achievements');
       const earnedData = await earnedResponse.json();
       setEarnedAchievements(earnedData.earned_achievements || []);
       setStats(earnedData.stats);
 
       // Fetch all achievements
-      const allResponse = await fetch(`${API_URL}/api/gamification/achievements?include_secret=true`, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
+      const allResponse = await fetch(
+        `${API_URL}/api/gamification/achievements?include_secret=true`,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
 
       if (!allResponse.ok) throw new Error('Failed to fetch all achievements');
       const allData = await allResponse.json();
@@ -121,12 +132,15 @@ const AchievementDisplay = ({ currentUser }) => {
     try {
       setChecking(true);
 
-      const response = await fetch(`${API_URL}/api/gamification/check-achievements`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
+      const response = await fetch(
+        `${API_URL}/api/gamification/check-achievements`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
 
       if (!response.ok) throw new Error('Failed to check achievements');
       const data = await response.json();
@@ -202,10 +216,19 @@ const AchievementDisplay = ({ currentUser }) => {
           }}
         >
           <CardContent>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                mb: 2,
+              }}
+            >
               <Avatar
                 sx={{
-                  bgcolor: earned ? RARITY_COLORS[achievement.rarity] : 'grey.400',
+                  bgcolor: earned
+                    ? RARITY_COLORS[achievement.rarity]
+                    : 'grey.400',
                   width: 56,
                   height: 56,
                   fontSize: '2rem',
@@ -224,11 +247,21 @@ const AchievementDisplay = ({ currentUser }) => {
               {achievement.name}
             </Typography>
 
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 2, minHeight: 40 }}>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ mb: 2, minHeight: 40 }}
+            >
               {achievement.description}
             </Typography>
 
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
               <Chip
                 label={achievement.rarity}
                 size="small"
@@ -248,7 +281,11 @@ const AchievementDisplay = ({ currentUser }) => {
             </Box>
 
             {earned && earnedData && (
-              <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{ display: 'block', mt: 1 }}
+              >
                 Earned on {new Date(earnedData.earned_at).toLocaleDateString()}
               </Typography>
             )}
@@ -270,7 +307,14 @@ const AchievementDisplay = ({ currentUser }) => {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 400 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: 400,
+        }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -280,13 +324,26 @@ const AchievementDisplay = ({ currentUser }) => {
     <Box sx={{ p: 3 }}>
       {/* Header with stats */}
       <Box sx={{ mb: 4 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mb: 2,
+          }}
+        >
           <Typography variant="h4" component="h1">
             🏆 Achievements
           </Typography>
           <Button
             variant="contained"
-            startIcon={checking ? <CircularProgress size={20} color="inherit" /> : <RefreshIcon />}
+            startIcon={
+              checking ? (
+                <CircularProgress size={20} color="inherit" />
+              ) : (
+                <RefreshIcon />
+              )
+            }
             onClick={checkForNewAchievements}
             disabled={checking}
           >
@@ -320,7 +377,11 @@ const AchievementDisplay = ({ currentUser }) => {
                     <Typography variant="h3" color="primary">
                       {stats.completion_percentage}%
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      gutterBottom
+                    >
                       Completion
                     </Typography>
                     <LinearProgress
@@ -355,7 +416,11 @@ const AchievementDisplay = ({ currentUser }) => {
           filteredAchievements.map(renderAchievementCard)
         ) : (
           <Grid item xs={12}>
-            <Typography variant="body1" color="text.secondary" textAlign="center">
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              textAlign="center"
+            >
               No achievements in this category yet.
             </Typography>
           </Grid>

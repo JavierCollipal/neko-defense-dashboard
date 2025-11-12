@@ -60,7 +60,8 @@ const CONTENT_CATEGORIES = {
  * Displays a single content item
  */
 const ContentCard = ({ content, onClick }) => {
-  const category = CONTENT_CATEGORIES[content.category] || CONTENT_CATEGORIES.general;
+  const category =
+    CONTENT_CATEGORIES[content.category] || CONTENT_CATEGORIES.general;
 
   return (
     <Card
@@ -132,16 +133,31 @@ const ContentCard = ({ content, onClick }) => {
         {content.tags && content.tags.length > 0 && (
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 2 }}>
             {content.tags.slice(0, 3).map((tag) => (
-              <Chip key={tag} label={`#${tag}`} size="small" variant="outlined" />
+              <Chip
+                key={tag}
+                label={`#${tag}`}
+                size="small"
+                variant="outlined"
+              />
             ))}
             {content.tags.length > 3 && (
-              <Chip label={`+${content.tags.length - 3}`} size="small" variant="outlined" />
+              <Chip
+                label={`+${content.tags.length - 3}`}
+                size="small"
+                variant="outlined"
+              />
             )}
           </Box>
         )}
 
         {/* Author + Engagement */}
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Avatar
               src={content.author?.avatar_url}
@@ -158,15 +174,21 @@ const ContentCard = ({ content, onClick }) => {
           <Box sx={{ display: 'flex', gap: 1.5 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.3 }}>
               <ViewsIcon fontSize="small" color="action" />
-              <Typography variant="caption">{content.engagement?.views || 0}</Typography>
+              <Typography variant="caption">
+                {content.engagement?.views || 0}
+              </Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.3 }}>
               <LikesIcon fontSize="small" color="action" />
-              <Typography variant="caption">{content.engagement?.likes || 0}</Typography>
+              <Typography variant="caption">
+                {content.engagement?.likes || 0}
+              </Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.3 }}>
               <CommentIcon fontSize="small" color="action" />
-              <Typography variant="caption">{content.engagement?.comments || 0}</Typography>
+              <Typography variant="caption">
+                {content.engagement?.comments || 0}
+              </Typography>
             </Box>
           </Box>
         </Box>
@@ -228,7 +250,8 @@ const ContentFeed = ({ currentUser, authToken, onContentClick }) => {
           endpoint = `${API_URL}/api/search`;
           params.append('q', searchQuery);
           if (category !== 'all') params.append('category', category);
-          if (selectedTags.length > 0) params.append('tags', selectedTags.join(','));
+          if (selectedTags.length > 0)
+            params.append('tags', selectedTags.join(','));
           params.append('sort', sortBy);
           params.append('page', page.toString());
           params.append('limit', '20');
@@ -249,7 +272,9 @@ const ContentFeed = ({ currentUser, authToken, onContentClick }) => {
         headers['Authorization'] = `Bearer ${authToken}`;
       }
 
-      const response = await fetch(`${endpoint}?${params.toString()}`, { headers });
+      const response = await fetch(`${endpoint}?${params.toString()}`, {
+        headers,
+      });
       const result = await response.json();
 
       if (!response.ok) {
@@ -277,7 +302,16 @@ const ContentFeed = ({ currentUser, authToken, onContentClick }) => {
     } finally {
       setLoading(false);
     }
-  }, [feedMode, category, searchQuery, selectedTags, sortBy, page, authToken, API_URL]);
+  }, [
+    feedMode,
+    category,
+    searchQuery,
+    selectedTags,
+    sortBy,
+    page,
+    authToken,
+    API_URL,
+  ]);
 
   // Fetch popular tags
   const fetchPopularTags = useCallback(async () => {
@@ -389,7 +423,10 @@ const ContentFeed = ({ currentUser, authToken, onContentClick }) => {
                   ),
                   endAdornment: searchQuery && (
                     <InputAdornment position="end">
-                      <IconButton size="small" onClick={() => setSearchQuery('')}>
+                      <IconButton
+                        size="small"
+                        onClick={() => setSearchQuery('')}
+                      >
                         <ClearIcon />
                       </IconButton>
                     </InputAdornment>
@@ -412,7 +449,9 @@ const ContentFeed = ({ currentUser, authToken, onContentClick }) => {
                 >
                   {Object.entries(CONTENT_CATEGORIES).map(([key, cat]) => (
                     <MenuItem key={key} value={key}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Box
+                        sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+                      >
                         <span>{cat.icon}</span>
                         <span>{cat.name}</span>
                       </Box>
@@ -444,11 +483,20 @@ const ContentFeed = ({ currentUser, authToken, onContentClick }) => {
             {/* Search Button & Clear Filters */}
             <Grid item xs={12}>
               <Box sx={{ display: 'flex', gap: 1 }}>
-                <Button variant="contained" startIcon={<SearchIcon />} onClick={handleSearch}>
+                <Button
+                  variant="contained"
+                  startIcon={<SearchIcon />}
+                  onClick={handleSearch}
+                >
                   Search
                 </Button>
-                {(searchQuery || category !== 'all' || selectedTags.length > 0) && (
-                  <Button startIcon={<ClearIcon />} onClick={handleClearFilters}>
+                {(searchQuery ||
+                  category !== 'all' ||
+                  selectedTags.length > 0) && (
+                  <Button
+                    startIcon={<ClearIcon />}
+                    onClick={handleClearFilters}
+                  >
                     Clear Filters
                   </Button>
                 )}
@@ -483,8 +531,12 @@ const ContentFeed = ({ currentUser, authToken, onContentClick }) => {
                     label={`#${tagObj.tag} (${tagObj.count})`}
                     size="small"
                     onClick={() => handleTagToggle(tagObj.tag)}
-                    variant={selectedTags.includes(tagObj.tag) ? 'filled' : 'outlined'}
-                    color={selectedTags.includes(tagObj.tag) ? 'primary' : 'default'}
+                    variant={
+                      selectedTags.includes(tagObj.tag) ? 'filled' : 'outlined'
+                    }
+                    color={
+                      selectedTags.includes(tagObj.tag) ? 'primary' : 'default'
+                    }
                   />
                 ))}
               </Box>

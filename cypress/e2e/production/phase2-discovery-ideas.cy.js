@@ -19,11 +19,13 @@ describe('🔍 Phase 2: Content Discovery & Ideas System', () => {
 
   before(() => {
     // Register test user
-    cy.request('POST', `${API_URL}/api/auth/register`, TEST_USER).then((response) => {
-      expect(response.status).to.eq(201);
-      authToken = response.body.access_token;
-      userId = response.body.user._id;
-    });
+    cy.request('POST', `${API_URL}/api/auth/register`, TEST_USER).then(
+      (response) => {
+        expect(response.status).to.eq(201);
+        authToken = response.body.access_token;
+        userId = response.body.user._id;
+      }
+    );
 
     // Create test content for search
     cy.request({
