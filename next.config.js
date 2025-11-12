@@ -3,6 +3,13 @@
 const nextConfig = {
   reactStrictMode: true,
 
+  // ESLint configuration (run separately in CI/CD to avoid build warnings)
+  eslint: {
+    // Don't run ESLint during builds (we run it separately in CI/CD)
+    // This avoids "Invalid Options" warnings from Next.js ESLint integration
+    ignoreDuringBuilds: true,
+  },
+
   // 🚀 2025 PERFORMANCE OPTIMIZATIONS
 
   // Experimental features for Next.js 14
