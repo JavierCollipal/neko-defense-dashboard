@@ -39,15 +39,13 @@ describe('Auth Routes E2E - /api/auth', () => {
 
   describe('POST /api/auth/register', () => {
     it('should register new user with valid data', async () => {
-      const response = await request(app)
-        .post('/api/auth/register')
-        .send({
-          username: 'neko',
-          email: 'neko@test.com',
-          password: 'NekoArc123',
-          display_name: 'Neko-Arc',
-          language: 'en',
-        });
+      const response = await request(app).post('/api/auth/register').send({
+        username: 'neko',
+        email: 'neko@test.com',
+        password: 'NekoArc123',
+        display_name: 'Neko-Arc',
+        language: 'en',
+      });
 
       expect(response.status).toBe(201);
       expect(response.body.success).toBe(true);
@@ -58,13 +56,11 @@ describe('Auth Routes E2E - /api/auth', () => {
     });
 
     it('should reject registration with invalid username', async () => {
-      const response = await request(app)
-        .post('/api/auth/register')
-        .send({
-          username: 'ab', // Too short
-          email: 'test@test.com',
-          password: 'Password123',
-        });
+      const response = await request(app).post('/api/auth/register').send({
+        username: 'ab', // Too short
+        email: 'test@test.com',
+        password: 'Password123',
+      });
 
       expect(response.status).toBe(400);
       expect(response.body.success).toBe(false);
@@ -72,13 +68,11 @@ describe('Auth Routes E2E - /api/auth', () => {
     });
 
     it('should reject registration with invalid email', async () => {
-      const response = await request(app)
-        .post('/api/auth/register')
-        .send({
-          username: 'neko',
-          email: 'invalid-email',
-          password: 'Password123',
-        });
+      const response = await request(app).post('/api/auth/register').send({
+        username: 'neko',
+        email: 'invalid-email',
+        password: 'Password123',
+      });
 
       expect(response.status).toBe(400);
       expect(response.body.success).toBe(false);
@@ -86,13 +80,11 @@ describe('Auth Routes E2E - /api/auth', () => {
     });
 
     it('should reject registration with weak password', async () => {
-      const response = await request(app)
-        .post('/api/auth/register')
-        .send({
-          username: 'neko',
-          email: 'neko@test.com',
-          password: 'weak',
-        });
+      const response = await request(app).post('/api/auth/register').send({
+        username: 'neko',
+        email: 'neko@test.com',
+        password: 'weak',
+      });
 
       expect(response.status).toBe(400);
       expect(response.body.success).toBe(false);
@@ -108,13 +100,11 @@ describe('Auth Routes E2E - /api/auth', () => {
       });
 
       // Try to register with same username
-      const response = await request(app)
-        .post('/api/auth/register')
-        .send({
-          username: 'neko',
-          email: 'neko2@test.com',
-          password: 'Password123',
-        });
+      const response = await request(app).post('/api/auth/register').send({
+        username: 'neko',
+        email: 'neko2@test.com',
+        password: 'Password123',
+      });
 
       expect(response.status).toBe(400);
       expect(response.body.success).toBe(false);
@@ -130,13 +120,11 @@ describe('Auth Routes E2E - /api/auth', () => {
       });
 
       // Try to register with same email
-      const response = await request(app)
-        .post('/api/auth/register')
-        .send({
-          username: 'neko2',
-          email: 'neko@test.com',
-          password: 'Password123',
-        });
+      const response = await request(app).post('/api/auth/register').send({
+        username: 'neko2',
+        email: 'neko@test.com',
+        password: 'Password123',
+      });
 
       expect(response.status).toBe(400);
       expect(response.body.success).toBe(false);
@@ -150,9 +138,7 @@ describe('Auth Routes E2E - /api/auth', () => {
         password: 'Password123',
       });
 
-      const user = await db
-        .collection('users')
-        .findOne({ username: 'neko' });
+      const user = await db.collection('users').findOne({ username: 'neko' });
 
       expect(user.password_hash).toBeDefined();
       expect(user.password_hash).not.toBe('Password123');
@@ -224,9 +210,7 @@ describe('Auth Routes E2E - /api/auth', () => {
         password: 'Password123',
       });
 
-      const user = await db
-        .collection('users')
-        .findOne({ username: 'neko' });
+      const user = await db.collection('users').findOne({ username: 'neko' });
 
       expect(user.last_login).toBeInstanceOf(Date);
       expect(user.last_login.getTime()).toBeGreaterThanOrEqual(
@@ -240,13 +224,11 @@ describe('Auth Routes E2E - /api/auth', () => {
 
     beforeEach(async () => {
       // Register and get refresh token
-      const response = await request(app)
-        .post('/api/auth/register')
-        .send({
-          username: 'neko',
-          email: 'neko@test.com',
-          password: 'Password123',
-        });
+      const response = await request(app).post('/api/auth/register').send({
+        username: 'neko',
+        email: 'neko@test.com',
+        password: 'Password123',
+      });
 
       refreshToken = response.body.refresh_token;
     });
@@ -272,9 +254,7 @@ describe('Auth Routes E2E - /api/auth', () => {
     });
 
     it('should reject missing refresh token', async () => {
-      const response = await request(app)
-        .post('/api/auth/refresh')
-        .send({});
+      const response = await request(app).post('/api/auth/refresh').send({});
 
       expect(response.status).toBe(400);
       expect(response.body.success).toBe(false);
@@ -286,13 +266,11 @@ describe('Auth Routes E2E - /api/auth', () => {
 
     beforeEach(async () => {
       // Register and get access token
-      const response = await request(app)
-        .post('/api/auth/register')
-        .send({
-          username: 'neko',
-          email: 'neko@test.com',
-          password: 'Password123',
-        });
+      const response = await request(app).post('/api/auth/register').send({
+        username: 'neko',
+        email: 'neko@test.com',
+        password: 'Password123',
+      });
 
       accessToken = response.body.access_token;
     });

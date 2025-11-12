@@ -82,8 +82,16 @@ const UserProfile = ({ user, isOwnProfile = false, onEdit }) => {
     );
   }
 
-  const { username, display_name, bio, avatar_url, reputation, stats, role, verified } =
-    user;
+  const {
+    username,
+    display_name,
+    bio,
+    avatar_url,
+    reputation,
+    stats,
+    role,
+    verified,
+  } = user;
 
   return (
     <Card sx={{ maxWidth: 800, margin: 'auto', mt: 2 }}>
@@ -153,10 +161,12 @@ const UserProfile = ({ user, isOwnProfile = false, onEdit }) => {
         <Box sx={{ mb: 3 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
             <TrophyIcon color="primary" sx={{ mr: 1 }} />
-            <Typography variant="h6">
-              Level {reputation.level}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ ml: 'auto' }}>
+            <Typography variant="h6">Level {reputation.level}</Typography>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ ml: 'auto' }}
+            >
               {reputation.points.toLocaleString()} points
             </Typography>
           </Box>
@@ -211,7 +221,9 @@ const UserProfile = ({ user, isOwnProfile = false, onEdit }) => {
               <Box sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
                 <ArticleIcon color="action" />
               </Box>
-              <Typography variant="h6">{stats.content_count.toLocaleString()}</Typography>
+              <Typography variant="h6">
+                {stats.content_count.toLocaleString()}
+              </Typography>
               <Typography variant="caption" color="text.secondary">
                 Posts
               </Typography>
@@ -223,7 +235,9 @@ const UserProfile = ({ user, isOwnProfile = false, onEdit }) => {
               <Box sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
                 <ViewsIcon color="action" />
               </Box>
-              <Typography variant="h6">{stats.total_views.toLocaleString()}</Typography>
+              <Typography variant="h6">
+                {stats.total_views.toLocaleString()}
+              </Typography>
               <Typography variant="caption" color="text.secondary">
                 Views
               </Typography>
@@ -235,7 +249,9 @@ const UserProfile = ({ user, isOwnProfile = false, onEdit }) => {
               <Box sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
                 <LikesIcon color="action" />
               </Box>
-              <Typography variant="h6">{stats.total_likes.toLocaleString()}</Typography>
+              <Typography variant="h6">
+                {stats.total_likes.toLocaleString()}
+              </Typography>
               <Typography variant="caption" color="text.secondary">
                 Likes
               </Typography>
@@ -247,7 +263,9 @@ const UserProfile = ({ user, isOwnProfile = false, onEdit }) => {
               <Box sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
                 <FollowersIcon color="action" />
               </Box>
-              <Typography variant="h6">{stats.followers.toLocaleString()}</Typography>
+              <Typography variant="h6">
+                {stats.followers.toLocaleString()}
+              </Typography>
               <Typography variant="caption" color="text.secondary">
                 Followers
               </Typography>

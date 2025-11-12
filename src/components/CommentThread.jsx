@@ -232,19 +232,22 @@ const Comment = ({
           )}
 
           {/* Reactions */}
-          {comment.reaction_counts && Object.keys(comment.reaction_counts).length > 0 && (
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 1 }}>
-              {Object.entries(comment.reaction_counts).map(([emoji, count]) => (
-                <Chip
-                  key={emoji}
-                  label={`${emoji} ${count}`}
-                  size="small"
-                  onClick={() => handleReactionClick(emoji)}
-                  sx={{ cursor: 'pointer' }}
-                />
-              ))}
-            </Box>
-          )}
+          {comment.reaction_counts &&
+            Object.keys(comment.reaction_counts).length > 0 && (
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 1 }}>
+                {Object.entries(comment.reaction_counts).map(
+                  ([emoji, count]) => (
+                    <Chip
+                      key={emoji}
+                      label={`${emoji} ${count}`}
+                      size="small"
+                      onClick={() => handleReactionClick(emoji)}
+                      sx={{ cursor: 'pointer' }}
+                    />
+                  )
+                )}
+              </Box>
+            )}
 
           {/* Action Buttons */}
           <Box sx={{ display: 'flex', gap: 1 }}>
@@ -273,7 +276,14 @@ const Comment = ({
             open={Boolean(reactionMenuAnchor)}
             onClose={handleReactionMenuClose}
           >
-            <Box sx={{ p: 1, display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 1 }}>
+            <Box
+              sx={{
+                p: 1,
+                display: 'grid',
+                gridTemplateColumns: 'repeat(5, 1fr)',
+                gap: 1,
+              }}
+            >
               {NEKO_REACTIONS.map((reaction) => (
                 <Tooltip key={reaction.emoji} title={reaction.label}>
                   <IconButton
@@ -300,10 +310,7 @@ const Comment = ({
                 sx={{ mb: 1 }}
               />
               <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
-                <Button
-                  size="small"
-                  onClick={() => setShowReplyBox(false)}
-                >
+                <Button size="small" onClick={() => setShowReplyBox(false)}>
                   Cancel
                 </Button>
                 <Button
@@ -483,7 +490,10 @@ const CommentThread = ({ contentId, currentUser, authToken }) => {
 
   // Delete comment
   const handleDelete = async (commentId) => {
-    if (!authToken || !confirm('Are you sure you want to delete this comment?')) {
+    if (
+      !authToken ||
+      !confirm('Are you sure you want to delete this comment?')
+    ) {
       return;
     }
 
@@ -514,14 +524,17 @@ const CommentThread = ({ contentId, currentUser, authToken }) => {
     if (!authToken) return;
 
     try {
-      const response = await fetch(`${API_URL}/api/comments/${commentId}/react`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${authToken}`,
-        },
-        body: JSON.stringify({ emoji }),
-      });
+      const response = await fetch(
+        `${API_URL}/api/comments/${commentId}/react`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${authToken}`,
+          },
+          body: JSON.stringify({ emoji }),
+        }
+      );
 
       const result = await response.json();
 
@@ -573,7 +586,9 @@ const CommentThread = ({ contentId, currentUser, authToken }) => {
             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
               <Button
                 variant="contained"
-                startIcon={posting ? <CircularProgress size={20} /> : <SendIcon />}
+                startIcon={
+                  posting ? <CircularProgress size={20} /> : <SendIcon />
+                }
                 onClick={handlePostComment}
                 disabled={!newCommentText.trim() || posting}
               >
@@ -591,7 +606,12 @@ const CommentThread = ({ contentId, currentUser, authToken }) => {
       {/* Comment List */}
       <Stack spacing={2}>
         {comments.length === 0 ? (
-          <Typography variant="body2" color="text.secondary" align="center" sx={{ py: 4 }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            align="center"
+            sx={{ py: 4 }}
+          >
             No comments yet. Be the first to comment!
           </Typography>
         ) : (

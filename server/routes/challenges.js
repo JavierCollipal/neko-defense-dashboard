@@ -87,7 +87,9 @@ router.post('/', requireAuth, async (req, res) => {
 
     // Check if user is admin
     if (req.user.role !== 'admin' && req.user.role !== 'moderator') {
-      return res.status(403).json({ error: 'Only admins can create challenges' });
+      return res
+        .status(403)
+        .json({ error: 'Only admins can create challenges' });
     }
 
     const challengeData = {
@@ -191,11 +193,16 @@ router.post('/:id/register', requireAuth, async (req, res) => {
       return res.status(400).json({ error: 'Invalid challenge ID' });
     }
 
-    const success = await registerForChallenge(db, new ObjectId(challengeId), userId);
+    const success = await registerForChallenge(
+      db,
+      new ObjectId(challengeId),
+      userId
+    );
 
     if (!success) {
       return res.status(400).json({
-        error: 'Could not register for challenge (already registered, full, or not available)',
+        error:
+          'Could not register for challenge (already registered, full, or not available)',
       });
     }
 
@@ -223,7 +230,8 @@ router.post('/:id/submit', requireAuth, async (req, res) => {
       return res.status(400).json({ error: 'Invalid challenge ID' });
     }
 
-    const { title, description, content_id, submission_url, attachments } = req.body;
+    const { title, description, content_id, submission_url, attachments } =
+      req.body;
 
     if (!title || !description) {
       return res.status(400).json({
@@ -242,7 +250,8 @@ router.post('/:id/submit', requireAuth, async (req, res) => {
 
     if (!submission) {
       return res.status(400).json({
-        error: 'Could not submit entry (not registered, already submitted, or challenge not active)',
+        error:
+          'Could not submit entry (not registered, already submitted, or challenge not active)',
       });
     }
 
@@ -381,7 +390,9 @@ router.post('/:id/determine-winners', requireAuth, async (req, res) => {
 
     // Check if user is admin
     if (req.user.role !== 'admin' && req.user.role !== 'moderator') {
-      return res.status(403).json({ error: 'Only admins can determine winners' });
+      return res
+        .status(403)
+        .json({ error: 'Only admins can determine winners' });
     }
 
     const winners = await determineWinners(db, new ObjectId(challengeId));

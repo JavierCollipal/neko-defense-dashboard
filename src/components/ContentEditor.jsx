@@ -37,12 +37,14 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 const CONTENT_CATEGORIES = {
   'threat-intel': {
     name: 'Threat Intelligence',
-    description: 'Security research, threat actor analysis, vulnerability reports',
+    description:
+      'Security research, threat actor analysis, vulnerability reports',
     icon: '🔍',
   },
   defense: {
     name: 'Defense Strategies',
-    description: 'Security best practices, defense mechanisms, protection methods',
+    description:
+      'Security best practices, defense mechanisms, protection methods',
     icon: '🛡️',
   },
   research: {
@@ -113,12 +115,18 @@ const ContentEditor = ({
   authToken,
 }) => {
   const [title, setTitle] = useState(initialContent?.title || '');
-  const [description, setDescription] = useState(initialContent?.description || '');
+  const [description, setDescription] = useState(
+    initialContent?.description || ''
+  );
   const [content, setContent] = useState(initialContent?.content?.text || '');
-  const [category, setCategory] = useState(initialContent?.category || 'general');
+  const [category, setCategory] = useState(
+    initialContent?.category || 'general'
+  );
   const [tags, setTags] = useState(initialContent?.tags || []);
   const [tagInput, setTagInput] = useState('');
-  const [visibility, setVisibility] = useState(initialContent?.visibility || 'public');
+  const [visibility, setVisibility] = useState(
+    initialContent?.visibility || 'public'
+  );
   const [publishImmediately, setPublishImmediately] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -130,9 +138,12 @@ const ContentEditor = ({
     }
   }, [tagInput, tags]);
 
-  const handleDeleteTag = useCallback((tagToDelete) => {
-    setTags(tags.filter((tag) => tag !== tagToDelete));
-  }, [tags]);
+  const handleDeleteTag = useCallback(
+    (tagToDelete) => {
+      setTags(tags.filter((tag) => tag !== tagToDelete));
+    },
+    [tags]
+  );
 
   const handleSave = async (publish = false) => {
     setError(null);
@@ -169,7 +180,8 @@ const ContentEditor = ({
         status: publish ? 'published' : 'draft',
       };
 
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
+      const API_URL =
+        process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
       const endpoint = initialContent?._id
         ? `${API_URL}/api/content/${initialContent._id}`
         : `${API_URL}/api/content/create`;
@@ -376,7 +388,9 @@ const ContentEditor = ({
               variant="outlined"
               onClick={() => handleSave(false)}
               disabled={loading}
-              startIcon={loading ? <CircularProgress size={20} /> : <SaveIcon />}
+              startIcon={
+                loading ? <CircularProgress size={20} /> : <SaveIcon />
+              }
             >
               Save Draft
             </Button>
@@ -385,7 +399,9 @@ const ContentEditor = ({
               variant="contained"
               onClick={() => handleSave(true)}
               disabled={loading}
-              startIcon={loading ? <CircularProgress size={20} /> : <PublishIcon />}
+              startIcon={
+                loading ? <CircularProgress size={20} /> : <PublishIcon />
+              }
             >
               {publishImmediately ? 'Publish Now' : 'Save & Publish'}
             </Button>

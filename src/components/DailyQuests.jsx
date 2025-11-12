@@ -35,7 +35,11 @@ const DailyQuests = ({ currentUser }) => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [claiming, setClaiming] = useState(null);
-  const [notification, setNotification] = useState({ open: false, message: '', severity: 'success' });
+  const [notification, setNotification] = useState({
+    open: false,
+    message: '',
+    severity: 'success',
+  });
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
   const authToken = localStorage.getItem('auth_token');
@@ -86,12 +90,15 @@ const DailyQuests = ({ currentUser }) => {
     try {
       setClaiming(questId);
 
-      const response = await fetch(`${API_URL}/api/gamification/daily-quests/${questId}/complete`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
+      const response = await fetch(
+        `${API_URL}/api/gamification/daily-quests/${questId}/complete`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -147,7 +154,11 @@ const DailyQuests = ({ currentUser }) => {
       <Card
         key={quest.id}
         sx={{
-          borderLeft: alreadyClaimed ? '4px solid #4caf50' : isComplete ? '4px solid #2196f3' : '4px solid #9e9e9e',
+          borderLeft: alreadyClaimed
+            ? '4px solid #4caf50'
+            : isComplete
+              ? '4px solid #2196f3'
+              : '4px solid #9e9e9e',
           transition: 'transform 0.2s, box-shadow 0.2s',
           '&:hover': {
             transform: 'translateY(-2px)',
@@ -156,7 +167,14 @@ const DailyQuests = ({ currentUser }) => {
         }}
       >
         <CardContent>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-start',
+              mb: 2,
+            }}
+          >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <Typography variant="h3" component="span">
                 {quest.icon}
@@ -168,12 +186,16 @@ const DailyQuests = ({ currentUser }) => {
                 </Typography>
               </Box>
             </Box>
-            {alreadyClaimed && <CompleteIcon color="success" fontSize="large" />}
+            {alreadyClaimed && (
+              <CompleteIcon color="success" fontSize="large" />
+            )}
           </Box>
 
           {/* Progress bar */}
           <Box sx={{ mb: 2 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+            <Box
+              sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}
+            >
               <Typography variant="body2" color="text.secondary">
                 Progress
               </Typography>
@@ -189,17 +211,31 @@ const DailyQuests = ({ currentUser }) => {
                 borderRadius: 4,
                 bgcolor: 'grey.200',
                 '& .MuiLinearProgress-bar': {
-                  bgcolor: alreadyClaimed ? '#4caf50' : isComplete ? '#2196f3' : '#9e9e9e',
+                  bgcolor: alreadyClaimed
+                    ? '#4caf50'
+                    : isComplete
+                      ? '#2196f3'
+                      : '#9e9e9e',
                 },
               }}
             />
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{ display: 'block', mt: 0.5 }}
+            >
               {quest.progress.percentage.toFixed(0)}% Complete
             </Typography>
           </Box>
 
           {/* Reward and action */}
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
             <Chip
               icon={<TrophyIcon />}
               label={`${quest.points} points`}
@@ -215,7 +251,13 @@ const DailyQuests = ({ currentUser }) => {
                 color="primary"
                 onClick={() => claimQuest(quest.id)}
                 disabled={claiming === quest.id}
-                startIcon={claiming === quest.id ? <CircularProgress size={20} color="inherit" /> : <TrophyIcon />}
+                startIcon={
+                  claiming === quest.id ? (
+                    <CircularProgress size={20} color="inherit" />
+                  ) : (
+                    <TrophyIcon />
+                  )
+                }
               >
                 {claiming === quest.id ? 'Claiming...' : 'Claim Reward'}
               </Button>
@@ -240,7 +282,14 @@ const DailyQuests = ({ currentUser }) => {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 400 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: 400,
+        }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -250,11 +299,23 @@ const DailyQuests = ({ currentUser }) => {
     <Box sx={{ p: 3 }}>
       {/* Header */}
       <Box sx={{ mb: 4 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mb: 2,
+          }}
+        >
           <Typography variant="h4" component="h1">
             📝 Daily Quests
           </Typography>
-          <Button variant="outlined" startIcon={<RefreshIcon />} onClick={fetchQuests} disabled={loading}>
+          <Button
+            variant="outlined"
+            startIcon={<RefreshIcon />}
+            onClick={fetchQuests}
+            disabled={loading}
+          >
             Refresh
           </Button>
         </Box>
@@ -266,19 +327,25 @@ const DailyQuests = ({ currentUser }) => {
               <Grid container spacing={3}>
                 <Grid item xs={12} sm={4}>
                   <Box sx={{ textAlign: 'center' }}>
-                    <Typography variant="h3">{stats.completed_today}</Typography>
+                    <Typography variant="h3">
+                      {stats.completed_today}
+                    </Typography>
                     <Typography variant="body2">Completed Today</Typography>
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <Box sx={{ textAlign: 'center' }}>
-                    <Typography variant="h3">{stats.total_available}</Typography>
+                    <Typography variant="h3">
+                      {stats.total_available}
+                    </Typography>
                     <Typography variant="body2">Total Quests</Typography>
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <Box sx={{ textAlign: 'center' }}>
-                    <Typography variant="h3">{stats.completion_percentage}%</Typography>
+                    <Typography variant="h3">
+                      {stats.completion_percentage}%
+                    </Typography>
                     <Typography variant="body2">Daily Progress</Typography>
                     <LinearProgress
                       variant="determinate"

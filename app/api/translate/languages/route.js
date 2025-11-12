@@ -5,6 +5,10 @@ import { NextResponse } from 'next/server';
 
 const BACKEND_URL = 'http://localhost:5001';
 
+// Force dynamic rendering - don't pre-render during build
+// This prevents "fetch failed" errors when backend server isn't running during build
+export const dynamic = 'force-dynamic';
+
 // GET /api/translate/languages - Get supported languages
 export async function GET(request) {
   try {
@@ -22,7 +26,13 @@ export async function GET(request) {
       status: response.status,
     });
   } catch (error) {
-    console.error('❌ Supported Languages API Error:', error.message);
+    // Only log errors at runtime, not during build
+    if (
+      process.env.NODE_ENV !== 'production' ||
+      typeof window !== 'undefined'
+    ) {
+      console.error('❌ Supported Languages API Error:', error.message);
+    }
     return NextResponse.json(
       {
         success: false,

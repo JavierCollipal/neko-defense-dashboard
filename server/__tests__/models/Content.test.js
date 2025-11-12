@@ -117,9 +117,7 @@ describe('Content Model - Validation and Helpers', () => {
         description: 'a'.repeat(1001),
       });
       expect(result.valid).toBe(false);
-      expect(result.error).toBe(
-        'Description must be at most 1000 characters'
-      );
+      expect(result.error).toBe('Description must be at most 1000 characters');
     });
 
     it('should reject invalid category', () => {
@@ -349,9 +347,7 @@ describe('Comment Model - Validation and Helpers', () => {
     });
 
     it('should extract multiple mentions', () => {
-      const mentions = extractMentions(
-        'Hey @neko-arc and @mario how are you?'
-      );
+      const mentions = extractMentions('Hey @neko-arc and @mario how are you?');
       expect(mentions).toContain('neko-arc');
       expect(mentions).toContain('mario');
     });

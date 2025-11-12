@@ -37,7 +37,8 @@ const IDEA_CATEGORIES = {
  * @returns {number} Priority score
  */
 function calculatePriorityScore(idea) {
-  const daysOld = (Date.now() - new Date(idea.created_at).getTime()) / (1000 * 60 * 60 * 24);
+  const daysOld =
+    (Date.now() - new Date(idea.created_at).getTime()) / (1000 * 60 * 60 * 24);
   const voteScore = idea.votes?.score || 0;
   const engagementScore = (idea.comments_count || 0) * 2 + (idea.views || 0);
 
@@ -111,15 +112,23 @@ function validateIdeaData(ideaData) {
   }
 
   // Category validation
-  if (ideaData.category && !Object.values(IDEA_CATEGORIES).includes(ideaData.category)) {
+  if (
+    ideaData.category &&
+    !Object.values(IDEA_CATEGORIES).includes(ideaData.category)
+  ) {
     errors.push(
       `Invalid category. Must be one of: ${Object.values(IDEA_CATEGORIES).join(', ')}`
     );
   }
 
   // Status validation
-  if (ideaData.status && !Object.values(IDEA_STATUSES).includes(ideaData.status)) {
-    errors.push(`Invalid status. Must be one of: ${Object.values(IDEA_STATUSES).join(', ')}`);
+  if (
+    ideaData.status &&
+    !Object.values(IDEA_STATUSES).includes(ideaData.status)
+  ) {
+    errors.push(
+      `Invalid status. Must be one of: ${Object.values(IDEA_STATUSES).join(', ')}`
+    );
   }
 
   // Tags validation
@@ -251,8 +260,12 @@ async function removeVote(db, ideaId, userId) {
   }
 
   const userIdObj = new ObjectId(userId);
-  const newUpvotes = (idea.votes?.upvotes || []).filter((id) => !id.equals(userIdObj));
-  const newDownvotes = (idea.votes?.downvotes || []).filter((id) => !id.equals(userIdObj));
+  const newUpvotes = (idea.votes?.upvotes || []).filter(
+    (id) => !id.equals(userIdObj)
+  );
+  const newDownvotes = (idea.votes?.downvotes || []).filter(
+    (id) => !id.equals(userIdObj)
+  );
   const voteScore = newUpvotes.length - newDownvotes.length;
 
   await db.collection('community_ideas').updateOne(

@@ -4,6 +4,7 @@ const { MongoClient } = require('mongodb');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const cookieParser = require('cookie-parser');
 const http = require('http');
 const { Server } = require('socket.io');
 require('dotenv').config();
@@ -29,10 +30,17 @@ const io = new Server(server, {
     origin: function (origin, callback) {
       // Same CORS logic as Express
       if (!origin) return callback(null, true);
-      if (origin.includes('trycloudflare.com') || origin.includes('vercel.app') || origin.includes('railway.app')) {
+      if (
+        origin.includes('trycloudflare.com') ||
+        origin.includes('vercel.app') ||
+        origin.includes('railway.app')
+      ) {
         return callback(null, true);
       }
-      const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001').split(',');
+      const allowedOrigins = (
+        process.env.ALLOWED_ORIGINS ||
+        'http://localhost:3000,http://localhost:3001'
+      ).split(',');
       if (allowedOrigins.indexOf(origin) !== -1) {
         callback(null, true);
       } else {
@@ -134,6 +142,9 @@ app.use('/api/', limiter);
 // Body parser with size limits (prevent DoS)
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true, limit: '1mb' }));
+
+// 🍪 Cookie parser (for httpOnly cookies authentication)
+app.use(cookieParser());
 
 // Connect to MongoDB
 async function connectDB() {
@@ -1780,6 +1791,7 @@ connectDB().then(async () => {
 
   // Import UGC route modules
   const authRoutes = require('./routes/auth');
+  const enhancedAuthRoutes = require('./routes/enhanced-auth'); // 🔒 Security Audit: httpOnly cookies + CSRF
   const contentRoutes = require('./routes/content');
   const commentsRoutes = require('./routes/comments');
   const discoveryRoutes = require('./routes/discovery');
@@ -1791,7 +1803,8 @@ connectDB().then(async () => {
   app.locals.db = db;
 
   // Mount UGC routes
-  app.use('/api/auth', authRoutes);
+  app.use('/api/auth', authRoutes); // Legacy auth (localStorage JWT)
+  app.use('/api/auth/v2', enhancedAuthRoutes); // 🔒 Enhanced auth (httpOnly cookies + CSRF)
   app.use('/api/content', contentRoutes);
   app.use('/api/comments', commentsRoutes);
   app.use('/api', discoveryRoutes); // Phase 2: Discovery & search routes
@@ -1803,9 +1816,13 @@ connectDB().then(async () => {
   console.log('  - /api/auth/* (Registration, Login, JWT)');
   console.log('  - /api/content/* (User Content CRUD)');
   console.log('  - /api/comments/* (Comments & Reactions)');
-  console.log('  - /api/search, /api/content/trending, /api/content/recommended (Discovery)');
+  console.log(
+    '  - /api/search, /api/content/trending, /api/content/recommended (Discovery)'
+  );
   console.log('  - /api/ideas/* (Community Ideas Board with Voting)');
-  console.log('  - /api/gamification/* (Achievements, Daily Quests, Leaderboard) 🏆');
+  console.log(
+    '  - /api/gamification/* (Achievements, Daily Quests, Leaderboard) 🏆'
+  );
   console.log('  - /api/challenges/* (Challenges & Contests with Judging) 🏅');
 
   // Initialize search indexes for Phase 2 discovery features

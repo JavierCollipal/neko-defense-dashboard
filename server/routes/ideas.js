@@ -6,7 +6,11 @@
 const express = require('express');
 const router = express.Router();
 const { ObjectId } = require('mongodb');
-const { requireAuth, optionalAuth, requireRole } = require('../middleware/auth');
+const {
+  requireAuth,
+  optionalAuth,
+  requireRole,
+} = require('../middleware/auth');
 const {
   IDEA_STATUSES,
   IDEA_CATEGORIES,
@@ -54,12 +58,17 @@ router.post('/', requireAuth, async (req, res) => {
     await db.collection('community_ideas').insertOne(newIdea);
 
     // Get author information
-    const author = await db
-      .collection('users')
-      .findOne(
-        { _id: new ObjectId(userId) },
-        { projection: { username: 1, display_name: 1, avatar_url: 1, verified: 1 } }
-      );
+    const author = await db.collection('users').findOne(
+      { _id: new ObjectId(userId) },
+      {
+        projection: {
+          username: 1,
+          display_name: 1,
+          avatar_url: 1,
+          verified: 1,
+        },
+      }
+    );
 
     newIdea.author = author;
 
@@ -142,17 +151,24 @@ router.get('/', optionalAuth, async (req, res) => {
       .toArray();
 
     // Get total count for pagination
-    const totalIdeas = await db.collection('community_ideas').countDocuments(query);
+    const totalIdeas = await db
+      .collection('community_ideas')
+      .countDocuments(query);
 
     // Populate author information
     for (const idea of ideas) {
       if (idea.author_id) {
-        const author = await db
-          .collection('users')
-          .findOne(
-            { _id: new ObjectId(idea.author_id) },
-            { projection: { username: 1, display_name: 1, avatar_url: 1, verified: 1 } }
-          );
+        const author = await db.collection('users').findOne(
+          { _id: new ObjectId(idea.author_id) },
+          {
+            projection: {
+              username: 1,
+              display_name: 1,
+              avatar_url: 1,
+              verified: 1,
+            },
+          }
+        );
         idea.author = author;
       }
 
@@ -233,12 +249,17 @@ router.get('/top', optionalAuth, async (req, res) => {
     // Populate author information
     for (const idea of topIdeas) {
       if (idea.author_id) {
-        const author = await db
-          .collection('users')
-          .findOne(
-            { _id: new ObjectId(idea.author_id) },
-            { projection: { username: 1, display_name: 1, avatar_url: 1, verified: 1 } }
-          );
+        const author = await db.collection('users').findOne(
+          { _id: new ObjectId(idea.author_id) },
+          {
+            projection: {
+              username: 1,
+              display_name: 1,
+              avatar_url: 1,
+              verified: 1,
+            },
+          }
+        );
         idea.author = author;
       }
 
@@ -275,7 +296,9 @@ router.get('/:id', optionalAuth, async (req, res) => {
     const db = req.app.locals.db;
     const ideaId = new ObjectId(req.params.id);
 
-    const idea = await db.collection('community_ideas').findOne({ _id: ideaId });
+    const idea = await db
+      .collection('community_ideas')
+      .findOne({ _id: ideaId });
 
     if (!idea) {
       return res.status(404).json({ error: 'Idea not found' });
@@ -290,12 +313,17 @@ router.get('/:id', optionalAuth, async (req, res) => {
 
     // Populate author information
     if (idea.author_id) {
-      const author = await db
-        .collection('users')
-        .findOne(
-          { _id: new ObjectId(idea.author_id) },
-          { projection: { username: 1, display_name: 1, avatar_url: 1, verified: 1 } }
-        );
+      const author = await db.collection('users').findOne(
+        { _id: new ObjectId(idea.author_id) },
+        {
+          projection: {
+            username: 1,
+            display_name: 1,
+            avatar_url: 1,
+            verified: 1,
+          },
+        }
+      );
       idea.author = author;
     }
 
@@ -331,7 +359,9 @@ router.put('/:id', requireAuth, async (req, res) => {
     const userId = req.user.user_id;
     const ideaId = new ObjectId(req.params.id);
 
-    const idea = await db.collection('community_ideas').findOne({ _id: ideaId });
+    const idea = await db
+      .collection('community_ideas')
+      .findOne({ _id: ideaId });
 
     if (!idea) {
       return res.status(404).json({ error: 'Idea not found' });
@@ -339,10 +369,14 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     // Check if user is the author or a co-author
     const isAuthor = idea.author_id.equals(new ObjectId(userId));
-    const isCoAuthor = idea.co_authors?.some((id) => id.equals(new ObjectId(userId)));
+    const isCoAuthor = idea.co_authors?.some((id) =>
+      id.equals(new ObjectId(userId))
+    );
 
     if (!isAuthor && !isCoAuthor) {
-      return res.status(403).json({ error: 'Only the author or co-authors can edit this idea' });
+      return res
+        .status(403)
+        .json({ error: 'Only the author or co-authors can edit this idea' });
     }
 
     const { title, description, tags, attachments } = req.body;
@@ -352,13 +386,19 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     if (title !== undefined) {
       if (typeof title !== 'string' || title.length < 5 || title.length > 200) {
-        return res.status(400).json({ error: 'Title must be between 5 and 200 characters' });
+        return res
+          .status(400)
+          .json({ error: 'Title must be between 5 and 200 characters' });
       }
       updates.title = title;
     }
 
     if (description !== undefined) {
-      if (typeof description !== 'string' || description.length < 10 || description.length > 5000) {
+      if (
+        typeof description !== 'string' ||
+        description.length < 10 ||
+        description.length > 5000
+      ) {
         return res.status(400).json({
           error: 'Description must be between 10 and 5000 characters',
         });
@@ -368,7 +408,9 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     if (tags !== undefined) {
       if (!Array.isArray(tags) || tags.length > 10) {
-        return res.status(400).json({ error: 'Tags must be an array with maximum 10 items' });
+        return res
+          .status(400)
+          .json({ error: 'Tags must be an array with maximum 10 items' });
       }
       updates.tags = tags;
     }
@@ -385,19 +427,28 @@ router.put('/:id', requireAuth, async (req, res) => {
     updates.updated_at = new Date();
 
     // Update idea
-    await db.collection('community_ideas').updateOne({ _id: ideaId }, { $set: updates });
+    await db
+      .collection('community_ideas')
+      .updateOne({ _id: ideaId }, { $set: updates });
 
     // Get updated idea
-    const updatedIdea = await db.collection('community_ideas').findOne({ _id: ideaId });
+    const updatedIdea = await db
+      .collection('community_ideas')
+      .findOne({ _id: ideaId });
 
     // Populate author information
     if (updatedIdea.author_id) {
-      const author = await db
-        .collection('users')
-        .findOne(
-          { _id: new ObjectId(updatedIdea.author_id) },
-          { projection: { username: 1, display_name: 1, avatar_url: 1, verified: 1 } }
-        );
+      const author = await db.collection('users').findOne(
+        { _id: new ObjectId(updatedIdea.author_id) },
+        {
+          projection: {
+            username: 1,
+            display_name: 1,
+            avatar_url: 1,
+            verified: 1,
+          },
+        }
+      );
       updatedIdea.author = author;
     }
 
@@ -423,7 +474,9 @@ router.delete('/:id', requireAuth, async (req, res) => {
     const userRole = req.user.role;
     const ideaId = new ObjectId(req.params.id);
 
-    const idea = await db.collection('community_ideas').findOne({ _id: ideaId });
+    const idea = await db
+      .collection('community_ideas')
+      .findOne({ _id: ideaId });
 
     if (!idea) {
       return res.status(404).json({ error: 'Idea not found' });
@@ -434,7 +487,9 @@ router.delete('/:id', requireAuth, async (req, res) => {
     const isAdmin = userRole === 'admin' || userRole === 'moderator';
 
     if (!isAuthor && !isAdmin) {
-      return res.status(403).json({ error: 'Only the author or admins can delete this idea' });
+      return res
+        .status(403)
+        .json({ error: 'Only the author or admins can delete this idea' });
     }
 
     await db.collection('community_ideas').deleteOne({ _id: ideaId });
@@ -464,7 +519,9 @@ router.post('/:id/vote', requireAuth, async (req, res) => {
     const { voteType } = req.body;
 
     if (!voteType || !['upvote', 'downvote'].includes(voteType)) {
-      return res.status(400).json({ error: 'Invalid vote type. Must be "upvote" or "downvote"' });
+      return res
+        .status(400)
+        .json({ error: 'Invalid vote type. Must be "upvote" or "downvote"' });
     }
 
     const voteCounts = await voteOnIdea(db, ideaId, userId, voteType);
@@ -510,70 +567,86 @@ router.delete('/:id/vote', requireAuth, async (req, res) => {
  *
  * Body: { status: string, admin_notes?: string, implementation_link?: string }
  */
-router.put('/:id/status', requireAuth, requireRole(['admin', 'moderator']), async (req, res) => {
-  try {
-    const db = req.app.locals.db;
-    const ideaId = new ObjectId(req.params.id);
-    const { status, admin_notes, implementation_link } = req.body;
+router.put(
+  '/:id/status',
+  requireAuth,
+  requireRole(['admin', 'moderator']),
+  async (req, res) => {
+    try {
+      const db = req.app.locals.db;
+      const ideaId = new ObjectId(req.params.id);
+      const { status, admin_notes, implementation_link } = req.body;
 
-    if (!status || !Object.values(IDEA_STATUSES).includes(status)) {
-      return res.status(400).json({
-        error: `Invalid status. Must be one of: ${Object.values(IDEA_STATUSES).join(', ')}`,
-      });
-    }
+      if (!status || !Object.values(IDEA_STATUSES).includes(status)) {
+        return res.status(400).json({
+          error: `Invalid status. Must be one of: ${Object.values(IDEA_STATUSES).join(', ')}`,
+        });
+      }
 
-    const idea = await db.collection('community_ideas').findOne({ _id: ideaId });
+      const idea = await db
+        .collection('community_ideas')
+        .findOne({ _id: ideaId });
 
-    if (!idea) {
-      return res.status(404).json({ error: 'Idea not found' });
-    }
+      if (!idea) {
+        return res.status(404).json({ error: 'Idea not found' });
+      }
 
-    const updates = {
-      status,
-      updated_at: new Date(),
-    };
+      const updates = {
+        status,
+        updated_at: new Date(),
+      };
 
-    if (admin_notes !== undefined) {
-      updates.admin_notes = admin_notes;
-    }
+      if (admin_notes !== undefined) {
+        updates.admin_notes = admin_notes;
+      }
 
-    if (implementation_link !== undefined) {
-      updates.implementation_link = implementation_link;
-    }
+      if (implementation_link !== undefined) {
+        updates.implementation_link = implementation_link;
+      }
 
-    if (status === IDEA_STATUSES.COMPLETED) {
-      updates.completed_at = new Date();
-    }
+      if (status === IDEA_STATUSES.COMPLETED) {
+        updates.completed_at = new Date();
+      }
 
-    await db.collection('community_ideas').updateOne({ _id: ideaId }, { $set: updates });
+      await db
+        .collection('community_ideas')
+        .updateOne({ _id: ideaId }, { $set: updates });
 
-    // Update priority score
-    await updatePriorityScore(db, ideaId);
+      // Update priority score
+      await updatePriorityScore(db, ideaId);
 
-    // Get updated idea
-    const updatedIdea = await db.collection('community_ideas').findOne({ _id: ideaId });
+      // Get updated idea
+      const updatedIdea = await db
+        .collection('community_ideas')
+        .findOne({ _id: ideaId });
 
-    // Populate author information
-    if (updatedIdea.author_id) {
-      const author = await db
-        .collection('users')
-        .findOne(
+      // Populate author information
+      if (updatedIdea.author_id) {
+        const author = await db.collection('users').findOne(
           { _id: new ObjectId(updatedIdea.author_id) },
-          { projection: { username: 1, display_name: 1, avatar_url: 1, verified: 1 } }
+          {
+            projection: {
+              username: 1,
+              display_name: 1,
+              avatar_url: 1,
+              verified: 1,
+            },
+          }
         );
-      updatedIdea.author = author;
-    }
+        updatedIdea.author = author;
+      }
 
-    res.json({
-      success: true,
-      message: 'Idea status updated successfully',
-      idea: updatedIdea,
-    });
-  } catch (error) {
-    console.error('Update status error:', error);
-    res.status(500).json({ error: 'Failed to update idea status' });
+      res.json({
+        success: true,
+        message: 'Idea status updated successfully',
+        idea: updatedIdea,
+      });
+    } catch (error) {
+      console.error('Update status error:', error);
+      res.status(500).json({ error: 'Failed to update idea status' });
+    }
   }
-});
+);
 
 /**
  * GET /api/ideas/stats

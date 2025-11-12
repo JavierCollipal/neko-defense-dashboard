@@ -172,7 +172,9 @@ const NotificationCenter = ({ currentUser }) => {
                       }
                     />
                   </ListItem>
-                  {index < notifications.length - 1 && <Divider component="li" />}
+                  {index < notifications.length - 1 && (
+                    <Divider component="li" />
+                  )}
                 </React.Fragment>
               ))}
             </List>

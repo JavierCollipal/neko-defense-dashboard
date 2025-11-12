@@ -36,7 +36,9 @@ describe('🎨 UGC Platform - Production Backend/Frontend Integration', () => {
         expect(response.status).to.eq(201);
         expect(response.body.success).to.be.true;
         expect(response.body.user).to.exist;
-        expect(response.body.user.username).to.eq(TEST_USER.username.toLowerCase());
+        expect(response.body.user.username).to.eq(
+          TEST_USER.username.toLowerCase()
+        );
         expect(response.body.user.email).to.eq(TEST_USER.email.toLowerCase());
         expect(response.body.user.password_hash).to.not.exist; // Should not expose password hash
 
@@ -50,7 +52,8 @@ describe('🎨 UGC Platform - Production Backend/Frontend Integration', () => {
         expect(response.body.user.reputation).to.exist;
         expect(response.body.user.reputation.points).to.eq(0);
         expect(response.body.user.reputation.level).to.eq(1);
-        expect(response.body.user.reputation.badges).to.be.an('array').that.is.empty;
+        expect(response.body.user.reputation.badges).to.be.an('array').that.is
+          .empty;
 
         // Store tokens for later tests
         authTokens = response.body.tokens;
@@ -143,7 +146,9 @@ describe('🎨 UGC Platform - Production Backend/Frontend Integration', () => {
       }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.success).to.be.true;
-        expect(response.body.user.username).to.eq(TEST_USER.username.toLowerCase());
+        expect(response.body.user.username).to.eq(
+          TEST_USER.username.toLowerCase()
+        );
       });
     });
 
@@ -204,14 +209,18 @@ describe('🎨 UGC Platform - Production Backend/Frontend Integration', () => {
         expect(response.status).to.eq(201);
         expect(response.body.success).to.be.true;
         expect(response.body.content).to.exist;
-        expect(response.body.content.title).to.eq('Test Threat Intelligence Report');
+        expect(response.body.content.title).to.eq(
+          'Test Threat Intelligence Report'
+        );
         expect(response.body.content.status).to.eq('draft');
         expect(response.body.content.engagement.views).to.eq(0);
         expect(response.body.content.engagement.likes).to.eq(0);
 
         // Check AI metadata
         expect(response.body.content.ai_metadata).to.exist;
-        expect(response.body.content.ai_metadata.quality_score).to.be.a('number');
+        expect(response.body.content.ai_metadata.quality_score).to.be.a(
+          'number'
+        );
 
         testContent = response.body.content;
       });
@@ -280,7 +289,9 @@ describe('🎨 UGC Platform - Production Backend/Frontend Integration', () => {
         expect(response.body.success).to.be.true;
         expect(response.body.content._id).to.eq(testContent._id);
         expect(response.body.content.author).to.exist;
-        expect(response.body.content.author.username).to.eq(TEST_USER.username.toLowerCase());
+        expect(response.body.content.author.username).to.eq(
+          TEST_USER.username.toLowerCase()
+        );
 
         // Views should increment
         expect(response.body.content.engagement.views).to.be.greaterThan(0);
@@ -330,7 +341,9 @@ describe('🎨 UGC Platform - Production Backend/Frontend Integration', () => {
       }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.success).to.be.true;
-        expect(response.body.content.title).to.eq('Updated Threat Intelligence Report');
+        expect(response.body.content.title).to.eq(
+          'Updated Threat Intelligence Report'
+        );
       });
     });
 
