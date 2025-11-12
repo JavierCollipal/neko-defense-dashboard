@@ -1,8 +1,6 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
 # 🐾⚡ NEKO DEFENSE PRE-COMMIT HOOK ⚡🐾
 # Auto-fix ESLint errors in staged files only
+# Compatible with Husky v9 and v10
 
 echo "🐾 Running lint-staged to fix staged files, nyaa~!"
 npx lint-staged

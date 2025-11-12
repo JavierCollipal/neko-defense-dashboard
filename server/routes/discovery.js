@@ -530,6 +530,19 @@ async function initializeSearchIndexes(db) {
   try {
     const collection = db.collection('user_generated_content');
 
+    // Check if collection exists before creating indexes
+    const collections = await db
+      .listCollections({ name: 'user_generated_content' })
+      .toArray();
+
+    if (collections.length === 0) {
+      // Collection doesn't exist yet - indexes will be created when first document is inserted
+      console.log(
+        'ℹ️  UGC collection not found - indexes will be created on first use'
+      );
+      return;
+    }
+
     // Check if text index exists
     const indexes = await collection.indexes();
     const hasTextIndex = indexes.some(
@@ -558,31 +571,38 @@ async function initializeSearchIndexes(db) {
       console.log('✅ Text search index created successfully');
     }
 
-    // Create performance indexes
+    // Create performance indexes (with background:true to avoid blocking)
     await collection.createIndex(
       { created_at: -1 },
-      { name: 'created_at_desc' }
+      { name: 'created_at_desc', background: true }
     );
     await collection.createIndex(
       { published_at: -1 },
-      { name: 'published_at_desc' }
+      { name: 'published_at_desc', background: true }
     );
     await collection.createIndex(
       { 'engagement.views': -1 },
-      { name: 'views_desc' }
+      { name: 'views_desc', background: true }
     );
     await collection.createIndex(
       { category: 1, created_at: -1 },
-      { name: 'category_created_desc' }
+      { name: 'category_created_desc', background: true }
     );
     await collection.createIndex(
       { author_id: 1, created_at: -1 },
-      { name: 'author_created_desc' }
+      { name: 'author_created_desc', background: true }
     );
 
     console.log('✅ All discovery indexes created successfully');
   } catch (error) {
-    console.error('❌ Failed to create search indexes:', error);
+    // Handle specific MongoDB errors gracefully
+    if (error.code === 26 || error.codeName === 'NamespaceNotFound') {
+      console.log(
+        'ℹ️  UGC collection not found - indexes will be created on first use'
+      );
+    } else {
+      console.error('❌ Failed to create search indexes:', error.message);
+    }
   }
 }
 
