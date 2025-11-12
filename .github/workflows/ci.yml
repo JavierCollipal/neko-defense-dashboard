@@ -137,7 +137,7 @@ jobs:
     name: 🎭 E2E Tests (Cypress) - SKIPPED
     runs-on: ubuntu-latest
     needs: [build]
-    if: false  # ⚠️ SKIPPED: Temporarily disabled while fixing Cypress issues
+    if: false # ⚠️ SKIPPED: Temporarily disabled while fixing Cypress issues
     strategy:
       fail-fast: false
       matrix:
@@ -196,7 +196,7 @@ jobs:
     name: 🎨 Production Integration Tests - SKIPPED
     runs-on: ubuntu-latest
     needs: [build]
-    if: false  # ⚠️ SKIPPED: Temporarily disabled while fixing Cypress issues
+    if: false # ⚠️ SKIPPED: Temporarily disabled while fixing Cypress issues
     services:
       # MongoDB service for testing
       mongodb:
@@ -275,7 +275,7 @@ jobs:
   quality-gate:
     name: ✅ Quality Gate
     runs-on: ubuntu-latest
-    needs: [lint, build, test-unit]  # test-e2e and test-production removed (currently skipped)
+    needs: [lint, build, test-unit] # test-e2e and test-production removed (currently skipped)
     if: always()
     steps:
       - name: 🎯 Check all jobs passed
