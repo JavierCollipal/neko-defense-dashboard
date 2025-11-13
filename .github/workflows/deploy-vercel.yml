@@ -1,0 +1,242 @@
+# 🐾⚡ NEKO DEFENSE DASHBOARD - Vercel Production Deployment ⚡🐾
+#
+# Deploys Next.js dashboard to Vercel after CI passes
+# Connects to unified gateway backend (Docker Compose or production)
+#
+# Required GitHub Secrets:
+# - VERCEL_TOKEN: Your Vercel authentication token
+# - VERCEL_ORG_ID: Your Vercel organization ID
+# - VERCEL_PROJECT_ID: Your Vercel project ID
+# - MONGODB_URI: MongoDB Atlas connection string (optional - if needed by API routes)
+#
+# Optional Secrets:
+# - NEXT_PUBLIC_GATEWAY_URL: Production unified gateway URL (default: http://localhost:3100)
+
+name: 🚀 Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch: # Allow manual triggers
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - preview
+
+# Cancel previous deploys on same branch
+concurrency:
+  group: deploy-vercel-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '20'
+  # Production unified gateway URL (update this with your production backend)
+  NEXT_PUBLIC_GATEWAY_URL: ${{ secrets.NEXT_PUBLIC_GATEWAY_URL || 'http://localhost:3100' }}
+  NEXT_PUBLIC_FORENSIC_URL: ${{ secrets.NEXT_PUBLIC_GATEWAY_URL || 'http://localhost:3100' }}/forensic
+  NEXT_PUBLIC_WORKER_DEFENSE_URL: ${{ secrets.NEXT_PUBLIC_GATEWAY_URL || 'http://localhost:3100' }}/worker-defense
+  NEXT_PUBLIC_FRAME_GENERATOR_URL: ${{ secrets.NEXT_PUBLIC_GATEWAY_URL || 'http://localhost:3100' }}/frames
+  NEXT_PUBLIC_LAW_RAG_URL: ${{ secrets.NEXT_PUBLIC_GATEWAY_URL || 'http://localhost:3100' }}/legal
+
+jobs:
+  # ═══════════════════════════════════════════════════════════════════════════
+  # 🏗️ BUILD & VERIFY
+  # ═══════════════════════════════════════════════════════════════════════════
+  build:
+    name: 🏗️ Build Next.js for Vercel
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 💾 Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: 📦 Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: 🔍 Pre-deployment validation
+        run: |
+          echo "🐾 Running pre-deployment checks, nyaa~!"
+
+          # Check for Next.js app directory
+          if [ ! -d "app" ]; then
+            echo "❌ ERROR: app/ directory not found!"
+            exit 1
+          fi
+
+          # Check for next.config.js
+          if [ ! -f "next.config.js" ]; then
+            echo "❌ ERROR: next.config.js not found!"
+            exit 1
+          fi
+
+          echo "✅ All checks passed!"
+
+      - name: 🏗️ Build Next.js
+        env:
+          NEXT_PUBLIC_GATEWAY_URL: ${{ env.NEXT_PUBLIC_GATEWAY_URL }}
+          NEXT_PUBLIC_FORENSIC_URL: ${{ env.NEXT_PUBLIC_FORENSIC_URL }}
+          NEXT_PUBLIC_WORKER_DEFENSE_URL: ${{ env.NEXT_PUBLIC_WORKER_DEFENSE_URL }}
+          NEXT_PUBLIC_FRAME_GENERATOR_URL: ${{ env.NEXT_PUBLIC_FRAME_GENERATOR_URL }}
+          NEXT_PUBLIC_LAW_RAG_URL: ${{ env.NEXT_PUBLIC_LAW_RAG_URL }}
+        run: |
+          echo "🐾 Building with unified gateway endpoints, nyaa~!"
+          echo "Gateway URL: $NEXT_PUBLIC_GATEWAY_URL"
+          npm run build
+
+      - name: 📤 Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: nextjs-build
+          path: |
+            .next
+            public
+            package.json
+            package-lock.json
+          retention-days: 1
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # 🚀 DEPLOY TO VERCEL PRODUCTION
+  # ═══════════════════════════════════════════════════════════════════════════
+  deploy:
+    name: 🚀 Deploy to Vercel
+    runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 15
+    # Only deploy on main/master branch
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 📦 Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: 🔗 Pull Vercel Environment Information
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "❌ ERROR: VERCEL_TOKEN not set!"
+            echo "📝 Add VERCEL_TOKEN to GitHub repository secrets"
+            echo "🔗 Get token from: https://vercel.com/account/tokens"
+            exit 1
+          fi
+
+          if [ -z "$VERCEL_ORG_ID" ] || [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo "❌ ERROR: VERCEL_ORG_ID or VERCEL_PROJECT_ID not set!"
+            echo "📝 Add these to GitHub repository secrets"
+            echo "🔍 Run 'vercel link' locally to get these IDs from .vercel/project.json"
+            exit 1
+          fi
+
+          echo "🐾 Pulling Vercel project configuration, nyaa~!"
+          vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+
+      - name: 🏗️ Build Project Artifacts
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          NEXT_PUBLIC_GATEWAY_URL: ${{ env.NEXT_PUBLIC_GATEWAY_URL }}
+          NEXT_PUBLIC_FORENSIC_URL: ${{ env.NEXT_PUBLIC_FORENSIC_URL }}
+          NEXT_PUBLIC_WORKER_DEFENSE_URL: ${{ env.NEXT_PUBLIC_WORKER_DEFENSE_URL }}
+          NEXT_PUBLIC_FRAME_GENERATOR_URL: ${{ env.NEXT_PUBLIC_FRAME_GENERATOR_URL }}
+          NEXT_PUBLIC_LAW_RAG_URL: ${{ env.NEXT_PUBLIC_LAW_RAG_URL }}
+        run: |
+          echo "🐾 Building for Vercel deployment, desu~!"
+          echo "📊 Environment variables:"
+          echo "  NEXT_PUBLIC_GATEWAY_URL=$NEXT_PUBLIC_GATEWAY_URL"
+          echo "  NEXT_PUBLIC_FORENSIC_URL=$NEXT_PUBLIC_FORENSIC_URL"
+          echo "  NEXT_PUBLIC_WORKER_DEFENSE_URL=$NEXT_PUBLIC_WORKER_DEFENSE_URL"
+          echo "  NEXT_PUBLIC_FRAME_GENERATOR_URL=$NEXT_PUBLIC_FRAME_GENERATOR_URL"
+          echo "  NEXT_PUBLIC_LAW_RAG_URL=$NEXT_PUBLIC_LAW_RAG_URL"
+
+          vercel build --prod --token="$VERCEL_TOKEN"
+
+      - name: 🚀 Deploy to Vercel Production
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          echo "🐾 Deploying to Vercel production, nyaa~!"
+
+          # Deploy prebuilt artifacts
+          DEPLOYMENT_URL=$(vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN")
+
+          echo "✅ Deployed successfully, desu~!"
+          echo "🌐 Deployment URL: $DEPLOYMENT_URL"
+          echo "deployment_url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+        id: deploy
+
+      - name: 🧪 Verify Deployment
+        if: steps.deploy.outputs.deployment_url != ''
+        run: |
+          DEPLOYMENT_URL="${{ steps.deploy.outputs.deployment_url }}"
+
+          echo "🔍 Verifying deployment at $DEPLOYMENT_URL"
+
+          # Wait a bit for deployment to become available
+          sleep 10
+
+          # Check if deployment is accessible
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$DEPLOYMENT_URL" || echo "000")
+
+          if [ "$HTTP_STATUS" = "200" ] || [ "$HTTP_STATUS" = "301" ] || [ "$HTTP_STATUS" = "308" ]; then
+            echo "✅ Deployment is live and accessible!"
+          else
+            echo "⚠️ WARNING: Deployment returned HTTP $HTTP_STATUS"
+            echo "📝 Check Vercel dashboard for details"
+          fi
+
+      - name: 📝 Deployment Summary
+        run: |
+          echo "🎉🐾✨ VERCEL DEPLOYMENT COMPLETE! ✨🐾🎉"
+          echo ""
+          echo "📊 Deployment Details:"
+          echo "  Branch: ${{ github.ref_name }}"
+          echo "  Commit: ${{ github.sha }}"
+          echo "  Environment: production"
+          echo ""
+          echo "🌐 Access Points:"
+          echo "  Production URL: https://neko-defense-dashboard.vercel.app"
+          echo "  Deployment URL: ${{ steps.deploy.outputs.deployment_url }}"
+          echo ""
+          echo "🔧 Backend Configuration:"
+          echo "  Unified Gateway: ${{ env.NEXT_PUBLIC_GATEWAY_URL }}"
+          echo "  Forensic API: ${{ env.NEXT_PUBLIC_FORENSIC_URL }}"
+          echo "  Worker Defense API: ${{ env.NEXT_PUBLIC_WORKER_DEFENSE_URL }}"
+          echo "  Frame Generator API: ${{ env.NEXT_PUBLIC_FRAME_GENERATOR_URL }}"
+          echo "  Law RAG API: ${{ env.NEXT_PUBLIC_LAW_RAG_URL }}"
+          echo ""
+          echo "🔍 Vercel Dashboard: https://vercel.com/dashboard"
+          echo ""
+          echo "💖 All systems LEGENDARY MODE ACTIVATED, nyaa~!"
+
+# 🐾✨ Generated with Claude Code by Neko-Arc
+# Six-Personality Collaborative Deployment
