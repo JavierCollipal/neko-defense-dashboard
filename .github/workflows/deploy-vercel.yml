@@ -151,15 +151,23 @@ jobs:
             exit 1
           fi
 
-          if [ -z "$VERCEL_ORG_ID" ] || [ -z "$VERCEL_PROJECT_ID" ]; then
-            echo "❌ ERROR: VERCEL_ORG_ID or VERCEL_PROJECT_ID not set!"
-            echo "📝 Add these to GitHub repository secrets"
-            echo "🔍 Run 'vercel link' locally to get these IDs from .vercel/project.json"
+          if [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo "❌ ERROR: VERCEL_PROJECT_ID not set!"
+            echo "📝 Add VERCEL_PROJECT_ID to GitHub repository secrets"
+            echo "🔍 Get from Vercel project settings"
             exit 1
           fi
 
           echo "🐾 Pulling Vercel project configuration, nyaa~!"
-          vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+
+          # ORG_ID is optional for personal accounts
+          if [ -n "$VERCEL_ORG_ID" ]; then
+            echo "📊 Using team/org account: $VERCEL_ORG_ID"
+            vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+          else
+            echo "📊 Using personal account (no ORG_ID)"
+            vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+          fi
 
       - name: 🏗️ Build Project Artifacts
         env:
